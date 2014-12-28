@@ -312,18 +312,20 @@ require_once('loader.php');
 	function getPrefixByRaion($raionid){
 		$sql="SELECT l.id, l.raion_id, name, prefix FROM localitate l INNER JOIN prefix p ON l.id = p.localitate_id where raion_id=".$raionid." order by oras desc, name";
 		$l=new Location();
-		$ls=$l->doSql($sql);
+		$ls=$l->getAll("raion_id=".$raionid,"oras desc, name");
 		$c=1;
 		if (count($ls)!=0){
 			$out='<div class="groupboxtable">';
 			$out.='<table style="width:100%;">';
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Prefix</th></th></tr>";
 			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				//$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				//$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
-				//$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.$l->prefix.'</td></tr>';
-				$out.='<tr><td>'.$c.'</td><td>'.$l->name.'</td><td style="text-align:center;">'.$l->prefix.'</td></tr>';
+				$ps=$l->getPrefixes();
+				$url=$this->getUrl("index.php","action=viewprefixbylocation&id=".$l->id);				
+				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a></td><td style="text-align:center;">';
+				foreach($ps as $p){
+					$out.='0-'.$p->prefix.'<br>';
+				}
+				$out.='</td></tr>';
 				$c=$c+1;
 			}
 			$out.="</table>";
@@ -350,49 +352,8 @@ require_once('loader.php');
 		$out='';
 		if (count($ps)!=0){
 			foreach($ps as $p){
-				$out='<h3>'.$p->prefix.'</h3>';
-// 				$o="<table width=\"100%\"><tr><td align=\"center\">";
-// 				$o.="<table  style=\"width: 100%\" class=\"source\">";
-// 				$img=Image::getMainImageByRefType('f', $p->id);
-// 				if ($img!=null){
-// 					$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
-// 				} else {
-// 					$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
-// 				}
-// 				$o.="<tr><td>Adresa:</td><td>".$p->getAdresa()."</td></tr>";
-// 				$o.="<tr><td></td><td></td></tr>";
-// 				$o.='<tr><td colspan="2"><a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai multe detalii aici</a></td></tr>';
-// 				$o.="</table>";
-// 				$o.="</td></tr></table>";
-// 				$h='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">'.$p->name.'</a>';
-				//$f='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
-				//$out.=$this->getGroupBoxH3('Prefix',$o);
+				$out.='<h3>0-'.$p->prefix.'</h3>';
 			}
-	
-// 			$sql="select count(*) as cnt from company where deleted=0 and valid=1";
-// 			if ($locationid!=0){
-// 				$sql.=" and localitate_id=".$locationid;
-// 			}
-// 			$p=new Company();
-// 			$ps=$p->doSql($sql);
-// 			$cnt=0;
-// 			foreach($ps as $p){
-// 				$cnt=$p->cnt;
-// 			}
-// 			//echo $cnt."-".$rowsperpage;
-// 			if ($cnt>$this->rowsperpage){
-// 				$out.='<div class="groupbox">';
-// 				$out.='<table width="100%"><tr><td align="center">';
-// 				if ($page!=0){
-// 					$out.='<a href="'.$this->getUrl("index.php","action=viewcompaniesbylocation&id=".$locationid."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
-// 				}
-// 				$out.=" ";
-// 				if ((($page+1)*$this->rowsperpage)<$cnt){
-// 					$out.='<a href="'.$this->getUrl("index.php","action=viewcompaniesbylocation&id=".$locationid."&page=".($page+1)).'" class="link_button">Inainte ></a>';
-// 				}
-// 				$out.='</td></tr></table>';
-// 				$out.='</div>';
-// 			}
  		}
 		return $out;
 	}			
@@ -517,10 +478,16 @@ require_once('loader.php');
 		if (count($rs)!=0){			
 			$c=1;
 			foreach($rs as $r){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				//$url=$this->getUrl("index.php","action=viewprefixbyraion&id=".$r->id);
-				//$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$r->getFullNameDescription().'</a></td><td>022</td></tr>';
-				$out.='<tr><td>'.$c.'</td><td>'.$r->getFullNameDescription().'</td><td>022</td></tr>';
+				$ps=$r->getPrefixes();
+				$url=$this->getUrl("index.php","action=viewprefixbyraion&id=".$r->id);
+				//$out.='<li style="font-weight:bold;"><a href="'.$this->getUrl("index.php").'&action=viewcompaniesbyraion&id='.$r->id.'">'.$r->getFullName().'</a></li>';
+				//$out.='<li style="font-weight:bold;"><a href="'.$url.'">'.$r->getFullName().'</a></li>';
+				
+				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$r->getFullNameDescription().'</a></td><td>';
+				foreach($ps as $p){
+					$out.='0-'.$p->prefix.'<br>';
+				}
+				$out.='</td></tr>';
 				$c=$c+1;	
 			}
 		}

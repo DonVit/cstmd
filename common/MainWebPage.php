@@ -15,22 +15,26 @@ class MainWebPage extends WebPage {
 	public function __construct() {
 		parent::__construct();
 		
-		$this->setJavascript(Config::$mainsite."/common/js/scripts.js");
+		
 				
 		//$this->setCSS(Config::$mainsite."/common/style/reset.css");
-		$this->setCSS(Config::$mainsite."/common/style/fonts.css");		
+		//$this->setCSS(Config::$mainsite."/common/style/fonts.css");		
 		//$this->setCSS(Config::$mainsite."/common/style/base.css");			
-		$this->setCSS(Config::$mainsite."/common/style/common.css");
+		//$this->setCSS(Config::$mainsite."/common/style/common.css");
+		
 		
 		//bootstrap
-		//$this->setCSS(Config::$mainsite."/common/style/bootstrap/css/bootstrap.min.css");
-		//$this->setFooterJavascript("//code.jquery.com/jquery.js");
+		$this->setCSS(Config::$mainsite."/common/style/bootstrap_14px/css/bootstrap.min.css");
+		$this->setFooterJavascript("//code.jquery.com/jquery.js");
 		//$this->setFooterJavascript(Config::$mainsite."/common/style/bootstrap/js/bootstrap.min.js");
-
+		
 		//yui
 		//$this->setCSS("http://yui.yahooapis.com/pure/0.3.0/pure-nr-min.css");
-		$this->setCSS(Config::$mainsite."/common/style/yui/style1.css");
-		$this->setBodyTag("class=\"pure-skin-mine\"");
+		//$this->setCSS(Config::$mainsite."/common/style/yui/style1.css");
+		//$this->setBodyTag("class=\"pure-skin-mine\"");
+		//$this->setJavascript(Config::$mainsite."/common/js/controls.js");
+		//$this->setJavascript(Config::$mainsite."/common/js/scripts.js");
+		$this->setCSS(Config::$mainsite."/common/style/bs.cst.css");
 	}
 	
 	function show($html="MainWebPageHtml"){
@@ -69,7 +73,7 @@ class MainWebPage extends WebPage {
 	function getHeader(){
 		//$out='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 		//$out.='<html xmlns="http://www.w3.org/1999/xhtml">';
-		$out='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> ';
+		$out='<!DOCTYPE html>';
 		$out.='<html>';
 		$out.='<head>';
 		$out.='<title>'.$this->getTitle().'</title>';
@@ -83,21 +87,21 @@ class MainWebPage extends WebPage {
 		$out.=$this->getJavascript();
 		$out.='</head>';
 		$out.=$this->getBodyTag();
-		$out.='<div id="main" class="main">';
-		$out.=$this->getBanner();		
+		//$out.='<div id="main" class="main">';
+		//$out.=$this->getBanner();		
 		$out.=$this->getTopMenu();	
 		
 		$out.=$this->getLogo();
 					
-		$out.='<div id="mainmenubar">';
-		$out.=$this->getMainMenu();
-		//$out.=$this->getUserMenu();
-		$out.='<div style="clear: both;"/>';
-		$out.='</div>';
-		$out.='</div>';
+//		$out.='<div id="mainmenubar">';
+//		//$out.=$this->getMainMenu();
+//		//$out.=$this->getUserMenu();
+//		$out.='<div style="clear: both;"/>';
+//		$out.='</div>';
+//		$out.='</div>';
 		return $out;
 	}
-	function getTopMenu(){	
+	function getTopMenu2(){	
 		$out='<div id="topmenu" class="container bar tophormenu">';
 		$out.=$this->getLanguageMenu();	
 		$out.=$this->getUserMenu();			
@@ -105,8 +109,9 @@ class MainWebPage extends WebPage {
 		$out.='</div>';	
 		return $out;
 	}
-	function getTopMenu2(){
-		$out='<div class="navbar navbar-default" role="navigation">';
+	function getTopMenu(){
+		$out='<header>';
+		$out.='<div class="navbar navbar-default bs-cst-nav" role="navigation">';
 		$out.='<div class="container">';
 		//<!-- Brand and toggle get grouped for better mobile display -->
 		$out.='<div class="navbar-header">';
@@ -121,6 +126,18 @@ class MainWebPage extends WebPage {
 		
 		$out.='<ul class="nav navbar-nav">';
 		//$SelectedItem=TopMenu::getSelectedItem();
+//		foreach (TopMenu::getItems($this->getLang()) as $ItemKey=>$ItemValue){
+//			//if ($SelectedItem==$ItemKey){
+//			$host=parse_url($ItemKey,PHP_URL_HOST);
+//			//Logger::setLogs($this->getServerName()."-".$ItemKey."-".$host);
+//			if ($this->getServerName()==$host){
+//				$out.='<li class="active"><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
+//			} else {
+//				$out.='<li><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
+//			}
+//		}
+		$m=new Menu();
+		
 		foreach (TopMenu::getItems($this->getLang()) as $ItemKey=>$ItemValue){
 			//if ($SelectedItem==$ItemKey){
 			$host=parse_url($ItemKey,PHP_URL_HOST);
@@ -130,7 +147,8 @@ class MainWebPage extends WebPage {
 			} else {
 				$out.='<li><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
 			}
-		}
+		}		
+		
 		$out.='</ul>';
 		
 		$out.='<ul class="nav navbar-nav">';
@@ -157,11 +175,11 @@ class MainWebPage extends WebPage {
 		$out.='</li>';
 		$out.='</ul>';
 		//$out.='</div>';
-		*/
+		*/	
 		//$out='<div id="usermenu" style="display:block;float:right">';
 		$out.='<ul class="nav navbar-nav navbar-right">';
 		$out.='<li class="dropdown">';
-		$out.='<a href="#" class="dropdown-toggle" data-toggle="dropdown">Limba <b class="caret"></b></a>';
+		$out.='<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>';
 		$out.='<ul class="dropdown-menu">';
 				
 		if (User::getCurrentUser()->name=="Anonymous"){
@@ -176,9 +194,8 @@ class MainWebPage extends WebPage {
 		$out.='</li>';
 		$out.='</ul>';
 		$out.='</div>';
-		$out.='</div>';
-		return $out;		
-		
+		$out.='</div>';	
+		$out.='</header>';
 		return $out;
 	}	
 	function getMainMenu(){	
@@ -237,15 +254,17 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	function getLogo(){	
-		$out='<div id="logo" class="container bar tophorlogo">';
+		$out='<div class="page-header bs-cst-pageheader">';
+		$out.='<div class="container">';
 		//$out.='<div id="logo-title-left"><span style="color:#000099;">casa</span><span style="color:#FFFF33;">ta</span><span style="color:#FF0000;">.md</span></div>';
-		$out.='<div id="logo-title-left" style="display:block;float:left">CASATA.MD</div>';
-		$out.='<div id="logo-title-right" style="display:block;float:left"><H1>'.$this->getLogoTitle().'</H1></div>';
+		$out.='<H1>'.$this->getLogoTitle().'</H1>';
+		$out.='<p>Raionul Briceni este situat la latitudinea 48.3617 longitudinea 27.0895 si altitudinea de 223 metri fata de nivelul marii. In componenta Raionului intra 39 localitati. Conform recensamintului din anul 2004 popuplatia este de 78 027 locuitori.</p>';
 		$out.=$this->getGooglePlus();
-		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
+		$out.='</div>';		
 		return $out;
 	}
+	
 	function getGooglePlus(){
 		if (Config::$live){
 			$out='<div id="logo-plusone" style="display:block;float:left;padding-left:100px;">';
@@ -520,7 +539,7 @@ class MainWebPage extends WebPage {
 		$out.='</div>';
 		
 		if ($footer!=""){	
-			$out.='<div class="panel-footer">';
+			$out.='<div class="panel-footer1">';
 			$out.=$footer;		
 			$out.='</div>';
 		}
@@ -575,15 +594,16 @@ class MainWebPage extends WebPage {
 	}
 	function getMap($m){
 
-		$this->setBodyTag('onload="MapViewOnMapLoad()"');
-		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setBodyTag('onload="MapViewOnMapLoad(false)"');
 		$this->setJavascript(Config::$mainsite."/common/js/maps.js");
 		$this->setJavascript(Config::$mainsite."/common/js/controls.js");
+		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
+		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
 
 		//$this->setBodyTag('<body onload="MapViewOnMapLoad()" onunload="GUnload()">');
 		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 		$out='';
+		$out.='<form id="poiform" name="poiform" method="post">';	
 		if ($m->lat==0){
 			$m->maptype=0;
 			$m->lat=0;
@@ -604,7 +624,8 @@ class MainWebPage extends WebPage {
 		$out.='<input name="lng" type="hidden" id="lng" readonly="true" class="inptdisabled" value="'.$m->lng.'" />';
 		//$out.='<input name="map_title" type="hidden" id="map_title" readonly="true" class="inptdisabled" value="" />';
 		//$out.='<input name="map_description" type="hidden" id="map_description" readonly="true" class="inptdisabled" value="" />';
-		$out.='<div id="map" style="width: 100%;"></div>';
+		$out.='<div id="map" style="width: 100%;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
+		$out.='</form>';	
 		return $out;
 	}
 	function setMap($m){
@@ -1030,12 +1051,13 @@ class MainWebPage extends WebPage {
 				$lsrs="Localitati *".$this->lsearch."* nu exista!";
 			}
 		}
-		$out='<div id="location">';
-		$out.='<form id="searchlocationform" name="searchlocationform" method="post">';
-		$out.='<div id="location-search-box1"><input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><br><input type="submit" name="searchlocationformpost" class="button" style="width:60px;" value="Cauta"><br>'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
-		$out.='</form>';
+		
+		$out='<form id="searchlocationform" name="searchlocationform" method="post">';
+		$out.='<div id="location" class="input-group">';
+		$out.='<input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'" class="form-control"><span class="input-group-btn"><button class="btn btn-default" type="submit" name="searchlocationformpost" value="Cauta">Go!</button></span><br>'.$lsrs;
 		$out.='</div>';
+		$out.='</form>';
+		
 		return $out;
 	}
 	function getSearchDictionar(){

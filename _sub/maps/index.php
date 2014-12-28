@@ -114,16 +114,12 @@ class MapsWebPage extends MainWebPage {
 		$this->showmap();
 	}			
 	function show($html=""){
-		$out='<div id="container">';
-		//$out.='<div id="left">my left';
-		//$out.='</div>';
-		//$out.='<div id="center">';
+		$out='';
+		$out.='<div class="container">';
+		$out.='<div class="row">';
 		$out.=$this->getMap();
 		$out.=$this->getLastMaps();
-		//$out.='</div>';
-		//$out.='<div id="right"> my right';
-		//$out.='</div>';
-		//$out.='<div style="clear: both;"/></div>';
+		$out.='</div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}
@@ -146,7 +142,7 @@ class MapsWebPage extends MainWebPage {
 	function getMap($out=''){
 
 		//$this->setBodyTag('<body onload="FullMapViewOnMapLoad()">');
-		$this->setBodyTag('<body onload="MapViewOnMapLoad(true)">');
+		$this->setBodyTag('onload="MapViewOnMapLoad(true)"');
 		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript(Config::$mainsite."/common/js/maps.js");
@@ -163,7 +159,7 @@ class MapsWebPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';		
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';		
-		$out.='<div id="map" style="width: 998px;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
+		$out.='<div id="map" style="width: 100%;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
 		$out.='</form>';
 		return $out;
 	}
@@ -173,7 +169,7 @@ class MapsWebPage extends MainWebPage {
 		$lastmaps=$this->map->getAll("","id desc","0","20");
 		
 		$out='';
-		$out.='<div id="maps" style="width: 998px;border:1px solid #777777;margin-top: 2px;">';
+		$out.='<div id="maps" style="width: 100%;border:1px solid #777777;margin-top: 2px;">';
 		foreach ($lastmaps as $lm){
 		//	$out.='<br>'.$lm->id;
 		//}

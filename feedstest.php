@@ -17,7 +17,7 @@ class IndexWebPage extends WebPage {
 		$out="";
 		$feedscount=0;
 		
-		$feed="http://www.viitorul.org/rss_feed.php?l=ro";
+		$feed="http://trm.md/rss/ro/economic.xml";
 				
 
 			//$xml_content = file_get_contents($f->rssfeed,false,$context);
@@ -76,7 +76,7 @@ class IndexWebPage extends WebPage {
 					CURLOPT_STDERR => $verbose = fopen('php://temp', 'rw+'),
 			);
 			
-			$url = "http://www.viitorul.org/rss_feed.php?l=ro";
+			$url = "http://trm.md/rss/ro/economic.xml";
 			$handle = curl_init($url);
 			curl_setopt_array($handle, $curlDefault);
 			$html = curl_exec($handle);

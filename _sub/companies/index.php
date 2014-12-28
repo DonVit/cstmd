@@ -182,8 +182,25 @@ require_once('loader.php');
 		$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getLocations($this->id)));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
-	}						
-	function show($out=''){
+	}
+ 	function show($out=''){
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div class="col-md-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';		
+		$out.='<div class="col-md-9">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		//$out.='<div class="col-md-3">';
+		//$out.=$this->getRightContainer();
+		//$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}
+	function show1($out=''){
 		$out="";
 		$out.='<div id="container">';
 		$out.='<div id="left" class="container left" style="width:198px;">';
@@ -507,7 +524,7 @@ require_once('loader.php');
 		}
 		return $out;
 	}
-	function show1($html=""){
+	function show2($html=""){
 		$out='<div id="container">';		
 		$out.='<div id="left">';
 		$out.=$this->getLeftContainer();

@@ -1301,7 +1301,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			}
 		}
 		$out.="</table>";
-		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$l->id).'">Mai mult contacte vezi aici</a>';
+		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$l->id).'">Mai multe contacte vezi aici</a>';
 		$out.="</div>";
 	
 		return $this->getGroupBoxH2("<a name=\"7\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);

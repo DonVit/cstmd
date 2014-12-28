@@ -23,7 +23,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));	
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
-		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
+		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
 		$this->show();
 	}
 	function actionViewRaion(){
@@ -233,6 +233,23 @@ class IndexLocationsWebPage extends MainWebPage {
 	}														
 	function show($out=''){
 		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div class="col-md-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';		
+		$out.='<div class="col-md-9">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		//$out.='<div class="col-md-2">';
+		//$out.=$this->getRightContainer();
+		//$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}
+	function show1($out=''){
+		$out="";
 		$out.='<div id="container">';
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();
@@ -246,7 +263,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
-	}
+	}	
 		
 	function getMain(){
 		$r=new Raion();
@@ -1058,7 +1075,7 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 			}
 		}
 		$out.="</table>";
-		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$this->id).'">Mai mult contacte vezi aici</a>';
+		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$this->id).'">Mai multe contacte vezi aici</a>';
 		$out.="</div>";
 	
 		return $this->getGroupBoxH2("<a name=\"10\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);

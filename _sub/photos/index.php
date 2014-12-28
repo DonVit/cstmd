@@ -26,7 +26,7 @@ class PhotosWebPage extends MainWebPage {
 		3 => "Vara",
 		4 => "Toamna"
 	);	
-	public $rowsperpage=15;
+	public $rowsperpage=24;
 	function __construct(){
 		parent::__construct();
 		/*
@@ -56,16 +56,20 @@ class PhotosWebPage extends MainWebPage {
 			$this->page=0;
 		}
 		
-		$out=$this->getImagesByAll($this->page,$this->rowsperpage);
-		$out.=$this->getPagesByAll($this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewimages"));
+		$outimages=$this->getImagesByAll($this->page,$this->rowsperpage);
+		$outpages=$this->getPagesByAll($this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewimages"));
 			
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
-		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexPhotosWebPageRaioaneTitle"),$out));
+				
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
+		//$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexPhotosWebPageRaioaneTitle"),$out));
+		$this->setLogoTitle($this->getConstants("IndexPhotosWebPageRaioaneTitle"));
+		$this->setCenterContainer($this->getGroupBoxH3("Imagini Recente",$outimages));
+		$this->setCenterContainer($outpages);
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));				
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));				
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		$this->show();
 	}
@@ -84,20 +88,21 @@ class PhotosWebPage extends MainWebPage {
 		$title="Imagini ".$raion->getFullNameDescription();
 
 		$this->setTitle($title);
-		//$this->setLogoTitle($title);
+		$this->setLogoTitle($title);
 		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 
 
-		$out=$this->getImagesByRaion($this->id,$this->page,$this->rowsperpage);
-		$out.=$this->getPagesByRaion($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewraionimages"));
+		$outimages=$this->getImagesByRaion($this->id,$this->page,$this->rowsperpage);
+		$outpagination=$this->getPagesByRaion($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewraionimages"));
 	
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
-		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocationsByRaion($raion->id)));
+		$this->setCenterContainer($this->getGroupBoxH3("Imagini recente",$outimages));
+		$this->setCenterContainer($outpagination);
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
@@ -120,12 +125,13 @@ class PhotosWebPage extends MainWebPage {
 		//$this->setLogoTitle($title);
 		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 
-		$out=$this->getImagesByLocalitate($this->id,$this->page,$this->rowsperpage);
-		$out.=$this->getPagesByLocalitate($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewlocalitateimages"));
+		$outimages=$this->getImagesByLocalitate($this->id,$this->page,$this->rowsperpage);
+		$outpagination=$this->getPagesByLocalitate($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewlocalitateimages"));
 	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
-		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
+		$this->setCenterContainer($this->getGroupBoxH2($title,$outimages));
+		$this->setCenterContainer($outpagination);
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
@@ -152,16 +158,18 @@ class PhotosWebPage extends MainWebPage {
 		//$this->setLogoTitle($title);
 		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 	
-		$out=$this->getImagesByYear($this->id,$this->page,$this->rowsperpage);
-		$out.=$this->getPagesByYear($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewyearimages"));
+		$outimages=$this->getImagesByYear($this->id,$this->page,$this->rowsperpage);
+		$outpaginatiin=$this->getPagesByYear($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewyearimages"));
 	
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
-		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
+		$this->setCenterContainer($this->getGroupBoxH2($title,$outimages));
+		$this->setCenterContainer($outpaginatiin);
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
+		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
@@ -184,16 +192,18 @@ class PhotosWebPage extends MainWebPage {
 		//$this->setLogoTitle($title);
 		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 	
-		$out=$this->getImagesByMonth($this->id,$this->page,$this->rowsperpage);
-		$out.=$this->getPagesByMonth($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewmonthimages"));
+		$outimages=$this->getImagesByMonth($this->id,$this->page,$this->rowsperpage);
+		$outpagination=$this->getPagesByMonth($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewmonthimages"));
 	
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
-		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setCenterContainer($this->getGroupBoxH2($title,$outimages));
+		$this->setCenterContainer($outpagination);
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
+		
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
@@ -216,22 +226,56 @@ class PhotosWebPage extends MainWebPage {
 		//$this->setLogoTitle($title);
 		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 	
-		$out=$this->getImagesBySeason($this->id,$this->page,$this->rowsperpage);
-		$out.=$this->getPagesBySeason($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewseasonimages"));
+		$outimages=$this->getImagesBySeason($this->id,$this->page,$this->rowsperpage);
+		$outpagination=$this->getPagesBySeason($this->id,$this->page,$this->rowsperpage,$this->getUrl("index.php","action=viewseasonimages"));
 	
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
-		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
-		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
-		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setCenterContainer($this->getGroupBoxH2($title,$outimages));
+		$this->setCenterContainer($outpagination);
+		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setLeftContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
+		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
+		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
 		
 	}					
 	function actionViewImage(){
+
+		$p=new Photo();
+		if ($p->loadById($this->id)){
+			//$this->redirect(Config::$imagessite);
+			$p->count();
+		}
+		//$p->contor=$p->contor+1;
+		//$p->save();
+	
+		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
+		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
+
+		$this->setTitle($p->getLongTitle());
+		$this->setLogoTitle($p->getLongTitle());
+		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
+
+		if(!isset($this->id)){
+			$this->id=Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id;
+		}
+		
+		$this->setCenterContainer($this->getGroupBoxH2($p->getLongTitle(),$this->getImage($p)));
+		$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
+		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));
+		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
+		$this->setRightContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
+		$this->setRightContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p)));
+		$this->setRightContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p)));
+		$this->setRightContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));						
+		$this->showImage();
+	}
+	function actionViewFullImage(){
 
 		$p=new Photo();
 		if ($p->loadById($this->id)){
@@ -252,17 +296,35 @@ class PhotosWebPage extends MainWebPage {
 			$this->id=Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id;
 		}
 		
-		$this->setCenterContainer($this->getGroupBoxH2($p->getLongTitle(),$this->getImage($p)));
-		$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
-		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));
-		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
-		$this->setRightContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
+		$this->setCenterContainer($this->getGroupBoxH2($p->getLongTitle(),$this->getFullImage($p)));
+		$this->setCenterContainer($this->getGroupBoxHtml("Alte Date:",$this->getSystemDetails($p)));
+		$this->setCenterContainer($this->getGroupBoxHtml("Pozitia pe harta a imaginii:",$this->getMap($p)));
+		$this->setCenterContainer($this->getGroupBoxHtml("Taguri:",$this->getTags($p)));
+		$this->setCenterContainer($this->getGroupBoxHtml("Comentarii:",Comment::getComments($this,'p',$p->id)));
+		
 		$this->setRightContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p)));
 		$this->setRightContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p)));
 		$this->setRightContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));						
-		$this->showImage();
+		$this->showFullImage();
 	}	
 	function show($out=''){
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div class="col-md-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';		
+		$out.='<div class="col-md-9">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		//$out.='<div class="col-md-3">';
+		//$out.=$this->getRightContainer();
+		//$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}
+	function show1($out=''){
 		$out="";
 		$out.='<div id="container">';
 		$out.='<div id="left" class="container left" style="width:198px;">';
@@ -277,20 +339,30 @@ class PhotosWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
-	}
+	}	
 	function showImage(){
-		$out="";
-		$out.='<div id="container">';
-		$out.='<div id="center" class="container center" style="width:600px;">';
+		$out='';
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div class="col-md-7">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		$out.='<div id="right" class="container right" style="width:398px;">';
+		$out.='<div class="col-md-5">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
+	function showFullImage(){
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div class="col-md-12">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}			
 	function getRightMenu(){
 		$out='<ul>';
 		//$out.='<li><a href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
@@ -320,16 +392,33 @@ class PhotosWebPage extends MainWebPage {
 		
 		$l=new Location();
 		$ls=$l->getAll("id in (".$st.")","oras desc, `order`, name");
-		$out="<ul>";
+		$out='<ul class="list-group">';
 		foreach($ls as $l){	
-			$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewlocalitateimages&id='.$l->id.'">'.$l->getFullName().'</a></li>';			
+			$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php").'&action=viewlocalitateimages&id='.$l->id.'">'.$l->getFullName().'</a></li>';			
 		}
 		$out.="</ul>";
 		return $out;
 	}
+	function getLocationsByRaion($raionid){
+		$lt=new Location();
+		$lts=$lt->doSql("SELECT l.id FROM photos AS p INNER JOIN localitate AS l ON p.localitate_id = l.id where l.raion_id=".$raionid." GROUP BY l.id");
+		$st='';
+		foreach($lts as $lt){	
+			$st.=$lt->id.',';			
+		}
+		$st.='0';
+		$l=new Location();
+		$ls=$l->getAll("id in (".$st.")","oras desc, `order`, name");
+		$out='<div class="list-group">';
+		foreach($ls as $l){	
+			$out.='<a href="'.$this->getUrl("index.php").'&action=viewlocalitateimages&id='.$l->id.'" class="list-group-item">'.$l->getFullName().'</a>';			
+		}
+		$out.="</div>";
+		return $out;
+	}	
 	function getRaions(){
 		$rt=new Raion();
-		$rts=$rt->doSql("SELECT r.id FROM photos AS p INNER JOIN raion AS r ON p.raion_id = r.id GROUP BY r.id");
+		$rts=$rt->doSql("select r.id,name,cnt from raion as r inner join (SELECT r.id, count(*) as cnt FROM photos AS p INNER JOIN raion AS r ON p.raion_id = r.id GROUP BY r.id) as t on r.id=t.id");
 		$st='';
 		foreach($rts as $rt){	
 			$st.=$rt->id.',';			
@@ -338,42 +427,43 @@ class PhotosWebPage extends MainWebPage {
 		
 		$r=new Raion();
 		$rs=$r->getAll("id in (".$st.")","municipiu desc, `order`, name");
-		$out="<ul>";
-		foreach($rs as $r){	
-			$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewraionimages&id='.$r->id.'">'.$r->getFullName().'</a></li>';			
+		$out='<div class="list-group">';
+		foreach($rts as $rt){	
+			$out.='<a href="'.$this->getUrl("index.php").'&action=viewraionimages&id='.$rt->id.'" class="list-group-item">'.$rt->name.'<span class="badge">'.$rt->cnt.'</span></a>';			
 		}
-		$out.="</ul>";
+		$out.="</div>";
 		return $out;
 	}
 	function getYears(){
 		$y=new DBManager();
-		$ys=$y->doSql("SELECT year(data) as year, count(*) as cnt FROM photos GROUP BY year(data)");
-		$out="<ul>";
+		$ys=$y->doSql("SELECT year(data) as year, count(*) as cnt FROM photos GROUP BY year(data) order by 1 desc");
+		$out='<div class="list-group">';
 		foreach($ys as $y){	
-			$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewyearimages&id='.$y->year.'">'.$y->year.' ('.$y->cnt.')</a></li>';			
+			$out.='<a href="'.$this->getUrl("index.php").'&action=viewyearimages&id='.$y->year.'" class="list-group-item">'.$y->year.' <span class="badge">'.$y->cnt.'</span></a>';			
 		}
-		$out.="</ul>";
+		$out.="</div>";
 		return $out;
 	}
 	function getMonths(){
 		$y=new DBManager();
 		$ys=$y->doSql("SELECT month(data) as month, count(*) as cnt FROM photos GROUP BY month(data)");
-		$out="<ul>";
+		$out='<div class="list-group">';
+		Logger::setLogs($ys);
 		foreach($ys as $y){
-			$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewmonthimages&id='.$y->month.'">'.$this->months[$y->month].' ('.$y->cnt.')</a></li>';
+			$out.='<a href="'.$this->getUrl("index.php").'&action=viewmonthimages&id='.$y->month.'" class="list-group-item">'.$this->months[$y->month].' <span class="badge">'.$y->cnt.'</span></a>';
 		}
-		$out.="</ul>";
+		$out.='</div>';
 		return $out;
 	}
 	function getSeasons(){
 		$y=new DBManager();
 		$ys=$y->doSql("SELECT month(data) as month, count(*) as cnt FROM photos GROUP BY month(data)");
-		$out="<ul>";
-		$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=1">'.$this->seasons[1].' ('.($ys[11]->cnt+$ys[0]->cnt+$ys[1]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=2">'.$this->seasons[2].' ('.($ys[2]->cnt+$ys[3]->cnt+$ys[4]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=3">'.$this->seasons[3].' ('.($ys[5]->cnt+$ys[6]->cnt+$ys[7]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=4">'.$this->seasons[4].' ('.($ys[8]->cnt+$ys[9]->cnt+$ys[10]->cnt).')</a></li>';						
-		$out.="</ul>";
+		$out='<div class="list-group">';
+		$out.='<a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=1" class="list-group-item">'.$this->seasons[1].' <span class="badge">'.($ys[11]->cnt+$ys[0]->cnt+$ys[1]->cnt).'</span></a>';
+		$out.='<a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=2" class="list-group-item">'.$this->seasons[2].' <span class="badge">'.($ys[2]->cnt+$ys[3]->cnt+$ys[4]->cnt).'</span></a>';
+		$out.='<a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=3" class="list-group-item">'.$this->seasons[3].' <span class="badge">'.($ys[5]->cnt+$ys[6]->cnt+$ys[7]->cnt).'</span></a>';
+		$out.='<a href="'.$this->getUrl("index.php").'&action=viewseasonimages&id=4" class="list-group-item">'.$this->seasons[4].' <span class="badge">'.($ys[8]->cnt+$ys[9]->cnt+$ys[10]->cnt).'</span></a>';						
+		$out.='</div>';
 		return $out;
 	}		
 	function getSeasonByMonth($month){
@@ -449,7 +539,88 @@ class PhotosWebPage extends MainWebPage {
 		$sql.=' limit '.$page*$rowsperpage.','.$rowsperpage;
 		return $this->getImages($sql);
 	}				
+	function getImages3($sql){
+		$p=new Photo();
+		$ps=$p->doSql($sql);
+		//$out='<div class="container-fluid">';
+		$out='<div class="row">';
+		//$out.='<div class="col-xs-6 col-md-3">';
+		
+		foreach($ps as $p){
+
+
+		  	//$out.='<a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'" class="thumbnail">';
+		  	$out.='<div class="thumbnail">';
+		  	$out.='<img src="files/t'.$p->file.'" alt="'.$p->title.'">';
+		  	$out.='<div class="caption"><p>'.$p->title.'</p></div>';
+		  	$out.='</div>';	
+		  	//$out.='</a>';	  		
+	  		
+	  		
+		}
+		$out.='</div>';
+		//$out.='</div>';
+		return $out;
+	}
 	function getImages($sql){
+		$p=new Photo();
+		$ps=$p->doSql($sql);
+		$out='';
+		$i=1;
+		$o='';
+		foreach($ps as $p){
+	  		if ($i==1){
+	  			$o='<div class="row">';
+  			}
+
+		  	$o.='<div class="col-md-4">';
+	  		//$o.='<div class="thumbnail"><img src="files/t'.$p->file.'" alt="'.$p->title.'" class1="img-thumbnail"></div>';
+	  		$o.='<a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'" class1="thumbnail"><div class="thumbnail bs-cst-thumbnail"><img src="files/s'.$p->file.'" alt="'.$p->title.'" class="img-thumbnail"></img><div class="caption"><p style="font-size1:80%;">'.$p->title.'</p></div></div></a>';	  		
+	  		$o.='</div>';
+	  		
+	  		if ($i==3){
+	  			$out.=$o.'</div>';
+	  			$o='';
+	  			$i=0;
+  			}
+	  		$i=$i+1;
+		}
+		if ($i!=1){
+			$out.=$o.'</div>';
+		}
+		$out.='';
+		return $out;
+	}	
+	function getImages2($sql){
+		$p=new Photo();
+		$ps=$p->doSql($sql);
+		$out='<div class="row">';
+		$i=1;
+		$o='';
+		foreach($ps as $p){
+	  		if ($i==1){
+	  			$o='<tr>';
+  			}
+
+		  	$o.='<td align="center" style="padding:10px;vertical-align:top;" width="33%">';
+	  		$o.='<div><a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'" class="thumbnail"><img src="files/t'.$p->file.'" alt="'.$p->title.'" class="img-thumbnail"></img><p style="font-size:80%;">'.$p->title.'</p></a></div>';	  		
+	  		$o.='</td>';
+	  		
+	  		if ($i==3){
+	  			$out.=$o.'</tr>';
+	  			$o='';
+	  			$i=0;
+  			}
+	  		$i=$i+1;
+		}
+		if ($i!=1){
+			$out.=$o.'</tr>';
+		}
+		$out.='</table>';
+		return $out;
+	}	
+	
+	function getImages1($sql){
 		$p=new Photo();
 		$ps=$p->doSql($sql);
 		$out='<table width="100%">';
@@ -461,13 +632,14 @@ class PhotosWebPage extends MainWebPage {
   			}
 
 		  	$o.='<td align="center" style="padding:10px;vertical-align:top;" width="33%">';
-	  		$o.='<div><a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'"><img src="files/t'.$p->file.'" alt="'.$p->title.'" class="imageborder"></img><p style="font-size:80%;">'.$p->title.'</p></a></div>';	  		
+	  		$o.='<div><a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'" class="thumbnail"><img src="files/t'.$p->file.'" alt="'.$p->title.'" class="img-thumbnail"></img><p style="font-size:80%;">'.$p->title.'</p></a></div>';	  		
 	  		$o.='</td>';
 	  		
 	  		if ($i==3){
 	  			$out.=$o.'</tr>';
 	  			$o='';
-	  			$i=0;  			}
+	  			$i=0;
+  			}
 	  		$i=$i+1;
 		}
 		if ($i!=1){
@@ -476,12 +648,13 @@ class PhotosWebPage extends MainWebPage {
 		$out.='</table>';
 		return $out;
 	}	
+	
 	function getImage($p){
 		$out='<table width="100%"><tr><td align="center">';
 		$out.='<table>';
 		$out.='<tr>';
 		$out.='<td>';
-  		$out.='<a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'" class="thumbnail"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"></img></a>';
+  		$out.='<a href="'.$this->getUrl("index.php").'&action=viewfullimage&id='.$p->id.'" class="thumbnail"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"></img></a>';
   		$out.='</td>';
 		$out.='</tr>';
 		$out.='</table>';
@@ -497,6 +670,27 @@ class PhotosWebPage extends MainWebPage {
 		$out.='</td></tr><tr><td style="text-align:center">'.$tmp.'</td></tr></table>';
 		return $out;
 	}
+	function getFullImage($p){
+		$out='<table width="100%"><tr><td align="center">';
+		$out.='<table>';
+		$out.='<tr>';
+		$out.='<td>';
+  		$out.='<a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'" class="thumbnail"><img src="files/'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"></img></a>';
+  		$out.='</td>';
+		$out.='</tr>';
+		$out.='</table>';
+		$prev=$p->getPrevPhotoId();
+		$tmp='';
+		if ($prev!=0){
+			$tmp='<a style="margin-right:5px;" href="'.$this->getUrl("index.php").'&action=viewimage&id='.$prev.'"><img src="img/media_previous_arrow.gif" alt="Precedenta" ></img></a>';	
+		}
+		$next=$p->getNextPhotoId();
+		if ($next!=0){
+			$tmp.='<a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$next.'"><img src="img/media_next_arrow.gif" alt="Urmatoarea" ></img></a>';	
+		}
+		$out.='</td></tr><tr><td style="text-align:center">'.$tmp.'</td></tr></table>';
+		return $out;
+	}	
 	function getImagesAround($p){
 		$ps=$p->getPhotosInRadius(6);
 		$out='<table width="100%">';
@@ -600,6 +794,29 @@ class PhotosWebPage extends MainWebPage {
 		return $this->getPages($sql,$page,$rowsperpage,$url,$season);
 	}									
 	function getPages($sql,$page,$rowsperpage,$url="",$id=0){
+		$p=new Photo();
+		$ps=$p->doSql($sql);
+		$out='';
+		//$out.='<div class="row">';
+		$out.='<ul class="pager">';
+	   	foreach($ps as $p){
+	   		$cnt=$p->cnt;
+		}
+		if ($id!=0){
+			$url=$url."&id=".$id;
+		}
+		if ($page!=0){
+			$out.='<li class="previous"><a href="'.$url.'&page='.($page-1).'" class="link_button">< Inapoi</a></li>';
+		}
+		$out.=" ";
+		if ((($page+1)*$rowsperpage)<$cnt){
+			$out.='<li class="next"><a href="'.$url.'&page='.($page+1).'" class="link_button">Inainte ></a></li>';
+		}
+		$out.='</ul>';
+		//$out.='</div>';
+		return $out;
+	}
+	function getPages1($sql,$page,$rowsperpage,$url="",$id=0){
 		$p=new Photo();
 		$ps=$p->doSql($sql);
 		$out='<table width="100%"><tr><td align="center">';

@@ -31,8 +31,8 @@ class NewsWebPage extends MainWebPage {
 			$this->redirect($this->getUrl(Config::$newssite.'/index.php','action=viewnews&id='.$this->id));
 		}
 		
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories()));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories()));
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
 		//$this->setCenterContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
 		$this->setCenterContainer($this->getNews());	
 		$this->setRightContainer($this->getGroupBoxH3("Stiri in format RSS:",$this->getRssLink()));
@@ -42,8 +42,8 @@ class NewsWebPage extends MainWebPage {
 	function actionViewCategorie(){
 		$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getNews());
 		$this->setRightContainer($this->getGroupBoxH3("Stiri in format RSS:",$this->getRssLink()));
 		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Surse de Stiri:",$this->getNewsCompanies()));		
@@ -52,8 +52,8 @@ class NewsWebPage extends MainWebPage {
 	function actionViewRaion(){
 		$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getNews());
 		$this->setRightContainer($this->getGroupBoxH3("Stiri in format RSS:",$this->getRssLink()));
 		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Surse de Stiri:",$this->getNewsCompanies()));		
@@ -62,8 +62,8 @@ class NewsWebPage extends MainWebPage {
 	function actionViewLocalitate(){
 		$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getNews());
 		$this->setRightContainer($this->getGroupBoxH3("Stiri in format RSS:",$this->getRssLink()));
 		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Surse de Stiri:",$this->getNewsCompanies()));		
@@ -72,8 +72,8 @@ class NewsWebPage extends MainWebPage {
 	function actionViewSursa(){
 		$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getNews());
 		$this->setRightContainer($this->getGroupBoxH3("Stiri in format RSS:",$this->getRssLink()));
 		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Surse de Stiri:",$this->getNewsCompanies($this->sursa)));		
@@ -110,8 +110,8 @@ class NewsWebPage extends MainWebPage {
 		//$this->setLogoTitle
 		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
-		$this->setLeftContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Categorie:",$this->getNewsCategories($this->categ)));
+		$this->setRightContainer($this->getGroupBoxH3("Filtru pe Localităţi:",$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getGroupBoxH1($n->title,$this->getNewsById($n)));
 		$this->setCenterContainer($this->getGroupBoxH3("",$this->getNewsDetails($n)));
 		$this->setCenterContainer($this->getLocalitatiByNews($n));	
@@ -130,17 +130,19 @@ class NewsWebPage extends MainWebPage {
 		
 	}
 	function show(){		
-		$out.='<div id="container">';
-		$out.='<div id="left" class="container left" style="width:198px;">';
-		$out.=$this->getLeftContainer();
-		$out.='</div>';		
-		$out.='<div id="center" class="container center" style="width:600px;">';
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		//$out.='<div class="col-md-3">';
+		//$out.=$this->getLeftContainer();
+		//$out.='</div>';		
+		$out.='<div class="col-md-9">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		$out.='<div id="right" class="container right" style="width:198px;">';
+		$out.='<div class="col-md-3">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='</div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		
