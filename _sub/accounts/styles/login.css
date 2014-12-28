@@ -1,0 +1,39 @@
+.form_container{
+	width: 500px;
+}
+.form_row {
+	padding:0px;
+}
+.form_row .label{
+	width: 100px;
+	display:block;
+	float:left;
+	vertical-align: middle;
+}
+.form_row .input{
+	width: 150px;
+	vertical-align: middle;
+}
+.form_footer_links{
+	padding-left:10px;
+	float: left;
+}
+.form_footer_button{
+	float: right;
+}
+.form_row_links{
+	padding-left: 10px;
+}
+#formcontrols{
+	padding-top: 10px;
+	width: 300px;
+	margin: auto;
+}
+#validationimage{
+	vertical-align: middle;
+}
+#validationcode{
+	width: 90px;
+}
+
+

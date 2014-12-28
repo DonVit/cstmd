@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Folder>
+<name>20080826_0959</name>
+<Style id="style">
+ <LineStyle>
+  <color>ff0000ff</color>
+  <width>1.5</width>
+ </LineStyle>
+ <PolyStyle>
+  <fill>0</fill>
+ </PolyStyle>
+</Style>
+<open>1</open>
+<Placemark>
+<styleUrl>#style</styleUrl>
+<LineString>
+<extrude>0</extrude>
+<altitudeMode>clampToGround</altitudeMode>
+<coordinates>
+28.837887,47.015915,0
+28.837825,47.015938,98
+28.837886,47.01591,101
+28.837956,47.01589,105
+28.838006,47.015843,112
+28.837956,47.015895,110
+28.837903,47.015953,107
+28.837852,47.015918,100
+28.837791,47.015884,98
+28.837744,47.015838,98
+28.837678,47.015819,97
+28.837634,47.015857,89
+28.837651,47.015904,90
+</coordinates>
+</LineString>
+</Placemark>
+<Folder>
+<name>Waypoints</name>
+</Folder>
+<Folder>
+<name>Markers</name>
+<Placemark>
+<name>09:57:54, 3.0 km/h</name>
+<IconStyle>
+<Icon>
+<href>http://maps.google.com/mapfiles/kml/pal3/icon61.png</href>
+</Icon>
+</IconStyle>
+<Point><coordinates>
+28.837678,47.015819,0
+</coordinates></Point>
+</Placemark>
+</Folder>
+<Folder>
+<name>Start/End/Info</name>
+<Placemark>
+<name>09:56:45</name>
+<Style>
+<IconStyle>
+<scale>0.6</scale>
+<Icon>
+<href>http://maps.google.com/mapfiles/kml/pal5/icon18l.png</href>
+</Icon>
+</IconStyle>
+</Style>
+<Point><coordinates>
+28.837887,47.015915,0
+</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>09:58:40</name>
+<description>Distance 0.07 km
+Duration 00:01:54</description><Style>
+<IconStyle>
+<scale>0.6</scale>
+<Icon>
+<href>http://maps.google.com/mapfiles/kml/pal5/icon52l.png</href>
+</Icon>
+</IconStyle>
+</Style>
+<Point><coordinates>
+28.837651,47.015904,0
+</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Max speed 4.0  km/h</name>
+<description/>
+<Style>
+<IconStyle>
+<Icon>
+<href>http://maps.google.com/mapfiles/kml/pal3/icon61.png</href>
+</Icon>
+</IconStyle>
+</Style>
+<Point><coordinates>
+28.837852,47.015918,100
+</coordinates></Point>
+</Placemark>
+</Folder>
+</Folder>
+</kml>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Mobile Trail Explorer">
+<trk>
+<trkseg>
+<trkpt lat="47.015922" lon="28.83758">
+<ele>0.0</ele>
+<time>2008-08-26T10:12:25Z</time>
+</trkpt>
+<trkpt lat="47.015899" lon="28.837637">
+<ele>94.9</ele>
+<time>2008-08-26T10:12:45Z</time>
+<hdop>2.92</hdop>
+<vdop>2.76</vdop>
+<pdop>4.02</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

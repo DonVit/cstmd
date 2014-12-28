@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <style type="text/css">
+
+    .style1 {background-color:#ffffff;font-weight:bold;border:2px #006699 solid;}
+    .style2 {background-color:#ffcccc;}
+
+    </style>
+    <title>Google Maps JavaScript API Example</title>
+<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAb_gfrYZFk_yGsf7Lt3YnMBTUL_3w75XkhxTqDseVMz1k3UXtaBScUFvTk4n97_Bjm8_IhH4HKKUl4A"
+      type="text/javascript"></script>
+    <script src="elabel.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+
+    function load() {
+      
+      if (GBrowserIsCompatible()) 
+     {
+
+
+function MyControl() {
+}
+MyControl.prototype = new GControl();
+
+// Creates a one DIV for each of the buttons and places them in a container
+// DIV which is returned as our control element. We add the control to
+// to the map container and return the element for the map class to
+// position properly.
+MyControl.prototype.initialize = function(map) {
+  var container = document.createElement("div");
+
+  var form = document.createElement("div");
+    
+  form.appendChild(document.createTextNode("Lat:"));
+  var latvalue = document.createElement("input");
+  latvalue.setAttribute("id", "lat");
+  latvalue.setAttribute("value", "lat");
+  latvalue.setAttribute("alt", "lat");
+  latvalue.setAttribute("size", "10");
+  latvalue.setAttribute("type", "text"); 
+  form.appendChild(latvalue);
+  
+  form.appendChild(document.createTextNode("Lng:"));
+  var lngvalue = document.createElement("input");
+  lngvalue.setAttribute("id", "lng");
+  lngvalue.setAttribute("value", "lng");
+  lngvalue.setAttribute("size", "10");
+  lngvalue.setAttribute("type", "text"); 
+  form.appendChild(lngvalue);
+  
+  form.appendChild(document.createTextNode("Raza:"));
+  var radiusvalue = document.createElement("input");
+  radiusvalue.setAttribute("id", "radius");
+  radiusvalue.setAttribute("value", "5");
+  radiusvalue.setAttribute("size", "2");
+  radiusvalue.setAttribute("type", "text"); 
+  form.appendChild(radiusvalue);
+  
+  
+  var show = document.createElement("input");
+  show.setAttribute("id", "show");
+  show.setAttribute("value", "show");
+  show.setAttribute("type", "button"); 
+  form.appendChild(show);
+  
+
+  this.setButtonStyle_(form);
+  container.appendChild(form);
+  
+  //controlDiv1.innerHTML = "Lat:<input type=\"text\" id=\"lat\" name=\"lat\" size=\"10\" maxlength=\"10\" value=\"\"> Lng:<input type=\"text\" id=\"lng\" name=\"lng\" size=\"10\" maxlength=\"10\" value=\"\"> Raza:<input type=\"text\" id=\"raza\" name=\"raza\" size=\"2\" maxlength=\"2\" value=\"5\"> km ";
+  
+  //var controlDiv = document.createElement("div");
+  ///this.setButtonStyle_(controlDiv);
+  //container.appendChild(controlDiv);
+  //controlDiv.appendChild(document.createTextNode("Show Names"));
+  //GEvent.addDomListener(controlDiv, "click", function() {
+  GEvent.addDomListener(show, "click", function() {
+    ShowLocations();
+  });
+
+  map.getContainer().appendChild(container);
+  return container;
+}
+
+// By default, the control will appear in the top left corner of the
+// map with 7 pixels of padding.
+MyControl.prototype.getDefaultPosition = function() {
+  return new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(7, 7));
+}
+
+// Sets the proper CSS for the given button element.
+MyControl.prototype.setButtonStyle_ = function(button) {
+  button.style.textDecoration = "underline";
+  button.style.color = "#0000cc";
+  button.style.backgroundColor = "white";
+  button.style.font = "small Arial";
+  button.style.border = "1px solid black";
+  button.style.padding = "2px";
+  button.style.marginBottom = "3px";
+  button.style.textAlign = "center";
+  //button.style.width = "6em";
+  button.style.cursor = "pointer";
+}
+
+
+
+
+
+
+
+var map = new GMap2(document.getElementById("map"));
+
+      map.addControl(new GLargeMapControl());
+      map.addControl(new GMapTypeControl());
+      map.addControl(new MyControl());
+      map.setCenter(new GLatLng(47,28), 8);      
+
+      GEvent.addListener(map, "click", function(marker, point) {
+      //alert(map.getCenter.lat()+" "+map.getCenter.lng());
+      //alert('Lat='+map.getCenter().lat()+' '+'Lng='+map.getCenter().lng());
+      alert('X='+point.x+' '+'Y='+point.y);
+      document.getElementById("lat").value=point.y;
+      document.getElementById("lng").value=point.x;
+      });
+
+/*
+var request = GXmlHttp.create();
+//request.open("GET", "http://labs.casata.md/gmaps/Example7/data.php", true);
+request.open("GET", "data.php", true);
+request.onreadystatechange = function() 
+{
+  if (request.readyState == 4) 
+   {
+        alert(request.responseText);
+        alert(request.responseXML);
+	var xmlDoc = request.responseXML;
+	var markers = xmlDoc.documentElement.getElementsByTagName("location");
+	for (var i = 0; i < markers.length; i++) 
+        {
+  	var point = new GPoint(parseFloat(markers[i].getAttribute("lng")),parseFloat(markers[i].getAttribute("lat")));
+  	var marker = new createMarker(point, markers[i].getAttribute("name"));
+  	map.addOverlay(marker);
+  	var point1 = new GLatLng(parseFloat(markers[i].getAttribute("lng")),parseFloat(markers[i].getAttribute("lat")));
+  	var marker1 = new ELabel(point1, markers[i].getAttribute("name"), "style2");
+  	map.addOverlay(marker1);
+	}
+  }
+}
+request.send(null);
+*/
+
+function createMarker(point,name) 
+{
+var marker = new GMarker(point);
+GEvent.addListener(marker, "click", function() {
+  marker.openInfoWindowHtml(name);
+});
+return marker;
+} 
+
+function ShowLocations()
+{
+
+var lat=document.getElementById("lat").value;
+var lng=document.getElementById("lng").value;
+var radius=document.getElementById("radius").value;
+
+var Params='data.php?'+'Lat='+lat+'&Lng='+lng+'&Radius='+radius;
+
+GDownloadUrl(Params, function(data, responseCode) 
+ {
+  var xml = GXml.parse(data);
+  var markers = xml.documentElement.getElementsByTagName("location");
+  for (var i = 0; i < markers.length; i++) 
+  {
+    var point = new GLatLng(parseFloat(markers[i].getAttribute("lat")),
+                            parseFloat(markers[i].getAttribute("lng")));
+    map.addOverlay(new createMarker(point, markers[i].getAttribute("name")));
+  }
+});
+}
+
+
+
+/*
+var Params='data.php?'
++'LatMin='+map.getBounds().getSouthWest().lat()
++'&LatMax='+map.getBounds().getNorthEast().lat()
++'&LngMin='+map.getBounds().getSouthWest().lng()
++'&LngMax='+map.getBounds().getNorthEast().lng();
+
+ShowLocations(Params);
+
+GLog.write(Params);
+GLog.write("map.getBounds().getSouthWest().lat()"+map.getBounds().getSouthWest().lat());
+GLog.write("map.getBounds().getSouthWest().lng()"+map.getBounds().getSouthWest().lng());
+GLog.write("map.getBounds().getNorthEast().lat()"+map.getBounds().getNorthEast().lat());
+GLog.write("map.getBounds().getNorthEast().lng()"+map.getBounds().getNorthEast().lng());
+*/
+}
+}
+
+    //]]>
+    </script>
+  </head>
+
+  <body onload="load()" onunload="GUnload()">
+    <div id="map" style="width: 500px; height: 400px"></div>
+  </body>
+</html>
+
+
+

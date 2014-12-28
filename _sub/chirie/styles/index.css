@@ -1,0 +1,185 @@
+#leftmenudiv{
+	margin-top: 2px;
+	float: left;
+	width: 148px;
+	
+}
+.leftmenulist {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	border: none;
+} 
+.leftmenulist li {
+	margin-left: 0px;
+	list-style-type:square;
+	padding:2px 2px 2px 5px;
+}
+
+.leftmenulist li a {
+	text-decoration: none;
+	color:#0000cc;
+}
+.leftmenulist li a, a:vizited {
+	text-decoration: none;
+	color:#0000cc;
+}
+.leftmenulist li a:hover {
+	color: #C20000;
+	border-bottom-style: none;
+}
+.leftsubmenulist {
+	margin: 0;
+	padding-left: 0;
+	font-weight: normal;
+} 
+.leftsubmenulist li {
+	margin-left: 0px;
+	padding:2px 2px 2px 20px;	
+	list-style-type:square;
+}
+.leftsubmenulist li a {
+	text-decoration: none;
+	color:#0000cc;
+}
+.leftsubmenulist li a, a:vizited {
+	text-decoration: none;
+	color:#0000cc;
+}
+.leftsubmenulist li a:hover {
+	color: #C20000;
+	border-bottom-style: none;
+}
+.leftsubsubmenulist {
+	margin: 0;
+	padding-left: 0;
+	font-weight: normal;
+} 
+.leftsubsubmenulist li {
+	margin-left: 0px;
+	padding:2px 2px 2px 35px;	
+	list-style-type:square;
+}
+.leftsubsubmenulist li a {
+	text-decoration: none;
+	color:#0000cc;
+}
+.leftsubsubmenulist li a, a:vizited {
+	text-decoration: none;
+	color:#0000cc;
+}
+.leftsubsubmenulist li a:hover {
+	color: #C20000;
+	border-bottom-style: none;
+}
+.leftmenulistselect li {
+	background-color: #FAEFE4;	
+	color: #FAEFE4;	
+}
+
+
+#filterdiv{
+	border:1px solid #777777;
+	background-color: #eeeeee;
+	margin-top: 2px;
+	padding: 4px;
+	float: left;
+	left: 2px;
+	position: relative;
+	width: 810px;
+}
+#maindiv{
+	border:1px solid #777777;
+	background-color: #eeeeee;
+	padding: 0px;
+	float: left;
+	left: 2px;
+	top: 2px;
+	position: relative;
+	width: 808px;
+}
+
+table.grid {
+	margin: 0px;
+	background:#777777;
+	color:white;
+	font-family:Arial,Helvetica,sans-serif;
+}
+tr.gridtr0 {
+	background:#EEEEEE;
+	color: #000000;
+	cursor: pointer;
+}
+tr.gridtr0over {
+	background:#EFF3FF;
+	color: blue;
+	cursor: pointer;
+}
+tr.gridtr1 {
+	background:#FAEFE4;
+	color: #000000;
+	cursor: pointer;
+}
+tr.gridtr1over {
+	background:#ffffff;
+	color: blue;
+	cursor: pointer;
+}
+th.gridth {
+	padding: 3px;
+	border: 1px solid #777777;
+}
+td.gridtd {
+	padding: 3px;
+}
+table.pages {
+	margin: 2px;
+	padding: 2px;
+	background-color: #EEEEEE;
+	border:1px solid #AAAAAA;
+	color:333333;
+	font-weight: bold;
+}
+#location-raion{
+	padding: 5px;
+	text-align: right;
+	font-weight: bold;
+	float: left;
+}
+
+#location-localitate{
+	padding: 5px;
+	text-align: right;
+	font-weight: bold;
+	float: left;
+}
+#location-sector{
+	padding: 5px;
+	text-align: right;
+	font-weight: bold;
+	float: left;
+}
+#location-search-label{
+	font-weight: bold;
+	padding: 5px;
+	float: left;
+	position: relative;
+}
+#location-search-box{
+	font-weight: bold;
+	padding: 5px;
+	float: left;
+	position: relative;
+}
+#lsearch{
+	vertical-align: middle;
+}
+#raionid{
+	width: 110px;
+}
+#locationid{
+	width: 110px;
+}
+#sectorid{
+	width: 110px;
+}

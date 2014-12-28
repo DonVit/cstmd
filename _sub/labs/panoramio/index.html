@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Panoramio Example</title>
+  <meta name="description" content="This is my page." />
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="/css/page.css" />
+  <script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1"></script>
+</head>
+<body>
+<h1>Panoramio Example</h1>
+<div id="div_photo_ex" style="float: right; margin: 10px 15px"></div>
+<script type="text/javascript">
+function showFotos(lat,lng){
+
+  var beaches = {'rect': {'sw': {'lat': (lat-0.045), 'lng': (lng-0.045)}, 'ne': {'lat': (lat+0.045), 'lng': (lng+0.045)}}};
+  var photo_ex_options = {'width': 600, 'height': 366, 'columns': 4, rows:2};
+  var photo_ex_widget = new panoramio.PhotoListWidget('div_photo_ex', beaches, photo_ex_options);
+  photo_ex_widget.setPosition(0);
+}
+showFotos(46.0074,28.4152);
+</script>
+</body>
+</html>

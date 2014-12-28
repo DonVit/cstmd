@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps JavaScript API Example</title>
+    <script src="maps.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+
+    function load() {
+      if (GBrowserIsCompatible()) 
+     {
+
+      // ===== It has one tile layer =====
+      var tilelayers = [new GTileLayer(new GCopyrightCollection("TestMap: Vitalie Doni"),0,24)];
+      tilelayers[0].getCopyright = function(a,b) {return "TestMap: Vitalie Doni"; }
+
+      tilelayers[0].getTileUrl = function (a,b) {
+        GLog.write("tile.php?x="+a.y+"&y="+a.x+"&zoom="+b);
+        return "tile.php?x="+a.y+"&y="+a.x+"&zoom="+b;
+
+        //GLog.write("http://labs.casata.md/gmaps/Example1/tile.php?x="+a.y+"&y="+a.x+"&zoom="+b);
+        //return "http://moldova.srv.ro/Example1/tile.php?x="+a.y+"&y="+a.x+"&zoom="+b;
+		
+      } ;
+
+
+      // ====== Create the MapType ==============
+      var custommap = new GMapType(tilelayers, new GMercatorProjection(25), "TestMap",{errorMessage:"No Data Available"});
+
+      var map = new GMap2(document.getElementById("map"));
+
+      map.addMapType(custommap);
+            
+      map.addControl(new GLargeMapControl());
+      map.setCenter(new GLatLng(0,0), 1, custommap);      
+    }    
+    else 
+    {
+      alert("Sorry, the Google Maps API is not compatible with this browser");
+    }
+}
+    //]]>
+    </script>
+  </head>
+
+  <body onload="load()" onunload="GUnload()">
+    <div id="map" style="width: 500px; height: 400px"></div>
+  </body>
+</html>
+

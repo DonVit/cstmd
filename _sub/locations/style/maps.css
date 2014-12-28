@@ -1,0 +1,28 @@
+#map{
+	width: 978px;
+	height: 550px;
+	border:1px solid #777777;
+	margin-top: 2px;
+}
+
+.buttoncontainer{
+	border: 1px solid black;  
+	background-color: white; 
+	text-align: center; 
+	width: 5em; 
+	right: 20.4em; 
+	cursor: pointer;
+}
+.button{
+	border-style: solid; 
+	border-color: white rgb(176, 176, 176) rgb(176, 176, 176) white; 
+	border-width: 1px; font-size: 12px;
+}
+.buttonselected{
+	border-style: solid; 
+	border-color: rgb(52, 86, 132) rgb(108, 157, 223) rgb(108, 157, 223) rgb(52, 86, 132); 
+	border-width: 1px; 
+	font-size: 12px; 
+	font-weight: bold;
+}
+

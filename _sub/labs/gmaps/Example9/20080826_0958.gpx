@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Mobile Trail Explorer">
+<trk>
+<trkseg>
+<trkpt lat="47.015915" lon="28.837887">
+<ele>0.0</ele>
+<time>2008-08-26T09:56:45Z</time>
+</trkpt>
+<trkpt lat="47.015938" lon="28.837825">
+<ele>98.9</ele>
+<time>2008-08-26T09:56:50Z</time>
+<hdop>3.61</hdop>
+<vdop>5.33</vdop>
+<pdop>6.43</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.01591" lon="28.837886">
+<ele>101.4</ele>
+<time>2008-08-26T09:56:53Z</time>
+<hdop>3.61</hdop>
+<vdop>5.33</vdop>
+<pdop>6.43</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.01589" lon="28.837956">
+<ele>105.0</ele>
+<time>2008-08-26T09:56:55Z</time>
+<hdop>3.61</hdop>
+<vdop>5.33</vdop>
+<pdop>6.43</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015843" lon="28.838006">
+<ele>112.3</ele>
+<time>2008-08-26T09:57:00Z</time>
+<hdop>3.61</hdop>
+<vdop>5.33</vdop>
+<pdop>6.43</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015895" lon="28.837956">
+<ele>110.1</ele>
+<time>2008-08-26T09:57:03Z</time>
+<hdop>3.6</hdop>
+<vdop>5.33</vdop>
+<pdop>6.43</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015953" lon="28.837903">
+<ele>107.4</ele>
+<time>2008-08-26T09:57:05Z</time>
+<hdop>3.6</hdop>
+<vdop>5.33</vdop>
+<pdop>6.43</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015918" lon="28.837852">
+<ele>100.1</ele>
+<time>2008-08-26T09:57:39Z</time>
+<hdop>3.6</hdop>
+<vdop>5.34</vdop>
+<pdop>6.44</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015884" lon="28.837791">
+<ele>98.5</ele>
+<time>2008-08-26T09:57:42Z</time>
+<hdop>3.6</hdop>
+<vdop>5.34</vdop>
+<pdop>6.44</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015838" lon="28.837744">
+<ele>98.2</ele>
+<time>2008-08-26T09:57:47Z</time>
+<hdop>3.6</hdop>
+<vdop>5.35</vdop>
+<pdop>6.44</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015819" lon="28.837678">
+<ele>97.6</ele>
+<time>2008-08-26T09:57:54Z</time>
+<hdop>3.6</hdop>
+<vdop>5.35</vdop>
+<pdop>6.44</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015857" lon="28.837634">
+<ele>89.8</ele>
+<time>2008-08-26T09:58:32Z</time>
+<hdop>3.59</hdop>
+<vdop>5.36</vdop>
+<pdop>6.45</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+<trkpt lat="47.015904" lon="28.837651">
+<ele>90.2</ele>
+<time>2008-08-26T09:58:40Z</time>
+<hdop>3.59</hdop>
+<vdop>5.36</vdop>
+<pdop>6.45</pdop>
+<fixtype>3D</fixtype>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

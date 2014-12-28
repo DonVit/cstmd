@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Folder>
+<name>20080826_1013</name>
+<Style id="style">
+ <LineStyle>
+  <color>ff0000ff</color>
+  <width>1.5</width>
+ </LineStyle>
+ <PolyStyle>
+  <fill>0</fill>
+ </PolyStyle>
+</Style>
+<open>1</open>
+<Placemark>
+<styleUrl>#style</styleUrl>
+<LineString>
+<extrude>0</extrude>
+<altitudeMode>clampToGround</altitudeMode>
+<coordinates>
+28.83758,47.015922,0
+28.837637,47.015899,94
+</coordinates>
+</LineString>
+</Placemark>
+<Folder>
+<name>Waypoints</name>
+</Folder>
+<Folder>
+<name>Markers</name>
+</Folder>
+<Folder>
+<name>Start/End/Info</name>
+<Placemark>
+<name>10:12:25</name>
+<Style>
+<IconStyle>
+<scale>0.6</scale>
+<Icon>
+<href>http://maps.google.com/mapfiles/kml/pal5/icon18l.png</href>
+</Icon>
+</IconStyle>
+</Style>
+<Point><coordinates>
+28.83758,47.015922,0
+</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>10:12:45</name>
+<description>Distance 0.00 km
+Duration 00:00:20</description><Style>
+<IconStyle>
+<scale>0.6</scale>
+<Icon>
+<href>http://maps.google.com/mapfiles/kml/pal5/icon52l.png</href>
+</Icon>
+</IconStyle>
+</Style>
+<Point><coordinates>
+28.837637,47.015899,0
+</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Max speed 0.0  km/h</name>
+<description/>
+<Style>
+<IconStyle>
+<Icon>
+<href>http://maps.google.com/mapfiles/kml/pal3/icon61.png</href>
+</Icon>
+</IconStyle>
+</Style>
+<Point><coordinates>
+28.83758,47.015922,0
+</coordinates></Point>
+</Placemark>
+</Folder>
+</Folder>
+</kml>

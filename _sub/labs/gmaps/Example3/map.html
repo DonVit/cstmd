@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps JavaScript API Example</title>
+    <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAb_gfrYZFk_yGsf7Lt3YnMBTUL_3w75XkhxTqDseVMz1k3UXtaBScUFvTk4n97_Bjm8_IhH4HKKUl4A" type="text/javascript"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+
+    function load() {
+      
+      if (GBrowserIsCompatible()) 
+     {
+
+
+// A TextualZoomControl is a GControl that displays textual "Zoom In"
+// and "Zoom Out" buttons (as opposed to the iconic buttons used in
+// Google Maps).
+function MyControl() {
+}
+MyControl.prototype = new GControl();
+
+// Creates a one DIV for each of the buttons and places them in a container
+// DIV which is returned as our control element. We add the control to
+// to the map container and return the element for the map class to
+// position properly.
+MyControl.prototype.initialize = function(map) {
+  var container = document.createElement("div");
+
+  var controlDiv = document.createElement("div");
+  this.setButtonStyle_(controlDiv);
+  container.appendChild(controlDiv);
+  controlDiv.appendChild(document.createTextNode("Map Center"));
+  GEvent.addDomListener(controlDiv, "click", function() {
+    alert('Lat'+map.getCenter().lat()+' Lng'+map.getCenter().lng());
+  });
+
+  map.getContainer().appendChild(container);
+  return container;
+}
+
+// By default, the control will appear in the top left corner of the
+// map with 7 pixels of padding.
+MyControl.prototype.getDefaultPosition = function() {
+  return new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(7, 7));
+}
+
+// Sets the proper CSS for the given button element.
+MyControl.prototype.setButtonStyle_ = function(button) {
+  button.style.textDecoration = "underline";
+  button.style.color = "#0000cc";
+  button.style.backgroundColor = "white";
+  button.style.font = "small Arial";
+  button.style.border = "1px solid black";
+  button.style.padding = "2px";
+  button.style.marginBottom = "3px";
+  button.style.textAlign = "center";
+  button.style.width = "6em";
+  button.style.cursor = "pointer";
+}
+
+
+
+
+
+
+
+
+
+      var map = new GMap2(document.getElementById("map"));
+
+
+      map.addControl(new GLargeMapControl());
+      map.addControl(new GMapTypeControl());
+      map.addControl(new MyControl());
+      map.setCenter(new GLatLng(47,28), 8);      
+
+
+    }    
+    else 
+    {
+      alert("Sorry, the Google Maps API is not compatible with this browser");
+    }
+}
+    //]]>
+    </script>
+  </head>
+
+  <body onload="load()" onunload="GUnload()">
+    <div id="map" style="width: 500px; height: 400px"></div>
+  </body>
+</html>
+
+

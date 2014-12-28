@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps JavaScript API Example</title>
+    <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAb_gfrYZFk_yGsf7Lt3YnMBTUL_3w75XkhxTqDseVMz1k3UXtaBScUFvTk4n97_Bjm8_IhH4HKKUl4A" type="text/javascript"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+
+    function load() {
+      
+      if (GBrowserIsCompatible()) 
+     {
+
+
+
+      // ===== It has one tile layer =====
+      var tilelayers = [new GTileLayer(new GCopyrightCollection("Moldova: Vitalie Doni"),0,16)];
+      tilelayers[0].getCopyright = function(a,b) {return "Moldova: Vitalie Doni"; }
+      var z;
+      tilelayers[0].getTileUrl = function (a,b) {
+        GLog.writeUrl("http://moldova.srv.ro/Example5/tile.php?x="+a.x+"&y="+a.y+"&zoom="+b);
+        return "http://moldova.srv.ro/Example5/tile.php?x="+a.x+"&y="+a.y+"&zoom="+b;
+      } ;
+
+      // ====== Create the MapType ==============
+      var custommap = new GMapType(tilelayers, new GMercatorProjection(17), "Moldova",{errorMessage:"No Data Available"});
+
+      var map = new GMap2(document.getElementById("map"));
+
+      map.addMapType(custommap);                  
+      map.addControl(new GLargeMapControl());
+      map.addControl(new GMapTypeControl());
+      map.setCenter(new GLatLng(47,28), 9, custommap);      
+
+      GEvent.addListener(map, "click", function(marker, point) {
+      //alert(map.getCenter.lat()+" "+map.getCenter.lng());
+      alert('Lat='+map.getCenter().lat()+' '+'Lng='+map.getCenter().lng());
+      //alert('X='+point.x+' '+'Y='+point.y);
+      });
+
+    }    
+    else 
+    {
+      alert("Sorry, the Google Maps API is not compatible with this browser");
+    }
+}
+    //]]>
+    </script>
+  </head>
+
+  <body onload="load()" onunload="GUnload()">
+    <div id="map" style="width: 500px; height: 400px"></div>
+  </body>
+</html>
+
+
+
