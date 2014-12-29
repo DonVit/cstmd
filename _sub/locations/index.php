@@ -79,7 +79,9 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setCenterContainer($this->getLocalitate());
 		$this->setCenterContainer($this->getPopulation());
-		$this->setCenterContainer($this->getPopulationInTime());		
+		$this->setCenterContainer($this->getPopulationInTime());
+		$this->setCenterContainer($this->showElectoralPreferences());
+		//$this->setCenterContainer($this->showAlegeri141130Image());	
 		$this->setCenterContainer($this->getLocalitatiInJur());
 		$this->setCenterContainer($this->getLocalitatiDistance());	
 		$this->setCenterContainer($this->getPhotos());
@@ -92,7 +94,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getTopNames($l));
 		$this->setCenterContainer($this->getSystemDetails($l));		
 		
-		$c='<a name="13"></a>Forum/Comentarii:';
+		$c='<a name="14"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'l',$l->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuLocalitate()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
@@ -252,7 +254,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$r=new Raion();
 		$rs=$r->getAll("","municipiu desc, `order`, name");
 		$out='<div class="groupboxtable">';
-		$out.='<table style="width:100%;" class="table table-condensed table-bordered table-striped table-hover">';
+		$out.='<table style="width:100%;">';
 		$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>".$this->getConstants("IndexLocationsWebPageRaioaneName")."</th></tr>";		
 		if (count($rs)!=0){			
 			$c=1;
@@ -286,15 +288,16 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#2").'">Primăria</a></li>';	
 		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#3").'">Date geografice</a></li>';
 		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#4").'">Poziția pe Harta</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#7").'">Populația</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#5").'">Localitați in raza de 10 km</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#6").'">Imagini in raza de 10 km</a></li>';		
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#8").'">Știri</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#9").'">Imobile</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#10").'">Telefoane</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#11").'">Nume de Familii</a></li>';				
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#12").'">Vizualizări</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#13").'">Forum/Comentarii</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#5").'">Populația</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#6").'">Preferinte Electorale</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#7").'">Localitați in raza de 10 km</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#8").'">Imagini in raza de 10 km</a></li>';		
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#9").'">Știri</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#10").'">Imobile</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#11").'">Telefoane</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#12").'">Nume de Familii</a></li>';				
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#13").'">Vizualizări</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#14").'">Forum/Comentarii</a></li>';
 		
 		$out.='</ul>';
 		return $out;
@@ -547,61 +550,33 @@ class IndexLocationsWebPage extends MainWebPage {
 		return $out;
 	}											
 	function getLeftMenu(){
-		$out='<div class="list-group">';
-		//$out.='<a class="list-group-item" href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php").'">'.$this->getConstants("IndexLocationsWebPageRaioaneTitle").'</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=vieworase").'" >'.$this->getConstants("IndexLocationsWebPageOraseTitle").'</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtopsuslocalitati").'" >Lista a 50 cele mai sus amplasate localitati din Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtopjoslocalitati").'" >Lista a 50 cele mai jos amplasate localitati din Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtopuppoplocalitati").'" >Lista a 50 cele mai populate localitati din Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtopdownpoplocalitati").'" >Lista a 50 cele mai putin populate localitati din Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtoplocalitatiucraineni").'" >Lista localitatilor populate cu Ucraineni din Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtoplocalitatirusi").'" >Lista localitatilor populate cu Rusi in Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtoplocalitatigagauzi").'" >Lista localitatilor populate cu Gagauzi in Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtoplocalitatibulgari").'" >Lista localitatilor populate cu Bulgari in Moldova</a>';
-$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtoplocalitatievrei").'" >Lista localitatilor populate cu Evrei in Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtoplocalitatipolonezi").'" >Lista localitatilor populate cu Polonezi din Moldova</a>';
-		$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=viewtoplocalitatitigani").'" >Lista localitatilor populate cu Romi/Tigani din Moldova</a>';		
-		//$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a>';
-		//$out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai aglomerate localitati, de ex in raza de 10 km</a>';	
-		//$out.='<a class="list-group-item" href="index.php#2" title="Stiri">Lista celor 30 cele mai mari sate</a>';
-		//$out.='<a class="list-group-item" href="index.php#2" title="Stiri">Lista celor 30 cele mai mici sate</a>';		
-		//$out.='<a class="list-group-item" href="index.php#2" title="Stiri">Lista celor 30 cele mai jos amplasate localitati</a>';
-		//$out.='<a class="list-group-item" href="index.php#2" title="Stiri">Lista celor 30 cele mai sus amplasate localitati</a>';		
-		//$out.='<a class="list-group-item" href="index.php#3" title="Imobil">Lista celor 30 cele mai populate Localitati</a>';				
-		//$out.='<a class="list-group-item" href="index.php#4" title="Imagini">Lista celor 30 cele mai putin populate Localitati</a>';
-		//$out.='<a class="list-group-item" href="index.php#4" title="Imagini">Populatia pe Municipii si Raioane</a>';		
-		$out.='</div>';
+		$out='<ul>';
+		//$out.='<li><a href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php").'">'.$this->getConstants("IndexLocationsWebPageRaioaneTitle").'</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" >'.$this->getConstants("IndexLocationsWebPageOraseTitle").'</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtopsuslocalitati").'" >Lista a 50 cele mai sus amplasate localitati din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtopjoslocalitati").'" >Lista a 50 cele mai jos amplasate localitati din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtopuppoplocalitati").'" >Lista a 50 cele mai populate localitati din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtopdownpoplocalitati").'" >Lista a 50 cele mai putin populate localitati din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatiucraineni").'" >Lista localitatilor populate cu Ucraineni din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatirusi").'" >Lista localitatilor populate cu Rusi in Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatigagauzi").'" >Lista localitatilor populate cu Gagauzi in Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatibulgari").'" >Lista localitatilor populate cu Bulgari in Moldova</a></li>';
+$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatievrei").'" >Lista localitatilor populate cu Evrei in Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatipolonezi").'" >Lista localitatilor populate cu Polonezi din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatitigani").'" >Lista localitatilor populate cu Romi/Tigani din Moldova</a></li>';		
+		//$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';
+		//$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai aglomerate localitati, de ex in raza de 10 km</a></li>';	
+		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mari sate</a></li>';
+		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mici sate</a></li>';		
+		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai jos amplasate localitati</a></li>';
+		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai sus amplasate localitati</a></li>';		
+		//$out.='<li><a href="index.php#3" title="Imobil">Lista celor 30 cele mai populate Localitati</a></li>';				
+		//$out.='<li><a href="index.php#4" title="Imagini">Lista celor 30 cele mai putin populate Localitati</a></li>';
+		//$out.='<li><a href="index.php#4" title="Imagini">Populatia pe Municipii si Raioane</a></li>';		
+		$out.='</ul>';
 		return $out;		
 	}
-	function getLeftMenu1(){
-		$out='<ul class="list-group">';
-		//$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php").'">'.$this->getConstants("IndexLocationsWebPageRaioaneTitle").'</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=vieworase").'" >'.$this->getConstants("IndexLocationsWebPageOraseTitle").'</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtopsuslocalitati").'" >Lista a 50 cele mai sus amplasate localitati din Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtopjoslocalitati").'" >Lista a 50 cele mai jos amplasate localitati din Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtopuppoplocalitati").'" >Lista a 50 cele mai populate localitati din Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtopdownpoplocalitati").'" >Lista a 50 cele mai putin populate localitati din Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtoplocalitatiucraineni").'" >Lista localitatilor populate cu Ucraineni din Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtoplocalitatirusi").'" >Lista localitatilor populate cu Rusi in Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtoplocalitatigagauzi").'" >Lista localitatilor populate cu Gagauzi in Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtoplocalitatibulgari").'" >Lista localitatilor populate cu Bulgari in Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtoplocalitatievrei").'" >Lista localitatilor populate cu Evrei in Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtoplocalitatipolonezi").'" >Lista localitatilor populate cu Polonezi din Moldova</a></li>';
-		$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=viewtoplocalitatitigani").'" >Lista localitatilor populate cu Romi/Tigani din Moldova</a></li>';
-		//$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';
-		//$out.='<li class="list-group-item"><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai aglomerate localitati, de ex in raza de 10 km</a></li>';
-		//$out.='<li class="list-group-item"><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mari sate</a></li>';
-		//$out.='<li class="list-group-item"><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mici sate</a></li>';
-		//$out.='<li class="list-group-item"><a href="index.php#2" title="Stiri">Lista celor 30 cele mai jos amplasate localitati</a></li>';
-		//$out.='<li class="list-group-item"><a href="index.php#2" title="Stiri">Lista celor 30 cele mai sus amplasate localitati</a></li>';
-		//$out.='<li class="list-group-item"><a href="index.php#3" title="Imobil">Lista celor 30 cele mai populate Localitati</a></li>';
-		//$out.='<li class="list-group-item"><a href="index.php#4" title="Imagini">Lista celor 30 cele mai putin populate Localitati</a></li>';
-		//$out.='<li class="list-group-item"><a href="index.php#4" title="Imagini">Populatia pe Municipii si Raioane</a></li>';
-		$out.='</ul>';
-		return $out;
-	}	
 	function getRaion(){
 
 		$out="";
@@ -713,7 +688,7 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 		if (count($ls)!=0){				
 			$o2s='';
 			$o2b='';
-			$o2s.='<a name="5"></a>'.$this->location->getFullNameDescription().' - Localitati in raza de 10 km:';		
+			$o2s.='<a name="7"></a>'.$this->location->getFullNameDescription().' - Localitati in raza de 10 km:';		
 			$l=new Location();
 			foreach($ls as $loc){
 				$l->loadById($loc->id);
@@ -776,7 +751,7 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 		$o2s='';
 		$o2b='';
 		if (($this->location->p>0)){				
-			$o2s='<a name="7"></a>'.$this->location->getFullNameDescription().' - Populatia (Conform recensamintului din anul 2004):';		
+			$o2s='<a name="5"></a>'.$this->location->getFullNameDescription().' - Populatia (Conform recensamintului din anul 2004):';		
 			$o2b='Locuitori - '.number_format($this->location->p, 0, ',', ' ').' din care:<br>';
 			//$o2b.='Din care:<br>';
 			$o2b.='Barbati - '.number_format($this->location->m, 0, ',', ' ').'<br>';
@@ -908,14 +883,14 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 	}	
 	function getNews(){
 		$out="";			
-		$o2s='<a name="8"></a>'.$this->location->getFullNameDescription().' - Stiri:';		
+		$o2s='<a name="9"></a>'.$this->location->getFullNameDescription().' - Stiri:';		
 		$n=new News();		
 		$o2b=$n->getNewsByLocalitate($this->location->id);	
 		return $this->getGroupBoxH3($o2s,$o2b);
 	}
 	function getPhotos(){
 		$out="";			
-		$o2s='<a name="6"></a>'.$this->location->getFullNameDescription().' - Foto/Imagini in raza de 10 km:';		
+		$o2s='<a name="8"></a>'.$this->location->getFullNameDescription().' - Foto/Imagini in raza de 10 km:';		
 		$p=new Photo();		
 		$o2b=$p->getPhotosByLatLng($this->location->lat,$this->location->lng);	
 		return $this->getGroupBoxH3($o2s,$o2b);
@@ -983,13 +958,13 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 		$out.='</div>';
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
-		return $this->getGroupBoxH3('<a name="12"></a>Alte date:',$out);
+		return $this->getGroupBoxH3('<a name="13"></a>Alte date:',$out);
 	}
 	function getImobilList($raionid,$locationid){
 	
 		$p=new PropertyView();
 		$rs=$p->getPropertiesSnapListView(0,0,0,0,0,$raionid,$locationid,0,0,10);
-		return $this->getGroupBoxH3('<a name="9"></a>Cereri si Oferte de Imobile în raza de 10km:',$rs);
+		return $this->getGroupBoxH3('<a name="10"></a>Cereri si Oferte de Imobile în raza de 10km:',$rs);
 	}
 	function getDictionar($l){
 		$d=new Dictionar();
@@ -1010,7 +985,7 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 		$ns=$n->getTopNamesByLocation($l->id);
 		$out="";
 		$out='<div class="groupboxtable">';
-		$out.='<table style="width:100%;" class="table table-condensed table-bordered table-striped table-hover">';
+		$out.='<table style="width:100%;">';
 		$out.='<tr><th style="width:20%;">Nr de ordine</th><th style="width:50%;">Nume de familie</th><th style="width:30%;text-align:center">Numarul total de familii</th></tr>';		
 		if (count($ns)!=0){			
 			$c=1;
@@ -1024,7 +999,7 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 		$out.="</table>";
 		$out.="</div>";		
 		
-		return $this->getGroupBoxH2("<a name=\"11\"></a>Top 50 Nume de Familii cele mai populare",$out);
+		return $this->getGroupBoxH2("<a name=\"12\"></a>Top 50 Nume de Familii cele mai populare",$out);
 	}
 	function getContacts($l){
 		
@@ -1058,10 +1033,10 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 			}
 		}
 		$out.="</table>";
-		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$this->id).'">Mai mult contacte vezi aici</a>';
+		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$this->id).'">Mai multe contacte vezi aici</a>';
 		$out.="</div>";
 	
-		return $this->getGroupBoxH2("<a name=\"10\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
+		return $this->getGroupBoxH2("<a name=\"11\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
 	}																			
 	function getPopulationInTime(){
 		$out="";
@@ -1087,7 +1062,7 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 						$min=$pop2004;
 					}
 					
-					$o2s='<a name="7"></a>'.$this->location->getFullNameDescription().' - Evolutia numarului de locuitori in ultimii 100 ani:';
+					$o2s=$this->location->getFullNameDescription().' - Evolutia numarului de locuitori in ultimii 100 ani:';
 					
 					//$o2b.='Componenta pe nationalitati:';
 					$o2b.='<br>';
@@ -1120,6 +1095,28 @@ $out.='<a class="list-group-item" href="'.$this->getUrl("index.php","action=view
 		$out.=$this->getGroupBoxH3($o2s,$o2b);
 		return $out;
 	}
+	function showElectoralPreferences(){
+		$this->setJavascript("https://www.google.com/jsapi");
+		$o2s='<a name="6"></a>Preferintele Electorale in anii precendenti ale locuitorilor din '.$this->location->getFullNameDescription();
+		$o2b=Alegeri::getResultsByLocation($this->location->raion_id,$this->location->id);
+		$o2f="Sursa: www.cec.md";
+		if (empty($o2b)){
+			return "";
+		} else {
+			return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+		}
+	}
+	function showAlegeri141130Image(){
+		
+		$o2s='<a name="6"></a>Rezultatele Electorale ale locuitorilor din '.$this->location->getFullNameDescription();
+		$o2b=Alegeri::getImageUrlByPrimarie($this->location->raion_id,$this->location->id);
+		$o2f="Sursa: www.cec.md";
+		if (empty($o2b)){
+			return "";
+		} else {
+			return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+		}
+	}	
 }
 $n=new IndexLocationsWebPage();
 ?>

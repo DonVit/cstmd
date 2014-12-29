@@ -7,30 +7,20 @@ class MainWebPage extends WebPage {
 	private $logotitle="logotitle";
 	private $css="";
 	private $javascript="";
-	private $footerjavascript="";
-	private $bodytag="";
+	private $bodytag="<body>";
 	private $leftcontainer;
 	private $centercontainer;
 	private $rightcontainer;	
 	public function __construct() {
 		parent::__construct();
 		
-		$this->setJavascript(Config::$mainsite."/common/js/scripts.js");
-				
-		//$this->setCSS(Config::$mainsite."/common/style/reset.css");
+		$this->setCSS(Config::$mainsite."/common/style/reset.css");
 		$this->setCSS(Config::$mainsite."/common/style/fonts.css");		
-		//$this->setCSS(Config::$mainsite."/common/style/base.css");			
-		$this->setCSS(Config::$mainsite."/common/style/common.css");
-		
-		//bootstrap
-		//$this->setCSS(Config::$mainsite."/common/style/bootstrap/css/bootstrap.min.css");
-		//$this->setFooterJavascript("//code.jquery.com/jquery.js");
-		//$this->setFooterJavascript(Config::$mainsite."/common/style/bootstrap/js/bootstrap.min.js");
+		$this->setCSS(Config::$mainsite."/common/style/base.css");			
 
-		//yui
-		//$this->setCSS("http://yui.yahooapis.com/pure/0.3.0/pure-nr-min.css");
-		$this->setCSS(Config::$mainsite."/common/style/yui/style1.css");
-		$this->setBodyTag("class=\"pure-skin-mine\"");
+		$this->setCSS(Config::$mainsite."/common/style/common.css");
+		$this->setJavascript(Config::$mainsite."/common/js/scripts.js");
+
 	}
 	
 	function show($html="MainWebPageHtml"){
@@ -58,12 +48,6 @@ class MainWebPage extends WebPage {
 	function setJavascript($javascript){
 		$this->javascript.='<script type="text/javascript" language="javascript" src="'.$javascript.'"></script>';
 	}
-	function getFooterJavascript(){
-		return $this->footerjavascript;
-	}
-	function setFooterJavascript($javascript){
-		$this->footerjavascript.='<script src="'.$javascript.'"></script>';
-	}	
 
 
 	function getHeader(){
@@ -89,12 +73,12 @@ class MainWebPage extends WebPage {
 		
 		$out.=$this->getLogo();
 					
-		$out.='<div id="mainmenubar">';
+		//$out.='<div id="mainmenubar">';
 		$out.=$this->getMainMenu();
 		//$out.=$this->getUserMenu();
-		$out.='<div style="clear: both;"/>';
-		$out.='</div>';
-		$out.='</div>';
+		//$out.='<div style="clear: both;"/>';
+		//$out.='</div>';
+		//$out.='</div>';
 		return $out;
 	}
 	function getTopMenu(){	
@@ -105,85 +89,9 @@ class MainWebPage extends WebPage {
 		$out.='</div>';	
 		return $out;
 	}
-	function getTopMenu2(){
-		$out='<div class="navbar navbar-default" role="navigation">';
-		$out.='<div class="container">';
-		//<!-- Brand and toggle get grouped for better mobile display -->
-		$out.='<div class="navbar-header">';
-		$out.='<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">';
-		$out.='<span class="sr-only">Toggle navigation</span>';
-		$out.='<span class="icon-bar"></span>';
-		$out.='<span class="icon-bar"></span>';
-		$out.='<span class="icon-bar"></span>';
-		$out.='</button>';
-		$out.='<a class="navbar-brand" href="#">CasaTa</a>';
-		$out.='</div>';
-		
-		$out.='<ul class="nav navbar-nav">';
-		//$SelectedItem=TopMenu::getSelectedItem();
-		foreach (TopMenu::getItems($this->getLang()) as $ItemKey=>$ItemValue){
-			//if ($SelectedItem==$ItemKey){
-			$host=parse_url($ItemKey,PHP_URL_HOST);
-			//Logger::setLogs($this->getServerName()."-".$ItemKey."-".$host);
-			if ($this->getServerName()==$host){
-				$out.='<li class="active"><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
-			} else {
-				$out.='<li><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
-			}
-		}
-		$out.='</ul>';
-		
-		$out.='<ul class="nav navbar-nav">';
-		$out.='<li>'.$this->getBookmarks().'</li>';
-		$out.='</ul>';
-
-		
-		
-		/*		
-		$out.='<ul class="nav navbar-nav navbar-right">';
-		$out.='<li class="dropdown">';
-		$out.='<a href="#" class="dropdown-toggle" data-toggle="dropdown">Limba <b class="caret"></b></a>';
-		$out.='<ul class="dropdown-menu">';	
-		$l=new Language();
-		$ls=$l->getAll();
-		foreach($ls as $l){
-			if ($l->name==$this->getLang()->name){
-				$out.='<li class="active"><a href="'.$this->getUrlInLanguage($l->name).'">'.$l->name_long.'</a></li>';
-			}else{
-				$out.='<li><a href="'.$this->getUrlInLanguage($l->name).'">'.$l->name_long.'</a></li>';
-			}
-		}
-		$out.='</ul>';
-		$out.='</li>';
-		$out.='</ul>';
-		//$out.='</div>';
-		*/
-		//$out='<div id="usermenu" style="display:block;float:right">';
-		$out.='<ul class="nav navbar-nav navbar-right">';
-		$out.='<li class="dropdown">';
-		$out.='<a href="#" class="dropdown-toggle" data-toggle="dropdown">Limba <b class="caret"></b></a>';
-		$out.='<ul class="dropdown-menu">';
-				
-		if (User::getCurrentUser()->name=="Anonymous"){
-			$out.='<li><a href="'.Config::$accountssite.'/login.php">Login</a></li>';
-			$out.='<li><a href="'.Config::$accountssite.'/register.php">Inregistrare</a></li>';
-		} else {
-			$out.='<li><a href="'.Config::$accountssite.'/index.php">Contul Personal</a></li>';
-			$out.='<li><a href="'.Config::$accountssite.'/logout.php">Logout</a></li>';
-		}
-		//$out.='<div style="clear: both;"/></div>';
-		$out.='</ul>';
-		$out.='</li>';
-		$out.='</ul>';
-		$out.='</div>';
-		$out.='</div>';
-		return $out;		
-		
-		return $out;
-	}	
 	function getMainMenu(){	
 		$out='<div id="mainmenu" class="container bar mainhormenu">';
-		$out.='<div id="mainmenuleft" class="pure-menu pure-menu-open pure-menu-horizontal" style="display:block;float:left">';
+		$out.='<div id="mainmenuleft" style="display:block;float:left">';
 		$out.='<ul>';
 		//$SelectedItem=TopMenu::getSelectedItem();
 		foreach (TopMenu::getItems($this->getLang()) as $ItemKey=>$ItemValue){
@@ -191,26 +99,24 @@ class MainWebPage extends WebPage {
 			$host=parse_url($ItemKey,PHP_URL_HOST);
 			//Logger::setLogs($this->getServerName()."-".$ItemKey."-".$host);	
 			if ($this->getServerName()==$host){
-				$out.='<li class="pure-menu-selected"><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
+				$out.='<li><a href="'.$ItemKey.'" style="border-bottom:2px solid #C20000;">'.$ItemValue.'</a></li>';
 			} else {
 				$out.='<li><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
 			}
 		}
 		$out.='</ul>';	
 		$out.='</div>';
-		
-		if (Config::$live){
 		$out.='<div id="mainmenuright" style="display:block;float:right">';
 		$out.='<ul>';
 		$out.='<li>'.$this->getBookmarks().'</li>';
 		$out.='</ul>';						
 		$out.='</div>';
-		}
-		$out.='</div>';
+		$out.='<div style="clear: both;"/></div>';		
+		$out.='</div>';	
 		return $out;
 	}	
 	function getUserMenu(){	
-		$out='<div id="usermenu" class="pure-menu pure-menu-open pure-menu-horizontal" style="display:block;float:right;width:inherit">';
+		$out='<div id="usermenu" style="display:block;float:right">';
 		$out.='<ul>';
 		if (User::getCurrentUser()->name=="Anonymous"){
 			$out.='<li><a href="'.Config::$accountssite.'/login.php">Login</a></li>';
@@ -228,9 +134,8 @@ class MainWebPage extends WebPage {
 		$out='';
 		$b=AdsBanner::getRandomBanner();
 		if (!is_null($b)){
-			
 			$out.='<div id="logo" class="container bar tophorlogo" style="text-align:center;">';
-			$out.='<a href="'.Config::$adssite.'/banner.php?id='.$b->id.'"><img src="'.$b->image_url.'" alt="'.$b->title.'" style="width: 980px;"></a>';               
+			$out.='<a href="'.Config::$adssite.'/banner.php?id='.$b->id.'" target="_blank"><img src="'.$b->image_url.'" alt="'.$b->title.'" style="width: 980px;"></a>';               
 			$out.='<div style="clear: both;"/></div>';
 			$out.='</div>';
 		}
@@ -240,7 +145,7 @@ class MainWebPage extends WebPage {
 		$out='<div id="logo" class="container bar tophorlogo">';
 		//$out.='<div id="logo-title-left"><span style="color:#000099;">casa</span><span style="color:#FFFF33;">ta</span><span style="color:#FF0000;">.md</span></div>';
 		$out.='<div id="logo-title-left" style="display:block;float:left">CASATA.MD</div>';
-		$out.='<div id="logo-title-right" style="display:block;float:left"><H1>'.$this->getLogoTitle().'</H1></div>';
+		$out.='<div id="logo-title-right" style="display:block;float:left">'.$this->getLogoTitle().'</div>';
 		$out.=$this->getGooglePlus();
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
@@ -258,23 +163,6 @@ class MainWebPage extends WebPage {
 		}	
 	}	
 	function getLanguageMenu(){	
-		$out='<div id="langmenu" class="pure-menu pure-menu-open pure-menu-horizontal" style="display:block;float:left;width:inherit;">';
-		$out.='<ul>';
-		$l=new Language();
-		$ls=$l->getAll();
-		foreach($ls as $l){
-			if ($l->name==$this->getLang()->name){
-				$out.='<li class="pure-menu-selected"><a href="#">'.$l->name_long.'</a></li>';
-				//$out.='<li><a href="'.$this->getUrlInLanguage($l->name).'">'.$l->name_long.'</a></li>';
-			}else{
-				$out.='<li><a href="'.$this->getUrlInLanguage($l->name).'">'.$l->name_long.'</a></li>';
-			}
-		}
-		$out.='</ul>';	
-		$out.='</div>';	
-		return $out;
-	}
-	function getLanguageMenu1(){
 		$out='<div id="langmenu" style="display:block;float:left">';
 		$out.='<ul>';
 		$l=new Language();
@@ -286,15 +174,15 @@ class MainWebPage extends WebPage {
 				$out.='<li><a href="'.$this->getUrlInLanguage($l->name).'">'.$l->name_long.'</a></li>';
 			}
 		}
-		$out.='</ul>';
-		$out.='</div>';
+		$out.='</ul>';	
+		$out.='</div>';	
 		return $out;
-	}				
+	}			
 	function getBodyTag(){
-		return "<body ".$this->bodytag.">";
+		return $this->bodytag;
 	}
 	function setBodyTag($bodytag){
-		$this->bodytag.=$bodytag." ";
+		$this->bodytag=$bodytag;
 	}
 	function getBody($html){
 		$out='<div id="body">';
@@ -303,41 +191,25 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	function getFooter(){
-		$out='<div id="footer" class="navbar navbar-default navbar-fixed-bottom" role="navigation">';
-		$out.=$this->getCounters();
-		$out.=$this->getBottomMenu();
-		$out.='</div>';
-		$out.='<div id="logs">';
-		$out.=$this->getLogs();
-		$out.='</div>';
-		$out.=$this->getFooterJavascript();		
-		$out.=$this->getGA();
-		$out.='</body>';
-		$out.='</html>';
-		return $out;		
-	}
-	function getFooter1(){
 		$out='<div id="footer" class="container bar bottomhormenu">';
 		$out.=$this->getCounters();
 		$out.=$this->getBottomMenu();
 		$out.='</div>';
-		$out.='<div id="logs">';
 		$out.=$this->getLogs();
 		$out.='</div>';
-		$out.=$this->getFooterJavascript();
-		$out.=$this->getGA();
+		$out.=$this->getGA();		
 		$out.='</body>';
 		$out.='</html>';
-		return $out;
-	}	
+		return $out;		
+	}
 	function getBottomMenu(){	
 		$out='<div id="bottommenu">';		
-		$out.='<ul class="nav navbar-nav">';
+		$out.='<ul>';
 		foreach (BottomMenu::$Items as $ItemKey=>$ItemValue){
 				//$out.='<div class="bottommenu_item"><a href="/'.$ItemKey.'">'.$ItemValue.'</a></div>';
 				$out.='<li><a href="'.Config::$accountssite.'/'.$ItemKey.'">'.$ItemValue.'</a></li>';
 		}
-		$out.='<li> | Email la: <a href="mailto:info@casata.md">info@casata.md</a></li>';
+		$out.='<li> | Email la: <a href="mailto:casata.md@outlook.com">casata.md@outlook.com</a></li>';	
 		$out.='</ul>';
 		$out.='</div>';	
 		$out.='<div style="clear: both;"/></div>';	
@@ -483,7 +355,7 @@ class MainWebPage extends WebPage {
 	}
 	function getGroupBoxH3($header="",$body="",$footer=""){
 		if ($header!=""){
-			$header='<h3 class="panel-title">'.$header.'</h3>';			
+			$header='<h3>'.$header.'</h3>';			
 		}
 		if ($footer!=""){	
 			$footer='<h3>'.$footer.'</h3>';		
@@ -501,7 +373,7 @@ class MainWebPage extends WebPage {
 	}		
 	function getGroupBoxH1($header="",$body="",$footer=""){
 		if ($header!=""){
-			$header='<h3>'.$header.'</h3>';			
+			$header='<h1>'.$header.'</h1>';			
 		}
 		if ($footer!=""){	
 			$footer='<h3>'.$footer.'</h3>';		
@@ -509,18 +381,15 @@ class MainWebPage extends WebPage {
 		return $this->getGroupBoxHtml($header,$body,$footer);
 	}
 	function getGroupBoxHtml($header="",$body="",$footer=""){
-		$out='<div class="panel panel-default">';
+		$out='<div class="container groupbox">';
 		if ($header!=""){
-			$out.='<div class="panel-heading">';
+			$out.='<div class="container groupboxheader">';
 			$out.=$header;		
 			$out.='</div>';	
-		}	
-		$out.='<div class="panel-body">';
-		$out.=$body;
-		$out.='</div>';
-		
+		}
+		$out.=$body;	
 		if ($footer!=""){	
-			$out.='<div class="panel-footer">';
+			$out.='<div class="container groupboxfooter">';
 			$out.=$footer;		
 			$out.='</div>';
 		}
@@ -528,17 +397,15 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	function getGroupBoxWizard($header="",$body="",$footer=""){
-		$out='<div class="panel panel-default">';
+		$out='<div class="container groupbox groupboxwizard">';
 		if ($header!=""){
-			$out.='<div class="panel-heading">';
-			$out.='<h3 class="panel-title">'.$header.'</h3>';
+			$out.='<div class="container groupboxwizardheader">';
+			$out.=$header;		
 			$out.='</div>';	
-		}	
-		$out.='<div class="panel-body">';
-		$out.=$body;
-		$out.='</div>';
+		}
+		$out.=$body;	
 		if ($footer!=""){	
-			$out.='<div class="panel-footer">';
+			$out.='<div class="container groupboxwizardfooter">';
 			$out.=$footer;		
 			$out.='</div>';
 		}
@@ -575,7 +442,7 @@ class MainWebPage extends WebPage {
 	}
 	function getMap($m){
 
-		$this->setBodyTag('onload="MapViewOnMapLoad()"');
+		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$mainsite."/common/js/maps.js");

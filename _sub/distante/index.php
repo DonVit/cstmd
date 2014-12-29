@@ -49,22 +49,17 @@ class DistancesWebPage extends MainWebPage {
 			$this->locationfrom->loadById($this->from);
 		} else {
 			$this->locationfrom->loadById(101);		
-			$this->from=101;
 		}
 		if (isset($this->to)){
 			$this->locationto->loadById($this->to);
 		} else {
-			$this->locationto->loadById(301);	
-			$this->to=301;
+			$this->locationto->loadById(301);		
 		}		
 		$t="Distanța din ".$this->locationfrom->getFullNameDescription()." pînă în ".$this->locationto->getFullNameDescription();
 		$gt="Distanța directă și distanța drumului din ".$this->locationfrom->getFullNameDescription()." pînă în ".$this->locationto->getFullNameDescription()." sunt de: <span id=\"directdistance\"></span> și <span id=\"roaddistance\"></span>";
 		$this->setTitle($t);
 		$this->setCenterContainer($this->getGroupBoxH3("Specifică localitatea de început și sfîrțit pentru a vedea distanța ți drumul:",$this->getFilter()));
 		$this->setCenterContainer($this->getGroupBoxH3($gt,$this->getMap()));
-		$c='<a name="10"></a>Forum/Comentarii:';
-		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'d',$this->from,$this->to)));
-		
 		$this->show();
 	}
 	function actionViewMap1(){

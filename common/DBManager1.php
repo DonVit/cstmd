@@ -3,7 +3,7 @@
  * Created on 27 Feb 2009
  *
  */
-class DBManager1 extends Object{
+class DBManager {
     //Common basic fields
     public $deleted;
     public $createdby;

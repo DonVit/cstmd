@@ -467,7 +467,7 @@ class PhotosWebPage extends MainWebPage {
 	  		if ($i==3){
 	  			$out.=$o.'</tr>';
 	  			$o='';
-	  			$i=0;  			}
+	  			$i=0;  			}
 	  		$i=$i+1;
 		}
 		if ($i!=1){
@@ -481,7 +481,7 @@ class PhotosWebPage extends MainWebPage {
 		$out.='<table>';
 		$out.='<tr>';
 		$out.='<td>';
-  		$out.='<a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'" class="thumbnail"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"></img></a>';
+  		$out.='<a href="'.$this->getUrl("index.php").'&action=viewimage&id='.$p->id.'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"></img></a>';
   		$out.='</td>';
 		$out.='</tr>';
 		$out.='</table>';
@@ -504,7 +504,7 @@ class PhotosWebPage extends MainWebPage {
 		$o="";
 		foreach($ps as $p){
 		  	$o.='<td align="center" style="padding:5px;vertical-align:top;">';
-	  		$o.='<div><a class="thumbnail" href="'.$this->getUrl("index.php","action=viewimage").'&id='.$p->id.'"><img src="files/t'.$p->file.'" alt="'.$p->title.'" class="imageborder" style="width:100px;"></img></a></div>';	  		
+	  		$o.='<div><a href="'.$this->getUrl("index.php","action=viewimage").'&id='.$p->id.'"><img src="files/t'.$p->file.'" alt="'.$p->title.'" class="imageborder" style="width:100px;"></img></a></div>';	  		
 	  		$o.='</td>';
 	  		
 	  		if (($i % 3)==0){

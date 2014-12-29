@@ -188,7 +188,7 @@ class Location extends DBManager {
 		return $ls[0]->distance;
 	}
 	function getContacts(){
-		$sql="SELECT xcompany.type,xsubdivizion.new_name as SubdivizionName, xsubsector.new_name as SectorName,phoneprefix,phonenumber FROM xsubcompany inner join xcompany on xsubcompany.companyid=xcompany.id left join xsubdivizion on xsubcompany.subdivizionid=xsubdivizion.id left join xsubsector on xsubcompany.subsectorid=xsubsector.id where localitateid=".$this->id." and xcompany.type in ('Primaria','Scoala','Gradinita','Medic','Politia','Casa De Cultura','Posta','Biblioteca','Banca','Biserica') order by xcompany.type LIMIT 0,100";
+		$sql="SELECT xcompany.type,xsubdivizion.new_name as SubdivizionName, xsubsector.new_name as SectorName,phoneprefix,phonenumber FROM xsubcompany inner join xcompany on xsubcompany.companyid=xcompany.id left join xsubdivizion on xsubcompany.subdivizionid=xsubdivizion.id left join xsubsector on xsubcompany.subsectorid=xsubsector.id where localitateid=".$this->id." and xcompany.type in ('Primaria','Scoala','Gradinita','Medic','Politia','Casa De Cultura','Posta','Biblioteca','Banca','Biserica','Gimnaziu') order by xcompany.type LIMIT 0,100";
 		$ls=$this->doSql($sql);
 		return $ls;
 		
@@ -205,6 +205,14 @@ class Location extends DBManager {
 	function getData(){
 		//return System::getDate(date_parse($this->data));
 		return substr($this->data,0,10);
-	}	
+	}
+	function getPrefixes(){
+		$o=DBManager::doSql("SELECT substring(prefix,1,3) as prefix FROM localitate l INNER JOIN prefix p ON l.id = p.localitate_id where l.id=".$this->id." group by substring(prefix,1,3) order by prefix");
+		if (!is_null($o)){
+			return $o;
+		} else {	
+			return null;
+		}
+	}		
 }
 ?>

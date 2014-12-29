@@ -15,7 +15,7 @@ class LoginWebPage extends MainWebPage {
 		if ($u->id!=0){
 			$this->redirect("index.php");
 		}
-		//$this->setCSS("styles/login.css");
+		$this->setCSS("styles/login.css");
 		$this->setTitle("Autentificare");
 		$this->setLogoTitle("CONT PERSONAL");
 		Logger::setLogs(User::getCurrentUser());
@@ -77,36 +77,33 @@ class LoginWebPage extends MainWebPage {
 		//$out.='<div id="formtitle" class="form_header">';
 		//$out.='Autentificare';
 		//$out.='</div>';
-		$out='<form method="post" name="loginform" role="form" class="pure-form pure-form-aligned">';
-		$out.='<fieldset>';
-		$out.='<legend>A Stacked Form</legend>';
-		$out.='<div class="pure-control-group">';
-		$out.='<label for="email">Email:</label>';
-		$out.='<input id="email" name="email" type="text" class="form-control" value="'.$this->email.'" required>';
+		$out='<form method="post" name="loginform">';
+		$out.='<div id="formcontrols">';
+		$out.='<div class="form_row">';
+		$out.='<label class="label" >Email:</label>';
+		$out.='<input name="email" type="text" class="input" value="'.$this->email.'">';
 		$out.='</div>';
-		$out.='<div class="pure-control-group">';
-		$out.='<label for="password">Parola:</label>';
-		$out.='<input id="password" name="password" type="password" class="form-control" value="" required>';
+		$out.='<div class="form_row">';
+		$out.='<label class="label">Parola:</label>';
+		$out.='<input name="password" type="password" class="input" value="">';
 		$out.='</div>';
-		$out.='<div class="pure-control-group">';
-		$out.='<label for="validationcode">Valideaza:</label>';
-		$out.='<input id="validationcode" type="text" name="validationcode" class="form-control" required><img id="validationimage" src="'.Config::$mainsite.'/validationimage.php" class="img-thumbnail"></img>';
+		$out.='<div class="form_row">';
+		$out.='<label class="label">Valideaza:</label>';
+		$out.='<input id="validationcode" type="text" name="validationcode" class="input"><img id="validationimage" src="'.Config::$mainsite.'/validationimage.php"></img>';
 		$out.='</div>';
-		$out.='<div class="pure-control-group">';
+		$out.='<div class="error">';
 		$out.=$this->errormessage;
-		$out.='</div>';		
-		$out.='<div class="pure-control-group">';
-		$out.='<label ></label>';
-		$out.='<input name="Login" type="submit"  class="pure-button pure-button-primary" value="Login">';
 		$out.='</div>';
-		$out.='<div class="pure-control-group">';
-		$out.='   <a href="register.php">Inregistreaza-te!</a> | <a href="password.php">Ai uitat parola ?</a>';
-		$out.='</div>';		
-		$out.='</fieldset>'; 
-		$out.='</form>';
+		$out.='</div>';
+		$outb='<div id="form_row_button" class="form_footer">';
+		$outb.='   <div class="form_footer_links"><a href="register.php">Inregistreaza-te!</a> | <a href="password.php">Ai uitat parola ?</a></div>';
+		$outb.='   <div class="form_footer_button"><input name="Login" type="submit" class="button" value="Login"></div>';
+		$outb.='   <div style="clear: both;"></div>';
+		$outb.='</div>'; 
+		$outb.='</form>';
 		//$out.='</div>';
 		//$out.='</div>';
-		return $this->getGroupBoxWizard("Autentificare",$out,"");
+		return $this->getGroupBoxWizard("Autentificare",$out,$outb);
 	}
 }
 

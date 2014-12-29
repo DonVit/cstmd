@@ -18,8 +18,8 @@ class TopMenu {
 		Config::$primariisite."/index.php?l=".$language->name=>"Primarii",
 		Config::$distantesite."/index.php?l=".$language->name=>"Distanțe",
 		Config::$dictionarsite."/index.php?l=".$language->name=>"Dictionar",
-		Config::$numesite."/index.php?l=".$language->name=>"Nume"				
-		//Config::$telefoanesite."/index.php?l=".$language->name=>"Telefoane",
+		Config::$numesite."/index.php?l=".$language->name=>"Nume",			
+		Config::$telefoanesite."/index.php?l=".$language->name=>"Telefoane"
 					
 		);
 		return $Items;

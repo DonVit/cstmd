@@ -5,7 +5,7 @@
  */
 require_once('loader.php');
  
-class RssImobilWebPage extends WebPage {
+class RssCompaniesWebPage extends WebPage {
 	function __construct(){
 		$this->setContentType("text/xml");
 		parent::__construct();
@@ -18,30 +18,34 @@ class RssImobilWebPage extends WebPage {
 		WebPage::show($this->getRss());
 	}
 	function getRss(){
-		$p=new Property();
-		$ps=$p->getAll("scop_id in (2,4)","id desc","0","10");
+		$sql = "select `id`,`name`,`created_date`, lat, lng FROM `company` where valid=1 order by `id` desc limit 0,20";
+		$c=new Company();
+		$cs=$c->doSql($sql);
 		
 		$out='<?xml version="1.0" encoding="utf-8"?>';
 		$out.='<rss version="2.0" xmlns:georss="http://www.georss.org/georss">';
 		$out.='<channel>';
-		$out.='<title>Anunturi Chirii din Republica Moldova</title>';
-		$out.='<link>'.Config::$chiriesite.'</link>';
-		$out.='<description>Serviciu de colectare Anunturi Imobiliare.</description>';
+		$out.='<title>Companii "Imobil Moldova"</title>';
+		$out.='<link>'.Config::$companiesite.'</link>';
+		$out.='<description>Lista Companii.</description>';
 		$out.='<language>ro</language>';
 
-		foreach($ps as $p){
+		foreach($cs as $c){
 
-			$title = $p->getShortDescription();
-			$link = Config::$chiriesite."/property.php?id=".$p->id;
-			$description = $p->getLongDescription();
-			$pubDate = date("r", strtotime($p->data));
+			$title = $c->name;
+			//$link = Config::$companiesite."/index.php?id=".$c->id;
+			$link = $this->getUrl(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id);
+			$description = $c->name;
+			$pubDate = date("r", strtotime($c->created_date));
+			//$image_file = Config::$companiesite."/files/t".$c->logo_file;
 			$image_file = Config::$mainsite.'/common/img/no_image_100x100.jpg';
 			$image_description = 'no image';
-			if ($p->getMainImage()!=null){
-				$image_file = Config::$imobilsite.'/data/t'.$p->getMainImage()->imagepath;
-				$image_description = $p->getMainImage()->imagenote;
-			}     
 			
+			$i=Image::getMainImageByRefType('f', $c->id);
+			if ($i!=null){
+				$image_file = Config::$companiesite."/data/t".$i->imagepath;
+				$image_description = $i->imagenote;
+			}
 
 			$title = htmlspecialchars($title);
 			$link = htmlspecialchars($link);
@@ -55,8 +59,8 @@ class RssImobilWebPage extends WebPage {
 			$out.='<description><![CDATA[<p><img align="left" src="'.$image_file.'" border="1" hspace="5" alt="'.$image_description.'">'.$description.'</p>]]></description>';
 			//$out.='<enclosure url="'.$image_file.'"/>';
 			$out.='<pubDate>'.$pubDate.'</pubDate>';
-			if ($p->lat!=0){
-				$out.='<georss:point>'.$p->lat.' '.$p->lng.'</georss:point>';
+			if ($c->lat!=0){
+				$out.='<georss:point>'.$c->lat.' '.$c->lng.'</georss:point>';
 			}			
 			$out.='</item>';			
 		}
@@ -65,6 +69,6 @@ class RssImobilWebPage extends WebPage {
 		return $out;
 	}
 }
-$n=new RssImobilWebPage();
+$n=new RssCompaniesWebPage();
 
 ?>

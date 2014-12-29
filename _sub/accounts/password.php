@@ -10,7 +10,7 @@ class PasswordWebPage extends MainWebPage {
 	private $errormessage="";
 	function __construct(){
 		parent::__construct();
-		//$this->setCSS("styles/password.css");
+		$this->setCSS("styles/password.css");
 		$this->setTitle("Recuperare Parola");
 		//$this->setLogoTitle("Recuperare Parola");
 		$this->setLogoTitle("CONT PERSONAL");
@@ -80,22 +80,20 @@ function actionDefault(){
 		//$out.=' <div id="form_title" class="form_header">Ai uitat parola ?</div>';
 		$out='<form method="post" name="passwordform">';
 		$out.=' <div id="formcontrols">';
-		$out.='  <div class="form-group">';
-		$out.='   <label id="label_email" for="email">Email:</label>';
-		$out.='   <input id="email" name="email" type="text" class="form-control" value="'.(isset($this->email)?$this->email:'').'">';
+		$out.='  <div class="form_row">';
+		$out.='   <label id="label_email">Email:</label>';
+		$out.='   <input name="email" type="text" class="input" value="'.(isset($this->email)?$this->email:'').'">';
 		$out.='  </div>';
-		$out.='  <div class="form-group">';
-		$out.='   <label id="label_email" for="validationcode">Valideaza:</label>';
-		$out.='   <input id="validationcode" type="text" name="validationcode" class="form-control"><img src="'.Config::$mainsite.'/validationimage.php" style="vertical-align: middle">';
+		$out.='  <div class="form_row">';
+		$out.='   <label id="label_email">Valideaza:</label>';
+		$out.='   <input id="validationcode" type="text" name="validationcode" class="input"><img src="'.Config::$mainsite.'/validationimage.php" style="vertical-align: middle">';
 		$out.='  </div>';
-		$out.='	 <div class="error">';
+		$out.='<div class="error">';
 		$out.=$this->errormessage;
-		$out.='  </div>'; 
+		$out.='</div>'; 
 		$out.='  </div>';
-		$outb='<div id="form_row_button" class="form_footer">';
-		$outb='  <div id="form_row_button" style="text-align: right;">';
-		$outb.='   <input name="submit" type="submit" class="btn btn-default" value="Trimite Parola">';
-		$outb.=' </div>';
+		$outb='  <div id="form_row_button" class="form_footer" style="text-align: right;">';
+		$outb.='   <input name="submit" type="submit" class="button" value="Trimite Parola">';
 		$outb.=' </div>';
 		$outb.=' </form>';
 		//$out.='</div>';
@@ -103,15 +101,20 @@ function actionDefault(){
 		return $this->getGroupBoxWizard("Ai uitat parola ?",$out,$outb);
 	}
 	function setInfoForm(){
+		//$out='<div id="form_container" class="form_container">';
+		//$out.='<div id="form" class="form">';
+		//$out.=' <div id="form_title" class="form_title">Ai uitat parola ?</div>';
 		$out=' <div id="formcontrols">';
-		$out.='  <div class="form-group">';
+		$out.='  <div class="form_row">';
 		$out.='   Parola a fost expediata pe email, vezi emailul si incearca sa faci login';
 		$out.='  </div>';
 		$out.=' </div>';
 		//$out.='</div>';
-		$outb='  <div id="form_row_button" class="form-group" style="text-align: right;">';
+		$outb='  <div id="form_row_button" class="form_footer" style="text-align: right;">';
 		$outb.='   <a href="login.php">Login</a>';
 		$outb.=' </div>';
+		//$outb.=' </form>';		
+		//$out.='</div>';
 		return $this->getGroupBoxH3("Ai uitat parola ?",$out,$outb);
 	}
 }

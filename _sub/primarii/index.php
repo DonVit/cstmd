@@ -83,6 +83,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getLocalitate());
 		$this->setCenterContainer($this->getPrimarieConsilieri());
 		//$this->setCenterContainer($this->getPopulation());
+		$this->setCenterContainer($this->showAlegeri141130Image());	
+		$this->setCenterContainer($this->showElectoralPreferences());
 		$this->setCenterContainer($this->getPrimariiInJur());
 		$this->setCenterContainer($this->getLocalitatiDistance());	
 		//$this->setCenterContainer($this->getPhotos());	
@@ -1301,12 +1303,33 @@ class IndexLocationsWebPage extends MainWebPage {
 			}
 		}
 		$out.="</table>";
-		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$l->id).'">Mai mult contacte vezi aici</a>';
+		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$l->id).'">Mai multe contacte vezi aici</a>';
 		$out.="</div>";
 	
 		return $this->getGroupBoxH2("<a name=\"7\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
 	}				
-												
+	function showElectoralPreferences(){
+		$this->setJavascript("https://www.google.com/jsapi");
+		$o2s='<a name="6"></a>Preferintele Electorale in anii precendenti ale locuitorilor din '.$this->location->getFullNameDescription();
+		$o2b=Alegeri::getResultsByPrimarie($this->location->raion_id,$this->location->id);
+		$o2f="Sursa: www.cec.md";
+		if (empty($o2b)){
+			return "";
+		} else {
+			return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+		}
+	}
+	function showAlegeri141130Image(){
+		
+		$o2s='<a name="6"></a>Alegerile Parlamentare din 30 noiembrie 2014 - Rezultatele din '.$this->location->getFullNameDescription();
+		$o2b=Alegeri::getImageUrlByPrimarie($this->location->raion_id,$this->location->id);
+		$o2f="Sursa: www.cec.md";
+		if (empty($o2b)){
+			return "";
+		} else {
+			return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+		}
+	}												
 }
 $n=new IndexLocationsWebPage();
 ?>

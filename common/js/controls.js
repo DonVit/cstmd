@@ -47,12 +47,11 @@ function CheckBoxControl(controlDiv,title,state,color,hint){
 	//var controlDiv = document.createElement('DIV');
 	controlDiv.style.padding = '5px';
 	//controlDiv.checked=state;
-	//controlDiv.style.display='block';
-	controlDiv.style.width='65px';
+	controlDiv.style.display='block';
+	controlDiv.style.width='66px';
 	
 	// Set CSS for the control border
 	var controlUI = document.createElement('DIV');
-	controlUI.id='controlUI';
 	controlUI.style.backgroundColor = 'white';
 	controlUI.style.borderStyle = 'solid';
 	controlUI.style.borderWidth = '1px';
@@ -60,12 +59,11 @@ function CheckBoxControl(controlDiv,title,state,color,hint){
 	controlUI.style.cursor = 'pointer';
 	controlUI.style.textAlign = 'center';
 	controlUI.title = hint;
-	//controlUI.style.display='block';
+	controlUI.style.display='block';
 	controlDiv.appendChild(controlUI);
 	
 	// Set CSS for the control interior
 	var controlCheck = document.createElement('DIV');
-	controlCheck.id='controlCheck';
 	controlCheck.style.backgroundColor = color;	
 	controlCheck.style.fontFamily = 'Arial,sans-serif';
 	controlCheck.style.fontSize = '12px';
@@ -76,13 +74,12 @@ function CheckBoxControl(controlDiv,title,state,color,hint){
 	controlCheck.style.borderStyle = 'solid';
 	controlCheck.style.borderWidth = '1px';	
 	controlCheck.style.float='left';
-	//controlCheck.style.position='relative';
-	//controlCheck.style.display='block';
+	controlCheck.style.position='relative';
+	controlCheck.style.display='block';
 	controlCheck.style.width='7px';
 	
 	// Set CSS for the control interior
 	var controlText = document.createElement('DIV');
-	controlText.id='controlText';
 	controlText.style.fontFamily = 'Arial,sans-serif';
 	controlText.style.fontSize = '12px';
 	controlText.style.fontWeight= 'bold';
@@ -91,8 +88,7 @@ function CheckBoxControl(controlDiv,title,state,color,hint){
 	controlText.style.verticalAlign= 'middle';
 	controlText.style.float='left';
 	controlText.style.position='relative';
-	//controlText.style.display='block';
-	controlText.style.width='25px';
+	controlText.style.display='block';
 	controlText.innerHTML=title;	
 	
 	// Set CSS for the control interior

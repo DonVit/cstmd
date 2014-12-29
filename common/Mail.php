@@ -77,29 +77,7 @@ class Mail{
 		</html>
 		';
 		Mail::send_email($user,$mailsubject, $mailmessage);
-	}
-	public static function send_publicreplay_email($comment){
-		$user='vitalie.doni@gmail.com';
-		if($comment->email!=''){
-			$user=$comment->email;
-		}
-	
-		$mailsubject = "Comentariu Aprobat";
-		$mailmessage = '
-		<html>
-		<head>
-		<title>Comentariu Aprobat</title>
-		</head>
-		<body>
-		<p>Buna '.$comment->name.'.</p>
-		<p>Comentariul de mai jos a fost aprobat de operator:</p>
-		<p>'.$comment->comment.'</p>
-		<p><a href="'.$comment->getLink().'">'.$comment->getLink().'<a/></p>
-		</body>
-		</html>
-		';
-		Mail::send_email($user,$mailsubject, $mailmessage);
-	}			
+	}		
 	public static function send_email($reciever,$subject, $message){
 	
 		/* Pentru a trimite un e-mail in format HTML trebuie setat antetul Content-type. */
@@ -107,10 +85,10 @@ class Mail{
 		$antet .= "Content-type: text/html; charset=utf-8\r\n";
 		
 		/* Antete aditionale */
-		$antet .= "From: Portalul Imobiliar \"CasaTa\" <casata.md@gmail.com>\r\n";
+		$antet .= "From: Portalul Imobiliar \"CasaTa\" <casata.md@outlook.com>\r\n";
 		
 		//$antete .= "Cc: birthdayarchive@example.com\r\n";
-		$antet .= "Bcc: vitalie.doni@gmail.com, casata.md@gmail.com\r\n";
+		$antet .= "Bcc: vitalie.doni@gmail.com, casata.md@outlook.com\r\n";
 		
 		/* Si acum sa-i dam drumul... */
 		if (Config::$live) {

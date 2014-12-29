@@ -136,6 +136,14 @@ class Raion extends DBManager {
 		} else {	
 			return null;
 		}
-	}	
+	}
+	function getPrefixes(){
+		$o=DBManager::doSql("SELECT substring(prefix,1,3) as prefix FROM localitate l INNER JOIN prefix p ON l.id = p.localitate_id where raion_id=".$this->id." group by substring(prefix,1,3) order by prefix");
+		if (!is_null($o)){
+			return $o;
+		} else {	
+			return null;
+		}
+	}		
 }
 ?>

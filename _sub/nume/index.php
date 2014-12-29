@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /*
  * Created on 25 Feb 2009
  *
@@ -58,29 +58,12 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->show();
 	}
 														
-	function show1($out=''){
-		$out="";
-		$out.='<div id="container1" class="pure-g">';
-		$out.='<div id="left1" class="pure-u-1-5">';
-		$out.=$this->getLeftContainer();
-		$out.='</div>';		
-		$out.='<div id="center1" class="pure-u-1-1">';
-		$out.=$this->getCenterContainer();
-		$out.='</div>';
-		$out.='<div id="right1" class="pure-u-1-5">';
-		$out.=$this->getRightContainer();
-		$out.='</div>';
-		//$out.='<div style="clear: both;"/></div>';
-		$out.='</div>';
-		MainWebPage::show($out);
-	}
-
 	function show($out=''){
 		$out="";
 		$out.='<div id="container">';
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();
-		$out.='</div>';
+		$out.='</div>';		
 		$out.='<div id="center" class="container center" style="width:600px;">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
@@ -90,15 +73,14 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
-	}	
+	}
 		
 	function getMain(){
 		$n=new Nume();
 		$ns=$n->getAll("","suma desc","0","100");
 		$out='<div class="groupboxtable">';
-		$out.='<table style="width:100%;" class="pure-table pure-table-bordered">';
-		$out.='<thead><tr><th style="width:20%;">Nr</th><th style="width:50%;">Nume de familie</th><th style="width:30%;text-align:center">Numarul total de familii</th></tr></thead>';		
-		$out.="<tbody>";
+		$out.='<table style="width:100%;">';
+		$out.='<tr><th style="width:20%;">Nr</th><th style="width:50%;">Nume de familie</th><th style="width:30%;text-align:center">Numarul total de familii</th></tr>';		
 		if (count($ns)!=0){			
 			$c=1;
 			foreach($ns as $n){
@@ -108,7 +90,6 @@ class IndexLocationsWebPage extends MainWebPage {
 				$c=$c+1;	
 			}
 		}
-		$out.="</tbody>";
 		$out.="</table>";
 		$out.="</div>";		
 		
@@ -414,8 +395,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		return $out;
 	}											
 	function getLeftMenu(){
-		$outm='<div class="pure-menu pure-menu-open">';
-		$outm.='<ul>';
+		$outm='<ul>';
 		//$out.='<li><a href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
 		$outm.='<li><a href="'.$this->getUrl("index.php").'">Top 100 cele mai populare nume de familie</a></li>';
 		$outm.='<li><a href="'.$this->getUrl("index.php","action=viewtop100namesgeograficlylocated").'">Top 100 cele mai raspindite geografic nume de familie</a></li>';
@@ -426,7 +406,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$outm.='<li><a href="'.$this->getUrl("index.php").'">Lista de familii dupa alfabet</a></li>';
 		//$outm.='<li><a href="'.$this->getUrl("index.php").'">Lista de prenume dupa alfabet</a></li>';
 		$outm.='</ul>';
-		$outm.='</div>';
 		$out="";
 		$out.=$this->getGroupBoxH3("Referinte Utile: ",$outm);
 		$out.=$this->getGroupBoxH3("Despre Date:",$this->getInfo());
@@ -451,7 +430,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 		$o1s='<a name="1"></a>Familia '.$this->nume->name;
 		//$o1b='Numele de familie '.$this->nume->name.' este pe locul XXX dupa popularitate si pe locul YYY dupa raspindirea geografica, conform cartii de telefoane exista <b>'.$this->nume->getFamiliesNumber().'</b> familii cu acest nume si sunt presente in <b>'.$this->nume->getLacalitiesNumber().'</b> localitati din RM, vezi mai jos';
-		$o1b='Conform datelor din cartea de telefoane (anul 2007), numele de familie <b>'.$this->nume->name.'</b> se intilneste in <b>'.$this->nume->getLacalitiesNumber().'</b> de localitati din Republica Moldova in care exista <b>'.$this->nume->getFamiliesNumber().'</b> de familii cu acest nume.';
+		$o1b='Conform datelor din cartea de telefoane (anul 2007), numele de familie <b>'.$this->nume->name.'</b> se intilneste in <b>'.$this->nume->getLacalitiesNumber().'</b> localitati din Republica Moldova in care exista <b>'.$this->nume->getFamiliesNumber().'</b> familii cu acest nume.';
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
 
 
@@ -528,7 +507,7 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function getMap($out=''){
 	
-		$this->setBodyTag('onload="initialize('.$this->nume->id.')"');
+		$this->setBodyTag('<body onload="initialize('.$this->nume->id.')">');
 		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript("http://maps.googleapis.com/maps/api/js?libraries=geometry&libraries=visualization&sensor=false");
@@ -546,7 +525,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		if (count($ls)!=0){				
 			$o2s='';
 			$o2b='';
-			$o2s.='<a name="5"></a> Top 100 Localitati in care numeld de familie  "'.$this->nume->name.'"  se intilneste:';
+			$o2s.='<a name="5"></a> Top 100 Localitati in care numele de familie  "'.$this->nume->name.'"  se intilneste:';
 			$o2b.='<div class="groupboxtable">';
 			$o2b.='<table style="width:100%;">';
 			$o2b.='<tr><th style="width:20%;">Nr Ordine</th><th style="width:50%;">Nume de Localitate</th><th style="width:30%;text-align:center">Numarul de familii</th></tr>';

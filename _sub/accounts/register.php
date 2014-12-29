@@ -134,7 +134,7 @@ function actionDefault(){
 		$out.='</div>';
 		$out.='</div>';
 		$outb='<div id="form_row_button" class="form_footer" style="text-align: right;">';
-		$outb.='<input name="salveaza" type="button" class="btn btn-default" value="Inregistreaza-te" onclick="javascript:RegisterOnSave();">';
+		$outb.='<input name="salveaza" type="button" class="button" value="Inregistreaza-te" onclick="javascript:RegisterOnSave();">';
 		$outb.='</div>';
 		$outb.='</form>';
 		//$out.='</div>';
