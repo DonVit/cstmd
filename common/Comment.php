@@ -1,11 +1,4 @@
 <?php
-/*
- * Created on 30 Jul 2009
- *
- */
-//require_once 'lib/fck/fckeditor.php';
-
-
 class Comment extends DBManager {
 	//public $webpage;
 	public $id;
@@ -25,12 +18,7 @@ class Comment extends DBManager {
 	//$this->publickey = '6LcrnMUSAAAAALynnjZ63OqlyUu2__MLp0t4bES_'; 
 	//$this->privatekey = '6LcrnMUSAAAAAKl3eUf4caIhzI2jMNbX8j2-KSFF';       
    }
-   public function getWeb(){
-   	if (substr($this->web,0,7)=="http://")   		
-   		return $this->web;
-   	else
-   		return "http://".$this->web;
-   }  
+ 
    public function getAproveLink(){
    		return $this->getUrl(Config::$mainsite."/comments.php","action=validate&id=".$this->id);
    }
@@ -151,10 +139,6 @@ class Comment extends DBManager {
 		//$out='<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=112580805963&amp;xfbml=1"></script><fb:comments href="'.$webpage->getServerName().$webpage->getRequestURI().'" num_posts="2" width="500"></fb:comments>';
 		//$out='<iframe src="http://www.facebook.com/plugins/like.php?href='.$url.'&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>';
 		if (count($cs)!=0){
-			//$out.='<div class="container groupboxtitle"><h3>Comentarii:</h3></div>';
-			//$out.='<div class="container groupboxheader">';
-			//$out.='<h3>Comentarii:</h3>';		
-			//$out.='</div>';
 			$out.='<div>';
 			$i=1;
 			foreach($cs as $c){
@@ -167,7 +151,7 @@ class Comment extends DBManager {
 				if ($c->web==""){
 					$out.='<span><b>Nume:</b> '.System::getHTML($c->name).' </span>';
 				} else {
-					$out.='<span><b>Nume:</b> <a href="'.$c->getWeb().'">'.System::getHTML($c->name).'</a> </span>';
+					$out.='<span><b>Nume:</b> <a href="'.System::getValidUrl($c->web).'">'.System::getHTML($c->name).'</a> </span>';
 				}
 				if ($c->email!=""){
 					$out.='<span><b>Email:</b> '.$c->email.' </span>';
@@ -180,16 +164,13 @@ class Comment extends DBManager {
 				//	$out.='<span><b>Web:</b> '.$c->web.' </span>';
 				//}
 				$out.='</div>';
-				$out.='<div class="newscomment_body">'.System::getHTML($c->comment).'</div>';								
+				$out.='<div class="newscomment_body">'.$c->comment.'</div>';								
 				$i=$i+1;		
 			}
 			$out.="</div>";
 		} else {
 			$out.='<div><div class="newscomment_body">Nu exista</div></div>';
 		}
-		//$out.=$this->getGroupBoxH3("Comentarii:",$out);
-		//$out.='<div class="container groupboxtitle"><h3>Comentează:</h3></div>';
-		//$out.='<form method="post" name="comment_form" action="'.$webpage.'">';
 		$out.='<div class="container groupboxheader">';
 		$out.='<h3>Comentează:</h3>';		
 		$out.='</div>';
@@ -199,50 +180,15 @@ class Comment extends DBManager {
 		$out.='<tr><td>Telefon:</td><td><input type="text" name="phone" style="width:98%;" value="'.((isset($webpage->phone))?($webpage->phone):'').'"></td></tr>';
 		$out.='<tr><td>Email:<span style="color:red">*</span></td><td><input type="text" name="email" style="width:98%;" value="'.((isset($webpage->email))?($webpage->email):'').'"></td></tr>';
 		$out.='<tr><td>Web Site:</td><td><input type="text" name="web" style="width:98%;"  value="'.((isset($webpage->web))?($webpage->web):'').'"></td></tr>';
-		//$out.='<tr><td>Comentariu:</td><td>';
-		////$oFCKeditor2 = new FCKeditor('comment') ;
-		////$oFCKeditor2->BasePath='/../../common/lib/fck/';
-		//$oFCKeditor2->BasePath=Config::$mainsite.'/common/lib/fck/';
-		//echo $oFCKeditor2->BasePath;
-		//$oFCKeditor2->Config["CustomConfigurationsPath"] = Config::$mainsite.'/common/lib/fck/myfckconfig.js';//"/fck/lib/fck/fckcfg.js" ;
-		//$oFCKeditor2->Height = "150px";
-		//$oFCKeditor2->Config['DefaultLanguage']		= 'en' ;
-		//$oFCKeditor->Config['AutoDetectLanguage'] = false;
-		//$oFCKeditor2->ToolbarSet = 'MyToolbar';
-		////$oFCKeditor2->ToolbarSet = "Basic";
-		//$oFCKeditor2->Config['SkinPath'] = "/fck/lib/fck/editor/skins/silver/" ;
-		////$oFCKeditor2->Value = $webpage->comment;
-		////$out.=$oFCKeditor2->CreateHtml();
-
-//<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/assets/skins/sam/skin.css">
-//<script src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
-//<script src="http://yui.yahooapis.com/2.8.0r4/build/element/element-min.js"></script> 
-//<script src="http://yui.yahooapis.com/2.8.0r4/build/container/container_core-min.js"></script>
-//<script src="http://yui.yahooapis.com/2.8.0r4/build/editor/simpleeditor-min.js"></script>		
-		
-		
-		//$out.='<span style="color:red">*</span></td></tr>';
 		$out.='<tr><td>Comentariu:<span style="color:red">*</span></td><td><textarea id="comment" name="comment" style="width:98%;height:100px;">'.((isset($webpage->comment))?($webpage->comment):'').'</textarea></td></tr>';
-		//$out.='<tr><td>Valideaza:</td><td><input id="validationcode" type="text" name="validationcode" class="input"><img id="validationimage" style="vertical-align: middle;" src="'.Config::$mainsite.'/validationimage.php"></img><span style="color:red">*</span></td></tr>';		
+        //$out.='<textarea name="text">'.$this->currentnews->text.'</textarea>';
+        $out.='<script>            CKEDITOR.replace( \'comment\' );        </script>';				
 		$out.='<script type="text/javascript">';
-		//$out.='        var RecaptchaOptions = {';
-		//$out.='                custom_translations : {';
-		//$out.='                        instructions_visual : "Scrivi le due parole:",';
-		//$out.='                        instructions_audio : "Trascrivi ci\u00f2 che senti:",';
-		//$out.='                        play_again : "Riascolta la traccia audio",';
-		//$out.='                        cant_hear_this : "Scarica la traccia in formato MP3",';
-		//$out.='                        visual_challenge : "Modalit\u00e0 visiva",';
-		//$out.='                        audio_challenge : "Modalit\u00e0 auditiva",';
-		//$out.='                        refresh_btn : "Chiedi due nuove parole",';
-		//$out.='                        help_btn : "Aiuto",';
-		//$out.='                        incorrect_try_again : "Scorretto. Riprova.",';
-		//$out.='                },';
 		$out.='                lang : \'ru\', // Unavailable while writing this code (just for audio challenge)';
 		$out.='                theme : \'red\',';
 		$out.='        };';
 		$out.='</script>';
 		$out.='<tr><td>Validare:<span style="color:red">*</span></td><td>'.recaptcha_get_html($publickey).'</td></tr>';
-		//$out.='<tr><td></td><td><span style="color:red">*</span> - cîmp obligator</td></tr>';
 		if ($errormsg!=""){
 			$out.='<tr><td><br><span style="color:red">Eroare:</span></td><td><br><span style="color:red">'.$errormsg.'</span><br></td></tr>';
 		}
@@ -250,18 +196,6 @@ class Comment extends DBManager {
 		$out.='<tr><td><br>Note:</td><td><br> 1. Cimpul marcat cu <span style="color:red">*</span> este obligator.<br> 2. Comentariul va fi publicat dupa ce va fi verificat de operator!</td></tr>';
 		$out.='</table>';
 		$out.='</form>';
-		//$out.='</div>';
-		
-		//$out.='var myEditor = new YAHOO.widget.Editor(\'comment\', {height: '300px',width: '300px',dompath: true,animate: true});';
-		//$out.='myEditor.render();';
-//$out.="
-//<script>  
-//(function() {
-//    var myEditor = new YAHOO.widget.SimpleEditor('comment',{height: '250px',width: '500px',dompath: true,animate: true});
-//    myEditor.render(); 
-//})();
-//</script>"; 		
-	
 		return $out;
 	}	
 	public static function getAllComments(){
@@ -277,7 +211,7 @@ class Comment extends DBManager {
 				if ($c->web==""){
 					$out.='<span><b> Nume:</b> '.System::getHTML($c->name).'</span>';
 				} else {
-					$out.='<span><b> Nume:</b> <a href="'.$c->getWeb().'">'.System::getHTML($c->name).'</a></span>';
+					$out.='<span><b> Nume:</b> <a href="'.System::getValidUrl($c->web).'">'.System::getHTML($c->name).'</a></span>';
 				}
 				//if ($c->email!=""){
 				//	$out.='<span><b>Email:</b> '.$c->email.' </span>';
@@ -288,7 +222,7 @@ class Comment extends DBManager {
 				$out.='<span><b> Data:</b> '.$c->date.' </span>';
 				$out.='</div>';
 				$out.='<div class="newscomment_body">';
-				$out.=System::getHTML($c->comment);
+				$out.=$c->comment;
 				$out.=' <a href="'.$c->getLink().'">vezi mai mult</a>';
 				$out.='</div>';
 			}

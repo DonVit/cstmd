@@ -15,12 +15,6 @@ class NewsWebPage extends MainWebPage {
 	public $sursa=0;
 	function __construct(){
 		parent::__construct();
-		//$this->setCSS("style/news.css");
-		//$t="Imobiliare: Raionul-".User::getCurrentRaion()->name." Localitatea-".User::getCurrentLocation()->name;
-		//$t="Stiri, Noutati, Evenimente, ... din Republica Moldova";
-		//$t="ŞTIRI IMOBILIARE DIN REPUBLICA MOLDOVA";
-		//$this->setTitle($t);
-		//$this->setLogoTitle($t);
 		$t="ŞTIRI IMOBILIARE DIN REPUBLICA MOLDOVA";
 		$this->setTitle($t);
 		$this->setLogoTitle($t);		

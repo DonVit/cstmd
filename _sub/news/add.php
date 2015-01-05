@@ -1,11 +1,6 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once('loader.php');
-require_once 'lib/fck/fckeditor.php';
- 
+
 class AddNewsWebPage extends MainWebPage {
 	public $step=1;
 	public $steps=5;
@@ -14,130 +9,11 @@ class AddNewsWebPage extends MainWebPage {
 	public $currentnewslocations;
 	
 	public $errormessage="";
-	function _construct(){
-		parent::__construct();
-		//$this->setJavascript("js/scripts.js");
-		//$this->setCSS("style/news.css");
-		$t="Adauga Stire";
-		$this->setTitle($t);
-		$this->setLogoTitle($t);
-		//get news from session
-		$this->currentnews=User::getCurrentNews();
-		//get news files
-		$this->currentfiles=User::getCurrentFiles();
-		//get newslocations from session
-		$this->currentnewslocations=User::getCurrentNewsLocations();
 
-		//Logger::setLogs("current news before=".$this->currentnews);
-		//print_r($_POST);
-		foreach ($_POST as $field => $value) {
-			if ($this->currentnews->isMember($field)){
-				$this->currentnews->$field=$this->getParamValue($value);
-			}
-		}
-		if (!empty($_FILES["image_file"]["name"])){
-			$newfilename=System::getRandomFileName($_FILES["image_file"]["name"]);
-			$this->currentnews->image_file=$newfilename;
-			move_uploaded_file($_FILES["image_file"]["tmp_name"], "images/t".$this->currentnews->image_file);
-			Photo::MakeThumb("images/t".$this->currentnews->image_file, "images/".$this->currentnews->image_file);
-			unlink("images/t".$this->currentnews->image_file);
-		}
-		//set newslocations to db and session
-		if (!empty($this->locations_selected)){
-			$this->currentnewslocations=array();
-			foreach($this->locations_selected as $location){
-				$nl=new NewsLocation();	
-				$nl->news_id=$this->currentnews->id;
-				$nl->localitate_id=$location;
-				$this->currentnewslocations[]=$nl;
-			}
-		}
-		$this->currentnews->save();
-		User::setCurrentNews($this->currentnews);
-		User::setCurrentNewsLocations($this->currentnewslocations);
-		//Logger::setLogs("current news after=".$this->currentnews);
-		//foreach($this->currentnewslocations as $l){
-		//	Logger::setLogs("current newslocations after=".$l);
-		//}
-
-		//Cancel the wizard
-		if ($this->action=="cancel"){
-			User::delCurrentNews();
-			User::delCurrentNewsLocations();
-			$this->redirect("index.php");
-		}
-		
-		if ($this->step==1){
-			$this->step_title="Adauga Stire";
-			if ($this->action=="next"){
-				$this->redirect($this->getBaseName()."?step=".($this->step+1));
-			}		
-			$this->setNews();			
-		}
-		if ($this->step==2){
-			$this->step_title="Adauga Imagine";
-			if ($this->action=="next"){
-				$this->redirect($this->getBaseName()."?step=".($this->step+1));
-			}
-			if ($this->action=="back"){
-				$this->redirect($this->getBaseName()."?step=".($this->step-1));
-			}				
-			//$this->setAdress();
-			$this->setImage();
-		}		
-		if ($this->step==3){
-			//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-			//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
-			$this->step_title="Adauga Pozitia";
-			if ($this->action=="next"){
-				$this->redirect($this->getBaseName()."?step=".($this->step+1));
-			}
-			if ($this->action=="back"){
-				$this->redirect($this->getBaseName()."?step=".($this->step-1));
-			}				
-			$this->setMap();
-		}
-		if ($this->step==4){
-			$this->step_title="Adauga Localitati";
-			if ($this->action=="next"){
-				$this->redirect($this->getBaseName()."?step=".($this->step+1));
-			}
-			if ($this->action=="back"){
-				$this->redirect($this->getBaseName()."?step=".($this->step-1));
-			}				
-			$this->setLocations();
-		}	
-		if ($this->step==5){
-			$this->step_title="Vaideaza!";
-			if ($this->action=="next"){
-				if (User::getValidationCode()==$this->validationcode){
-					$this->currentnews->valid=1;
-					$this->currentnews->save();
-					foreach($this->currentnewslocations as $l){
-						$l->save();
-					}
-					
-					//Photo::makeIcons_MergeCenter("images/".$this->currentnews->image_file, "files/t".$this->currentphoto->file, 100);
-					//Photo::makeIcons_MergeCenter("files/".$this->currentphoto->file, "files/s".$this->currentphoto->file, 300);
-
-					//if (isset($news->file)){
-					//	unlink("files/".$news->file);
-					//}	
-					
-					User::delCurrentNews();
-					User::delCurrentNewsLocations();
-					$this->redirect("index.php?id=".$this->currentnews->id);
-				}
-			}
-			if ($this->action=="back"){
-				$this->redirect($this->getBaseName()."?step=".($this->step-1));
-			}				
-			$this->setValidation();
-		}				
-	}
 	function __construct(){
 		parent::__construct();
 		$this->setJavascript("js/scripts.js");
+		$this->setJavascript("http://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
 		//$this->setCSS("style/news.css");
 		$t="Adauga Stire";
 		$this->setTitle($t);
@@ -292,123 +168,17 @@ class AddNewsWebPage extends MainWebPage {
 		
 		$this->redirect($this->getUrl("add.php"));
 	}			
-	function _show($html=""){
-		$out='<div id="container">';
-		$out.=$html;
-		$out.='</div>';
-		MainWebPage::show($out);
-	}
 	function show(){
 		$out="";
 		$out.='<div id="container">';
-		//$out.='<div id="left" class="container left" style="width:98px;">';
-		//$out.=$this->getLeftContainer();
-		//$out.='</div>';		
 		$out.='<div id="center" class="container center" style="width:1000px;">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		//$out.='<div id="right" class="container right" style="width:98px;">';
-		//$out.=$this->getRightContainer();
-		//$out.='</div>';
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
-	function _setWizardPage($html){
-		$out=' <div id="form_container" class="form_container">';
-		$out.=' <div id="form" class="form">';
-		$out.='  <form id="frmNews" name="frmNews" method="POST" action="'.$this->getBaseName().'?step='.$this->step.'" enctype="multipart/form-data">';
-		$out.='  <input id="action" name="action" type="hidden">';
-		$out.='  <div id="form_header" class="form_header">';
-		$out.='   <div class="form_header_title">'.$this->step_title.'</div>';
-		$out.='   <div class="form_header_steps">Pasul '.$this->step.' din '.$this->steps.'</div>';
-		$out.='   <div style="clear: both;"></div>';
-		$out.='  </div>';
-		$out.='  <div id="formcontrols">';
-		$out.=$html;
-		$out.='  </div>';
-		$out.=' <div class="form_footer">';
-		$out.='  <div class="form_footer_cancel">';
-		$out.='   <input name="cancel" type="button" class="button" value="Anuleaza" onclick="javascript:WizardNavButtonOnClick(\'cancel\');">';
-		$out.='  </div>';
-		$out.='  <div class="form_footer_backnext">';
-		if ($this->step!=1){
-			$out.='  <input name="back" type="button" class="button" value="<< Inapoi" onclick="javascript:WizardNavButtonOnClick(\'back\');">';
-		}
-		if ($this->step==$this->steps){
-			$out.='   <input name="next" type="button" class="button" value="Publica" onclick="javascript:WizardNavButtonOnClick(\'next\');">';
-		} else {
-			$out.='   <input name="next" type="button" class="button" value="Mai depaparte >>" onclick="javascript:WizardNavButtonOnClick(\'next\');">';
-		}
-		$out.='  </div>';
-		$out.='  <div style="clear: both;"></div>';
-		$out.=' </div>';
-		$out.='</form>';
-		$out.='</div>';
-		$out.='</div>';
-		return $out;
-	}
 
-	function _setAdress(){
-		$out='';
-		
-		$out.='<fieldset>';
-		$out.='<legend>Adresa:</legend>';		
-		$out.='<table class="property-table" align="center" style="width: 100%;">';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul:</td>';
-		$out.='<td style="width: 70%;">'.$this->getRaionDropDown($this->currentphoto->raion_id).'</td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Oras/Sat:</td>';
-		$out.='<td style="width: 70%;">'.$this->getLocationDropDown($this->currentphoto->raion_id,$this->currentphoto->localitate_id).'</td>';
-		$out.='</tr>';
-		$out.='</table>';	
-		$out.='</fieldset>'; 
-
-		$this->show($this->setWizardPage($out));
-	}
-	function _getAdress(){
-		$out='';
-		$out.='<fieldset id="fieldset-address-view">';
-		$out.='<legend>Adresa:</legend>';		
-		$out.='<table class="property-table" align="center" style="width: 86%;">';
-		$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getRaion()->getFullName().'</td<td class="property-name" style="width: 25%;">Nr. Casa:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->casa_nr.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getLocation()->getFullName().'</td<td class="property-name" style="width: 25%;">Nr. Scara:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->scara_nr.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Sector:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td<td class="property-name" style="width: 25%;">Nr. Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->apartament_nr.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Strada:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->strada.'</td<td></td><td></td></tr>';	
-		$out.='</table>'; 
-		$out.='</fieldset>'; 		
-		
-		$out.='<fieldset id="fieldset-address-notes-view">';
-		$out.='<legend>Note la Adresa:</legend>';
-		$out.='<table class="property-table" align="center">';
-		$out.='<tr><td class="property-value" style="height:65px;">'.$this->currentproperty->noteadresa.'</td></tr>';
-		$out.='</table>';		
-		$out.='</fieldset>'; 		
-		
-		return $out;
-	}
-	function setMap1(){
-		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
-		
-		$out='';
-		$out.='<div class="form_row">';
-		$out.='<table style="width:100%"><tr><td>';
-		$out.='<input type="input" id="map_title" name="map_title" value="'.$this->currentnews->map_title.'" style="width:100%">';
-		$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$this->currentnews->centerlat.'"/>';
-		$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$this->currentnews->centerlng.'"/>';
-		$out.='<input id="maptype" name="maptype" type="hidden" value="'.$this->currentnews->maptype.'"/>';
-		$out.='<input id="zoom" name="zoom" type="hidden" value="'.$this->currentnews->zoom.'"/>';
-		$out.='<input name="lat" type="hidden" id="lat" readonly="true" class="inptdisabled" value="'.$this->currentnews->lat.'"/>';
-		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->currentnews->lng.'"/>';
-		$out.='</td></tr><tr><td>';
-		$out.='<div id="map"></div>';
-		$out.='</div>';
-		$out.='</td></tr></table>';		
-		return $this->getWizardPage($out);
-	}
 	function setNews(){
 		$out='';
 		//$out.='<fieldset id="fieldset-files">';
@@ -423,13 +193,10 @@ class AddNewsWebPage extends MainWebPage {
 		$out.='<tr><td>Keywords:</td><td><textarea id="note" name="keywords" style="width:600px;;height:50px" >'.$this->currentnews->keywords.'</textarea></td></tr>';			
 		$out.='<tr><td>Data:</td><td><input type="input" id="date" name="date" value="'.$this->currentnews->date.'"></td></tr>';		
 		//$out.='<tr><td>Text:</td><td><textarea id="text" name="text" style="width:600px;;height:500px" >'.$this->currentnews->text.'</textarea></td></tr>';
-		$out.='<tr><td>Text:</td><td>';		
-		$oFCKeditor2 = new FCKeditor('text') ;
-		$oFCKeditor2->BasePath='/lib/fck/';
-		$oFCKeditor2->Config["CustomConfigurationsPath"] = '/lib/fck/myfckconfig.js';;
-		$oFCKeditor2->Height = "500px";
-		$oFCKeditor2->Value = $this->currentnews->text;
-		$out.=$oFCKeditor2->CreateHtml();
+		
+		$out.='<tr><td>Text:</td><td>';
+        $out.='<textarea name="text">'.$this->currentnews->text.'</textarea>';
+        $out.='<script>            CKEDITOR.replace( \'text\' );        </script>';		
 		$out.='</td></tr>';
 		$out.='</table>';			 
 		//$out.='</fieldset>';

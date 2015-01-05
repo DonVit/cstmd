@@ -154,7 +154,7 @@ class DBManager extends Object {
     			$sql.=", `".$name."`";
     		}
 		}
-		$sql.=" from `".$this->getTableName()."` where id='".$id."'";
+		$sql.=" from `".$this->getTableName()."` where id='".$id."' and deleted=0";
 	
 		$result=$this->sql($sql);
 		$num_rows = mysql_num_rows($result);
@@ -178,7 +178,7 @@ class DBManager extends Object {
     			$sql.=", `".$name."`";
     		}
 		}
-		$sql.=" from `".$this->getTableName()."` where id='".$id."'";
+		$sql.=" from `".$this->getTableName()."` where id='".$id."' and deleted=0";
 	
 		$result=$this->sql($sql);
 		if (mysql_num_rows($result)!=0){
