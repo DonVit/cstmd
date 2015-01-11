@@ -4,9 +4,7 @@ require_once('loader.php');
 class IndexWebPage extends MainWebPage {
 	function __construct(){
 		parent::__construct();
-		//$this->setCSS("style/main.css");
 		$this->setCSS(Config::$mainsite."/style/main.css");
-		//$t="Acasa: Raionul-".User::getCurrentRaion()->name." Localitatea-".User::getCurrentLocation()->name;
 		$t="PORTAL IMOBILIAR DIN REPUBLICA MOLDOVA";
 		$this->setTitle($t);
 		$this->setLogoTitle($t);
@@ -18,110 +16,68 @@ class IndexWebPage extends MainWebPage {
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Anunturi Oferte, Cereri Imobiliare</h2>';		
 		$out.='</div>';
-		$out.='<div style="width:168px;float:left;">';
+		$out.='<div id="left" style="width:168px;float:left;">';
 		$out.=$this->getImobilCount();	
-		$out.=$this->getImobilAdd();
-		//$out.=$this->getCompaniesCount();	
-		//$out.=$this->getCompaniesAdd();					
+		$out.=$this->getImobilAdd();				
 		$out.='</div>';			
-		$out.='<div style="width:824px;float:right;">';
-		//$out.=$this->getLastNews();
+		$out.='<div id="center" style="width:824px;float:right;">';
 		$out.=$this->getLastImobil();
-		//$out.=$this->getLastChirie();
-		//$out.=$this->getLastCompanies();
-		//$out.=$this->getLastImages();
 		$out.='</div>';
-		//$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
+		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 		$out.='<div id="group2" class="maingroupbox">';
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Anunturi Oferte, Cereri Chirii</h2>';		
 		$out.='</div>';
-		$out.='<div style="width:168px;float:left;">';
-		//$out.=$this->getImobilCount();	
-		//$out.=$this->getImobilAdd();
+		$out.='<div id="left" style="width:168px;float:left;">';
 		$out.=$this->getChirieCount();	
 		$out.=$this->getChirieAdd();					
 		$out.='</div>';			
-		$out.='<div style="width:824px;float:right;">';
-		//$out.=$this->getLastNews();
+		$out.='<div id="center" style="width:824px;float:right;">';
 		$out.=$this->getLastChirie();
-		//$out.=$this->getLastChirie();
-		//$out.=$this->getLastCompanies();
-		//$out.=$this->getLastImages();
 		$out.='</div>';
-		//$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
+		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';		
-		$out.='<div class="maingroupbox">';
+		$out.='<div id="group3" class="maingroupbox">';
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Stiri Imobiliare</h2>';		
 		$out.='</div>';
-		$out.='<div style="width:168px;float:left;">';
-		//$out.=$this->getImobilCount();	
-		//$out.=$this->getImobilAdd();
-		$out.=$this->getNewsCount();	
-		//$out.=$this->getNewsAdd();					
+		$out.='<div id="left" style="width:168px;float:left;">';
+		$out.=$this->getNewsCount();						
 		$out.='</div>';			
-		$out.='<div style="width:824px;float:right;">';
+		$out.='<div id="center" style="width:824px;float:right;"">';
 		$out.=$this->getLastNews();
-		//$out.=$this->getLastImobil();
-		//$out.=$this->getLastChirie();
-		//$out.=$this->getLastCompanies();
-		//$out.=$this->getLastImages();
 		$out.='</div>';
-		//$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
+		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';	
 
-		
-		$out.='<div class="maingroupbox">';
+		$out.='<div id="group3" class="maingroupbox">';
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Fotografii, Imagini</h2>';		
 		$out.='</div>';
-		$out.='<div style="width:168px;float:left;">';
-		//$out.=$this->getImobilCount();	
-		//$out.=$this->getImobilAdd();
-		$out.=$this->getImagesCount();	
-		//$out.=$this->getNewsAdd();					
+		$out.='<div id="left" style="width:168px;float:left;">';
+		$out.=$this->getImagesCount();						
 		$out.='</div>';			
-		$out.='<div style="width:824px;float:right;">';
+		$out.='<div id="center" style="width:824px;float:right;">';
 		$out.=$this->getLastImages();
-		//$out.=$this->getLastImobil();
-		//$out.=$this->getLastChirie();
-		//$out.=$this->getLastCompanies();
-		//$out.=$this->getLastImages();
 		$out.='</div>';
-		//$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
+		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 
-		$out.='<div class="maingroupbox">';
+		$out.='<div id="group3" class="maingroupbox">';
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Comentarii:</h2>';
 		$out.='</div>';
-		$out.='<div style="width:168px;float:left;">';
+		$out.='<div id="left" style="width:168px;float:left;">';
 		$out.=$this->getCommentsCount();
-		//$out.=$this->getImobilAdd();
-		//$out.=$this->getImagesCount();
-		//$out.=$this->getNewsAdd();
 		
 		$out.='</div>';
-		$out.='<div style="width:824px;float:right;">';
+		$out.='<div id="center" style="width:824px;float:right;">';
 		$out.=$this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments());
-		//$out.=$this->getLastImobil();
-		//$out.=$this->getLastChirie();
-		//$out.=$this->getLastCompanies();
-		//$out.=$this->getLastImages();
 		$out.='</div>';
-		//$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
+		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
-		
-		
 		$out.='</div>';
-		//$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		MainWebPage::show($out);
 	}
@@ -137,44 +93,38 @@ class IndexWebPage extends MainWebPage {
 		$ns=$n->doSql($sql);	
 		$out='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Ultimile Stiri</h2>';
-		$out.='<table style="width:100%"><tr><td>';		
+		$out.='<table width="100%"><tr><td>';		
 		foreach($ns as $n){
 		   		$out.='<h2 class="groupheader_h2"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite.'/index.php','action=viewnews&id='.$n->news_id).'" class="title" target="_self">'.$n->title.'</a></h2>';
 		  		$out.='<table class="news_body"><tr><td style="padding-bottom:5px;">';
 		  		$i=Image::getMainImageByRefType('n', $n->news_id);
 		  		if ($i!=null){
-		  			$out.='<table style="align:left"><tr><td><a href="'.Config::$newssite.'/index.php?id='.$n->news_id.'"><img src="'.Config::$newssite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"/></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($i->imageurl).'" target="_blank">'.System::getDomainFromURL($i->imageurl).'</a></p></td></tr></table>';
+		  			$out.='<table align="left" style1="margin-right:6px;"><tr><td class1="imageframe"><a href="'.Config::$newssite.'/index.php?id='.$n->news_id.'" class1="imga"><img src="'.Config::$newssite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style1="hight:100px; width:150px;border: 1px;border-color: back;border-style: solid;" class="imageborder"></img></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($i->imageurl).'" target="_blank">'.System::getDomainFromURL($i->imageurl).'</a></p></td></tr></table>';
 		  		}
-		  		$out.='<span>'.$n->t.'</span> ... <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite.'/index.php','action=viewnews&id='.$n->news_id).'" target="_self">mai mult</a></td></tr>';
+		  		$out.='<span id="spantext">'.$n->t.'</span> ... <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite.'/index.php','action=viewnews&id='.$n->news_id).'" target="_self">mai mult</a></td></tr>';
 		  		$out.='</table>';
 		}	
 		$out.='</td></tr></table>';
 		$out.='<h2 class="groupfooter_h2"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite.'/index.php').'">mai multe stiri</a></h2>';		
-		$out.='</div>';
-
-		
+		$out.='</div>';	
 		return $out;
 	}	
 	function getLastImobil(){
 		$p=new Property();
-		//$rs=$p->getImobilByPage(0,0,0,0,0,0,0,0,3);
-		//$rs=$p->getAll("scop_id in (1,3)","id desc","0","3");
 		$rs=$p->get3ImobilWithImages();
 		$out='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Ultimile Anunturi</h2>';
-		$out.='<table style="width:100%"><tr><td>';		
+		$out.='<table width="100%"><tr><td>';		
 		foreach($rs as $n){
-		   		$link=$this->getUrlWithSpecialCharsConverted(Config::$imobilsite.'/property.php','id='.$n->id);
-				$out.='<h2 class="groupheader_h2"><a href="'.$link.'" class="title" target="_self">'.$n->getShortDescription().'</a></h2>';
+		   		$out.='<h2 class="groupheader_h2"><a href="'.Config::$imobilsite.'/property.php?id='.$n->id.'" class="title" target="_self">'.$n->getShortDescription().'</a></h2>';
 		  		$out.='<table style="width:100%"><tr><td style="padding-bottom:5px;">';
 		  		$i=Image::getMainImageByRefType('i', $n->id);
 		  		if ($i!=null){
-		  			//$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\"/><p class=\"news_image_tag\"><a href=\"".System::getURLAmpReplace($n->image_url)."\" target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
-		  			$out.='<table style="align:left"><tr><td><img src="'.Config::$imobilsite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"/></td></tr></table>';
+		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$imobilsite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style1="height: 100px; width:130px;"  class="imageborder"></img></td></tr></table>';
 		  		} else {
-		  			$out.='<table style="align:left"><tr><td><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" alt="no image" class="imageborder"/></td></tr></table>';
+		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
 		  		}
-		  		$out.=$n->getLongDescription().' <a href="'.$link.'">vezi mai mult</a></td></tr>';
+		  		$out.=$n->getLongDescription().' <a href='.Config::$imobilsite.'/property.php?id='.$n->id.'>vezi mai mult</a></td></tr>';
 		  		$out.='</table>';
 		}													
 		$out.='</td></tr></table>';
@@ -184,23 +134,20 @@ class IndexWebPage extends MainWebPage {
 	}
 	function getLastChirie(){
 		$p=new Property();
-		//$rs=$p->getImobilByPage(0,0,0,0,0,0,0,0,3);
-		//$rs=$p->getAll("scop_id in (2,4)","id desc","0","3");
 		$rs=$p->get3ChirieWithImages();
 		$out='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Ultimile Anunturi</h2>';
-		$out.='<table style="width:100%"><tr><td>';		
+		$out.='<table width="100%"><tr><td>';		
 		foreach($rs as $n){
-		   		$link=$this->getUrlWithSpecialCharsConverted(Config::$chiriesite.'/property.php','id='.$n->id);
-				$out.='<h2 class="groupheader_h2"><a href="'.$link.'" class="title" target="_self">'.$n->getShortDescription().'</a></h2>';
+		   		$out.='<h2 class="groupheader_h2"><a href="'.Config::$chiriesite.'/property.php?id='.$n->id.'" class="title" target="_self">'.$n->getShortDescription().'</a></h2>';
 		  		$out.='<table style="width:100%"><tr><td style="padding-bottom:5px;">';
 		  		$i=Image::getMainImageByRefType('c', $n->id);
 		  		if ($i!=null){
-		  			$out.='<table style="align:left"><tr><td><img src="'.Config::$chiriesite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"/></td></tr></table>';
+		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$chiriesite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
 		  		} else {
-		  			$out.='<table style="align:left"><tr><td><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" alt="no image" class="imageborder"/></td></tr></table>';
+		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
 		  		}
-		  		$out.=$n->getLongDescription().' <a href="'.$link.'">vezi mai mult</a></td></tr>';
+		  		$out.=$n->getLongDescription().' <a href='.Config::$chiriesite.'/property.php?id='.$n->id.'>vezi mai mult</a></td></tr>';
 		  		$out.='</table>';
 		}													
 		$out.='</td></tr></table>';
@@ -216,7 +163,7 @@ class IndexWebPage extends MainWebPage {
 		$ps=$p->doSql($sql);
 		$out='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Ultimile Imagini</h2>';
-		$out.='<table style="width:100%">';
+		$out.='<table width="100%">';
 		$i=0;
 		foreach($ps as $p){
 			if ($i==0){
@@ -225,8 +172,8 @@ class IndexWebPage extends MainWebPage {
 			if ($i==4){
 				$out.="</tr><tr>";
 			}
-		  	$out.='<td style="padding:10px;vertical-align:top;align:center;">';
-	  		$out.='<div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewimage&id='.$p->id).'"><img src="'.Config::$imagessite.'/files/t'.$p->file.'" alt="'.$p->title.'" class="imageborder"/><p style="font-size:80%;">'.$p->title.'</p></a></div>';	  		
+		  	$out.='<td align="center" style="padding:10px;vertical-align:top;">';
+	  		$out.='<div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewimage&id='.$p->id).'"><img src="'.Config::$imagessite.'/files/t'.$p->file.'" alt="'.$p->title.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img><p style="font-size:80%;">'.$p->title.'</p></a></div>';	  		
 	  		$out.='</td>';
 			if ($i==8){
 				$out.="</tr>";

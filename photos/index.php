@@ -462,14 +462,8 @@ class PhotosWebPage extends MainWebPage {
 		return $out;
 	}	
 	function getImage($p){
-		$out='<table style="width:100%" ><tr><td style="align:center" >';
-		$out.='<table>';
-		$out.='<tr>';
-		$out.='<td>';
+		$out='<table style="width:100%" ><tr><td style="text-align:center" >';
   		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"/></a>';
-  		$out.='</td>';
-		$out.='</tr>';
-		$out.='</table>';
 		$prev=$p->getPrevPhotoId();
 		$tmp='';
 		if ($prev!=0){
