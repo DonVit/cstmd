@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once('loader.php');
  
 //class NewsWebPage extends LocationFilterWebPage {
@@ -180,9 +176,9 @@ class NewsWebPage extends MainWebPage {
 		$out.='<ul>';
 		foreach ($ncs as $nc){
 			if ($categid==$nc->id){
-				$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrl("index.php").'&action=viewcategorie&categ='.$nc->id.'" title="'.$nc->getFieldValueByName("description").'">'.$nc->getFieldValueByName("name").'</a></li>';
+				$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcategorie&categ='.$nc->id).'" title="'.$nc->getFieldValueByName("description").'">'.$nc->getFieldValueByName("name").'</a></li>';
 			} else {
-				$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewcategorie&categ='.$nc->id.'" title="'.$nc->getFieldValueByName("description").'">'.$nc->getFieldValueByName("name").'</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcategorie&categ='.$nc->id).'" title="'.$nc->getFieldValueByName("description").'">'.$nc->getFieldValueByName("name").'</a></li>';
 			}
 		}
 		$out.="</ul>";
@@ -199,11 +195,11 @@ class NewsWebPage extends MainWebPage {
 		$out='<ul>';
 		foreach ($ncs as $nc){
 			//$out.="<li><a href=\"".Config::$companiesite."/index.php?id=".$nc->id."\" title=\"".$nc->website."\">".$nc->name."</a></li>";
-			//$out.='<li><a href="'.$this->getUrl('index.php').'&action=viewsursa&sursa='.$nc->id.'" title="'.$nc->website.'">'.$nc->name.'</a></li>';
+			//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php').'action=viewsursa&sursa='.$nc->id.'" title="'.$nc->website.'">'.$nc->name.'</a></li>';
 			if ($sursa==$nc->id){
-				//$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrl("index.php").'&action=viewsursa&sursa='.$nc->id.'" title="'.$nc->website.'">'.$nc->name.'</a></li>';
+				//$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrlWithSpecialCharsConverted("index.php").'action=viewsursa&sursa='.$nc->id.'" title="'.$nc->website.'">'.$nc->name.'</a></li>';
 			} else {
-				$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewsursa&sursa='.$nc->id.'" title="'.$nc->website.'">'.$nc->name.'</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewsursa&sursa='.$nc->id).'" title="'.$nc->website.'">'.$nc->name.'</a></li>';
 			}						
 		}
 		$out.='</ul>';
@@ -218,9 +214,9 @@ class NewsWebPage extends MainWebPage {
 		$out.='<ul>';
 		foreach ($rs as $r){
 			if ($raionid==$r->id){
-				$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrl("index.php").'&action=viewraion&raion='.$r->id.'" title="'.$r->getFullNameDescription().'">'.$r->getFullName().'</a></li>';
+				$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewraion&raion='.$r->id).'" title="'.$r->getFullNameDescription().'">'.$r->getFullName().'</a></li>';
 			} else {
-				$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewraion&raion='.$r->id.'" title="'.$r->getFullNameDescription().'">'.$r->getFullName().'</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewraion&raion='.$r->id).'" title="'.$r->getFullNameDescription().'">'.$r->getFullName().'</a></li>';
 			}
 		}
 		$out.='</ul>';
@@ -230,7 +226,7 @@ class NewsWebPage extends MainWebPage {
 	function getRssLink(){
 		//$out='<div class="groupbox">';
 		$out.='<ul class="leftmenulist">';
-		$out.='<li><a href="rss.php" title="Ştiri în format RSS">Ştiri în format RSS <img src="'.Config::$mainsite.'/common/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"></img></a></li>';
+		$out.='<li><a href="rss.php" title="Ştiri în format RSS">Ştiri în format RSS <img src="'.Config::$mainsite.'/common/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"/></a></li>';
 		$out.='</ul>';
 		//$out.='</div>';
 		return $out;
@@ -259,7 +255,7 @@ class NewsWebPage extends MainWebPage {
 			$t.=$r->getFullNameDescription();
 			$this->setTitle($t);
 			$out.="<div class=\"groupbox\">";
-			$out.='<h2 class="news_title" align="center">Ştiri Imobiliare relevante la <a href="'.$this->getUrl(Config::$locationssite."/index.php").'&action=viewraion&id='.$r->id.'">'.$r->getFullNameDescription().'</h2>';
+			$out.='<h2 class="news_title" align="center">Ştiri Imobiliare relevante la <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$r->id).'">'.$r->getFullNameDescription().'</h2>';
 			$out.="</div>";
 		}
 		if ($this->localitate!=0){
@@ -269,7 +265,7 @@ class NewsWebPage extends MainWebPage {
 			$t.=$l->getFullNameDescription();
 			$this->setTitle($t);
 			$out.="<div class=\"groupbox\">";
-			$out.='<h2 class="news_title" align="center">Ştiri Imobiliare relevante la <a href="'.$this->getUrl(Config::$locationssite."/index.php").'&action=viewlocalitate&id='.$l->id.'">'.$l->getFullNameDescription().'</h2>';
+			$out.='<h2 class="news_title" align="center">Ştiri Imobiliare relevante la <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate&id='.$l->id).'">'.$l->getFullNameDescription().'</h2>';
 			$out.='</div>';						
 		}
 		if ($this->sursa!=0){
@@ -279,7 +275,7 @@ class NewsWebPage extends MainWebPage {
 			$t.=$c->name;
 			$this->setTitle($t);
 			$out.="<div class=\"groupbox\">";
-			$out.='<h2 align="center">Ştiri Imobiliare relevante la <a href="'.$this->getUrl(Config::$companiesite."/index.php").'&action=viewcompany&id='.$c->id.'" target="_self">'.$c->name.'</a></h2>';
+			$out.='<h2 align="center">Ştiri Imobiliare relevante la <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id).'" target="_self">'.$c->name.'</a></h2>';
 			$out.="</div>";						
 		}		
 		$sql.=" order by date desc limit ".$this->page*$this->rowsperpage.",".$this->rowsperpage;
@@ -288,33 +284,21 @@ class NewsWebPage extends MainWebPage {
 		$ns=$n->doSql($sql);	
 		
 		foreach($ns as $n){
-		   		//$out.="<h2 class=\"news_title\"><a href=\"".$this->getBaseName()."?id=".$n->news_id."&title=".str_replace(" ","-",$n->title)."\"\" class=\"title\" target=\"_self\">".$n->title."</a></h2>";
-/*
-		   		$out.="<h2 class=\"news_title\"><a href=\"".$this->getBaseName()."?id=".$n->news_id."\" class=\"title\" target=\"_self\">".$n->title."</a></h2>";
-		  		$out.="<table class=\"news_body\"><tr><td style=\"padding-bottom:5px;\">";
-		  		if ($n->image_file!=""){
-		  			//$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\"></img><p class=\"news_image_tag\"><a href=\"".System::getURLAmpReplace($n->image_url)."\" target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
-		  			$out.="<table align=\"left\" style=\"margin-right:6px;\"><tr><td class=\"imageframe\"><a href=\"".$this->getBaseName()."?id=".$n->news_id."\" class=\"imga\"><img src=\"images/".$n->image_file."\" alt=\"".$n->image_description."\" style=\"hight:100px; width:150px;border: 1px;border-color: back;border-style: solid;\"></img></a><p class=\"news_image_tag\"><a href=\"".System::getURLAmpReplace($n->image_url)."\" target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
-		  		}
-		  		$out.='<span id="spantext">'.$n->t.'</span> <a href="index.php?id='.$n->news_id.'" target="_self">mai mult</a></td></tr>';
-		  		$out.='<tr><td><table class="news_info"><tr><td align="left">Sursa: <a href="'.Config::$companiesite.'/index.php?id='.$n->company_id.'" target="_self">'.$n->company_name.'</a>  din data: '.date("Y-m-d", strtotime($n->date)).'</td><td>Categorie:<a href="index.php?categ='.$n->news_category_id.'" target="_self">'.$n->news_category_name.'</a></td><td>Vizite:'.$n->news_contor.'</td><td align="right"><a href="redirect.php?id='.$n->news_id.'" target="_blank">ştirea originală</a>&nbsp;&nbsp;<a href="index.php?id='.$n->news_id.'" target="_self">ştirea în cache</a></td></tr></table></td></tr>';
-		  		$out.="</table>";
-*/
-		   		$s='<a href="'.$this->getUrl("index.php").'&action=viewnews&id='.$n->news_id.'" class="title" target="_self">'.$n->title.'</a>';
+
+		   		$s='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewnews&id='.$n->news_id).'" class="title" target="_self">'.$n->title.'</a>';
 		  		$b='<table style="width:100%"><tr><td style="padding-bottom:5px;">';
 		  		$i=Image::getMainImageByRefType('n', $n->news_id);
 		  		if ($i!=null){
-		  			//$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\"></img><p class=\"news_image_tag\"><a href=\"".System::getURLAmpReplace($n->image_url)."\" target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
-		  			$b.='<table align="left" style="margin-right:6px;"><tr><td><a href="'.$this->getUrl("index.php").'&action=viewnews&id='.$n->news_id.'"><img src="data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style="hight:100px; width:150px;" class="imageborder"></img></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($i->imageurl).'" target="_blank">'.System::getDomainFromURL($i->imageurl).'</a></p></td></tr></table>';
-		  			//$b1.='<table align="left" style="margin-right:8px;"><tr><td><a href="'.System::getURLAmpReplace($n->image_url).'" class="imga"><img src="images/'.$n->image_file.'" alt="'.$n->image_description.'" class="imageborder"></img></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($n->image_url).'" target="_blank">'.System::getDomainFromURL($n->image_url).'</a></p></td></tr></table>';
+		  			//$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\"/><p class=\"news_image_tag\"><a href=\"".System::getURLAmpReplace($n->image_url)."\" target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
+		  			$b.='<table style="margin-right:6px;align:left;"><tr><td><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewnews&id='.$n->news_id).'"><img src="data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style="hight:100px; width:150px;" class="imageborder"/></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($i->imageurl).'" target="_blank">'.System::getDomainFromURL($i->imageurl).'</a></p></td></tr></table>';
+		  			//$b1.='<table align="left" style="margin-right:8px;"><tr><td><a href="'.System::getURLAmpReplace($n->image_url).'" class="imga"><img src="images/'.$n->image_file.'" alt="'.$n->image_description.'" class="imageborder"/></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($n->image_url).'" target="_blank">'.System::getDomainFromURL($n->image_url).'</a></p></td></tr></table>';
 		  		}
-		  		$b.='<span id="spantext">'.$n->t.'</span> <a href="'.$this->getUrl("index.php").'&action=viewnews&id='.$n->news_id.'" target="_self">mai mult</a></td></tr>';
-		  		$b.='<tr><td>'.$this->getGroupBoxH3('','<table style="font-size:85%;width:100%"><tr><td align="left">Sursa: <a href="'.$this->getUrl(Config::$companiesite."/index.php").'&action=viewcompany&id='.$n->company_id.'" target="_self">'.$n->company_name.'</a></td><td>Data: '.date("Y-m-d", strtotime($n->date)).'</td><td>Categorie:<a href="index.php?categ='.$n->news_category_id.'" target="_self">'.$n->news_category_name.'</a></td><td>Vizite:'.$n->news_contor.'</td><td align="right"><a href="'.$this->getUrl("index.php").'&action=viewnews&id='.$n->news_id.'" target="_self">ştirea în cache</a></td></tr></table>').'</td></tr>';
+		  		$b.='<span >'.$n->t.'</span> <a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewnews&id='.$n->news_id).'" target="_self">mai mult</a></td></tr>';
+		  		$b.='<tr><td>'.$this->getGroupBoxH3('','<table style="font-size:85%;width:100%"><tr><td style="align:left;">Sursa: <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/index.php','action=viewcompany&id='.$n->company_id).'" target="_self">'.$n->company_name.'</a></td><td>Data: '.date("Y-m-d", strtotime($n->date)).'</td><td>Categorie:<a href="index.php?categ='.$n->news_category_id.'" target="_self">'.$n->news_category_name.'</a></td><td>Vizite:'.$n->news_contor.'</td><td style="align:right;"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewnews&id='.$n->news_id).'" target="_self">ştirea în cache</a></td></tr></table>').'</td></tr>';
 		  		$b.='</table>';
 		  		$out.=$this->getGroupBoxH2($s,$b);		  		
 		}
-		//$out.="</div>";
-		
+
 		$sql="select count(*) as cnt from news where valid=1";
 		if ($this->categ!=0){
 			$sql.=" and news_category=".$this->categ;
@@ -353,14 +337,14 @@ class NewsWebPage extends MainWebPage {
 		$out.='<table><tr><td style="padding-bottom:5px;">';
 		$i=Image::getMainImageByRefType('n', $n->id);
 		if ($i!=null){
-			$out.='<table align="left" style="margin-right:8px;"><tr><td class="imageborder"><a href="'.System::getURLAmpReplace($i->imageurl).'" class="imga"><img src="data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></img></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($i->imageurl).'" target="_blank">'.System::getDomainFromURL($i->imageurl).'</a></p></td></tr></table>';
+			$out.='<table style="margin-right:8px;align:left;"><tr><td class="imageborder"><a href="'.System::getURLAmpReplace($i->imageurl).'" class="imga"><img src="data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"/></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($i->imageurl).'" target="_blank">'.System::getDomainFromURL($i->imageurl).'</a></p></td></tr></table>';
 		}
-		$out.='<span id="spantext">'.$n->text.'</span></td></tr>';
+		$out.='<span id="spantext2">'.$n->text.'</span></td></tr>';
 		$out.='</table>';				
 		return $out;
 	}	
 	function getNewsDetails($n){
-		$out='<table style="font-size:85%;width:100%"><tr><td align="left">Sursa: <a href="'.$this->getUrl(Config::$companiesite."/index.php").'&action=viewcompany&id='.$n->company_id.'" target="_self">'.$n->getCompany()->name.'</a></td><td>Data: '.date("Y-m-d", strtotime($n->date)).'</td><td>Categorie:<a href="index.php?categ='.$n->news_category.'" target="_self">'.$n->getNewsCategory()->name_ro.'</a></td><td>Vizite:'.$n->contor.'</td><td align="right"><a href="redirect.php?id='.$n->id.'" target="_blank">ştirea originală</a></td></tr></table>';				
+		$out='<table style="font-size:85%;width:100%"><tr><td style="align:left;">Sursa: <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/index.php','action=viewcompany&id='.$n->company_id).'" target="_self">'.$n->getCompany()->name.'</a></td><td>Data: '.date("Y-m-d", strtotime($n->date)).'</td><td>Categorie:<a href="index.php?categ='.$n->news_category.'" target="_self">'.$n->getNewsCategory()->name_ro.'</a></td><td>Vizite:'.$n->contor.'</td><td style="align:right;"><a href="redirect.php?id='.$n->id.'" target="_blank">ştirea originală</a></td></tr></table>';				
 		return $out;
 	}
 	function getLocalitatiByNews($n){
@@ -375,9 +359,9 @@ class NewsWebPage extends MainWebPage {
 			$out.="<table  style1=\"font-size:85%;width:100%\"><tr><td>";
 			foreach($ls as $l){
 				if ($l->r_name==$l->l_name){
-						$out.='<a href="'.$this->getUrl("index.php","action=viewlocalitate").'&localitate='.$l->l_id.'" target="_self" title="'.$l->l_name.'">'.$l->l_name.';</a>  ';
+						$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewlocalitate&localitate='.$l->l_id).'" target="_self" title="'.$l->l_name.'">'.$l->l_name.';</a>  ';
 				} else {
-						$out.='<a href="'.$this->getUrl("index.php","action=viewlocalitate").'&localitate='.$l->l_id.'" target="_self" title="'.$l->r_name.'-'.$l->l_name.'">'.$l->r_name.'-'.$l->l_name.';</a>  ';		
+						$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewlocalitate&localitate='.$l->l_id).'" target="_self" title="'.$l->r_name.'-'.$l->l_name.'">'.$l->r_name.'-'.$l->l_name.';</a>  ';		
 				}
 			}
 			$out.="</td></tr></table>";

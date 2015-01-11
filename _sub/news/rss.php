@@ -34,8 +34,8 @@ class RssNewsWebPage extends WebPage {
 
 			$title = $n->title;
 			//$link = Config::$newssite."/index.php?id=".$n->id;
-			//$link = $this->getUrl(Config::$newssite.'/index.php','action=viewnews&id='.$n->id);
-			$link = htmlspecialchars($this->getUrl(Config::$newssite.'/index.php','action=viewnews&id='.$n->id));
+			//$link = $this->getUrlWithSpecialCharsConverted(Config::$newssite.'/index.php','action=viewnews&id='.$n->id);
+			$link = htmlspecialchars($this->getUrlWithSpecialCharsConverted(Config::$newssite.'/index.php','action=viewnews&id='.$n->id));
 			$description = $n->title;
 			$pubDate = date("r", strtotime($n->date));
 			//$image_file = Config::$newssite.'/images/'.$n->image_file;   

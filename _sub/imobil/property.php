@@ -79,7 +79,7 @@ class PropertyWebPage extends MainWebPage {
 		//$out.='<div id="right" class="container right" style="width:800px;">';
 		//$out.=$this->getCenterContainer();
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		
@@ -136,7 +136,7 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<div id="property-view-dateq" style="float:right">';
 		$out.='Vizualizari: '.$this->currentproperty->contor;
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';						
+		$out.='<div style="clear: both;"></div>';						
 		$out.='</div>';
 		return $this->getGroupBoxHtml("<h3>Alte date:</h3>",$out,"");	 
 	}	

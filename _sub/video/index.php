@@ -35,19 +35,19 @@ class VideoWebPage extends MainWebPage {
 		$out.='<div id="right" class="container right" style="width:198px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
 
 	function getRightMenu(){
 		$out='<ul>';
-		//$out.='<li><a href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'">'.$this->getConstants("IndexLocationsWebPageRaioaneTitle").'</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" >'.$this->getConstants("IndexLocationsWebPageOraseTitle").'</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai jos amplasate localitati</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';	
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">'.$this->getConstants("IndexLocationsWebPageRaioaneTitle").'</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=vieworase").'" >'.$this->getConstants("IndexLocationsWebPageOraseTitle").'</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai jos amplasate localitati</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';	
 		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mari sate</a></li>';
 		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mici sate</a></li>';		
 		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai jos amplasate localitati</a></li>';
@@ -95,7 +95,7 @@ class VideoWebPage extends MainWebPage {
 		//$out.='<div id="right">';
 		//$out.=$this->getRightContainer();		
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
 	}
@@ -133,7 +133,7 @@ class VideoWebPage extends MainWebPage {
 		//$out.='<div id="right">';
 		//$out.=$this->getRightContainer();		
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
 	}
@@ -173,7 +173,7 @@ class VideoWebPage extends MainWebPage {
 		//$out.='<div id="right">';
 		//$out.=$this->getRightContainer();		
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
 	}				
@@ -352,7 +352,7 @@ class VideoWebPage extends MainWebPage {
 		$out.='<div id="location-search-box">Cauta Localitate:<input type="text" name="lsearch" value="'.$this->lsearch.'"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
 		//$out.='<div id="location-search-box"><input type="text" id="lsearch" name="lsearch" value="Cauta Localitate" onblur="if (this.value==\'\') this.value=\'Cauta Localitate\';" onfocus="if (this.value==\'Cauta Localitate\') this.value=\'\';"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
 		//$out.='<div id="location-search">'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;

@@ -77,7 +77,7 @@ class FeedBackWebPage extends MainWebPage {
 		$out.='<div id="center" class="container center" style="width:500px;float: none;margin: 0 auto;padding:20px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
@@ -108,7 +108,7 @@ class FeedBackWebPage extends MainWebPage {
 		$out.='</div>';
 		$out.='<div class="form_row">';
 		$out.='<label class="label">Valideaza:</label>';
-		$out.='<input id="validationcode" type="text" name="validationcode" class="input"><img id="validationimage" src="'.Config::$mainsite.'/validationimage.php"></img>';
+		$out.='<input id="validationcode" type="text" name="validationcode" class="input"><img id="validationimage" src="'.Config::$mainsite.'/validationimage.php"/>';
 		$out.='</div>';
 		$out.='<div class="error">';
 		$out.=$this->errormessage;

@@ -26,7 +26,7 @@ class SitemapImagesWebPage extends WebPage {
 
 		foreach($ps as $p){
 			//$link = Config::$imagessite."/index.php?id=".$p->id;
-			$link = htmlspecialchars($this->getUrl(Config::$imagessite.'/index.php','action=viewimage&id='.$p->id));
+			$link = htmlspecialchars($this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewimage&id='.$p->id));
 			$pubDate = date("Y-m-d", strtotime($p->data));
 			$out.='<url>';
 			$out.='<loc>'.$link.'</loc>';

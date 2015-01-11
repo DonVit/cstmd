@@ -63,7 +63,7 @@ function actionDefault(){
 		$out.='<div id="center" class="container center" style="width:500px;float: none;margin: 0 auto;padding:20px;">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		

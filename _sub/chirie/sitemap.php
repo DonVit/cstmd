@@ -26,7 +26,7 @@ class SitemapCompaniesWebPage extends WebPage {
 
 		foreach($cs as $c){
 			//$link = Config::$companiesite."/index.php?id=".$c->id;
-			$link = htmlspecialchars($this->getUrl(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id));
+			$link = htmlspecialchars($this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id));
 			$pubDate = date("Y-m-d", strtotime($c->created_date));
 			$out.='<url>';
 			$out.='<loc>'.$link.'</loc>';

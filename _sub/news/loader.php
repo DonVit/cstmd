@@ -1,9 +1,9 @@
 <?php
 error_reporting(0); 
-$commonpath='../../common/';
+$commonpath='../common/';
 function __autoload($class_name) {
 	global $commonpath;
     require_once $commonpath.$class_name . '.php';
-    require_once '../../common/lib/recaptcha-php-1.11/recaptchalib.php';
+    require_once '../common/lib/recaptcha-php-1.11/recaptchalib.php';
 }
 ?>

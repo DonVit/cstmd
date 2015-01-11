@@ -26,7 +26,7 @@ class SitemapMapsWebPage extends WebPage {
 
 		foreach($ms as $m){
 			//$link = Config::$imagessite."/index.php?id=".$p->id;
-			$link = htmlspecialchars($this->getUrl(Config::$mapssite.'/index.php','action=viewmap&id='.$m->id));
+			$link = htmlspecialchars($this->getUrlWithSpecialCharsConverted(Config::$mapssite.'/index.php','action=viewmap&id='.$m->id));
 			$pubDate = date("Y-m-d", strtotime($m->data));
 			$out.='<url>';
 			$out.='<loc>'.$link.'</loc>';

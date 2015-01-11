@@ -28,7 +28,7 @@ class AdsWebPage extends MainWebPage {
 		$out.='</div>';		
 		//$out.='<div id="right"> my right';
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}

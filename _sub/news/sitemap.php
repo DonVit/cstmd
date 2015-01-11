@@ -26,7 +26,7 @@ class SitemapNewsWebPage extends WebPage {
 
 		foreach($ns as $n){
 			//$link = Config::$newssite."/index.php?id=".$n->id;
-			$link = htmlspecialchars($this->getUrl(Config::$newssite.'/index.php','action=viewnews&id='.$n->id));
+			$link = htmlspecialchars($this->getUrlWithSpecialCharsConverted(Config::$newssite.'/index.php','action=viewnews&id='.$n->id));
 			$pubDate = date("Y-m-d", strtotime($n->date));
 			$out.='<url>';
 			$out.='<loc>'.$link.'</loc>';

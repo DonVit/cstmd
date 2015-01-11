@@ -25,7 +25,7 @@ class ImagesWebPage extends MainWebPage {
 		$out.='<div id="right">';
 		$out.=$this->getRightContainer();		
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';	
 		MainWebPage::show($out);
 	}

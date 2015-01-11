@@ -23,11 +23,11 @@ class LocationElevationWebPage extends MainWebPage {
 		$in='http://chart.apis.google.com/chart?cht=p&chd=t:40,30,20,10&chs=400x200&chl=PCRM%2033%|PLDM%2020%|PL|AMN&chco=FF0000|00FF00|0000FF|FFFF00';
 		$out='image1.jpg';
 		$this->save_image($in,$out);
-		$out.='<img src="image1.jpg"></img>';
+		$out.='<img src="image1.jpg"/>';
 		$out.='</div>';
 		$out.='<div id="right"> my right';
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}

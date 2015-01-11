@@ -25,7 +25,7 @@ class ImagesWebPage extends LocationFilterWebPage {
 		$out.='<div id="right">';
 		$out.=$this->getRightContainer();		
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		LocationFilterWebPage::show($out);
 	}
@@ -121,7 +121,7 @@ class ImagesWebPage extends LocationFilterWebPage {
 		   		$out.="<h2 class=\"news_title\"><a href=\"".$this->getBaseName()."?id=".$n->news_id."\"\" class=\"title\" target=\"_self\">".$n->title."</a></h2>";
 		  		$out.="<table class=\"news_body\"><tr><td style=\"padding-bottom:5px;\">";
 		  		if ($n->image_file!=""){
-		  			$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"images/".$n->image_file."\" alt=\"".$n->image_description."\"></img><p class=\"news_image_tag\"><a href=\"".System::getURLAmpReplace($n->image_url)."\" target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
+		  			$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"images/".$n->image_file."\" alt=\"".$n->image_description."\"/><p class=\"news_image_tag\"><a href=\"".System::getURLAmpReplace($n->image_url)."\" target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
 		  		}
 		  		$out.="&nbsp;&nbsp;&nbsp;".$n->t." <a href=\"index.php?id=$n->news_id\" target=\"_self\">mai mult</a></td></tr>";
 		  		$out.="<tr><td><table class=\"news_info\"><tr><td align=\"left\">Sursa: <a href=\"sources.php?id=".$n->news_source_id."\" target=\"_self\">".$n->news_source_name."</a>  din data: ".date("Y-m-d", strtotime($n->date))."</td><td>Categorie:<a href=\"index.php?categ=".$n->news_category_id."\" target=\"_self\">".$n->news_category_name."</a></td><td>Vizite:".$n->news_contor."</td><td align=\"right\"><a href=\"redirect.php?id=$n->news_id\" target=\"_blank\">ştirea originală</a>&nbsp;&nbsp;<a href=\"index.php?id=$n->news_id\" target=\"_self\">ştirea în cache</a></td></tr></table></td></tr>";
@@ -148,7 +148,7 @@ class ImagesWebPage extends LocationFilterWebPage {
 		   		$out.="<h2 class=\"news_title\"><a href=\"index.php?id=$n->news_id\" class=\"title\" target=\"_self\">".$n->title."</a></h2>";
 		  		$out.="<table class=\"news_body\"><tr><td style=\"padding-bottom:5px;\">";
 		  		if ($n->image_file!=""){
-		  			  		$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"images/".$n->image_file."\" alt=\"".$n->image_description."\"></img><p class=\"news_image_tag\"><a href=".System::getURLAmpReplace($n->image_url)." target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
+		  			  		$out.="<table align=\"left\" style=\"margin-right:5px;\"><tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"images/".$n->image_file."\" alt=\"".$n->image_description."\"/><p class=\"news_image_tag\"><a href=".System::getURLAmpReplace($n->image_url)." target=\"_blank\">".System::getDomainFromURL($n->image_url)."</a></p></td></tr></table>";
 		  		}
 		  		$out.="&nbsp;&nbsp;&nbsp;".nl2br($n->t)."</td></tr>";
 				if (($n->map_lat!="")&&($n->map_lng!="")){
@@ -242,7 +242,7 @@ function getNewsByNewsCategory($id){
 		if ($i==4){
 			$out.="</tr><tr>";
 		}
-		$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"images/$n->image_file\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"></img><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
+		$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"images/$n->image_file\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"/><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
 		if ($i==8){
 			$out.="</tr>";
 		}
@@ -427,9 +427,9 @@ function getPages($page,$rowsperpage,$categ,$raion,$localitate){
 	
 				$out.="<tr>";
 		  		//$out.="<table align=\"left\" style=\"margin-right:5px;\">";
-	//	  		$out.="<tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"files/".$row->file."\" alt=\"".$row->title."\"></img></td></tr>";
+	//	  		$out.="<tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"files/".$row->file."\" alt=\"".$row->title."\"/></td></tr>";
 		  		$out.="<td align=\"center\">";
-		  		$out.="<a href=\"index.php?id=".$row->id."\"><img src=\"files/t".$row->file."\" alt=\"".$row->title."\" style=\"border: 2px solid #C3D9FF;padding:5px;\"></img></a><p>".$row->title."</p>";
+		  		$out.="<a href=\"index.php?id=".$row->id."\"><img src=\"files/t".$row->file."\" alt=\"".$row->title."\" style=\"border: 2px solid #C3D9FF;padding:5px;\"/></a><p>".$row->title."</p>";
 		  		$out.="</td>";
 		  		//$out.="</table>";
 		  		$out.="</tr>";
@@ -452,22 +452,22 @@ function getPages($page,$rowsperpage,$categ,$raion,$localitate){
 		$out.="<tr>";
 		$prev=getPrevPhoto($id);
 		if ($prev!=0){
-			$out.="<td><a href=\"index.php?id=".$prev."\"><img src=\"media_previous_arrow.gif\" alt=\"Precedenta\" ></img></a></td>";	
-			//$out.="<td><a href=\"index.php?id=".$prev."\"><img src=\"previous.jpg\" alt=\"Precedenta\" ></img></a></td>";
+			$out.="<td><a href=\"index.php?id=".$prev."\"><img src=\"media_previous_arrow.gif\" alt=\"Precedenta\" /></a></td>";	
+			//$out.="<td><a href=\"index.php?id=".$prev."\"><img src=\"previous.jpg\" alt=\"Precedenta\" /></a></td>";
 		}
 		while($row = mysql_fetch_object($result)){
 				
 		  		//$out.="<table align=\"left\" style=\"margin-right:5px;\">";
-	//	  		$out.="<tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"files/".$row->file."\" alt=\"".$row->title."\"></img></td></tr>";
+	//	  		$out.="<tr><td style=\"vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;\"><img src=\"files/".$row->file."\" alt=\"".$row->title."\"/></td></tr>";
 		  		$out.="<td>";
-		  		$out.="<a href=\"index.php?id=".$row->id."\"><img src=\"files/t".$row->file."\" alt=\"".$row->title."\" style=\"border: 2px solid #C3D9FF;padding:5px;\"></img></a><p>".$row->title."</p>";
+		  		$out.="<a href=\"index.php?id=".$row->id."\"><img src=\"files/t".$row->file."\" alt=\"".$row->title."\" style=\"border: 2px solid #C3D9FF;padding:5px;\"/></a><p>".$row->title."</p>";
 		  		$out.="</td>";
 		  		//$out.="</table>";
 	
 		}
 		$next=getNextPhoto($id);
 		if ($next!=0){
-			$out.="<td><a href=\"index.php?id=".$next."\"><img src=\"media_next_arrow.gif\" alt=\"Urmatoarea\" ></img></a></td>";	
+			$out.="<td><a href=\"index.php?id=".$next."\"><img src=\"media_next_arrow.gif\" alt=\"Urmatoarea\" /></a></td>";	
 		}
 		$out.="</tr>";
 		$out.="</table>";

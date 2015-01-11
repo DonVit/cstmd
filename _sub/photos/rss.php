@@ -32,7 +32,7 @@ class RssImagesWebPage extends WebPage {
 
 			$title = $p->title;
 			//$link = Config::$imagessite."/index.php?id=".$p->id;
-			$link = $this->getUrl(Config::$imagessite.'/index.php','action=viewimage&id='.$p->id);
+			$link = $this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewimage&id='.$p->id);
 			$description = $p->title;
 			$pubDate = date("r", strtotime($p->data));
 			$image_file = Config::$imagessite."/files/t".$p->file;   

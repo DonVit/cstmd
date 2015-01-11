@@ -8,47 +8,14 @@ require_once('loader.php');
 class MapsWebPage extends MainWebPage {
 	function __construct(){
 		parent::__construct();
-		
-		//if ((isset($this->lat))&&(isset($this->lng))&&(isset($this->title))){
-		/*	
-		if (isset($this->lat)){
-			$m=new Map();
-			$m->centerlat=$this->centerlat;
-			$m->centerlng=$this->centerlng;
-			$m->zoom=$this->zoom;
-			$m->maptype=$this->maptype;
-			$m->lat=$this->lat;
-			$m->lng=$this->lng;
-			$m->title=$this->ptitle;
-			$m->description=$this->pdescription;
-			$m->save();
-			if (isset($m->id)){
-				$this->redirect(Config::$mapssite.'/index.php?id='.$m->id);
-			}
-		}
-		*/
-		
-		
 		$t="HARTI DIN REPUBLICA MOLDOVA";		
 		$this->setTitle($t);
 		$this->setLogoTitle($t);
-
-
 		$this->create();		
 	}
 	function actionDefault(){
-	
 		$this->map=User::getCurrentMap();
-		//$this->setBodyTag('<body onload="OnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;hl=ro&amp;sensor=false&amp;key=".Config::getMapKey($this->getServerName()));
 		$this->setCSS("style/maps.css");
-		//$this->setJavascript("js/scripts.js");
-
-
-		//$this->setLogoTitle("Localitati din Republica Moldova");
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));	
-		//$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
 		$this->show();
 	}
 	function actionViewMap(){
@@ -66,15 +33,7 @@ class MapsWebPage extends MainWebPage {
 			}
 		}	
 		$this->setTitle("Harti Moldova: ".$this->map->title);
-		
-		//$this->setBodyTag('<body onload="OnViewMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;hl=ro&amp;sensor=false&amp;key=".Config::getMapKey($this->getServerName()));
 		$this->setCSS("style/maps.css");
-		//$this->setJavascript("js/scripts.js");
-
-		//$this->setLogoTitle("Localitati din Republica Moldova");
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));	
 		$this->setCenterContainer($this->getGroupBoxH1($this->map->title,$this->getViewMap()));
 		$this->setCenterContainer($this->getGroupBoxH3("Descriere",$this->getViewMapDescription()));
 		$this->setCenterContainer($this->getGroupBoxH3("Alte Date",$this->getSystemDetails()));
@@ -99,31 +58,15 @@ class MapsWebPage extends MainWebPage {
 			
 		}
 		$this->setTitle("Harti Moldova: ".$this->map->title);
-	
-		//$this->setBodyTag('<body onload="OnViewMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;hl=ro&amp;sensor=false&amp;key=".Config::getMapKey($this->getServerName()));
 		$this->setCSS("style/maps.css");
-		//$this->setJavascript("js/scripts.js");
-	
-		//$this->setLogoTitle("Localitati din Republica Moldova");
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setCenterContainer($this->getGroupBoxH1($this->map->title,$this->getViewPoi()));
 		$this->setCenterContainer($this->getGroupBoxH3("Descriere",$this->getViewMapDescription()));
-		//$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'m',$m->id)));
 		$this->showmap();
 	}			
 	function show($html=""){
 		$out='<div id="container">';
-		//$out.='<div id="left">my left';
-		//$out.='</div>';
-		//$out.='<div id="center">';
 		$out.=$this->getMap();
 		$out.=$this->getLastMaps();
-		//$out.='</div>';
-		//$out.='<div id="right"> my right';
-		//$out.='</div>';
-		//$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}
@@ -139,19 +82,17 @@ class MapsWebPage extends MainWebPage {
 		$out.='<div id="right" class="container right" style="width:98px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
 	function getMap($out=''){
 
-		//$this->setBodyTag('<body onload="FullMapViewOnMapLoad()">');
 		$this->setBodyTag('<body onload="MapViewOnMapLoad(true)">');
 		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript(Config::$mainsite."/common/js/maps.js");
 		$this->setJavascript(Config::$mainsite."/common/js/controls.js");
-		//$this->setJavascript("https://www.google.com/jsapi?key=".Config::getGAPIKey($this->getServerName()));
 		
 		$out='';
 		$out.='<form id="poiform" name="poiform" method="post">';		
@@ -168,40 +109,21 @@ class MapsWebPage extends MainWebPage {
 		return $out;
 	}
 	function getLastMaps($out=''){
-	
-		
 		$lastmaps=$this->map->getAll("","id desc","0","20");
-		
 		$out='';
 		$out.='<div id="maps" style="width: 998px;border:1px solid #777777;margin-top: 2px;">';
 		foreach ($lastmaps as $lm){
-		//	$out.='<br>'.$lm->id;
-		//}
-		//$out.='<div>';
-		//foreach($cs as $c){
-		$url=Config::$mapssite."/index.php?l=ro&action=viewmap&id=".$lm->id;
+			$url=$this->getUrlWithSpecialCharsConverted(Config::$mapssite."/index.php","action=viewmap&id=".$lm->id);
 			$out.='<div class="newscomment_head" style="font-size:85%;">';
 			$out.='<span><a href="'.$url.'"># '.$lm->id.'</a></span>';
-			//if ($c->web==""){
 			$out.='<span><b> Titlu:</b> '.System::getHTML($lm->title).'</span>';
-			//} else {
-			//	$out.='<span><b> Nume:</b> <a href="'.$c->web.'">'.System::getHTML($c->name).'</a></span>';
-			//}
-			//if ($c->email!=""){
-			//	$out.='<span><b>Email:</b> '.$c->email.' </span>';
-			//}
-			//if ($c->phone!=""){
-			//	$out.='<span><b>Tel:</b> '.$c->phone.' </span>';
-			//}
 			$out.='<span><b> Data:</b> '.$lm->data.' </span>';
 			$out.='</div>';
 			$out.='<div class="newscomment_body">';
 			$out.=System::getHTML($lm->description);
 			$out.=' <a href="'.$url.'">vezi mai mult</a>';
 			$out.='</div>';
-		}
-		//$out.="</div>";
-		
+		}	
 		$out.='</div>';
 		$out.='</form>';
 		return $out;
@@ -214,8 +136,6 @@ class MapsWebPage extends MainWebPage {
 		
 		$out='';
 		$out='<form id="poiform" name="poiform" method="post">';		
-		//$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$this->map->centerlat.'"/>';
-		//$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$this->map->centerlng.'"/>';
 		$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$this->map->lat.'"/>';
 		$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$this->map->lng.'"/>';
 		
@@ -267,7 +187,7 @@ class MapsWebPage extends MainWebPage {
 		$out.='<div id="property-view-dateq" style="float:right">';
 		$out.='Vizualizari: '.$this->map->contor;
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
 	}							

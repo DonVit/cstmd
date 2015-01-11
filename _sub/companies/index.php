@@ -1,18 +1,10 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once('loader.php');
  class CompaniesWebPage extends MainWebPage {
 	public $rowsperpage=10;
 	public $page;
 	function __construct(){
 		parent::__construct();
-		//$this->setCSS("style/styles.css");
-		//$t="COMPANII, TIPURI COMPANII DIN REPUBLICA MOLDOVA";
-		//$this->setTitle($t);
-		//$this->setLogoTitle($t);
 		$t="COMPANII DIN REPUBLICA MOLDOVA";
 		$this->setLogoTitle($t);		
 		$this->create();		
@@ -24,13 +16,9 @@ require_once('loader.php');
 		}
 		$this->setTitle($t);	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyTypeList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getGroupBoxH1($t,$this->getCompanyTypes()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getRaions(0)));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
 	}
 	function actionViewCompany(){
@@ -50,37 +38,23 @@ require_once('loader.php');
 			}
 		}
 		User::setCurrentFiles($fs);		
-		
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));			
 
 		$this->setTitle('Companii in Moldova: '.$c->name);
 		$this->setDescription($c->description);
-		
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu:",$this->getMenu()));
-		
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyTypeList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
-		//$this->setCenterContainer($this->getGroupBoxH3($this->getCompanyTitle($c)));
 		$this->setCenterContainer($this->getGroupBoxH1($this->getCompanyTitle($c),$this->getCompanyDetails($c)));
-		$this->setCenterContainer($this->getGroupBoxH3('<a name="2"></a>Adresa:',$this->getAdress($c)));
+		$this->setCenterContainer($this->getGroupBoxH3('<a id="2"></a>Adresa:',$this->getAdress($c)));
 		
-		$this->setCenterContainer($this->getGroupBoxH3('<a name="3"></a>Contacte:',$this->getContacts($c)));
-		$this->setCenterContainer($this->getGroupBoxH3('<a name="4"></a>Pozitia pe Harta:',$this->getMap($c)));
-		$this->setCenterContainer($this->getGroupBoxH3('<a name="5"></a>Imagini:',$this->getFiles()));
+		$this->setCenterContainer($this->getGroupBoxH3('<a id="3"></a>Contacte:',$this->getContacts($c)));
+		$this->setCenterContainer($this->getGroupBoxH3('<a id="4"></a>Pozitia pe Harta:',$this->getMap($c)));
+		$this->setCenterContainer($this->getGroupBoxH3('<a id="5"></a>Imagini:',$this->getFiles()));
 		$n=new News();
 		
-		$this->setCenterContainer($this->getGroupBoxH3('<a name="6"></a>Ştiri ce aparţin acestei surse:',$n->getNewsByCompany($c)));
+		$this->setCenterContainer($this->getGroupBoxH3('<a id="6"></a>Ştiri ce aparţin acestei surse:',$n->getNewsByCompany($c)));
 		$this->setCenterContainer($this->getGroupBoxH3('Alte date:',$this->getSystemDetails($c)));
 		
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));
-		//$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getRaions(0)));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));
-		$c='<a name="10"></a>Forum/Comentarii:';
+		$c='<a id="10"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'c',$this->id)));
 		
 		$this->show();
@@ -98,25 +72,10 @@ require_once('loader.php');
 			$this->id=0;
 			$this->setTitle('Companii in Moldova: ');			
 		}
-
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));			
-
-		
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyTypeList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getCompanies($this->id,$this->page));
-		//$this->setCenterContainer($this->getGroupBoxH3("Adresa:",$this->getCompanyAddress($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Contacte:",$this->getCompanyContacts($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe Harta:",$this->getMap($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Ştiri ce aparţin acestei surse:",$this->getCompanyNews($c)));		
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getRaions(0)));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
 	}	
 	function actionViewCompaniesByRaion(){
@@ -130,25 +89,10 @@ require_once('loader.php');
 			$this->id=0;
 			$this->setTitle('Companii in Moldova: ');			
 		}
-
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));			
-
-		
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyTypeList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getCompaniesByRaion($this->id,$this->page));
-		//$this->setCenterContainer($this->getGroupBoxH3("Adresa:",$this->getCompanyAddress($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Contacte:",$this->getCompanyContacts($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe Harta:",$this->getMap($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Ştiri ce aparţin acestei surse:",$this->getCompanyNews($c)));		
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getRaions($this->id)));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
 	}
 	function actionViewCompaniesByLocation(){
@@ -162,25 +106,10 @@ require_once('loader.php');
 			$this->id=0;
 			$this->setTitle('Companii in Moldova: ');			
 		}
-
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));			
-
-		
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyTypeList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getCompaniesByLocation($this->id,$this->page));
-		//$this->setCenterContainer($this->getGroupBoxH3("Adresa:",$this->getCompanyAddress($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Contacte:",$this->getCompanyContacts($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe Harta:",$this->getMap($c)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Ştiri ce aparţin acestei surse:",$this->getCompanyNews($c)));		
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getLocations($this->id)));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
 	}						
 	function show($out=''){
@@ -195,49 +124,43 @@ require_once('loader.php');
 		$out.='<div id="right" class="container right" style="width:198px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}			
 	function getMenu(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#1").'">Descriere</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#2").'">Adresa</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#3").'">Contacte</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#4").'">Harta</a></li>';	
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#5").'">Imagini</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#6").'">Stiri</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#1").'">Descriere</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#2").'">Adresa</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#3").'">Contacte</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#4").'">Harta</a></li>';	
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#5").'">Imagini</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#6").'">Stiri</a></li>';		
 		$out.='</ul>';
 		return $out;
 	}
 	function getMenuLinks(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("add.php").'">Adauga Companie</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'">Lista Tipuri Companii</a></li>';		
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompanies").'">Lista Companii</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("add.php").'">Adauga Companie</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Lista Tipuri Companii</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies").'">Lista Companii</a></li>';		
 		$out.='</ul>';
 		return $out;
 	}
 	function getRssLink(){
 		$out='<ul>';
-		$out.='<li><a href="rss.php">Companii in RSS <img src="'.Config::$mainsite.'/common/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"></img></a></li>';
+		$out.='<li><a href="rss.php">Companii in RSS <img src="'.Config::$mainsite.'/common/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"/></a></li>';
 		$out.='</ul>';
 		return $out;
 	}
 	function getCompanyTypes(){
 		$c=new CompanyType;
 		$cs=$c->getAll("","`name`");
-		//$out="<div class=\"groupbox\">";
 		$out='';
 		foreach ($cs as $c){
-			//$out.='<li><a href="'.$this->getBaseName().'?view=companies&type='.$c->id.'">'.$c->name.'</a></li>';
-			$url=$this->getUrl("index.php","action=viewcompanies&id=".$c->id);
-			$out.='<h3><a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$c->id).'">'.$c->name.'</a></h3>';
-			//$out.='<h3><a href="'.$this->getBaseName().'?view=companies&type='.$c->id.'">'.$c->name.'</a></h3>';
-		
+			$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$c->id);
+			$out.='<h3><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$c->id).'">'.$c->name.'</a></h3>';		
 		}
-		//$out.="</ul>";
-		//$out.="</div>";
 		return $out;
 	}	
 	function getCompanies($type,$page){	
@@ -250,21 +173,21 @@ require_once('loader.php');
 		$out='';
 		foreach($ps as $p){
 	
-			$o="<table width=\"100%\"><tr><td align=\"center\">";
-			$o.="<table  style=\"width: 100%\" class=\"source\">";
+			$o='<table style="width: 100%"><tr><td style="align:center">';
+			$o.='<table  style="width: 100%" class="source">';
 			$img=Image::getMainImageByRefType('f', $p->id);
 			if ($img!=""){
-				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" style="align:right;valign:top;"><img src="data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 			} else {
-				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" style="align:right;valign:top;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 			}
 			$o.="<tr><td>Adresa:</td><td>".$p->getAdresa()."</td></tr>";
 			$o.="<tr><td></td><td></td></tr>";
-			$o.='<tr><td colspan="2"><a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai multe detalii aici</a></td></tr>';
+			$o.='<tr><td colspan="2"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompany&id='.$p->id).'">vezi mai multe detalii aici</a></td></tr>';
 			$o.="</table>"; 			
 			$o.="</td></tr></table>";
-			$h='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">'.$p->name.'</a>';			
-			//$f='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
+			$h='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompany&id='.$p->id).'">'.$p->name.'</a>';			
+			//$f='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
 			$out.=$this->getGroupBoxH1($h,$o);	
 		}
 		$sql="select count(*) as cnt from company where deleted=0 and valid=1";
@@ -280,33 +203,17 @@ require_once('loader.php');
 		//echo $cnt."-".$rowsperpage;
 		if ($cnt>$this->rowsperpage){
 			$out.='<div class="groupbox">';
-			$out.='<table width="100%"><tr><td align="center">';	
+			$out.='<table style="width:100%" ><tr><td style="align:center;" >';	
 			if ($page!=0){
-				$out.='<a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$type."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
+				$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$type."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
 			}
 			$out.=" ";
 			if ((($page+1)*$this->rowsperpage)<$cnt){
-				$out.='<a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$type."&page=".($page+1)).'" class="link_button">Inainte ></a>';
+				$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$type."&page=".($page+1)).'" class="link_button">Inainte ></a>';
 			}
 			$out.='</td></tr></table>';
 			$out.='</div>';			
 		}
-		return $out;
-	}
-	function getCompanyTypes1(){
-		$c=new CompanyType;
-		$cs=$c->getAll("","`name`");
-		//$out="<div class=\"groupbox\">";
-		//$out.="<ul class=\"leftmenulist\">";
-		foreach ($cs as $c){
-			//$out.='<li><a href="'.$this->getBaseName().'?view=companies&type='.$c->id.'">'.$c->name.'</a></li>';
-			$url=$this->getUrl("index.php","action=viewcompanies&id=".$c->id);
-			$out.='<h3><a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$c->id).'">'.$c->name.'</a></h3>';
-			//$out.='<h3><a href="'.$this->getBaseName().'?view=companies&type='.$c->id.'">'.$c->name.'</a></h3>';
-		
-		}
-		//$out.="</ul>";
-		//$out.="</div>";
 		return $out;
 	}	
 	function getCompaniesByRaion($raionid,$page){	
@@ -319,21 +226,21 @@ require_once('loader.php');
 		$out='';
 		foreach($ps as $p){
 	
-			$o="<table width=\"100%\"><tr><td align=\"center\">";
-			$o.="<table  style=\"width: 100%\" class=\"source\">";
+			$o='<table style="width: 100%"><tr><td style="align:center">';
+			$o.='<table  style="width: 100%" class="source">';
 			$img=Image::getMainImageByRefType('f', $p->id);
 			if ($img!=null){
-				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" style="align:right;valign:top;"><img src="data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 			} else {
-				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" style="align:right;valign:top;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 			}
 			$o.="<tr><td>Adresa:</td><td>".$p->getAdresa()."</td></tr>";
 			$o.="<tr><td></td><td></td></tr>";
-			$o.='<tr><td colspan="2"><a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai multe detalii aici</a></td></tr>';
+			$o.='<tr><td colspan="2"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompany&id='.$p->id).'">vezi mai multe detalii aici</a></td></tr>';
 			$o.="</table>"; 			
 			$o.="</td></tr></table>";
-			$h='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">'.$p->name.'</a>';			
-			//$f='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
+			$h='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompany&id='.$p->id).'">'.$p->name.'</a>';			
+			//$f='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
 			$out.=$this->getGroupBoxH1($h,$o);	
 		}
 		$sql="select count(*) as cnt from company where deleted=0 and valid=1";
@@ -349,13 +256,13 @@ require_once('loader.php');
 		//echo $cnt."-".$rowsperpage;
 		if ($cnt>$this->rowsperpage){
 			$out.='<div class="groupbox">';
-			$out.='<table width="100%"><tr><td align="center">';	
+			$out.='<table style="width:100%" ><tr><td style="align:center;" >';	
 			if ($page!=0){
-				$out.='<a href="'.$this->getUrl("index.php","action=viewcompaniesbyraion&id=".$raionid."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
+				$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompaniesbyraion&id=".$raionid."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
 			}
 			$out.=" ";
 			if ((($page+1)*$this->rowsperpage)<$cnt){
-				$out.='<a href="'.$this->getUrl("index.php","action=viewcompaniesbyraion&id=".$raionid."&page=".($page+1)).'" class="link_button">Inainte ></a>';
+				$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompaniesbyraion&id=".$raionid."&page=".($page+1)).'" class="link_button">Inainte ></a>';
 			}
 			$out.='</td></tr></table>';
 			$out.='</div>';			
@@ -373,21 +280,21 @@ require_once('loader.php');
 		if (count($ps)!=0){
 			foreach($ps as $p){
 		
-				$o="<table width=\"100%\"><tr><td align=\"center\">";
-				$o.="<table  style=\"width: 100%\" class=\"source\">";
+				$o='<table style="width: 100%"><tr><td style="align:center">';
+				$o.='<table  style="width: 100%" class="source">';
 				$img=Image::getMainImageByRefType('f', $p->id);
 				if ($img!=null){
-					$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+					$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" style="align:right;valign:top;"><img src="data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 				} else {
-					$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+					$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" style="align:right;valign:top;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 				}
 				$o.="<tr><td>Adresa:</td><td>".$p->getAdresa()."</td></tr>";
 				$o.="<tr><td></td><td></td></tr>";
-				$o.='<tr><td colspan="2"><a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai multe detalii aici</a></td></tr>';
+				$o.='<tr><td colspan="2"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompany&id='.$p->id).'">vezi mai multe detalii aici</a></td></tr>';
 				$o.="</table>"; 			
 				$o.="</td></tr></table>";
-				$h='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">'.$p->name.'</a>';			
-				//$f='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
+				$h='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompany&id='.$p->id).'">'.$p->name.'</a>';			
+				//$f='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
 				$out.=$this->getGroupBoxH1($h,$o);	
 			}
 		
@@ -404,13 +311,13 @@ require_once('loader.php');
 			//echo $cnt."-".$rowsperpage;
 			if ($cnt>$this->rowsperpage){
 				$out.='<div class="groupbox">';
-				$out.='<table width="100%"><tr><td align="center">';	
+				$out.='<table style="width:100%" ><tr><td style="align:center;" >';	
 				if ($page!=0){
-					$out.='<a href="'.$this->getUrl("index.php","action=viewcompaniesbylocation&id=".$locationid."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
+					$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompaniesbylocation&id=".$locationid."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
 				}
 				$out.=" ";
 				if ((($page+1)*$this->rowsperpage)<$cnt){
-					$out.='<a href="'.$this->getUrl("index.php","action=viewcompaniesbylocation&id=".$locationid."&page=".($page+1)).'" class="link_button">Inainte ></a>';
+					$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompaniesbylocation&id=".$locationid."&page=".($page+1)).'" class="link_button">Inainte ></a>';
 				}
 				$out.='</td></tr></table>';
 				$out.='</div>';			
@@ -419,34 +326,28 @@ require_once('loader.php');
 		return $out;
 	}		
 	function getCompanyTitle($c){
-		$out='<a name="1"></a><h1 style="text-align: center;">'.$c->name.'</h1>';
+		$out='<a id="1"></a>'.$c->name;
 		return $out;
 	}
 	function getCompanyDetails($c){
-
-		//$out='<h2 style="text-align:left;border-bottom:2px #777777 solid; padding:2px;"><a href="'.$this->getBaseName().'?id='.$c->id.'" target="_self" class="sourcetitle">'.$c->name.'</a></h2>';
-
-		$out='<table width="100%">';	
+		$out='<table style="width:100%" >';	
 		$i=Image::getMainImageByRefType('f', $c->id);
-		//if ($i!=null){
-		//	$out.='<table align="left" style="margin-right:8px;"><tr><td class="imageborder"><a href="'.System::getURLAmpReplace($n->image_url).'" class="imga"><img src="data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></img></a><p class="news_image_tag"><a href="'.System::getURLAmpReplace($n->image_url).'" target="_blank">'.System::getDomainFromURL($n->image_url).'</a></p></td></tr></table>';
-		//}			
 		if ($i!=null){
-			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td align="right" valign="top"><img src="data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td style="align:right;valign:top;"><img src="data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"/></td></tr>';
 		} else {
-			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td align="right" valign="top"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td style="align:right;valign:top;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" class="imageborder"/></td></tr>';
 		}
 		$out.='</table>';		
-		$out.='<table width="100%">';		
-		$out.='<tr><td style="width:20%">Tip Companie:</td><td><a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$c->company_type_id).'" target="_self">'.$c->getCompanyType()->name.'</a></td></tr>';		
+		$out.='<table style="width:100%" >';		
+		$out.='<tr><td style="width:20%">Tip Companie:</td><td><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$c->company_type_id).'" target="_self">'.$c->getCompanyType()->name.'</a></td></tr>';		
 		$out.='</table>';		
 		
 		return $out;
 	}
 	function getCompanyAddress1($c){
-		$out='<table width="100%">';		
-		$out.='<tr><td style="width:20%">Municipiu/Raion:</td><td><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewraion").'&id='.$c->getRaion()->id.'" >'.$c->getRaion()->getFullName().'</a></td></tr>';
-		$out.='<tr><td>Oras/Sat:</td><td><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate").'&id='.$c->getLocalitate()->id.'" >'.$c->getLocalitate()->getFullName().'</a></td></tr>';
+		$out='<table style="width:100%" >';		
+		$out.='<tr><td style="width:20%">Municipiu/Raion:</td><td><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion").'&id='.$c->getRaion()->id.'" >'.$c->getRaion()->getFullName().'</a></td></tr>';
+		$out.='<tr><td>Oras/Sat:</td><td><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate").'&id='.$c->getLocalitate()->id.'" >'.$c->getLocalitate()->getFullName().'</a></td></tr>';
 		$out.='<tr><td>Sector/Regiune:</td><td>'.$c->getSector()->name.'</td></tr>';				
 		$out.='<tr><td>Strada:</td><td>'.$c->strada.'</td></tr>';
 		$out.='</table>';		
@@ -454,9 +355,7 @@ require_once('loader.php');
  		return $out;
  	}	
 	function getCompanyContacts($c){
-		//$out.='<fieldset id="contacts">';
-		//$out.='<legend>Contacte:</legend>';
-		$out='<table width="100%">';
+		$out='<table style="width:100%" >';
 		if ($c->phone2==''){
 			$out.='<tr><td style="width:20%">Telefon:</td><td>'.$c->phone1.'</td></tr>';
 		} else {
@@ -492,11 +391,11 @@ require_once('loader.php');
 				}
 				$img=Image::getMainImageByRefType('n', $n->id);
 				if($img!=null){
-					$out.='<td><div><a href="'.$this->getUrl(Config::$newssite."/index.php","action=viewnews&id=".$n->id).'"><img src="'.Config::$newssite.'/data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style="width:120px;"></img><p>'.$n->title.'</p></a></div></td>';
+					$out.='<td><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewnews&id=".$n->id).'"><img src="'.Config::$newssite.'/data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" style="width:120px;"/><p>'.$n->title.'</p></a></div></td>';
 				}else{
-					$out.='<td><div><a href="'.$this->getUrl(Config::$newssite."/index.php","action=viewnews&id=".$n->id).'"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" alt="no image" style="width:120px;"></img><p>'.$n->title.'</p></a></div></td>';
+					$out.='<td><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewnews&id=".$n->id).'"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" alt="no image" style="width:120px;"/><p>'.$n->title.'</p></a></div></td>';
 				}
-				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"></img><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
+				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"/><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
 				
 				if ($i==8)	{
 					$out.='</tr>';
@@ -518,7 +417,7 @@ require_once('loader.php');
 		$out.='<div id="right">';
 		$out.=$this->getRightContainer();		
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';	
 		MainWebPage::show($out);
 	}
@@ -530,63 +429,16 @@ require_once('loader.php');
 
 		return $out;	
 	}
-	function getMain1(){
-		$out="";
-		if (isset($this->view)){
-			$rowsperpage=12;
-			$out.=$this->getCompanies($this->type,$this->page,$rowsperpage);
-		}elseif (isset($this->id)){
-			$out.=$this->getCompanyById($this->id);	
-			$out.=$this->getNewsByNewsCompany($this->id);		
-		} else {
-			$out.=$this->getCompanyTypes();
-		}		
-		return $out;
-	}		
-	function getCenterContainer1(){
-		$out="";
-		if (isset($this->view)){
-			$rowsperpage=12;
-			$out.=$this->getCompanies($this->type,$this->page,$rowsperpage);
-		}elseif (isset($this->id)){
-			$out.=$this->getCompanyById($this->id);	
-			$out.=$this->getNewsByNewsCompany($this->id);		
-		} else {
-			$out.=$this->getCompanyTypes();
-		}		
-		return $out;
-	}
-	function getRightContainer1(){
-		$out="";
-		$out.=$this->getRssLink();
-		return $out;
-	}					
-	function getCompanyList1(){
-		$out='<div class="groupbox">';
-		$out.='<ul class="leftmenulist">';
-		$out.='<li><a href="index.php?view=companies">Lista Companii</a></li>';
-		$out.='</ul>';
-		$out.='</div>';
-		return $out;
-	}
-	function getCompanyTypeList1(){
-		$out='<div class="groupbox">';
-		$out.='<ul class="leftmenulist">';
-		$out.='<li><a href="index.php">Lista Tipuri Companii</a></li>';
-		$out.='</ul>';
-		$out.='</div>';
-		return $out;
-	}
 	function getRaions($raionid){		
 		$r=new Raion();
 		$rs=$r->getAll("","municipiu desc");
 		$out="<ul>";
 		foreach($rs as $r){	
 			if ($r->id==$raionid){
-				$out.='<li style="font-weight:bold;"><a href="'.$this->getUrl("index.php").'&action=viewcompaniesbyraion&id='.$r->id.'">'.$r->getFullName().'</a></li>';			
+				$out.='<li style="font-weight:bold;"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompaniesbyraion&id='.$r->id).'">'.$r->getFullName().'</a></li>';			
 				$out.=$this->getLocationsByRaion($raionid);
 			} else {
-				$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewcompaniesbyraion&id='.$r->id.'">'.$r->getFullName().'</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompaniesbyraion&id='.$r->id).'">'.$r->getFullName().'</a></li>';
 			}
 		}
 		$out.="</ul>";
@@ -598,9 +450,9 @@ require_once('loader.php');
 		$out="<ul style=\"margin:10px;\">";
 		foreach($ls as $l){	
 			if ($locationid==$l->id){
-				$out.='<li style="list-style-type: circle;font-weight:bold;"><a href="'.$this->getUrl("index.php").'&action=viewcompaniesbylocation&id='.$l->id.'">'.$l->getFullName().'</a></li>';
+				$out.='<li style="list-style-type: circle;font-weight:bold;"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompaniesbylocation&id='.$l->id).'">'.$l->getFullName().'</a></li>';
 			} else {
-				$out.='<li style="list-style-type: circle;"><a href="'.$this->getUrl("index.php").'&action=viewcompaniesbylocation&id='.$l->id.'">'.$l->getFullName().'</a></li>';
+				$out.='<li style="list-style-type: circle;"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompaniesbylocation&id='.$l->id).'">'.$l->getFullName().'</a></li>';
 			}
 						
 		}
@@ -617,10 +469,10 @@ require_once('loader.php');
 		$out="<ul>";
 		foreach($rs as $r){	
 			if ($r->id==$l->raion_id){
-				$out.='<li style="font-weight:bold;"><a href="'.$this->getUrl("index.php").'&action=viewcompaniesbyraion&id='.$r->id.'">'.$r->getFullName().'</a></li>';			
+				$out.='<li style="font-weight:bold;"><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompaniesbyraion&id='.$r->id).'">'.$r->getFullName().'</a></li>';			
 				$out.=$this->getLocationsByRaion($l->raion_id,$locationid);
 			} else {
-				$out.='<li><a href="'.$this->getUrl("index.php").'&action=viewcompaniesbyraion&id='.$r->id.'">'.$r->getFullName().'</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcompaniesbyraion&id='.$r->id).'">'.$r->getFullName().'</a></li>';
 			}
 		}
 		$out.="</ul>";
@@ -628,13 +480,13 @@ require_once('loader.php');
 	}				
 	function getSystemDetails($c){
 		$out='<div>';
-		$out.='<div id="property-view-dateq" style="float:left">';
+		$out.='<div id="property-view-dateq1" style="float:left">';
 		$out.='Data publicarii: '.$c->getData();
 		$out.='</div>';
-		$out.='<div id="property-view-dateq" style="float:right">';
+		$out.='<div id="property-view-dateq2" style="float:right">';
 		$out.='Vizualizari: '.$c->contor;
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
 	}

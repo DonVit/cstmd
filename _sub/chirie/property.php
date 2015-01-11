@@ -76,7 +76,7 @@ class PropertyWebPage extends MainWebPage {
 		//$out.='<div id="right" class="container right" style="width:800px;">';
 		//$out.=$this->getCenterContainer();
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		
@@ -132,7 +132,7 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<div id="property-view-dateq" style="float:right">';
 		$out.='Vizualizari: '.$this->currentproperty->contor;
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';						
+		$out.='<div style="clear: both;"></div>';						
 		$out.='</div>';
 		return $this->getGroupBoxHtml("<h3>Alte date:</h3>",$out,"");	 
 	}	
@@ -344,8 +344,8 @@ class PropertyWebPage extends MainWebPage {
 			//$out.='<fieldset id="fieldset-address-view">';
 			//$out.='<legend>Adresa:</legend>';		
 			$out.='<table class="property-table" align="center" style="width: 100%;">';
-			$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewraion").'&id='.$this->currentproperty->getRaion()->id.'" >'.$this->currentproperty->getRaion()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Casa:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->casa_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate").'&id='.$this->currentproperty->getLocation()->id.'" >'.$this->currentproperty->getLocation()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Scara:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->scara_nr.'</td></tr>';
+			$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion").'&id='.$this->currentproperty->getRaion()->id.'" >'.$this->currentproperty->getRaion()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Casa:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->casa_nr.'</td></tr>';
+			$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate").'&id='.$this->currentproperty->getLocation()->id.'" >'.$this->currentproperty->getLocation()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Scara:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->scara_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Sector:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td><td class="property-name" style="width: 25%;">Nr. Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->apartament_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Strada:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->strada.'</td><td></td><td></td></tr>';	
 			//$out.='</table>'; 

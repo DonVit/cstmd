@@ -13,10 +13,6 @@ class IndexDictionarWebPage extends MainWebPage {
 	private $dictionar;
 	function __construct(){
 		parent::__construct();
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;hl=ro&amp;sensor=false&amp;key=".Config::getMapKey($this->getServerName()));
-		//$this->setCSS("style/maps.css");
-		//$this->setJavascript("js/scripts.js");
 		$this->setLogoTitle("Dictionar Geografic al Basarabiei an. 1904 de Zamfir Arbore");
 		$this->dictionarJudet=new DictionarJudet();
 		$this->dictionarTip=new DictionarTip();
@@ -106,7 +102,7 @@ class IndexDictionarWebPage extends MainWebPage {
 		$out.='<div id="right" class="container right" style="width:198px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}
@@ -116,7 +112,7 @@ class IndexDictionarWebPage extends MainWebPage {
 		$djs=$this->dictionarJudet->getAll();
 		if (count($djs)!=0){
 		foreach ($djs as $dj){
-			$out.='<li><a href="'.$this->getUrl("index.php","action=viewjudet&id=".$dj->id).'">'.$dj->nume.'</a></li>';
+			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewjudet&id=".$dj->id).'">'.$dj->nume.'</a></li>';
 		}
 		}
 		$out.='</ul>';
@@ -127,7 +123,7 @@ class IndexDictionarWebPage extends MainWebPage {
 		$dts=$this->dictionarTip->getAll();
 		if (count($dts)!=0){
 			foreach ($dts as $dt){
-				$out.='<li><a href="'.$this->getUrl("index.php","action=viewtip&id=".$dt->id).'">'.$dt->nume.'</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtip&id=".$dt->id).'">'.$dt->nume.'</a></li>';
 			}
 		}		
 		$out.='</ul>';
@@ -145,7 +141,7 @@ class IndexDictionarWebPage extends MainWebPage {
 		if (!empty($this->dictionar->localitate_id)){
 			$l=new Location();
 			$l->loadById($this->dictionar->localitate_id);
-			$o1f.='<a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id).'">Vezi aici mai mult despre '.$l->getFullNameDescription().'</a>';
+			$o1f.='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id).'">Vezi aici mai mult despre '.$l->getFullNameDescription().'</a>';
 		}				
 		$out.=$this->getGroupBoxH3($o1s,$o1b,$o1f);
 		return $out;
@@ -164,7 +160,7 @@ class IndexDictionarWebPage extends MainWebPage {
 		$this->setTitle($o1s);
 		
 		foreach ($ds as $d){
-			$o1b.='<a href="'.$this->getUrl("index.php","action=viewdictionar&id=".$d->id).'">'.$d->denumire.', '.$d->tip.' in Judetul '.$d->judet.'</a><br>';
+			$o1b.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdictionar&id=".$d->id).'">'.$d->denumire.', '.$d->tip.' in Judetul '.$d->judet.'</a><br>';
 		}
 		
 		
@@ -186,7 +182,7 @@ class IndexDictionarWebPage extends MainWebPage {
 		$this->setTitle($o1s);
 		
 		foreach ($ds as $d){
-			$o1b.='<a href="'.$this->getUrl("index.php","action=viewdictionar&id=".$d->id).'">'.$d->denumire.', '.$d->tip.' in Judetul '.$d->judet.'</a><br>';
+			$o1b.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdictionar&id=".$d->id).'">'.$d->denumire.', '.$d->tip.' in Judetul '.$d->judet.'</a><br>';
 		}
 	
 	
@@ -201,7 +197,7 @@ class IndexDictionarWebPage extends MainWebPage {
 		$out.='<div id="property-view-dateq" style="float:right">';
 		$out.='Vizualizari: '.$d->contor;
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $this->getGroupBoxH3('Alte date:',$out);
 	}															

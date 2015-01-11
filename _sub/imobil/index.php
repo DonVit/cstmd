@@ -1,12 +1,7 @@
 <?php
-/*
- * Created on 24 Feb 2009
- *
- */
+
 require_once('loader.php');
 class Properties extends MainWebPage {
-
-//class Properties extends LocationFilterWebPage {
 	
 	function __construct() {
 		parent::__construct();
@@ -77,18 +72,10 @@ class Properties extends MainWebPage {
 		$this->create();	
 	}
 	function actionDefault(){
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$t="Imobiliare: Raionul-".User::getImobilCurrentRaion()->name." Localitatea-".User::getImobilCurrentLocation()->name;
-	
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getRssLink()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
-		//$this->setCenterContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
 		$this->setRightContainer($this->getGroupBoxH3("",$this->getMain()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
 	}		
 	function show($out=''){
@@ -98,44 +85,17 @@ class Properties extends MainWebPage {
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();
 		$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
 		$out.='<div id="right" class="container right" style="width:800px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		
-	function _show($html=""){
-		$out=$this->getLocation();
-		//$out.=$html;
-		//$out.=$this->getBodyMainArea();
-		$out.='<div id="container">';
-		//$out.='<div id="leftmenudiv">';
-		$out.='<div id="left">';
-		$out.=$this->getAdd();
-		//$out.=$this->getMenu();
-		$out.=$this->getMenu();		
-		$out.=$this->getRssLink();
-		$out.='</div>';
-		//$out.='<div id="filterdiv">';
-		//$out.=$this->getLocation();
-		//$out.='</div>';
-		$out.='<div id="maindiv">';
-		//$out.='<div id="center">';
-		$out.=$this->getImobilList($this->page,20);
-		$out.=$this->getPages($this->page,20);
-		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
-		$out.='</div>';
-		MainWebPage::show($out);
-	}
 	function getAdd(){	
 		//$out='<div id="leftmenu1" class="groupbox">';
 		$out='<ul class="leftmenulist1">';
-		$out.='<li><a href="'.$this->getUrl("add.php").'">Adauga Anunt</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("add.php").'">Adauga Anunt</a></li>';
 		$out.='</ul>';
 		//$out.='</div>';
 		return $out;
@@ -181,22 +141,22 @@ class Properties extends MainWebPage {
 				if ($s->scop_id==User::getImobilCurrentScop()){
 					$out.='<li style="color: #C20000;"><a href="/'.$this->getBaseName().'?scopid='.$s->scop_id.'&tipimobil=0&subtipimobil=0&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id.'" style="color: #C20000;">'.$s->scop_name.' ('.$s->cnt.')</a></li>';
 				}else{
-					$out.='<li><a href="/'.$this->getBaseName().'?scopid='.$s->scop_id.'&tipimobil=0&subtipimobil=0&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id.'">'.$s->scop_name.' ('.$s->cnt.')</a></li>';
+					$out.='<li><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil=0&subtipimobil=0&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id).'">'.$s->scop_name.' ('.$s->cnt.')</a></li>';
 				}
 				$out.='<ul class="leftsubmenulist">';
 				foreach ($ts as $t){				
 					if ($s->scop_id==$t->scop_id){
 						if ($t->tipimobil_id!=User::getImobilCurrentTipImobil()){
-							$out.='<li><a href="/'.$this->getBaseName().'?scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id.'">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';						
+							$out.='<li><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id).'">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';						
 						}else{
-							$out.='<li style="color: #C20000;"><a href="/'.$this->getBaseName().'?scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id.'" style="color: #C20000;">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';
+							$out.='<li style="color: #C20000;"><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id).'" style="color: #C20000;">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';
 							$out.='<ul class="leftsubsubmenulist">';
 							foreach($sts as $st){
 								if ($t->tipimobil_id==$st->tipimobil_id){
 									if ($st->subtipimobil_id==User::getImobilCurrentSubTipImobil()){
-										$out.='<li style="color: #C20000;"><a href="/'.$this->getBaseName().'?scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil='.$st->subtipimobil_id.'&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id.'" style="color: #C20000;">'.$st->subtipimobil_name.' ('.$st->cnt.')</a></li>';
+										$out.='<li style="color: #C20000;"><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil='.$st->subtipimobil_id.'&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id).'" style="color: #C20000;">'.$st->subtipimobil_name.' ('.$st->cnt.')</a></li>';
 									}else{
-										$out.='<li><a href="/'.$this->getBaseName().'?scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil='.$st->subtipimobil_id.'&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id.'">'.$st->subtipimobil_name.' ('.$st->cnt.')</a></li>';
+										$out.='<li><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil='.$st->subtipimobil_id.'&raionid='.User::getImobilCurrentRaion()->id.'&locationid='.User::getImobilCurrentLocation()->id.'&sectorid='.User::getImobilCurrentSector()->id).'">'.$st->subtipimobil_name.' ('.$st->cnt.')</a></li>';
 									}
 								}
 							}
@@ -215,7 +175,7 @@ class Properties extends MainWebPage {
 	function getRssLink(){
 		//$out='<div class="groupbox">';
 		$out='<ul class="leftmenulist1">';
-		$out.='<li><a href="rss.php" title="Anuţuri în format RSS">Anuţuri în RSS <img src="'.Config::$mainsite.'/common/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"></img></a></li>';
+		$out.='<li><a href="rss.php" title="Anuţuri în format RSS">Anuţuri în RSS <img src="'.Config::$mainsite.'/common/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"/></a></li>';
 		$out.='</ul>';
 		//$out.='</div>';
 		return $out;
@@ -225,18 +185,18 @@ class Properties extends MainWebPage {
 		$p=new Property();
 		$rs=$p->getImobilByPage(0,User::getImobilCurrentScop(),User::getImobilCurrentTipImobil(),User::getImobilCurrentSubTipImobil(),User::getImobilCurrentRaion()->id,User::getImobilCurrentLocation()->id,User::getImobilCurrentSector()->id,$page,$rowsperpage);
 		$imobil_result_output='<div class="groupboxtable">';
-		$imobil_result_output.="<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\" class=\"grid\">";
-		$imobil_result_output.="<tr>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Link</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Foto</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Harta</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Data Pub.</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Anunt</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Imobil</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Addresa</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Aria</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Pret</th>";
-		$imobil_result_output.="</tr>";
+		$imobil_result_output.='<table style="width:100%;border: 0;cellpadding:0;cellspacing:1;" class="grid">';
+		$imobil_result_output.='<tr>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Link</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Foto</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Harta</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Data Pub.</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Tip Anunt</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Tip Imobil</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Addresa</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Aria</th>';
+		$imobil_result_output.='<th class="gridth" style="align:center;">Pret</th>';
+		$imobil_result_output.='</tr>';
 		$i=0;
 		if(count($rs)!=0){
 			foreach($rs as $row){
@@ -244,15 +204,15 @@ class Properties extends MainWebPage {
 				$imobil_result_output.= "" .
 				//print_r($row);
 				"<tr class=\"gridtr".($i & 1)."\" onclick=\"ImobilTableRowClick(".$row->id.");\" onmouseover=\"ImobilTableRowMouseOver(this,".($i & 1).");\" onmouseout=\"ImobilTableRowMouseOut(this,".($i & 1).");\">" .
-				"<td class=\"gridtd\" align=\"center\">".$this->getFunctions($row->id)."</td>" .
-				"<td class=\"gridtd\" align=\"center\">".$this->getAlbum($row)."</td>" .
-				"<td class=\"gridtd\" align=\"center\">".$this->getMap($row)."</td>" .
-				"<td class=\"gridtd\" align=\"center\">".date("Y-m-d", strtotime($row->data))."</td>" .
-		  		"<td class=\"gridtd\" align=\"left\">".$row->scop_name."</td>" .
-				"<td class=\"gridtd\" align=\"left\">".$row->tipimobil_name." - ".$row->subtipimobil_name."</td>" .
-				"<td class=\"gridtd\" align=\"left\">".$this->getAdress($row)."</td>" .
-				"<td class=\"gridtd\" align=\"center\">".$this->getAria($row)."</td>" .
-				"<td class=\"gridtd\" align=\"center\">".$this->getPret($row)."</td>";
+				"<td class=\"gridtd\" style=\"align:center;\">".$this->getFunctions($row->id)."</td>" .
+				"<td class=\"gridtd\" style=\"align:center;\">".$this->getAlbum($row)."</td>" .
+				"<td class=\"gridtd\" style=\"align:center;\">".$this->getMap($row)."</td>" .
+				"<td class=\"gridtd\" style=\"align:center;\">".date("Y-m-d", strtotime($row->data))."</td>" .
+		  		"<td class=\"gridtd\" style=\"align:left;\">".$row->scop_name."</td>" .
+				"<td class=\"gridtd\" style=\"align:left;\">".$row->tipimobil_name." - ".$row->subtipimobil_name."</td>" .
+				"<td class=\"gridtd\" style=\"align:left;\">".$this->getAdress($row)."</td>" .
+				"<td class=\"gridtd\" style=\"align:center;\">".$this->getAria($row)."</td>" .
+				"<td class=\"gridtd\" style=\"align:center;\">".$this->getPret($row)."</td>";
 			}
 		}
 		$imobil_result_output.="</table>";
@@ -294,20 +254,20 @@ function getPages($page,$rowsperpage){
 	$out.="</div>";	
 	return $out;
 }
-
 function getFunctions($imobilid){
-		return "<a href=\"".Config::$imobilsite."/add.php?id=".$imobilid."\"><img src=\"".Config::$mainsite."/common/img/view.jpg\" border=0 align=\"middle\"></a>";
+		return '<a href="'.$this->getUrlWithSpecialCharsConverted('add.php','id='.$imobilid).'"><img src="'.Config::$mainsite.'/common/img/view.jpg" style="border:0;align:middle" alt="deschide anutul"></a>';
 }
 function getAlbum($row){
 	if (is_numeric($row->image_id)){
-		return "<a href=\"".Config::$imobilsite."/add.php?id=".$row->id."\"><img src=\"".Config::$mainsite."/common/img/photo.gif\" border=0 align=\"middle\"></a>";
+		return '<a href="'.$this->getUrlWithSpecialCharsConverted('add.php','id='.$row->id).'"><img src="'.Config::$mainsite.'/common/img/photo.gif" style="border:0;align:middle" alt="deschide anutul cu foto"></a>';
+		
 	} else {
-		return "";
+		return '';
 	}
 }
 function getMap($row){
 	if (($row->lat!=0)&&($row->lng!=0)){
-		return "<a href=\"".Config::$imobilsite."/add.php?id=".$row->id."\"><img src=\"".Config::$mainsite."/common/img/map.png\" border=0 align=\"middle\"></a>";
+		return '<a href="'.$this->getUrlWithSpecialCharsConverted('add.php','id='.$row->id).'"><img src="'.Config::$mainsite.'/common/img/map.png" style="border:0;align:middle" alt="deschide anutul cu harta"></a>';
 	} else {
 		return "";
 	}
@@ -396,7 +356,7 @@ function getAriaTotala($row){
 		$out.='<div id="location-search-box">Cauta Localitate:<input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
 		//$out.='<div id="location-search-box"><input type="text" id="lsearch" name="lsearch" value="Cauta Localitate" onblur="if (this.value==\'\') this.value=\'Cauta Localitate\';" onfocus="if (this.value==\'Cauta Localitate\') this.value=\'\';"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
 		//$out.='<div id="location-search">'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;

@@ -73,7 +73,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<div id="right1" class="pure-u-1-5">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		//$out.='<div style="clear: both;"/></div>';
+		//$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}
@@ -90,7 +90,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<div id="right" class="container right" style="width:198px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
@@ -106,7 +106,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			$c=1;
 			foreach($ns as $n){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewnume&id=".$n->id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$n->id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$n->name.'</a></td><td>'.$n->suma.'</td></tr>';
 				$c=$c+1;	
 			}
@@ -119,10 +119,10 @@ class IndexLocationsWebPage extends MainWebPage {
 	}	
 	function getMenuNume(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewnume&id=".$this->id."#1").'">Descriere</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewnume&id=".$this->id."#2").'">Distributia pe Harta</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewnume&id=".$this->id."#3").'">Top Localitati</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewnume&id=".$this->id."#4").'">Forum/Comentarii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$this->id."#1").'">Descriere</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$this->id."#2").'">Distributia pe Harta</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$this->id."#3").'">Top Localitati</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$this->id."#4").'">Forum/Comentarii</a></li>';
 		$out.='</ul>';
 		return $out;
 	}
@@ -131,15 +131,15 @@ class IndexLocationsWebPage extends MainWebPage {
 	function getLeftMenu(){
 		$outm='<div class="pure-menu pure-menu-open">';
 		$outm.='<ul>';
-		//$out.='<li><a href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
-		$outm.='<li><a href="'.$this->getUrl("index.php").'">Top 100 cele mai populare nume de familie</a></li>';
-		$outm.='<li><a href="'.$this->getUrl("index.php","action=viewtop100namesgeograficlylocated").'">Top 100 cele mai raspindite geografic nume de familie</a></li>';
-		$outm.='<li><a href="'.$this->getUrl("index.php","action=viewtop100prenume").'">Top 100 cele mai populare prenume</a></li>';
-		//$outm.='<li><a href="'.$this->getUrl("index.php").'">Familii unicale in RM</a></li>';
-		//$outm.='<li><a href="'.$this->getUrl("index.php").'">Top 100 cele mai scurte familii</a></li>';
-		//$outm.='<li><a href="'.$this->getUrl("index.php").'">Top 100 cele mai lungi familii</a></li>';
-		//$outm.='<li><a href="'.$this->getUrl("index.php").'">Lista de familii dupa alfabet</a></li>';
-		//$outm.='<li><a href="'.$this->getUrl("index.php").'">Lista de prenume dupa alfabet</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
+		$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Top 100 cele mai populare nume de familie</a></li>';
+		$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtop100namesgeograficlylocated").'">Top 100 cele mai raspindite geografic nume de familie</a></li>';
+		$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtop100prenume").'">Top 100 cele mai populare prenume</a></li>';
+		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Familii unicale in RM</a></li>';
+		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Top 100 cele mai scurte familii</a></li>';
+		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Top 100 cele mai lungi familii</a></li>';
+		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Lista de familii dupa alfabet</a></li>';
+		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Lista de prenume dupa alfabet</a></li>';
 		$outm.='</ul>';
 		$outm.='</div>';
 		$out="";
@@ -265,7 +265,7 @@ class IndexLocationsWebPage extends MainWebPage {
 				foreach ($ns as $v){
 					//$l->loadById($v->location_id);
 					//$r->loadById($l->raion_id);
-					$nurl=$this->getUrl(Config::$numesite."/index.php","action=viewnume&id=".$v->id);
+					$nurl=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$v->id);
 					$nsrs.="<a href=".$nurl." target=\"_blank\">".$v->name."</a><br>";
 				}
 			}else {
@@ -286,7 +286,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='</select>';
 		$out.='<input type="submit" name="gotodate" class="button" style="width:60px;" value="Cauta">';
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;
@@ -305,7 +305,7 @@ class IndexLocationsWebPage extends MainWebPage {
 				foreach ($ls as $v){
 					$l->loadById($v->location_id);
 					$r->loadById($l->raion_id);
-					$lurl=$this->getUrl(Config::$calendarsite."/index.php","action=viewdate&id=".$this->id."&location_id=".$l->id);
+					$lurl=$this->getUrlWithSpecialCharsConverted(Config::$calendarsite."/index.php","action=viewdate&id=".$this->id."&location_id=".$l->id);
 					$lsrs.="<a href=".$lurl." target=\"_blank\">".$r->getFullName()."->".$l->getFullName()."</a><br>";
 				}
 			}else {
@@ -323,7 +323,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='</table>';		
 		
 		$out.='<div id="location-search-box1"><input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><br><input type="submit" name="searchlocationformpost" class="button" style="width:60px;" value="Cauta"><br>'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;

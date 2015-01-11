@@ -245,7 +245,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<div id="right" class="container right" style="width:198px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}
@@ -260,7 +260,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			$c=1;
 			foreach($rs as $r){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewraion&id=".$r->id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$r->id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$r->getFullNameDescription().'</a></td></tr>';
 				$c=$c+1;	
 			}
@@ -272,28 +272,28 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function getMenuRaion(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewraion&id=".$this->id."#1").'">Descriere</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewraion&id=".$this->id."#2").'">Primarii in componenata</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewraion&id=".$this->id."#3").'">Harta</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewraion&id=".$this->id."#4").'">Populatia</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewraion&id=".$this->id."#5").'">Forum/Comentarii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#1").'">Descriere</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#2").'">Primarii in componenata</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#3").'">Harta</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#4").'">Populatia</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#5").'">Forum/Comentarii</a></li>';
 		$out.='</ul>';
 		return $out;
 	}
 	function getMenuPrimarie(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#1").'">Descriere</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#2").'">Localitati in componenta</a></li>';	
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#3").'">Date geografice</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#4").'">Pozitia pe Harta</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#5").'">Lista Consilierilor</a></li>';		
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#6").'">Primarii in raza de 10 km</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#7").'">Telefoane</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#1").'">Descriere</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#2").'">Localitati in componenta</a></li>';	
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#3").'">Date geografice</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#4").'">Pozitia pe Harta</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#5").'">Lista Consilierilor</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#6").'">Primarii in raza de 10 km</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#7").'">Telefoane</a></li>';
 		
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#6").'">Foto/Imagini in raza de 10 km</a></li>';		
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewlocalitate&id=".$this->id."#7").'">Populatia</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#8").'">Stiri</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewprimarie&id=".$this->id."#9").'">Forum/Comentarii</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#6").'">Foto/Imagini in raza de 10 km</a></li>';		
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#7").'">Populatia</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#8").'">Stiri</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#9").'">Forum/Comentarii</a></li>';
 		
 		$out.='</ul>';
 		return $out;
@@ -308,8 +308,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>".$this->getConstants("IndexLocationsWebPageRaioaneName")."</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a></td></tr>';
 				$c=$c+1;	
 			}
@@ -328,8 +328,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Altitudinea (m.)</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a> din <a href="'.$urlr.'">'.$l->getRaion()->getFullNameDescription().'</a></td><td style="text-align:center;">'.$l->elevation.'</td></tr>';
 				$c=$c+1;	
 			}
@@ -348,8 +348,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Altitudinea (m.)</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a> din <a href="'.$urlr.'">'.$l->getRaion()->getFullNameDescription().'</a></td><td style="text-align:center;">'.$l->elevation.'</td></tr>';
 				$c=$c+1;	
 			}
@@ -368,8 +368,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				//$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				//$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a></td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -388,8 +388,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a> din <a href="'.$urlr.'">'.$l->getRaion()->getFullNameDescription().'</a></td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -409,8 +409,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Ucraineni</th><th>% Ucraineni</th><th>Total Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->ucraineni, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->ucraineni/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -430,8 +430,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Rusi</th><th>% Rusi</th><th>Total Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->rusi, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->rusi/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -451,8 +451,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Gagauzi</th><th>% Gagauzi</th><th>Total Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->gagauzi, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->gagauzi/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -472,8 +472,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Bulgari</th><th>% Bulgari</th><th>Total Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->bulgari, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->bulgari/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -493,8 +493,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Evrei</th><th>% Evrei</th><th>Total Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->evrei, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->evrei/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -514,8 +514,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Polonezi</th><th>% Polonezi</th><th>Total Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->polonezi, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->polonezi/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -535,8 +535,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Tigani</th><th>% Tigani</th><th>Total Populatie</th></tr>";
 			foreach($ls as $l){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrl("index.php","action=viewraion&id=".$l->raion_id);
+				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->tigani, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->tigani/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
 				$c=$c+1;	
 			}
@@ -547,23 +547,23 @@ class IndexLocationsWebPage extends MainWebPage {
 	}											
 	function getLeftMenu(){
 		$out='<ul>';
-		//$out.='<li><a href="'.$this->getUrl("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'" >Lista primariilor dupa Raioane si Municipii</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$locationssite."/index.php").'">'.$this->getConstants("IndexLocationsWebPageRaioaneTitle").'</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=vieworase").'" >'.$this->getConstants("IndexLocationsWebPageOraseTitle").'</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewtopsuslocalitati").'" >Lista a 50 cele mai sus amplasate localitati din Moldova</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewtopjoslocalitati").'" >Lista a 50 cele mai jos amplasate localitati din Moldova</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewtopuppoplocalitati").'" >Lista a 50 cele mai populate localitati din Moldova</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewtopdownpoplocalitati").'" >Lista a 50 cele mai putin populate localitati din Moldova</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatiucraineni").'" >Lista localitatilor populate cu Ucraineni din Moldova</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatirusi").'" >Lista localitatilor populate cu Rusi in Moldova</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatigagauzi").'" >Lista localitatilor populate cu Gagauzi in Moldova</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatibulgari").'" >Lista localitatilor populate cu Bulgari in Moldova</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatievrei").'" >Lista localitatilor populate cu Evrei in Moldova</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatipolonezi").'" >Lista localitatilor populate cu Polonezi din Moldova</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=viewtoplocalitatitigani").'" >Lista localitatilor populate cu Tigani din Moldova</a></li>';		
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';
-		//$out.='<li><a href="'.$this->getUrl("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai aglomerate localitati, de ex in raza de 10 km</a></li>';	
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'" >Lista primariilor dupa Raioane si Municipii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php").'">'.$this->getConstants("IndexLocationsWebPageRaioaneTitle").'</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=vieworase").'" >'.$this->getConstants("IndexLocationsWebPageOraseTitle").'</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewtopsuslocalitati").'" >Lista a 50 cele mai sus amplasate localitati din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewtopjoslocalitati").'" >Lista a 50 cele mai jos amplasate localitati din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewtopuppoplocalitati").'" >Lista a 50 cele mai populate localitati din Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewtopdownpoplocalitati").'" >Lista a 50 cele mai putin populate localitati din Moldova</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatiucraineni").'" >Lista localitatilor populate cu Ucraineni din Moldova</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatirusi").'" >Lista localitatilor populate cu Rusi in Moldova</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatigagauzi").'" >Lista localitatilor populate cu Gagauzi in Moldova</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatibulgari").'" >Lista localitatilor populate cu Bulgari in Moldova</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatievrei").'" >Lista localitatilor populate cu Evrei in Moldova</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatipolonezi").'" >Lista localitatilor populate cu Polonezi din Moldova</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatitigani").'" >Lista localitatilor populate cu Tigani din Moldova</a></li>';		
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';
+		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai aglomerate localitati, de ex in raza de 10 km</a></li>';	
 		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mari sate</a></li>';
 		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai mici sate</a></li>';		
 		//$out.='<li><a href="index.php#2" title="Stiri">Lista celor 30 cele mai jos amplasate localitati</a></li>';
@@ -594,7 +594,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$o2b.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th></tr>";
 		$c=1;
 		foreach($ls as $l){	
-			$url=$this->getUrl("index.php","action=viewprimarie&id=".$l->id);
+			$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$l->id);
 			$o2b.='<tr><td style="text-align:center;">'.$c.'</td><td><a href="'.$url.'">'.$l->getPrimariaName().'</a></td></tr>';
 			$c=$c+1;
 		}
@@ -623,7 +623,7 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function getLocalitate(){
 		$out="";
-		$url=$this->getUrl(Config::$locationssite."/index.php","action=viewraion&id=".$this->raion->id);
+		$url=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion&id=".$this->raion->id);
 		$o1s='<a name="1"></a>'.$this->location->getPrimariaName().' - Scurta descriere:';
 		$o1b=$this->location->getPrimariaName().' este  in  componenta <a href='.$url.'>'.$this->raion->getFullNameDescription().'</a> situata la latitudinea '.$this->location->getLatShort().' longitudinea '.$this->location->getLngShort().' si altitudinea de '.$this->location->elevation.' metri fata de nivelul marii.';
 		
@@ -660,7 +660,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			$o2b.='<table style="width:100%;">';
 			$o2b.='<th>Denumirea localitatii</th><th>Numarul de locuitori</th>';
 			foreach($ls as $l){
-				$url=$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
+				$url=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
 				$o2b.='<tr><td><a href="'.$url.'">'.$l->getFullName().'</a><td>'.$l->p.'</td></td></tr>';
 				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';	
 			}
@@ -678,7 +678,7 @@ class IndexLocationsWebPage extends MainWebPage {
 // 			$o2b.='<table style="width:100%;">';
 // 			$o2b.='<th>Numele Cosilierui</th><th>Partidul</th>';
 // 			foreach($ls as $l){
-// 				$url=$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
+// 				$url=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
 // 				$o2b.='<tr><td>'.$l->prenume.' '.$l->nume.'</td><td>'.$l->partid.'</td></tr>';
 // 				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';
 // 			}
@@ -803,9 +803,9 @@ class IndexLocationsWebPage extends MainWebPage {
 			$l=new Location();
 			foreach($ls as $loc){
 				$l->loadById($loc->id);
-				$lurl=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$rurl=$this->getUrl("index.php","action=viewraion&id=".$l->getRaion()->id);
-				$o2b.=round($loc->distance).' km - distanța directă pînă la <a href="'.$lurl.'">'.$l->getFullNameDescription().'</a> din <a href="'.$rurl.'">'.$l->getRaion()->getFullNameDescription().'</a> - <a href="'.$this->getUrl(Config::$distantesite."/index.php","from=".$this->location->id."&to=".$loc->id).'">vezi pe harta</a><br>';
+				$lurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$rurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->getRaion()->id);
+				$o2b.=round($loc->distance).' km - distanța directă pînă la <a href="'.$lurl.'">'.$l->getFullNameDescription().'</a> din <a href="'.$rurl.'">'.$l->getRaion()->getFullNameDescription().'</a> - <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$distantesite."/index.php","from=".$this->location->id."&to=".$loc->id).'">vezi pe harta</a><br>';
 				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';	
 			}
 			$out.=$this->getGroupBoxH3($o2s,$o2b);		
@@ -824,9 +824,9 @@ class IndexLocationsWebPage extends MainWebPage {
 			$l=new Location();
 			foreach($ls as $loc){
 				$l->loadById($loc->id);
-				$lurl=$this->getUrl("index.php","action=viewprimarie&id=".$l->id);
-				$rurl=$this->getUrl("index.php","action=viewraion&id=".$l->getRaion()->id);
-				$o2b.=round($loc->distance).' km - distanța directă pînă la <a href="'.$lurl.'">'.$l->getPrimariaName().'</a> din <a href="'.$rurl.'">'.$l->getRaion()->getFullNameDescription().'</a> - <a href="'.$this->getUrl(Config::$distantesite."/index.php","from=".$this->location->id."&to=".$loc->id).'">vezi pe harta</a><br>';
+				$lurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$l->id);
+				$rurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->getRaion()->id);
+				$o2b.=round($loc->distance).' km - distanța directă pînă la <a href="'.$lurl.'">'.$l->getPrimariaName().'</a> din <a href="'.$rurl.'">'.$l->getRaion()->getFullNameDescription().'</a> - <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$distantesite."/index.php","from=".$this->location->id."&to=".$loc->id).'">vezi pe harta</a><br>';
 				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';
 			}
 			$out.=$this->getGroupBoxH3($o2s,$o2b);
@@ -845,11 +845,11 @@ class IndexLocationsWebPage extends MainWebPage {
 			$l=new Location();
 			foreach($ls as $loc){
 				$l->loadById($loc->to_id);
-				$furl=$this->getUrl("index.php","action=viewlocalitate&id=".$loc->from_id);
-				$turl=$this->getUrl("index.php","action=viewlocalitate&id=".$loc->to_id);
-				//$turl=$this->getUrl("index.php","action=viewraion&id=".$l->getRaion()->id);
+				$furl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$loc->from_id);
+				$turl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$loc->to_id);
+				//$turl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->getRaion()->id);
 				//$o2b.=round($loc->distance).' km - distanța directă pînă la <a href="'.$turl.'">'.$loc->to_name.'</a> din <a href="'.$rurl.'">'.$l->getRaion()->getFullNameDescription().'<br></a>';
-				$o2b.='Distanța directă pîna în <a href="'.$turl.'">'.$l->getFullName().'</a> este de - '.round($loc->distance).' km <a href="'.$this->getUrl(Config::$distantesite."/index.php","from=".$loc->from_id."&to=".$loc->to_id).'">vezi pe harta</a><br>';
+				$o2b.='Distanța directă pîna în <a href="'.$turl.'">'.$l->getFullName().'</a> este de - '.round($loc->distance).' km <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$distantesite."/index.php","from=".$loc->from_id."&to=".$loc->to_id).'">vezi pe harta</a><br>';
 				//$o2b.='<a>test</a><br>';	
 			}
 			$out.=$this->getGroupBoxH3($o2s,$o2b);		
@@ -868,8 +868,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$l=new Location();
 			foreach($ls as $loc){
 				$l->loadById($loc->id);
-				$lurl=$this->getUrl("index.php","action=viewlocalitate&id=".$l->id);
-				$rurl=$this->getUrl("index.php","action=viewraion&id=".$l->getRaion()->id);
+				$lurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
+				$rurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->getRaion()->id);
 				$o2b.='<a href="'.$lurl.'">'.$l->getFullNameDescription().'</a> din <a href="'.$rurl.'">'.$l->getRaion()->getFullNameDescription().'<br></a>';
 				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';	
 			}
@@ -1245,7 +1245,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<div id="location-search-box">Cauta Localitate:<input type="text" name="lsearch" value="'.$this->lsearch.'"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
 		//$out.='<div id="location-search-box"><input type="text" id="lsearch" name="lsearch" value="Cauta Localitate" onblur="if (this.value==\'\') this.value=\'Cauta Localitate\';" onfocus="if (this.value==\'Cauta Localitate\') this.value=\'\';"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
 		//$out.='<div id="location-search">'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;
@@ -1297,20 +1297,20 @@ class IndexLocationsWebPage extends MainWebPage {
 			$c=1;
 			foreach($ns as $n){
 				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				//$url=$this->getUrl(Config::$numesite."/index.php","action=viewnume&id=".$n->id);
+				//$url=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$n->id);
 				$out.='<tr><td>'.$c.'</td><td>'.$n->type.' ('.$n->SectorName.')</a></td><td>0-'.$n->phoneprefix.'-'.$n->phonenumber.'</td></tr>';
 				$c=$c+1;
 			}
 		}
 		$out.="</table>";
-		$out.='<a href="'.$this->getUrl(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$l->id).'">Mai multe contacte vezi aici</a>';
+		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$l->id).'">Mai multe contacte vezi aici</a>';
 		$out.="</div>";
 	
 		return $this->getGroupBoxH2("<a name=\"7\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
 	}				
 	function showElectoralPreferences(){
 		$this->setJavascript("https://www.google.com/jsapi");
-		$o2s='<a name="6"></a>Preferintele Electorale in anii precendenti ale locuitorilor din '.$this->location->getFullNameDescription();
+		$o2s='<a name="6"></a>Preferintele Electorale in anii precedenti ale locuitorilor din '.$this->location->getFullNameDescription();
 		$o2b=Alegeri::getResultsByPrimarie($this->location->raion_id,$this->location->id);
 		$o2f="Sursa: www.cec.md";
 		if (empty($o2b)){

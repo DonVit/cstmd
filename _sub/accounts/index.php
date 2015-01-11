@@ -31,7 +31,7 @@ class IndexWebPage extends MainWebPage {
 		//$out.='<div id="right">';
 		//$out.=$this->getRightContainer();		
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';	
 		MainWebPage::show($out);
 	}
@@ -128,7 +128,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='<div id="right" class="container right" style="width:800px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		
@@ -159,9 +159,9 @@ class IndexWebPage extends MainWebPage {
 	function getAdd(){
 		//$out='<div class="groupbox">';
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl(Config::$imobilsite.'/add.php').'">Adauga Imobil</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$chiriesite.'/add.php').'">Adauga Chirie</a></li>';
-		$out.='<li><a href="'.$this->getUrl(Config::$companiesite.'/add.php').'">Adauga Companie</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imobilsite.'/add.php').'">Adauga Imobil</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$chiriesite.'/add.php').'">Adauga Chirie</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/add.php').'">Adauga Companie</a></li>';		
 		$out.='</ul>';
 		//$out.='</div>';
 		return $out;
@@ -169,10 +169,10 @@ class IndexWebPage extends MainWebPage {
 	function getMenu(){
 		//$out='<div class="groupbox">';
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("index.php").'">Anunturile Mele</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Anunturile Mele</a></li>';
 		//$out.='<li><a href="index.php?action=companii">Companiile Mele</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'&action=companii">Companiile Mele</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'&action=settings">Setarile Mele</a></li>';						
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=companii">Companiile Mele</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=settings">Setarile Mele</a></li>';						
 		$out.='</ul>';
 		//$out.='</div>';
 		return $out;

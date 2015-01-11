@@ -120,7 +120,7 @@ class AddMapWebPage extends MainWebPage {
 		//$out.='<div id="right" class="container right" style="width:98px;">';
 		//$out.=$this->getRightContainer();
 		//$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}

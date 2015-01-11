@@ -34,7 +34,7 @@ class RssCompaniesWebPage extends WebPage {
 
 			$title = $c->name;
 			//$link = Config::$companiesite."/index.php?id=".$c->id;
-			$link = $this->getUrl(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id);
+			$link = $this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id);
 			$description = $c->name;
 			$pubDate = date("r", strtotime($c->created_date));
 			//$image_file = Config::$companiesite."/files/t".$c->logo_file;
