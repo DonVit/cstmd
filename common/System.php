@@ -62,6 +62,9 @@ class System{
 	   		return $url;
 	   	else
 	   		return "http://".$url;
-   } 	
+   }
+	public static function getHtmlSpecialChars($text){
+		return htmlspecialchars($text);
+	}    	
 }
 ?>

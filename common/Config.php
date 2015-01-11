@@ -4,6 +4,7 @@ class Config {
 	public static $defaultlanguage="ro";
 
 	public static $mainsite="http://casata.it";
+	public static $commonsite="http://common.casata.it";
 	public static $newssite="http://news.casata.it";
 	public static $imobilsite="http://imobil.casata.it";
 	public static $chiriesite="http://chirie.casata.it";

@@ -43,9 +43,9 @@ class CompanyList extends Object{
 		return $imobil_result_output;
 	}
 	function getFunctions($imobilid,$scopid){			
-		$r='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/index.php?id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/view.jpg" border=0 align="middle"></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/edit.png" border=0 align="middle"></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/delete.png" border=0 align="middle"></a></td>';
+		$r='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/index.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';
 		return $r;
 	}
 

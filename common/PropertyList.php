@@ -149,31 +149,31 @@ class PropertyList extends Object{
 	}	
 	function getFunctions($imobilid,$scopid){
 			if (($scopid==1)||($scopid==3)){
-				$r='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/property.php?id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/view.jpg" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/edit.png" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?action=republish&id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/reload.png" border=0 align="middle" alt="republica"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/delete.png" border=0 align="middle"></a></td>';
+				$r='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/property.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
+				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
+				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?action=republish&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/reload.png" border=0 align="middle" alt="republica"></a></td>';
+				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';
 				
 			} else {
-				$r='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/property.php?id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/view.jpg" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/edit.png" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?action=republish&id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/reload.png" border=0 align="middle" alt="republica"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$mainsite.'/common/img/delete.png" border=0 align="middle"></a></td>';			
+				$r='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/property.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
+				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
+				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?action=republish&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/reload.png" border=0 align="middle" alt="republica"></a></td>';
+				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';			
 			}
 		return $r;
 	}
 	function getAlbum($row){
 		if (is_numeric($row->image_id)){
-			//return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><img src="'.Config::$mainsite.'/common/img/photo.gif" border=0 align="middle"></a>';
-			return '<img src="'.Config::$mainsite.'/common/img/photo.gif" border=0 align="middle">';			
+			//return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><img src="'.Config::$commonsite.'/img/photo.gif" border=0 align="middle"></a>';
+			return '<img src="'.Config::$commonsite.'/img/photo.gif" border=0 align="middle">';			
 		} else {
 			return "";
 		}
 	}
 	function getMap($row){
 		if (($row->lat!=0)&&($row->lng!=0)){
-			//return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><img src="'.Config::$mainsite.'/common/img/map.png" border=0 align="middle"></a>';
-			return '<img src="'.Config::$mainsite.'/common/img/map.png" border=0 align="middle">';
+			//return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><img src="'.Config::$commonsite.'/img/map.png" border=0 align="middle"></a>';
+			return '<img src="'.Config::$commonsite.'/img/map.png" border=0 align="middle">';
 		} else {
 			return "";
 		}

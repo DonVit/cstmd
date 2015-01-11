@@ -95,13 +95,11 @@ class Object {
 		} else {
 			$url.="?l=".$this->getLang()->name;
 		}
-
 		return $url;
 	}
-	function setUrl($params=""){	
-		$url="";
-		return $url;
-	}
+	function getUrlWithSpecialCharsConverted($url,$params=""){	
+		return htmlspecialchars($this->getUrl($url,$params));
+	}	
 	function getQueryParamFromUrl($p,$url){
     	$r=NULL;
     	if (!empty($url)) {

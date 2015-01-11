@@ -87,11 +87,11 @@ class News extends DBManager {
 				}
 				$img=Image::getMainImageByRefType('n', $n->id);
 				if ($img!=null){
-					$out.='<td style="width:25%"><div><a href="'.$this->getUrl(Config::$newssite."/index.php","action=viewnews").'&id='.$n->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$newssite.'/data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" class="imageborder"  style="width:120px;"></img><p class="newsgroup_p">'.$n->title.'</p></a></div></td>';
+					$out.='<td style="width:25%"><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewnews").'&id='.$n->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$newssite.'/data/t'.$img->imagepath.'" alt="'.$img->imagenote.'" class="imageborder"  style="width:120px;"/><p class="newsgroup_p">'.$n->title.'</p></a></div></td>';
 				}else{
-					$out.='<td style="width:25%"><div><a href="'.$this->getUrl(Config::$newssite."/index.php","action=viewnews").'&id='.$n->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"></img><p class="newsgroup_p">'.$n->title.'</p></a></div></td>';
+					$out.='<td style="width:25%"><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewnews").'&id='.$n->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"/><p class="newsgroup_p">'.$n->title.'</p></a></div></td>';
 				}
-				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"></img><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
+				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"/><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
 				
 				if ($i==8){
 					$out.='</tr>';

@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 24 Feb 2009
- *
- */
 class MainWebPage extends WebPage {
 	private $logotitle="logotitle";
 	private $css="";
@@ -14,12 +10,12 @@ class MainWebPage extends WebPage {
 	public function __construct() {
 		parent::__construct();
 		
-		$this->setCSS(Config::$mainsite."/common/style/reset.css");
-		$this->setCSS(Config::$mainsite."/common/style/fonts.css");		
-		$this->setCSS(Config::$mainsite."/common/style/base.css");			
+		$this->setCSS(Config::$commonsite."/style/reset.css");
+		$this->setCSS(Config::$commonsite."/style/fonts.css");		
+		$this->setCSS(Config::$commonsite."/style/base.css");			
 
-		$this->setCSS(Config::$mainsite."/common/style/common.css");
-		$this->setJavascript(Config::$mainsite."/common/js/scripts.js");
+		$this->setCSS(Config::$commonsite."/style/common.css");
+		$this->setJavascript(Config::$commonsite."/js/scripts.js");
 		
 		$this->setJavascript("http://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");		
 
@@ -38,34 +34,39 @@ class MainWebPage extends WebPage {
 	function setLogoTitle($logotitle){
 		$this->logotitle=$logotitle;
 	}
+	function getFavIcon(){
+		return '<link  rel="icon" href="'.Config::$commonsite.'/img/favicon.ico">';
+	}
+	function getTheShiv(){
+		$out='';
+		$out.='<!--[if lt IE 9]>';
+		$out.='<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>';
+		$out.='<![endif]-->';
+		return $out;
+	}			
 	function getCSS(){
 		return $this->css;
 	}
 	function setCSS($css){
-		$this->css.='<link type="text/css" rel="stylesheet" href="'.$css.'"></link>';
+		$this->css.='<link rel="stylesheet" href="'.$css.'">';
 	}
 	function getJavascript(){
 		return $this->javascript;
 	}
 	function setJavascript($javascript){
-		$this->javascript.='<script type="text/javascript" language="javascript" src="'.$javascript.'"></script>';
+		$this->javascript.='<script src="'.$javascript.'"></script>';
 	}
-
-
 	function getHeader(){
-		//$out='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-		//$out.='<html xmlns="http://www.w3.org/1999/xhtml">';
-		$out='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> ';
+		$out='<!doctype html>';
 		$out.='<html>';
 		$out.='<head>';
 		$out.='<title>'.$this->getTitle().'</title>';
-		$out.='<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
+		$out.='<meta charset="utf-8">';
 		$out.='<meta content="'.$this->getDescription().'" name="description"/>';
 		$out.='<meta content="'.$this->getKeywords().'" name="keywords"/>';
-		$out.='<link href="'.Config::$mainsite.'/common/img/favicon.ico" rel="fovorite icon"/>';
-		//$out.='<link type="text/css" rel="stylesheet" href="styles/common.css"></link>';
+		$out.=$this->getTheShiv();
+		$out.=$this->getFavIcon();
 		$out.=$this->getCSS();
-		//$out.='<script type="text/javascript" language="javascript" src="js/scripts.js"></script>';
 		$out.=$this->getJavascript();
 		$out.=$this->getGA();
 		$out.='</head>';
@@ -73,22 +74,15 @@ class MainWebPage extends WebPage {
 		$out.='<div id="main" class="main">';
 		$out.=$this->getBanner();		
 		$out.=$this->getTopMenu();	
-		
 		$out.=$this->getLogo();
-					
-		//$out.='<div id="mainmenubar">';
 		$out.=$this->getMainMenu();
-		//$out.=$this->getUserMenu();
-		//$out.='<div style="clear: both;"/>';
-		//$out.='</div>';
-		//$out.='</div>';
 		return $out;
 	}
 	function getTopMenu(){	
 		$out='<div id="topmenu" class="container bar tophormenu">';
 		$out.=$this->getLanguageMenu();	
 		$out.=$this->getUserMenu();			
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';	
 		return $out;
 	}
@@ -114,7 +108,7 @@ class MainWebPage extends WebPage {
 		$out.='<li>'.$this->getBookmarks().'</li>';
 		$out.='</ul>';						
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';		
+		$out.='<div style="clear: both;"></div>';		
 		$out.='</div>';	
 		return $out;
 	}	
@@ -128,7 +122,7 @@ class MainWebPage extends WebPage {
 			$out.='<li><a href="'.Config::$accountssite.'/index.php">Contul Personal</a></li>';
 			$out.='<li><a href="'.Config::$accountssite.'/logout.php">Logout</a></li>';
 		}
-		//$out.='<div style="clear: both;"/></div>';
+		//$out.='<div style="clear: both;"></div>';
 		$out.='</ul>';	
 		$out.='</div>';	
 		return $out;
@@ -137,9 +131,9 @@ class MainWebPage extends WebPage {
 		$out='';
 		$b=AdsBanner::getRandomBanner();
 		if (!is_null($b)){
-			$out.='<div id="logo" class="container bar tophorlogo" style="text-align:center;">';
+			$out.='<div id="ad" class="container bar tophorlogo" style="text-align:center;">';
 			$out.='<a href="'.Config::$adssite.'/banner.php?id='.$b->id.'" target="_blank"><img src="'.$b->image_url.'" alt="'.$b->title.'" style="width: 980px;"></a>';               
-			$out.='<div style="clear: both;"/></div>';
+			$out.='<div style="clear: both;"></div>';
 			$out.='</div>';
 		}
 		return $out;
@@ -150,7 +144,7 @@ class MainWebPage extends WebPage {
 		$out.='<div id="logo-title-left" style="display:block;float:left">CASATA.MD</div>';
 		$out.='<div id="logo-title-right" style="display:block;float:left">'.$this->getLogoTitle().'</div>';
 		$out.=$this->getGooglePlus();
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
 	}
@@ -214,7 +208,7 @@ class MainWebPage extends WebPage {
 		$out.='<li> | Email la: <a href="mailto:casata.md@outlook.com">casata.md@outlook.com</a></li>';	
 		$out.='</ul>';
 		$out.='</div>';	
-		$out.='<div style="clear: both;"/></div>';	
+		$out.='<div style="clear: both;"></div>';	
 		return $out;
 	}
 	function getCounters(){	
@@ -246,7 +240,7 @@ class MainWebPage extends WebPage {
 			//$out.='</fieldset>';
 			$out.='</div>';
 			$out.='<p style="font-size:85%;">(11px) Lorem ipsum dolor sit amet, consectetur.</p>';
-			$out.='<div style="clear: both;"/></div>';	
+			$out.='<div style="clear: both;"></div>';	
 		}
 		return $out;
 	}
@@ -336,28 +330,6 @@ class MainWebPage extends WebPage {
 	function getRightContainer(){
 		return $this->rightcontainer;		
 	}			
-	function _getGroupBoxH32($text){
-		$out='<div class="container groupbox">';
-		$out.=$text;		
-		$out.='</div>';
-		return $out;
-	}
-	function _getGroupBoxH31($title, $text){
-		$out='<div class="container groupboxheader">';
-		$out.='<h3>'.$title.'</h3>';		
-		$out.='</div>';	
-		$out.=$text;		
-		return $this->getGroupBoxH3($out);
-	}
-	function _getGroupBoxH33($header="",$body="",$footer=""){
-		if ($header!=""){
-			$header=$header;			
-		}
-		if ($footer!=""){	
-			$footer=$footer;		
-		}
-		return $this->getGroupBoxHtml($header,$body,$footer);
-	}
 	function getGroupBoxH3($header="",$body="",$footer=""){
 		if ($header!=""){
 			$header='<h3>'.$header.'</h3>';			
@@ -435,23 +407,13 @@ class MainWebPage extends WebPage {
 		$out.='</div>';
 		return $out;
 	}						
-	function _getGroupBoxH3WithHeaderAndFooter($header, $text, $footer){
-		$out='<div class="container groupboxtitle">';
-		$out.='<h3>'.$header.'</h3>';		
-		$out.='</div>';	
-		$out.=$text;
-		$out='<div class="container groupboxtitle">';
-		$out.='<h3>'.$footer.'</h3>';		
-		$out.='</div>';					
-		return $this->getGroupBoxH3($out);
-	}
 	function getMap($m){
 
 		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
-		$this->setJavascript(Config::$mainsite."/common/js/maps.js");
-		$this->setJavascript(Config::$mainsite."/common/js/controls.js");
+		$this->setJavascript(Config::$commonsite."/js/maps.js");
+		$this->setJavascript(Config::$commonsite."/js/controls.js");
 
 		//$this->setBodyTag('<body onload="MapViewOnMapLoad()" onunload="GUnload()">');
 		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
@@ -483,7 +445,7 @@ class MainWebPage extends WebPage {
 
 		$this->setBodyTag('<body onload="MapEditOnMapLoad()">');
 		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
-		$this->setJavascript(Config::$mainsite."/common/js/maps.js");
+		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
 		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 		
@@ -518,7 +480,7 @@ class MainWebPage extends WebPage {
 	}
 	function setAdress($a){
 		$out='';
-		$out.='<table class="property-table" align="center" style="width: 100%;">';
+		$out.='<table class="property-table" style="width: 100%;align:center;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul:</td>';
 		$out.='<td style="width: 70%;">'.Raion::getRaionDropDown($a->raion_id,"width:200px;").'</td>';
@@ -556,9 +518,9 @@ class MainWebPage extends WebPage {
 	}	
 	function getAdress($a){
 			$out='';			
-			$out.='<table class="property-table" align="center" style="width: 100%;">';
-			$out.='<tr><td class="property-name" style="width: 35%;">Municipiul/Raionul:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewraion").'&id='.$a->getRaion()->id.'" >'.$a->getRaion()->getFullName().'</a></td></tr>';			
-			$out.='<tr><td class="property-name" style="width: 35%;">Oras/Sat:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate").'&id='.$a->getLocation()->id.'" >'.$a->getLocation()->getFullName().'</a></td></tr>';			
+			$out.='<table class="property-table" style="width: 100%;align:center;">';
+			$out.='<tr><td class="property-name" style="width: 35%;">Municipiul/Raionul:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$a->getRaion()->id).'" >'.$a->getRaion()->getFullName().'</a></td></tr>';			
+			$out.='<tr><td class="property-name" style="width: 35%;">Oras/Sat:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate','&id='.$a->getLocation()->id).'" >'.$a->getLocation()->getFullName().'</a></td></tr>';			
 			$out.='<tr><td class="property-name" style="width: 35%;">Sector:</td><td class="property-value" style="width: 65%;">'.$a->getSector()->name.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 35%;">Strada:</td><td class="property-value" style="width: 65%;">'.$a->strada.'</td><td></td><td></td></tr>';
 			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Casa:</td><td class="property-value" style="width: 65%;">'.$a->casa_nr.'</td></tr>';
@@ -570,7 +532,7 @@ class MainWebPage extends WebPage {
 	}		
 	function setContacts($c){
 		$out='';	
-		$out.='<table class="property-table" align="center" style="width: 100%;">';
+		$out.='<table class="property-table" style="width: 100%;align:center;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Nume de contact:</td>';
 		$out.='<td style="width: 70%;"><input type="text" id="name" name="contactname" style="width: 55%;" value="'.$c->contactname.'"></td>';
@@ -608,10 +570,10 @@ class MainWebPage extends WebPage {
 	}	
 	function getContacts($c){
 		$out='';
-		$out.='<table class="property-table" align="center" style="width:100%">';
+		$out.='<table class="property-table" style="width:100%;align:center;">';
 		$out.='<tr>';
 		$out.='<td style="width:70%">';					
-		$out.='<table class="property-table" align="center" style="width:100%">';
+		$out.='<table class="property-table" style="width:100%;align:center;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width:35%">Nume de contact:</td><td class="property-value" style="width:65%">'.$c->contactname.'</td>';
 		$out.='</tr>';
@@ -664,7 +626,7 @@ class MainWebPage extends WebPage {
 		//$qrcodeurl.='NOTE:'.$c->notecontact.'';
 		
 		$out='';
-		$out.='<table class="property-table" align="center" style="width:100%">';
+		$out.='<table class="property-table" style="width:100%;align:center;">';
 		$out.='<tr>';
 		$out.='<td class="property-value" style="text-align: center;">Salveaza contactele pe telefon:</td>';
 		$out.='</tr>';
@@ -758,35 +720,35 @@ class MainWebPage extends WebPage {
 	function getFiles(){
 		$files=User::getCurrentFiles();
 	
-		//$this->setCSS(Config::$mainsite."/common/style/lightbox.css");
+		//$this->setCSS(Config::$commonsite."/style/lightbox.css");
 	
-		//$this->setCSS(Config::$mainsite."/common/js/lightbox2.51/css/screen.css");
+		//$this->setCSS(Config::$commonsite."/js/lightbox2.51/css/screen.css");
 		//$this->setCSS("http://fonts.googleapis.com/css?family=Fredoka+One|Open+Sans:400,700");
 		
 		
-		//$this->setJavascript(Config::$mainsite."/common/js/builder.js");
-		//$this->setJavascript(Config::$mainsite."/common/js/effects.js");
+		//$this->setJavascript(Config::$commonsite."/js/builder.js");
+		//$this->setJavascript(Config::$commonsite."/js/effects.js");
 
-		//$this->setJavascript(Config::$mainsite."/common/js/prototype.js");
-		//$this->setJavascript(Config::$mainsite."/common/js/scriptaculous.js?load=effects,builder");
-		//$this->setJavascript(Config::$mainsite."/common/js/lightbox.js");
+		//$this->setJavascript(Config::$commonsite."/js/prototype.js");
+		//$this->setJavascript(Config::$commonsite."/js/scriptaculous.js?load=effects,builder");
+		//$this->setJavascript(Config::$commonsite."/js/lightbox.js");
 		
-		//$this->setJavascript(Config::$mainsite."/common/js/scriptaculous-js-1.9.0/prototype.js");
-		//$this->setJavascript(Config::$mainsite."/common/js/scriptaculous-js-1.9.0/scriptaculous.js");		
-		//$this->setJavascript(Config::$mainsite."/common/js/lightbox v2.04/lightbox.js");
+		//$this->setJavascript(Config::$commonsite."/js/scriptaculous-js-1.9.0/prototype.js");
+		//$this->setJavascript(Config::$commonsite."/js/scriptaculous-js-1.9.0/scriptaculous.js");		
+		//$this->setJavascript(Config::$commonsite."/js/lightbox v2.04/lightbox.js");
 		
 		//$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
 		//$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js");
 		
-		$this->setCSS(Config::$mainsite."/common/js/lightbox2.51/css/lightbox.css");
-		$this->setJavascript(Config::$mainsite."/common/js/lightbox2.51/js/jquery-1.7.2.min.js");
-		$this->setJavascript(Config::$mainsite."/common/js/lightbox2.51/js/jquery-ui-1.8.18.custom.min.js");
-		$this->setJavascript(Config::$mainsite."/common/js/lightbox2.51/js/jquery.smooth-scroll.min.js");				
-		$this->setJavascript(Config::$mainsite."/common/js/lightbox2.51/js/lightbox.js");
+		$this->setCSS(Config::$commonsite."/js/lightbox2.51/css/lightbox.css");
+		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-1.7.2.min.js");
+		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-ui-1.8.18.custom.min.js");
+		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery.smooth-scroll.min.js");				
+		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/lightbox.js");
 		
 		
 		$out='';
-		$out.='<table class="property-table" align="center" style="width: 100%;">';
+		$out.='<table class="property-table" style="width: 100%;align:center;">';
 		$out.='<tr><td style="text-align:center;">';
 		if ((sizeof($files)!=0)){
 			$outt='';
@@ -795,7 +757,7 @@ class MainWebPage extends WebPage {
 					//$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" rel="lightbox[list]"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
 					$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" rel="lightbox[roadtrip]"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
 				//} else {
-					//$out.='<a href="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" ><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" class="imageborder"></a>&nbsp';
+					//$out.='<a href="'.Config::$commonsite.'/img/no_image_100x100.jpg" ><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" class="imageborder"></a>&nbsp';
 				}				
 		    }
 		    if ($outt==''){
@@ -808,7 +770,7 @@ class MainWebPage extends WebPage {
 		return $out;		
 	}					
 	function getWizardPage($html){
-		$this->setJavascript(Config::$mainsite."/common/js/wizard.js");
+		$this->setJavascript(Config::$commonsite."/js/wizard.js");
 		//$out.='<div id="form" class="font-size: 16px;">';
 		$outh='<form id="frmWizard" name="frmWizard" method="POST" enctype="multipart/form-data">';		
 		//footer
@@ -857,7 +819,7 @@ class MainWebPage extends WebPage {
 		//$outh.='  <div style="float:right">';
 		//$outh.='  Pasul '.$this->step.' din '.$this->steps;		
 		//$outh.='  </div>';
-		$outh.='  <div style="clear: both;"></div>';				
+		$outh.='  <div s></div>';				
 		$outh.=' </div>';
 		//body
 		$out.=' <div id="formcontrols" style="padding:10px;padding-top:20px;padding-bottom:20px;height:160px;width:auto;">';
@@ -895,17 +857,17 @@ class MainWebPage extends WebPage {
 				foreach ($ls as $v){
 					$l->loadById($v->location_id);
 					$r->loadById($l->raion_id);
-					$lurl=$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
+					$lurl=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
 					$lsrs.="<a href=".$lurl." target=\"_blank\">".$r->getFullName()."->".$l->getFullName()."</a><br>";
 				}
 			}else {
 				$lsrs="Localitati *".$this->lsearch."* nu exista!";
 			}
 		}
-		$out='<div id="location">';
+		$out='<div id="searchLocation">';
 		$out.='<form id="searchlocationform" name="searchlocationform" method="post">';
-		$out.='<div id="location-search-box1"><input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><br><input type="submit" name="searchlocationformpost" class="button" style="width:60px;" value="Cauta"><br>'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div id="location-search-box"><input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><br><input type="submit" name="searchlocationformpost" class="button" style="width:60px;" value="Cauta"><br>'.$lsrs.'</div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;
@@ -914,7 +876,7 @@ class MainWebPage extends WebPage {
 		$out='<div id="dictionar">';
 		$out.='<form id="searchdictionarformpost" name="searchdictionarformpost" method="get">';
 		$out.='<div id="location-search-box1"><input type="text" name="dsearch" value=""><input type="submit" name="searchdictionarformpost" class="button" style="width:60px;" value="Cauta"></div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;
@@ -927,7 +889,7 @@ class MainWebPage extends WebPage {
 			$lsrs.="Rezultatele cautarii:<br><br>";
 			if (!is_null($ls)){
 				foreach ($ls as $v){
-					$lurl=$this->getUrl(Config::$dictionarsite."/index.php","action=viewdictionar&id=".$v->id);
+					$lurl=$this->getUrlWithSpecialCharsConverted(Config::$dictionarsite."/index.php","action=viewdictionar&id=".$v->id);
 					$lsrs.='<a href="'.$lurl.'">'.$v->denumire.', '.$v->tip.' in Judetul '.$v->judet.'</a><br>';
 				}
 			}else {
@@ -938,7 +900,7 @@ class MainWebPage extends WebPage {
 		$out.='<form id="searchdictionarformpost" name="searchdictionarformpost" method="GET">';
 		$out.='<div id="location-search-box1"><br><br><br><input type="text" name="dsearch"  style="width:400px;" value="'.(isset($this->dsearch)?$this->dsearch:'').'"><input type="submit" name="searchdictionarformpost" class="button" style="width:60px;" value="Cauta"></div>';
 		$out.='<div id="location-search-box1" style="text-align:left;padding-left:10px;"><br><br><br>'.$lsrs.'<br><br><br></div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;
@@ -954,17 +916,17 @@ class MainWebPage extends WebPage {
 				foreach ($ls as $v){
 					$l->loadById($v->location_id);
 					$r->loadById($l->raion_id);
-					$lurl=$this->getUrl(Config::$primariisite."/index.php","action=viewprimarie&id=".$l->id);
+					$lurl=$this->getUrlWithSpecialCharsConverted(Config::$primariisite."/index.php","action=viewprimarie&id=".$l->id);
 					$lsrs.="<a href=".$lurl." target=\"_blank\">".$r->getFullName()."->".$l->getFullName()."</a><br>";
 				}
 			}else {
 				$lsrs="Localitati *".System::getHTML($this->psearch)."* nu exista!";
 			}
 		}
-		$out='<div id="location">';
+		$out='<div id="searchPrimarie">';
 		$out.='<form id="searchprimarieformpost" name="searchprimarieformpost" method="post">';
-		$out.='<div id="location-search-box1"><input type="text" name="psearch" value="'.(isset($this->psearch)?$this->psearch:'').'"><br><input type="submit" name="searchprimarieformpost" class="button" style="width:60px;" value="Cauta"><br>'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div id="primaria-search-box"><input type="text" name="psearch" value="'.(isset($this->psearch)?$this->psearch:'').'"><br><input type="submit" name="searchprimarieformpost" class="button" style="width:60px;" value="Cauta"><br>'.$lsrs.'</div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;
@@ -981,7 +943,7 @@ class MainWebPage extends WebPage {
 				foreach ($ns as $v){
 					//$l->loadById($v->location_id);
 					//$r->loadById($l->raion_id);
-					$nurl=$this->getUrl(Config::$numesite."/index.php","action=viewnume&id=".$v->id);
+					$nurl=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$v->id);
 					$nsrs.="<a href=".$nurl." target=\"_blank\">".$v->name."</a><br>";
 				}
 			}else {
@@ -991,7 +953,7 @@ class MainWebPage extends WebPage {
 		$out='<div id="name">';
 		$out.='<form id="searchnameform" name="searchnameform" method="post">';
 		$out.='<div id="location-search-box1"><input type="text" name="nsearch" value="'.(isset($this->nsearch)?$this->nsearch:'').'"><br><input type="submit" name="searchnameformpost" class="button" style="width:60px;" value="Cauta"><br>'.$nsrs.'</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</form>';
 		$out.='</div>';
 		return $out;
@@ -999,7 +961,7 @@ class MainWebPage extends WebPage {
 	function getPanoramioFotos($m){
 	
 		$this->setJavascript("http://www.panoramio.com/wapi/wapi.js?v=1");
-		$this->setJavascript(Config::$mainsite."/common/js/panoramio.js");
+		$this->setJavascript(Config::$commonsite."/js/panoramio.js");
 	
 		if ($m->lat==0){
 			$m->maptype=3;

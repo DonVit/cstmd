@@ -20,39 +20,39 @@ class Comment extends DBManager {
    }
  
    public function getAproveLink(){
-   		return $this->getUrl(Config::$mainsite."/comments.php","action=validate&id=".$this->id);
+   		return $this->getUrlWithSpecialCharsConverted(Config::$mainsite."/comments.php","action=validate&id=".$this->id);
    }
 	public function getLink(){
-		$link=$this->getUrl(Config::$mainsite."/index.php");
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$mainsite."/index.php");
 		if ($this->item_type=="n"){
-			$link=$this->getUrl(Config::$newssite."/index.php","action=viewnews&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewnews&id=".$this->item_id);
 		}
 		if ($this->item_type=="p"){
-			$link=$this->getUrl(Config::$imagessite."/index.php","action=viewimage&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$imagessite."/index.php","action=viewimage&id=".$this->item_id);
 		}
 		if ($this->item_type=="r"){
-			$link=$this->getUrl(Config::$locationssite."/index.php","action=viewraion&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion&id=".$this->item_id);
 		}	
 		if ($this->item_type=="l"){
-			$link=$this->getUrl(Config::$locationssite."/index.php","action=viewlocalitate&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$this->item_id);
 		}
 		if ($this->item_type=="m"){
-			$link=$this->getUrl(Config::$mapssite."/index.php","action=viewmap&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$mapssite."/index.php","action=viewmap&id=".$this->item_id);
 		}
 		if ($this->item_type=="c"){
-			$link=$this->getUrl(Config::$companiesite."/index.php","action=viewcompany&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$companiesite."/index.php","action=viewcompany&id=".$this->item_id);
 		}		
 		if ($this->item_type=="d"){
-			$link=$this->getUrl(Config::$dictionarsite."/index.php","action=viewdictionar&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$dictionarsite."/index.php","action=viewdictionar&id=".$this->item_id);
 		}
 		if ($this->item_type=="x"){
-			$link=$this->getUrl(Config::$primariisite."/index.php","action=viewraion&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$primariisite."/index.php","action=viewraion&id=".$this->item_id);
 		}
 		if ($this->item_type=="y"){
-			$link=$this->getUrl(Config::$primariisite."/index.php","action=viewprimarie&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$primariisite."/index.php","action=viewprimarie&id=".$this->item_id);
 		}
 		if ($this->item_type=="f"){
-			$link=$this->getUrl(Config::$numesite."/index.php","action=viewnume&id=".$this->item_id);
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$this->item_id);
 		}	
 		return $link;						
 	}

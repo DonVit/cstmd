@@ -1,6 +1,7 @@
 .buildpath
 .project
 .settings/
-_sub/news/data/
-_sub/chirie/data/
-_sub/imobil/data/
+news/data/
+chirie/data/
+imobil/data/
+photos/files/

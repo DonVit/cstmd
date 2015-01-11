@@ -164,7 +164,7 @@ class WebPage extends Object {
 				$url.="&".$field."=".$this->getParamValue($value);
 			}
 		}
-		return $url;
+		return htmlspecialchars($url);
 	}		
 	function create(){
 		if (isset($this->action)){

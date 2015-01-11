@@ -27,6 +27,9 @@ class Photo extends DBManager {
 		$t=$r->getFullNameDescription().', '.$l->getFullNameDescription().', '.$this->title;
 		return $t;	
 	}
+	function getTitle(){
+		return System::getHtmlSpecialChars($this->title);	
+	}	
 	function getPrevPhotoId(){
 		$sql="SELECT id FROM `photos` WHERE id < $this->id order by id desc limit 0,1";
 		$ps=$this->doSql($sql);
@@ -86,8 +89,8 @@ class Photo extends DBManager {
 				if ($i==4){
 					$out.='</tr><tr>';
 				}
-				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$p->id\"><img src=\"".Config::$imagessite."/thumbs/".$p->image_file."\" alt=\"".$p->image_description."\" class=\"newsgroup_img\"></img><p class=\"newsgroup_p\">$p->title</p></a></div></td>";
-				$out.='<td style="width:25%"><div><a href="'.$this->getUrl(Config::$imagessite."/index.php","action=viewimage").'&id='.$p->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$imagessite.'/files/s'.$p->file.'" class="imageborder"  style="width:120px;"></img><p class="newsgroup_p">'.$p->title.'</p></a></div></td>';
+				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$p->id\"><img src=\"".Config::$imagessite."/thumbs/".$p->image_file."\" alt=\"".$p->image_description."\" class=\"newsgroup_img\"/><p class=\"newsgroup_p\">$p->title</p></a></div></td>";
+				$out.='<td style="width:25%"><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite."/index.php","action=viewimage").'&id='.$p->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$imagessite.'/files/s'.$p->file.'" class="imageborder"  style="width:120px;"/><p class="newsgroup_p">'.$p->title.'</p></a></div></td>';
 				if ($i==8){
 					$out.='</tr>';
 				}

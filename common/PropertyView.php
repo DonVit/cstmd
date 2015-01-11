@@ -155,18 +155,18 @@ class PropertyView  {
 		return $imobil_result_output.$out;
 	}		
 	function getFunctions($imobilid){
-		return "<a href=\"".Config::$imobilsite."/property.php?id=".$imobilid."\"><img src=\"".Config::$mainsite."/common/img/view.jpg\" border=0 align=\"middle\"></a>";
+		return "<a href=\"".Config::$imobilsite."/property.php?id=".$imobilid."\"><img src=\"".Config::$commonsite."/img/view.jpg\" border=0 align=\"middle\"></a>";
 	}
 	function getAlbum($row){
 		if (is_numeric($row->image_id)){
-			return "<a href=\"".Config::$imobilsite."/property.php?id=".$row->id."\"><img src=\"".Config::$mainsite."/common/img/photo.gif\" border=0 align=\"middle\"></a>";
+			return "<a href=\"".Config::$imobilsite."/property.php?id=".$row->id."\"><img src=\"".Config::$commonsite."/img/photo.gif\" border=0 align=\"middle\"></a>";
 		} else {
 			return "";
 		}
 	}
 	function getMap($row){
 		if (($row->lat!=0)&&($row->lng!=0)){
-			return "<a href=\"".Config::$imobilsite."/property.php?id=".$row->id."\"><img src=\"".Config::$mainsite."/common/img/map.png\" border=0 align=\"middle\"></a>";
+			return "<a href=\"".Config::$imobilsite."/property.php?id=".$row->id."\"><img src=\"".Config::$commonsite."/img/map.png\" border=0 align=\"middle\"></a>";
 		} else {
 			return "";
 		}

@@ -104,31 +104,31 @@ require_once('loader.php');
 		$out.='<div id="right" class="container right" style="width:198px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}			
 	function getMenu(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#1").'">Descriere</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#2").'">Adresa</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#3").'">Contacte</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#4").'">Harta</a></li>';						
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompany&id=".$this->id."#5").'">Stiri</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#1").'">Descriere</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#2").'">Adresa</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#3").'">Contacte</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#4").'">Harta</a></li>';						
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompany&id=".$this->id."#5").'">Stiri</a></li>';		
 		$out.='</ul>';
 		return $out;
 	}
 	function getMenuLinks(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrl("add.php").'">Adauga Companie</a></li>';
-		$out.='<li><a href="'.$this->getUrl("index.php").'">Lista Tipuri Companii</a></li>';		
-		$out.='<li><a href="'.$this->getUrl("index.php","action=viewcompanies").'">Lista Companii</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("add.php").'">Adauga Companie</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Lista Tipuri Companii</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies").'">Lista Companii</a></li>';		
 		$out.='</ul>';
 		return $out;
 	}
 	function getRssLink(){
 		$out='<ul>';
-		$out.='<li><a href="rss.php">Companii in RSS <img src="'.Config::$mainsite.'/common/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"></img></a></li>';
+		$out.='<li><a href="rss.php">Companii in RSS <img src="'.Config::$commonsite.'/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"/></a></li>';
 		$out.='</ul>';
 		return $out;
 	}
@@ -139,8 +139,8 @@ require_once('loader.php');
 		//$out.="<ul class=\"leftmenulist\">";
 		foreach ($cs as $c){
 			//$out.='<li><a href="'.$this->getBaseName().'?view=companies&type='.$c->id.'">'.$c->name.'</a></li>';
-			$url=$this->getUrl("index.php","action=viewcompanies&id=".$c->id);
-			$out.='<h3><a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$c->id).'">'.$c->name.'</a></h3>';
+			$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$c->id);
+			$out.='<h3><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$c->id).'">'.$c->name.'</a></h3>';
 			//$out.='<h3><a href="'.$this->getBaseName().'?view=companies&type='.$c->id.'">'.$c->name.'</a></h3>';
 		
 		}
@@ -161,17 +161,17 @@ require_once('loader.php');
 			$o="<table width=\"100%\"><tr><td align=\"center\">";
 			$o.="<table  style=\"width: 100%\" class=\"source\">";
 			if ($p->logo_file!=""){
-				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="files/t'.$p->logo_file.'" alt="'.$p->logo_description.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="files/t'.$p->logo_file.'" alt="'.$p->logo_description.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 			} else {
-				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+				$o.='<tr><td style="width: 20%">Descriere:</td><td style="text-align: justify">'.nl2br($p->text).'</td><td rowspan="7" align="right" valign="top"><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 			}
 			$o.="<tr><td>Adresa:</td><td>".$p->getAdresa()."</td></tr>";
 			$o.="<tr><td></td><td></td></tr>";
-			$o.='<tr><td colspan="2"><a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai multe detalii aici</a></td></tr>';
+			$o.='<tr><td colspan="2"><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai multe detalii aici</a></td></tr>';
 			$o.="</table>"; 			
 			$o.="</td></tr></table>";
-			$h='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">'.$p->name.'</a>';			
-			//$f='<a href="'.$this->getUrl("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
+			$h='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=viewcompany&id='.$p->id.'">'.$p->name.'</a>';			
+			//$f='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=viewcompany&id='.$p->id.'">vezi mai mult detalii aici</a>';
 			$out.=$this->getGroupBoxH1($h,$o);	
 		}
 		$sql="select count(*) as cnt from company where valid=1";
@@ -189,11 +189,11 @@ require_once('loader.php');
 			$out.='<div class="groupbox">';
 			$out.='<table width="100%"><tr><td align="center">';	
 			if ($page!=0){
-				$out.='<a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$type."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
+				$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$type."&page=".($page-1)).'" class="link_button">< Inapoi</a>';
 			}
 			$out.=" ";
 			if ((($page+1)*$this->rowsperpage)<$cnt){
-				$out.='<a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$type."&page=".($page+1)).'" class="link_button">Inainte ></a>';
+				$out.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$type."&page=".($page+1)).'" class="link_button">Inainte ></a>';
 			}
 			$out.='</td></tr></table>';
 			$out.='</div>';			
@@ -210,13 +210,13 @@ require_once('loader.php');
 
 		$out.='<table width="100%">';		
 		if ($c->logo_file!=""){
-			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td align="right" valign="top"><img src="files/t'.$c->logo_file.'" alt="'.$c->logo_description.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td align="right" valign="top"><img src="files/t'.$c->logo_file.'" alt="'.$c->logo_description.'" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 		} else {
-			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td align="right" valign="top"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"></img></td></tr>';
+			$out.='<tr><td style="width:20%">Descriere:</td><td style="text-align: justify;vertical-align: top;">'.nl2br($c->text).'</td><td align="right" valign="top"><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" style1="border: 2px solid #C3D9FF;padding:5px;" class="imageborder"/></td></tr>';
 		}
 		$out.='</table>';		
 		$out.='<table width="100%">';		
-		$out.='<tr><td style="width:20%">Tip Companie:</td><td><a href="'.$this->getUrl("index.php","action=viewcompanies&id=".$c->company_type_id).'" target="_self">'.$c->getCompanyType()->name.'</a></td></tr>';		
+		$out.='<tr><td style="width:20%">Tip Companie:</td><td><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies&id=".$c->company_type_id).'" target="_self">'.$c->getCompanyType()->name.'</a></td></tr>';		
 		$out.='</table>';		
 		
 		return $out;
@@ -263,8 +263,8 @@ require_once('loader.php');
 				if ($i==4){
 					$out.='</tr><tr>';
 				}
-				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"></img><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
-				$out.='<td><div><a href="'.$this->getUrl(Config::$newssite."/index.php","action=viewnews&id=".$n->id).'"><img src="'.Config::$newssite.'/images/'.$n->image_file.'" alt="'.$n->image_description.'" style="width:120px;"></img><p>'.$n->title.'</p></a></div></td>';
+				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"/><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
+				$out.='<td><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewnews&id=".$n->id).'"><img src="'.Config::$newssite.'/images/'.$n->image_file.'" alt="'.$n->image_description.'" style="width:120px;"/><p>'.$n->title.'</p></a></div></td>';
 				if ($i==8)	{
 					$out.='</tr>';
 				}
@@ -285,7 +285,7 @@ require_once('loader.php');
 		$out.='<div id="right">';
 		$out.=$this->getRightContainer();		
 		$out.='</div>';
-		$out.='<div style="clear: both;"/></div>';
+		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';	
 		MainWebPage::show($out);
 	}
