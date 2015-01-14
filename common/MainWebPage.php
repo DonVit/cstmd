@@ -16,9 +16,8 @@ class MainWebPage extends WebPage {
 
 		$this->setCSS(Config::$commonsite."/style/common.css");
 		$this->setJavascript(Config::$commonsite."/js/scripts.js");
-		
-		$this->setJavascript("http://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");		
-
+		$this->setJavascript("https://www.google.com/recaptcha/api.js?hl=".$this->getLang()->name);
+		$this->setJavascript("http://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
 	}
 	
 	function show($html="MainWebPageHtml"){
@@ -67,6 +66,7 @@ class MainWebPage extends WebPage {
 		$out.=$this->getTheShiv();
 		$out.=$this->getFavIcon();
 		$out.=$this->getCSS();
+		//$out.='<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 		$out.=$this->getJavascript();
 		$out.=$this->getGA();
 		$out.='</head>';

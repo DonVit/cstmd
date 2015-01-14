@@ -102,15 +102,26 @@ class Comment extends DBManager {
 		// fb end
 		
 
-		$publickey = '6LcrnMUSAAAAALynnjZ63OqlyUu2__MLp0t4bES_'; 
-		$privatekey = '6LcrnMUSAAAAAKl3eUf4caIhzI2jMNbX8j2-KSFF';  
-				
+		$publickey = '6LfKVwATAAAAAHXk7eGPHodON6N5rqr6C1sBkGMy'; 
+		$privatekey = '6LfKVwATAAAAAERFhV7Z3hvCzX2DlDRbW4HHTt08';  
 
+			// The response from reCAPTCHA
+		$resp = null;
+		// The error code from reCAPTCHA, if any
+		$error = null;
+		
+		$reCaptcha = new ReCaptcha($privatekey);
+		
 		$errormsg='';
+		$infomsg='';
 		if (!empty($_POST['commentformpost'])){
-			$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
+			//$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
 			//if (User::getValidationCode()==$webpage->validationcode){
-			if ($resp->is_valid){
+		    $resp = $reCaptcha->verifyResponse(
+		        $_SERVER["REMOTE_ADDR"],
+		        $_POST["g-recaptcha-response"]
+		    );	
+			if ($resp != null && $resp->success){
 				if(isset($webpage->name)&&isset($webpage->comment)&&isset($webpage->email)){
 					//$c=new Comment();
 					//$c->item_type=$item_type;
@@ -124,7 +135,8 @@ class Comment extends DBManager {
 					$c->date=System::getCurentDateTime();
 					$c->valid=0;
 					$c->save();
-					$webpage->comment="";			
+					$webpage->comment="";		
+					$infomsg="Mesajul a fost salvat si urmeaza a fi verificat de operator !";	
 					Mail::send_comment_email($c);
 				} else {
 					$errormsg="Completeaza cimpurile obligatorii!";
@@ -172,14 +184,15 @@ class Comment extends DBManager {
 			$out.='<div><div class="newscomment_body">Nu exista</div></div>';
 		}
 		$out.='<div class="container groupboxheader">';
-		$out.='<h3>Comentează:</h3>';		
+		$out.='<a id="99"></a><h3>Comentează:</h3>';		
 		$out.='</div>';
-		$out.='<form method="post" name="commentform">';
+		$out.='<form method="post" name="commentform" action="'.$webpage->getRequestURI().'#99">';
+		
 		$out.='<table style="width:100%;">';
 		$out.='<tr><td>Nume:<span style="color:red">*</span></td><td><input type="text" name="name" style="width:98%;" value="'.((isset($webpage->name))?($webpage->name):'').'"></td></tr>';
 		$out.='<tr><td>Telefon:</td><td><input type="text" name="phone" style="width:98%;" value="'.((isset($webpage->phone))?($webpage->phone):'').'"></td></tr>';
-		$out.='<tr><td>Email:<span style="color:red">*</span></td><td><input type="text" name="email" style="width:98%;" value="'.((isset($webpage->email))?($webpage->email):'').'"></td></tr>';
-		$out.='<tr><td>Web Site:</td><td><input type="text" name="web" style="width:98%;"  value="'.((isset($webpage->web))?($webpage->web):'').'"></td></tr>';
+		$out.='<tr><td>Email:<span style="color:red">*</span></td><td><input type="email" name="email" style="width:98%;" value="'.((isset($webpage->email))?($webpage->email):'').'"></td></tr>';
+		$out.='<tr><td>Web Site:</td><td><input type="url" name="web" style="width:98%;"  value="'.((isset($webpage->web))?($webpage->web):'').'"></td></tr>';
 		$out.='<tr><td>Comentariu:<span style="color:red">*</span></td><td><textarea id="comment" name="comment" style="width:98%;height:100px;">'.((isset($webpage->comment))?($webpage->comment):'').'</textarea></td></tr>';
         //$out.='<textarea name="text">'.$this->currentnews->text.'</textarea>';
         $out.='<script>            CKEDITOR.replace( \'comment\' );        </script>';				
@@ -188,11 +201,17 @@ class Comment extends DBManager {
 		$out.='                theme : \'red\',';
 		$out.='        };';
 		$out.='</script>';
-		$out.='<tr><td>Validare:<span style="color:red">*</span></td><td>'.recaptcha_get_html($publickey).'</td></tr>';
-		if ($errormsg!=""){
-			$out.='<tr><td><br><span style="color:red">Eroare:</span></td><td><br><span style="color:red">'.$errormsg.'</span><br></td></tr>';
-		}
+		
+		$out.='<tr><td>Validare:<span style="color:red">*</span></td><td>';
+		$out.='<div class="g-recaptcha" data-sitekey="'.$publickey.'"></div>';
+		$out.='</td></tr>';	
 		$out.='<tr><td></td><td><input type="submit" name="commentformpost" value="Postează"></td></tr>';
+		if ($errormsg!=""){
+			$out.='<tr><td></td><td><br><span style="color:red;font-weight: bold;font-size: 16px;margin: 20px;"">'.$errormsg.'</span><br><br></td></tr>';
+		}
+		if ($infomsg!=""){
+			$out.='<tr><td></td><td><br><span style="color:green;font-weight: bold;font-size: 16px;margin: 20px;">'.$infomsg.'</span><br><br></td></tr>';
+		}			
 		$out.='<tr><td><br>Note:</td><td><br> 1. Cimpul marcat cu <span style="color:red">*</span> este obligator.<br> 2. Comentariul va fi publicat dupa ce va fi verificat de operator!</td></tr>';
 		$out.='</table>';
 		$out.='</form>';
