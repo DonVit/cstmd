@@ -50,8 +50,8 @@ lightbox = new Lightbox options
     function LightboxOptions() {
       //this.fileLoadingImage = 'images/loading.gif';
       //this.fileCloseImage = 'images/close.png';
-      this.fileLoadingImage = 'http://casata.md/common/img/loading.gif';
-      this.fileCloseImage = 'http://casata.md/common/img/close.png';
+      this.fileLoadingImage = 'http://common.casata.md/img/loading.gif';
+      this.fileCloseImage = 'http://common.casata.md/img/close.png';
   
       this.resizeDuration = 700;
       this.fadeDuration = 500;

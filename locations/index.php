@@ -1097,7 +1097,7 @@ $out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action
 	}
 	function showElectoralPreferences(){
 		$this->setJavascript("https://www.google.com/jsapi");
-		$o2s='<a name="6"></a>Preferintele Electorale in anii precedenti ale locuitorilor din '.$this->location->getFullNameDescription();
+		$o2s='<a name="6"></a>Preferintele Electorale pe parcursul anilor ale locuitorilor din '.$this->location->getFullNameDescription();
 		$o2b=Alegeri::getResultsByLocation($this->location->raion_id,$this->location->id);
 		$o2f="Sursa: www.cec.md";
 		if (empty($o2b)){

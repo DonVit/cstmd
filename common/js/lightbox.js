@@ -46,8 +46,8 @@
 //  Configurationl
 //
 LightboxOptions = Object.extend({
-    fileLoadingImage:        'http://casata.md/common/img/loading.gif',     
-    fileBottomNavCloseImage: 'http://casata.md/common/img/closelabel.gif',
+    fileLoadingImage:        'http://common.casata.md/img/loading.gif',     
+    fileBottomNavCloseImage: 'http://common.casata.md/img/closelabel.gif',
 
     overlayOpacity: 0.8,   // controls transparency of shadow overlay
 
@@ -106,7 +106,7 @@ Lightbox.prototype = {
         //              </div>
         //              <div id="loading">
         //                  <a href="#" id="loadingLink">
-        //                      <img src="http://casata.md/common/img/loading.gif">
+        //                      <img src="http://common.casata.md/img/loading.gif">
         //                  </a>
         //              </div>
         //          </div>
@@ -119,7 +119,7 @@ Lightbox.prototype = {
         //              </div>
         //              <div id="bottomNav">
         //                  <a href="#" id="bottomNavClose">
-        //                      <img src="http://casata.md/common/img/close.gif">
+        //                      <img src="http://common.casata.md/img/close.gif">
         //                  </a>
         //              </div>
         //          </div>

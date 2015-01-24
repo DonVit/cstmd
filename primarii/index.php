@@ -1310,7 +1310,7 @@ class IndexLocationsWebPage extends MainWebPage {
 	}				
 	function showElectoralPreferences(){
 		$this->setJavascript("https://www.google.com/jsapi");
-		$o2s='<a name="6"></a>Preferintele Electorale in anii precedenti ale locuitorilor din '.$this->location->getFullNameDescription();
+		$o2s='<a name="6"></a>Preferintele Electorale pe parcursul anilor ale locuitorilor din '.$this->location->getPrimariaName();
 		$o2b=Alegeri::getResultsByPrimarie($this->location->raion_id,$this->location->id);
 		$o2f="Sursa: www.cec.md";
 		if (empty($o2b)){
@@ -1321,7 +1321,7 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function showAlegeri141130Image(){
 		
-		$o2s='<a name="6"></a>Alegerile Parlamentare din 30 noiembrie 2014 - Rezultatele din '.$this->location->getFullNameDescription();
+		$o2s='<a name="6"></a>Alegerile Parlamentare din 30 noiembrie 2014 - Rezultatele din '.$this->location->getPrimariaName();
 		$o2b=Alegeri::getImageUrlByPrimarie($this->location->raion_id,$this->location->id);
 		$o2f="Sursa: www.cec.md";
 		if (empty($o2b)){

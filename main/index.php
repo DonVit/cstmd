@@ -122,7 +122,7 @@ class IndexWebPage extends MainWebPage {
 		  		if ($i!=null){
 		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$imobilsite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style1="height: 100px; width:130px;"  class="imageborder"></img></td></tr></table>';
 		  		} else {
-		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
+		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
 		  		}
 		  		$out.=$n->getLongDescription().' <a href='.Config::$imobilsite.'/property.php?id='.$n->id.'>vezi mai mult</a></td></tr>';
 		  		$out.='</table>';
@@ -145,7 +145,7 @@ class IndexWebPage extends MainWebPage {
 		  		if ($i!=null){
 		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$chiriesite.'/data/t'.$i->imagepath.'" alt="'.$i->imagenote.'" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
 		  		} else {
-		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$mainsite.'/common/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
+		  			$out.='<table align="left" style1="margin-right:5px;"><tr><td style1="vertical-align: top;border: 1px;border-color: red;border-style: solid;margin-right:5px;"><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"></img></td></tr></table>';
 		  		}
 		  		$out.=$n->getLongDescription().' <a href='.Config::$chiriesite.'/property.php?id='.$n->id.'>vezi mai mult</a></td></tr>';
 		  		$out.='</table>';
