@@ -15,7 +15,7 @@ class FeedItem extends DBManager {
 	function getTableName(){
 		return "feeditem";
 	}
-	public static function isNew($feeditem){
+	public function isNew($feeditem){
 		$fi=new FeedItem();
 		$fis=$fi->getAll("companyid=".$feeditem->companyid." and link=\"".$feeditem->link."\" and status=1");
 		if (is_null($fis)){
@@ -23,6 +23,23 @@ class FeedItem extends DBManager {
 		} else {
 			return false;
 		}
+	}
+	public function itentifyNewItems(){
+		$fi=new FeedItem();
+		
+		$fis=$fi->getAll("status=0");
+		
+		if (count($fis)!=0){
+			foreach($fis as $fi){
+				if ($this->isNew($fi)){
+					$fi->status=1;
+					$fi->save();
+				} else {
+					$fi->delete();
+				}
+			}
+		}
+		DBManager::doSql("delete from feeditem where deleted=1");		
 	}
 	
 }
