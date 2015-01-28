@@ -1,8 +1,5 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
+
 class FeedItem extends DBManager {
 	public $id;
 	public $companyid;
@@ -11,13 +8,14 @@ class FeedItem extends DBManager {
 	public $description;
 	public $pubdate;
 	public $createdat;
-	public $status;
+	public $status;//0-just downloaded/draft; 1- new; 2-read; 
+	public $contor;
 	function getTableName(){
 		return "feeditem";
 	}
 	public function isNew($feeditem){
 		$fi=new FeedItem();
-		$fis=$fi->getAll("companyid=".$feeditem->companyid." and link=\"".$feeditem->link."\" and status=1");
+		$fis=$fi->getAll("companyid=".$feeditem->companyid." and link=\"".$feeditem->link."\" and status in (1,2)");
 		if (is_null($fis)){
 			return true;
 		} else {
@@ -41,6 +39,12 @@ class FeedItem extends DBManager {
 		}
 		DBManager::doSql("delete from feeditem where deleted=1");		
 	}
+	//mark all latest news as read
+	public function markAsReadLatestNews(){
+		$now=new DateTime();
+		DBManager::doSql("update feeditem set status=2 where status=1 and createdat>='".$now->format('Y-m-d')."'");		
+	}	
+	
 	
 }
 
