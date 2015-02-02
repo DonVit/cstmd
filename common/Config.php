@@ -23,6 +23,7 @@ class Config {
 	public static $calendarsite="http://calendar.casata.it";	
 	public static $numesite="http://nume.casata.it";
 	public static $adssite="http://ads.casata.it";
+	public static $feedssite="http://feeds.casata.it";
 	public static $errorpage="http://casata.it/error.php";
 	public static $cookiedomain=".casata.it";
 

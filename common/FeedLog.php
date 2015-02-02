@@ -1,36 +1,15 @@
 <?php
 class FeedLog extends DBManager {
 	public $id;
+	public $feedjobid;
 	public $companyid;
 	public $downloadstatus;
 	public $parsestatus;
 	public $error;
-	public $attemptat;
+	public $started_at;
+	public $ended_at;	
 	function getTableName(){
 		return "feedlog";
-	}
-	
-	function getAtemptsForToday(){
-		$now=new DateTime();
-		$current_date=$now->format('Y-m-d');
-		return $this->getAll('attemptat>='.$current_date,"attemptat desc");
-	}
-	function getRssFeeds(){
-		$f=new Company();
-		$fs=$f->getAll('rssfeed!=""',"id desc");
-		$feedscount=0;
-		foreach($fs as $f){
-			$status=$this->getFeed($f);
-			$feedscount++;
-		}			
-	}	
-	function getItem($node, $nodename){
-		$rtn="";
-		$items=$node->getElementsByTagName($nodename);
-		if ($items->length!=0){
-			$rtn=$items->item(0)->childNodes->item(0)->nodeValue;
-		}		
-		return $rtn;
 	}
 	function getFeed($f){
 
@@ -38,6 +17,7 @@ class FeedLog extends DBManager {
 			$feedparsestatus=0;
 			$errormessage="";
 			
+
 			$ch = curl_init();
 			
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -59,6 +39,7 @@ class FeedLog extends DBManager {
 						$item_desc=$this->getItem($item,'description');
 						$item_date=$this->getItem($item,'pubDate');
 						$fi=new FeedItem();
+						$fi->feedlogid=$fl->id;
 						$fi->companyid=$f->id;
 						$fi->title=strip_tags($item_title);
 						$fi->link=strip_tags($item_link);
@@ -73,15 +54,22 @@ class FeedLog extends DBManager {
 			}
 			curl_close ($ch);
 			
-			$fl=new FeedLog();
-			$fl->companyid=$f->id;
-			$fl->downloadstatus=$feeddownloadstatus;
-			$fl->parsestatus=$feedparsestatus;
-			$fl->error=$errormessage;
-			$fl->attemptat=System::getCurentDateTime();
-			$fl->save();		
+			
+			$this->downloadstatus=$feeddownloadstatus;
+			$this->parsestatus=$feedparsestatus;
+			$this->error=$errormessage;
+			$this->ended_at=System::getCurentDateTime();
+			$this->save();		
 		return (($feeddownloadstatus==1)&&($feedparsestatus==1));
 	}
+	function getItem($node, $nodename){
+		$rtn="";
+		$items=$node->getElementsByTagName($nodename);
+		if ($items->length!=0){
+			$rtn=$items->item(0)->childNodes->item(0)->nodeValue;
+		}		
+		return $rtn;
+	}		
 }
 
 ?>

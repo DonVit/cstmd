@@ -1013,9 +1013,11 @@ class IndexLocationsWebPage extends MainWebPage {
 	}	
 	function getNews(){
 		$out="";			
-		$o2s='<a name="8"></a>'.$this->location->getPrimariaName().' - Stiri:';		
-		$n=new News();		
-		$o2b=$n->getNewsByLocalitate($this->location->id);	
+		$o2s='<a name="8"></a>'.$this->location->getPrimariaName().' - Ultimile Stiri:';		
+		$n=new News();
+		$fi=new FeedItem();
+		$o2b=$fi->getNewsByPrimarie($this->location->id);		
+		$o2b.=$n->getNewsByLocalitate($this->location->id);	
 		return $this->getGroupBoxH3($o2s,$o2b);
 	}
 	function getPhotos(){

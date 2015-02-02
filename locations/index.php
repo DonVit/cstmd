@@ -44,7 +44,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getRaionPopulation());
 		$this->setCenterContainer($this->getRaionPhotos());
 		$this->setCenterContainer($this->getPanoramioFotos($r));
-		$this->setCenterContainer($this->getImobilList($this->raion->id, 0));			
+		$this->setCenterContainer($this->getImobilList($this->raion->id, 0));
+		$this->setCenterContainer($this->getPrimarieNews());			
 		$c='<a name="11"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'r',$r->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuRaion()));
@@ -278,6 +279,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#4").'">Populația</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#5").'">Imagini</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#9").'">Imobile</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#7").'">Stiri</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#11").'">Forum/Comentarii</a></li>';
 		$out.='</ul>';
 		return $out;
@@ -883,11 +885,20 @@ $out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action
 	}	
 	function getNews(){
 		$out="";			
-		$o2s='<a name="9"></a>'.$this->location->getFullNameDescription().' - Stiri:';		
-		$n=new News();		
-		$o2b=$n->getNewsByLocalitate($this->location->id);	
+		$o2s='<a name="9"></a>'.$this->location->getFullNameDescription().' - Ultimele Stiri:';		
+		$n=new News();
+		$fi=new FeedItem();
+		$o2b=$fi->getNewsByLocalitate($this->location->id);	
+		$o2b.=$n->getNewsByLocalitate($this->location->id);	
 		return $this->getGroupBoxH3($o2s,$o2b);
 	}
+	function getPrimarieNews(){
+		$out="";			
+		$o2s='<a name="7"></a>'.$this->raion->getFullNameDescription().' - Ultimele Stiri:';		
+		$fi=new FeedItem();
+		$o2b=$fi->getNewsByRaion($this->raion->id);	
+		return $this->getGroupBoxH3($o2s,$o2b);
+	}	
 	function getPhotos(){
 		$out="";			
 		$o2s='<a name="8"></a>'.$this->location->getFullNameDescription().' - Foto/Imagini in raza de 10 km:';		

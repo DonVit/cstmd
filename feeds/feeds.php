@@ -5,24 +5,28 @@ class IndexWebPage extends MainWebPage {
 	function __construct(){
 		parent::__construct();
 		$this->setCSS(Config::$mainsite."/style/main.css");
-		$t="PORTAL IMOBILIAR DIN REPUBLICA MOLDOVA";
+		$t="FEEDS CRAWLER DIN REPUBLICA MOLDOVA";
 		$this->setTitle($t);
 		$this->setLogoTitle($t);
 		$this->create();	
 	}
 	function actionDefault(){
-		$fl=new FeedLog();
-		$fl->getRssFeeds();
-		$fi=new FeedItem();
-		$fi->itentifyNewItems();		
 		$this->setLeftContainer($this->getGroupBoxH3("Menu", $this->getMenuFeeds()));	
-		$this->setCenterContainer($this->getGroupBoxH1("Ultimile Stiri",$this->getLatestNews()));
-		$fi->markAsReadLatestNews();
+		$this->setCenterContainer($this->getGroupBoxH1("Ultimile Joburi",$this->getLatestJobs()));
 		$this->show();
 	}
-	function actionToday(){
-		$this->setLeftContainer($this->getGroupBoxH3("Menu", $this->getMenuFeeds()));			
-		$this->setCenterContainer($this->getGroupBoxH1($n->title,$this->getTodayNews()));
+	function actionCrawl(){
+		$f=new FeedJob();
+		$fi= new FeedItem();
+		$f->started_at=System::getCurentDateTime();
+		$f->save();	
+		$f->getRssFeeds();
+		$fi->itentifyNewItems();
+		$fi->mapNewsToLocations();		
+		$f->ended_at=System::getCurentDateTime();
+		$f->save();			
+		$this->setLeftContainer($this->getGroupBoxH3("Menu", $this->getMenuFeeds()));	
+		$this->setCenterContainer($this->getGroupBoxH1("Ultimile Joburi",$this->getLatestJobs()));
 		$this->show();
 	}
 	function actionRedirect(){
@@ -33,17 +37,17 @@ class IndexWebPage extends MainWebPage {
 				$fi->count();
 				$this->redirect($fi->link);
 			} else {
-				$this->redirect("feeds.php");
+				$this->redirect("index.php");
 			}
 		} else {
-			$this->redirect("feeds.php");
+			$this->redirect("index.php");
 		}
 	}	
 	function getMenuFeeds(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("feeds.php").'">Ultimile Stiri</a></li>';		
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("feeds.php","action=today").'">Stirile de Azi</a></li>';				
-			
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("feeds.php").'">Ultimile Joburi</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("feeds.php","action=crawl").'">Crawl News</a></li>';				
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Ultimele Stiri</a></li>';				
 		$out.='</ul>';
 		return $out;
 	}			
@@ -93,24 +97,23 @@ class IndexWebPage extends MainWebPage {
 		return $out;
 	}
 
-	function getLatestNews(){
+	function getLatestJobs(){
 		$out="";
-		$n=new FeedItem();
-		$now=new DateTime();
-		$ns=$n->doSql("select fi.id,title,link,fi.description,pubdate,companyid,c.name from feeditem as fi inner join company as c on fi.companyid=c.id where fi.status=1 and createdat>='".$now->format('Y-m-d')."' order by fi.id desc");
-		$out.=$this->getNewsTable($ns);
+		$j=new FeedJob();
+		$js=$j->getAll();
+		$out.=$this->getJobsTable($js);
 		return $out;
 	}
-	function getNewsTable($ns){
+	function getJobsTable($js){
 		$out='<div class="groupboxtable">';
 		$out.='<table style="width:100%;" class="pure-table pure-table-bordered">';
-		$out.='<thead><tr><th>Nr</th><th>Compania</th><th>Title</th><th>Data</th></tr></thead>';
+		$out.='<thead><tr><th>Nr</th><th>Start Date</th><th>End Date</th><th>Duration</th></tr></thead>';
 		$out.="<tbody>";
-		if (count($ns)!=0){
-			$c=count($ns);
-			foreach($ns as $n){
-				$url=$this->getUrlWithSpecialCharsConverted("feeds.php","action=redirect&id=".$n->id);
-				$out.='<tr><td>'.$c.'</td><td>'.$n->name.'</td><td><a href="'.$url.'" target="_blank">'.$n->title.'</a></td><td>'.$n->pubdate.'</td></tr>';
+		if (count($js)!=0){
+			$c=count($js);
+			foreach($js as $j){
+				//$url=$this->getUrlWithSpecialCharsConverted("index.php","action=redirect&id=".$n->id);
+				$out.='<tr><td>'.$c.'</td><td>'.$j->started_at.'</td><td>'.$j->ended_at.'</td><td></td></tr>';
 				$c=$c-1;
 			}
 		}

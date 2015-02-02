@@ -213,6 +213,9 @@ class Location extends DBManager {
 		} else {	
 			return null;
 		}
+	}
+	function finLocationsInText($text){
+		
 	}		
 }
 ?>

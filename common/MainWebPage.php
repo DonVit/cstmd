@@ -520,7 +520,7 @@ class MainWebPage extends WebPage {
 			$out='';			
 			$out.='<table class="property-table" style="width: 100%;align:center;">';
 			$out.='<tr><td class="property-name" style="width: 35%;">Municipiul/Raionul:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$a->getRaion()->id).'" >'.$a->getRaion()->getFullName().'</a></td></tr>';			
-			$out.='<tr><td class="property-name" style="width: 35%;">Oras/Sat:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate','&id='.$a->getLocation()->id).'" >'.$a->getLocation()->getFullName().'</a></td></tr>';			
+			$out.='<tr><td class="property-name" style="width: 35%;">Oras/Sat:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate&id='.$a->getLocation()->id).'" >'.$a->getLocation()->getFullName().'</a></td></tr>';			
 			$out.='<tr><td class="property-name" style="width: 35%;">Sector:</td><td class="property-value" style="width: 65%;">'.$a->getSector()->name.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 35%;">Strada:</td><td class="property-value" style="width: 65%;">'.$a->strada.'</td><td></td><td></td></tr>';
 			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Casa:</td><td class="property-value" style="width: 65%;">'.$a->casa_nr.'</td></tr>';
