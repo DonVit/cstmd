@@ -11,15 +11,10 @@ class IndexLocationsWebPage extends MainWebPage {
 	
 	function __construct(){
 		parent::__construct();
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;hl=ro&amp;sensor=false&amp;key=".Config::getMapKey($this->getServerName()));
-		//$this->setCSS("style/maps.css");
-		//$this->setJavascript("js/scripts.js");
 		$this->setLogoTitle("LOCALITATI DIN REPUBLICA MOLDOVA");		
 		$this->create();		
 	}
 	function actionDefault(){
-		//$this->setLogoTitle("Localitati din Republica Moldova");
 		$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));	
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
@@ -38,8 +33,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			$this->id=$this->raion->id;
 		}
 		$r->count();
-		$this->setTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->raion->getFullNameDescription());
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->raion->getFullNameDescription());	
+		$this->setTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->raion->getFullNameDescription());	
 		$this->setCenterContainer($this->getRaion());
 		$this->setCenterContainer($this->getRaionPopulation());
 		$this->setCenterContainer($this->getRaionPhotos());
@@ -76,8 +70,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		Logger::setLogs($this->location);		
 		$l->count();
 		$this->setTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->location->getFullNameDescription().' din '.$this->location->getRaion()->getFullNameDescription());
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->location->getFullNameDescription());
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setCenterContainer($this->getLocalitate());
 		$this->setCenterContainer($this->getPopulation());
 		$this->setCenterContainer($this->getPopulationInTime());
@@ -105,8 +97,6 @@ class IndexLocationsWebPage extends MainWebPage {
 
 	function actionViewOrase($html="LocationsWebPageHTML"){
 		$this->setTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageOraseTitle"),$this->getOrase()));
@@ -116,8 +106,6 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewTopSusLocalitati($html="LocationsWebPageHTML"){
 		$t="Lista a 50 cele mai sus amplasate localitati din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopSusLocalitati()));
@@ -127,30 +115,22 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewTopJosLocalitati($html="LocationsWebPageHTML"){
 		$t="Lista a 50 cele mai jos amplasate localitati din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopJosLocalitati()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
 	function actionViewTopUpPopLocalitati($html="LocationsWebPageHTML"){
 		$t="Lista a 50 cele mai populate localitati din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopUpPopLocalitati()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
 	function actionViewTopDownPopLocalitati($html="LocationsWebPageHTML"){
 		$t="Lista a 50 cele mai putin populate localitati din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopDownPopLocalitati()));
@@ -160,8 +140,6 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewTopLocalitatiUcraineni($html="LocationsWebPageHTML"){
 		$t="Lista localitatilor populate cu Ucraineni din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiUcraineni()));
@@ -171,8 +149,6 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewTopLocalitatiRusi($html="LocationsWebPageHTML"){
 		$t="Lista localitatilor populate cu Rusi din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiRusi()));
@@ -182,8 +158,6 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewTopLocalitatiGagauzi($html="LocationsWebPageHTML"){
 		$t="Lista localitatilor populate cu Gagauzi din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiGagauzi()));
@@ -193,8 +167,6 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewTopLocalitatiBulgari($html="LocationsWebPageHTML"){
 		$t="Lista localitatilor populate cu Bulgari din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiBulgari()));
@@ -204,8 +176,6 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewTopLocalitatiEvrei($html="LocationsWebPageHTML"){
 		$t="Lista localitatilor populate cu Evrei din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiEvrei()));

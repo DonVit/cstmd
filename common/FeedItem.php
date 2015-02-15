@@ -45,7 +45,7 @@ class FeedItem extends DBManager {
 		DBManager::doSql("update feeditem set status=2 where status=1");	
 	}
 	public function getNewsByRaion($raion_id){
-		$sql="SELECT t1.feeditemid as id,  t2.title FROM feeditemlocation t1 inner join feeditem t2 on t1.feeditemid=t2.id inner join localitate t3 on t1.localitateid=t3.id where t3.raion_id=".$raion_id." order by t1.feeditemid desc  limit 0,100";
+		$sql="SELECT t4.feeditemid as id, t2.title from (select t1.feeditemid FROM feeditemlocation t1 inner join localitate t3 on t1.localitateid=t3.id where t3.raion_id=".$raion_id." group by t1.feeditemid) as t4 inner join feeditem t2 on t4.feeditemid=t2.id order by t4.feeditemid desc limit 0,100";
 		$ns=DBManager::doSql($sql);
 		$out=$this->getNewsTable($ns);
 		return $out;
