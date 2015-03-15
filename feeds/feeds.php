@@ -100,7 +100,7 @@ class IndexWebPage extends MainWebPage {
 	function getLatestJobs(){
 		$out="";
 		$j=new FeedJob();
-		$js=$j->getAll();
+		$js=$j->getAll("","id desc","0","100");
 		$out.=$this->getJobsTable($js);
 		return $out;
 	}
@@ -110,11 +110,8 @@ class IndexWebPage extends MainWebPage {
 		$out.='<thead><tr><th>Nr</th><th>Start Date</th><th>End Date</th><th>Duration</th></tr></thead>';
 		$out.="<tbody>";
 		if (count($js)!=0){
-			$c=count($js);
 			foreach($js as $j){
-				//$url=$this->getUrlWithSpecialCharsConverted("index.php","action=redirect&id=".$n->id);
-				$out.='<tr><td>'.$c.'</td><td>'.$j->started_at.'</td><td>'.$j->ended_at.'</td><td></td></tr>';
-				$c=$c-1;
+				$out.='<tr><td>'.$j->id.'</td><td>'.$j->started_at.'</td><td>'.$j->ended_at.'</td><td></td></tr>';
 			}
 		}
 		$out.="</tbody>";

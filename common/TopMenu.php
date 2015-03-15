@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 26 Feb 2009
- *
- */
 class TopMenu {
 	public static function getItems($language){
 		$Items=array(
@@ -11,6 +7,7 @@ class TopMenu {
 		Config::$chiriesite."/index.php?l=".$language->name=>"Chirie",
 		Config::$companiesite."/index.php?l=".$language->name=>"Companii",
 		Config::$newssite."/index.php?l=".$language->name=>"Ştiri",
+		Config::$feedssite."/index.php?l=".$language->name=>"Feeduri",
 		//Config::$videosite."/index.php?l=".$language->name=>"Video",		
 		Config::$imagessite."/index.php?l=".$language->name=>"Imagini",
 		Config::$mapssite."/index.php?l=".$language->name=>"Hărţi",	

@@ -37,7 +37,21 @@ class IndexWebPage extends MainWebPage {
 		$out.=$this->getLastChirie();
 		$out.='</div>';
 		$out.='<div style="clear: both;"/></div>';
-		$out.='</div>';		
+		$out.='</div>';
+
+		$out.='<div id="group3" class="maingroupbox">';
+		$out.='<div class="groupbox">';
+		$out.='<h2 class="groupheader_h2">Ultimile Titluri de Stiri </h2>';		
+		$out.='</div>';
+		$out.='<div id="left" style="width:168px;float:left;">';
+		$out.=$this->getLastFeedsCount();						
+		$out.='</div>';			
+		$out.='<div id="center" style="width:824px;float:right;"">';
+		$out.=$this->getLastFeedsTitles();
+		$out.='</div>';
+		$out.='<div style="clear: both;"/></div>';
+		$out.='</div>';			
+		
 		$out.='<div id="group3" class="maingroupbox">';
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Stiri Imobiliare</h2>';		
@@ -81,6 +95,20 @@ class IndexWebPage extends MainWebPage {
 		
 		MainWebPage::show($out);
 	}
+
+	function getLastFeedsTitles(){
+		$out='<div class="groupbox">';
+		$out.='<h2 class="groupheader_h2">Titluri de Stiri</h2>';
+		$out.='<table width="100%"><tr><td>';
+		$f=new FeedItem();	
+		$todayDate=date("d-m-y");	
+		$out.=$f->getNewsByDate($todayDate,25);
+		$out.='</td></tr></table>';
+		$out.='<h2 class="groupfooter_h2"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$feedssite.'/index.php').'">mai multe stiri</a></h2>';		
+		$out.='</div>';
+		return $out;
+	}	
+	
 	function getLastNews(){
 		$out="";
 		$sql="select news.id as news_id, title, left(news.text,850) as t, url, date, company.id as company_id, company.name as company_name, news_category.id as news_category_id, news_category.name_ro as news_category_name, contacturl,news.contor as news_contor from news ";
@@ -258,6 +286,24 @@ class IndexWebPage extends MainWebPage {
 		$out.='</div>';
 		return $out;			
 	}
+	function getLastFeedsCount(){
+		$f=new FeedItem();
+		$fs=$f->doSql("select count(*) as cnt from feeditem where deleted=0 and status=2");
+		
+		$c=0;
+		foreach ($fs as $f){
+			$c=$f->cnt;
+		}
+
+		$out='<div class="groupbox">';
+		$out.='<h2 class="groupheader_h2">Total Titluri:</h2>';												
+		$out.='<ul class="leftmenulist">';		
+		$out.='<li style="font-size:200%;text-align:center;">'.$c.'</li>';		
+		$out.='</ul>';		
+		$out.='<h2 class="groupfooter_h2">...</h2>';
+		$out.='</div>';
+		return $out;
+	}	
 	function getNewsCount(){
 
 		$n=new News();

@@ -1,10 +1,5 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once('loader.php');
-
 
 class IndexLocationsWebPage extends MainWebPage {
 
@@ -39,7 +34,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getRaionPhotos());
 		$this->setCenterContainer($this->getPanoramioFotos($r));
 		$this->setCenterContainer($this->getImobilList($this->raion->id, 0));
-		$this->setCenterContainer($this->getPrimarieNews());			
+		$this->setCenterContainer($this->getRaionNews());			
 		$c='<a name="11"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'r',$r->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuRaion()));
@@ -80,6 +75,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getPhotos());
 		$this->setCenterContainer($this->getPanoramioFotos($l));
 		$this->setCenterContainer($this->getLocalitatiCuAcelasNume());	
+		$this->setCenterContainer($this->getNewsTitles());		
 		$this->setCenterContainer($this->getNews());		
 		$this->setCenterContainer($this->getImobilList($this->raion->id, $this->location->id));
 		$this->setCenterContainer($this->getContacts($l));
@@ -857,17 +853,28 @@ $out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action
 		$out="";			
 		$o2s='<a name="9"></a>'.$this->location->getFullNameDescription().' - Ultimele Stiri:';		
 		$n=new News();
+		$o2b=$n->getNewsByLocalitate($this->location->id);	
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewlocalitate&localitate=".$this->location->id);
+		$o2f=$this->getFooterWithLink($link);	
+		return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+	}
+	function getNewsTitles(){
+		$out="";			
+		$o2s='<a name="9"></a>'.$this->location->getFullNameDescription().' - Ultimele Titluri de Stiri:';		
 		$fi=new FeedItem();
 		$o2b=$fi->getNewsByLocalitate($this->location->id);	
-		$o2b.=$n->getNewsByLocalitate($this->location->id);	
-		return $this->getGroupBoxH3($o2s,$o2b);
-	}
-	function getPrimarieNews(){
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=localitate&id=".$this->location->id);
+		$o2f=$this->getFooterWithLink($link);	
+		return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+	}	
+	function getRaionNews(){
 		$out="";			
-		$o2s='<a name="7"></a>'.$this->raion->getFullNameDescription().' - Ultimele Stiri:';		
+		$o2s='<a name="7"></a>'.$this->raion->getFullNameDescription().' - Ultimele Titluri de Stiri:';		
 		$fi=new FeedItem();
 		$o2b=$fi->getNewsByRaion($this->raion->id);	
-		return $this->getGroupBoxH3($o2s,$o2b);
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=raion&id=".$this->raion->id);
+		$o2f=$this->getFooterWithLink($link);	
+		return $this->getGroupBoxH3($o2s,$o2b,$o2f);
 	}	
 	function getPhotos(){
 		$out="";			
@@ -1097,7 +1104,7 @@ $out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action
 		} else {
 			return $this->getGroupBoxH3($o2s,$o2b,$o2f);
 		}
-	}	
+	}		
 }
 $n=new IndexLocationsWebPage();
 ?>

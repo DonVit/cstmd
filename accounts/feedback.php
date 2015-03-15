@@ -53,16 +53,7 @@ class FeedBackWebPage extends MainWebPage {
 		$this->create();		
 	}
 	function actionDefault(){
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
-		//$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		//$this->setLeftContainer($this->getGroupBoxH3("",$this->getRssLink()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
-		//$this->setCenterContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
-		$this->setRightContainer($this->getFeedbackForm());
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
+		$this->setRightContainer($this->getFeedbackForm());		
 		$this->show();
 	}		
 	function show($html=""){

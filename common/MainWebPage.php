@@ -290,14 +290,14 @@ class MainWebPage extends WebPage {
 	function getBookmarks($permalink="", $title="") {
 		if (Config::$live){
 			//addthis
-			$out='<div class="addthis_toolbox addthis_default_style " style="width:200px;">';
+			$out='<div class="addthis_toolbox addthis_default_style " style="width:120px;">';
 			$out.='<a class="addthis_button_preferred_1"></a>';
 			$out.='<a class="addthis_button_preferred_2"></a>';
 			$out.='<a class="addthis_button_preferred_3"></a>';
-			$out.='<a class="addthis_button_preferred_4"></a>';
-			$out.='<a class="addthis_button_preferred_5"></a>';
-			$out.='<a class="addthis_button_preferred_6"></a>';
-			$out.='<a class="addthis_button_preferred_7"></a>';
+			//$out.='<a class="addthis_button_preferred_4"></a>';
+			//$out.='<a class="addthis_button_preferred_5"></a>';
+			//$out.='<a class="addthis_button_preferred_6"></a>';
+			//$out.='<a class="addthis_button_preferred_7"></a>';
 			//$out.='<a class="addthis_button_preferred_8"></a>';
 			//$out.='<a class="addthis_button_preferred_9"></a>';
 			//$out.='<a class="addthis_button_preferred_10"></a>';
@@ -1081,6 +1081,13 @@ class MainWebPage extends WebPage {
 		$xmlStr=str_replace("'",'&#39;',$xmlStr);
 		$xmlStr=str_replace("&",'&amp;',$xmlStr);
 		return $xmlStr;
+	}
+	public function getFooterWithLink($link){
+		$out='';
+		$out.='<div style="text-align: right;  margin: 10px;">';
+		$out.='<a class="link_button" href="'.$link.'" target="_blank">Vezi aici mai multe</a>';
+		$out.='</div>';	
+		return $out;
 	}																				
 }
 //$b=new WebPage();

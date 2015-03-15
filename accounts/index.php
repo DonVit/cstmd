@@ -35,35 +35,20 @@ class IndexWebPage extends MainWebPage {
 		$out.='</div>';	
 		MainWebPage::show($out);
 	}
-	function actionDefault(){
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));		
+	function actionDefault(){		
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
-		//$this->setLeftContainer($this->getGroupBoxH3("",$this->getRssLink()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
-		//$this->setCenterContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
-		$this->setRightContainer($this->getGroupBoxH3("",$this->getImobil()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
+		$this->setRightContainer($this->getGroupBoxH3("",$this->getImobil()));		
 		$this->show();
 	}
 	function actionCompanii(){
-		//$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));		
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
-		//$this->setLeftContainer($this->getGroupBoxH3("",$this->getRssLink()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
-		//$this->setCenterContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
-		$this->setRightContainer($this->getGroupBoxH3("",$this->getCompanii()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
+		$this->setRightContainer($this->getGroupBoxH3("",$this->getCompanii()));		
 		$this->show();
 	}	
 	function actionSettings(){
-		$this->setTitle("Setari");
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));		
+		$this->setTitle("Setari");		
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
 
@@ -106,13 +91,7 @@ class IndexWebPage extends MainWebPage {
 		$this->password=$u->password;
 		$this->repassword=$u->password;
 		$this->note=$u->note;
-		
-		//$this->setLeftContainer($this->getGroupBoxH3("",$this->getRssLink()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
-		//$this->setCenterContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
 		$this->setRightContainer($this->setSettingsForm());
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
 	}				
 	function show($out=''){

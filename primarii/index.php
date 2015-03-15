@@ -1,25 +1,13 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once('loader.php');
 
-
-class IndexLocationsWebPage extends MainWebPage {
-
-	
+class IndexLocationsWebPage extends MainWebPage {	
 	function __construct(){
 		parent::__construct();
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;hl=ro&amp;sensor=false&amp;key=".Config::getMapKey($this->getServerName()));
-		//$this->setCSS("style/maps.css");
-		//$this->setJavascript("js/scripts.js");
 		$this->setLogoTitle("PRIMARIILE DIN REPUBLICA MOLDOVA");		
 		$this->create();		
 	}
 	function actionDefault(){
-		//$this->setLogoTitle("Localitati din Republica Moldova");
 		$this->setTitle("Lista primariilor dupa Raioane si Municipii");
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));	
 		$this->setCenterContainer($this->getGroupBoxH2("Lista primariilor dupa Raioane si Municipii",$this->getMain()));
@@ -39,11 +27,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$this->id=$this->raion->id;
 		}
 		$r->count();
-		$this->setTitle('Primariile din '.$this->raion->getFullNameDescription());
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->raion->getFullNameDescription());	
-		$this->setCenterContainer($this->getRaion());
-		//$this->setCenterContainer($this->getRaionPopulation());
-		//$this->setCenterContainer($this->getRaionPhotos());		
+		$this->setTitle('Primariile din '.$this->raion->getFullNameDescription());	
+		$this->setCenterContainer($this->getRaion());	
 		$c='<a name="5"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'x',$r->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuRaion()));
@@ -77,20 +62,15 @@ class IndexLocationsWebPage extends MainWebPage {
 		Logger::setLogs($this->location);
 		Logger::setLogs("point11".$this->location->parent_id);
 		$l->count();
-		$this->setTitle('Primarii Moldova: '.$this->location->getPrimariaName());
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->location->getFullNameDescription());
-		//$this->setLogoTitle("Localitati din Republica Moldova");			
+		$this->setTitle('Primarii Moldova: '.$this->location->getPrimariaName());		
 		$this->setCenterContainer($this->getLocalitate());
 		$this->setCenterContainer($this->getPrimarieConsilieri());
-		//$this->setCenterContainer($this->getPopulation());
 		$this->setCenterContainer($this->showAlegeri141130Image());	
 		$this->setCenterContainer($this->showElectoralPreferences());
 		$this->setCenterContainer($this->getPrimariiInJur());
 		$this->setCenterContainer($this->getLocalitatiDistance());	
-		//$this->setCenterContainer($this->getPhotos());	
-		//$this->setCenterContainer($this->getPanoramioFotos($l));
-		//$this->setCenterContainer($this->getLocalitatiCuAcelasNume());	
 		$this->setCenterContainer($this->getContacts($l));
+		$this->setCenterContainer($this->getNewsTitles());
 		$this->setCenterContainer($this->getNews());
 		
 		$c='<a name="9"></a>Forum/Comentarii:';
@@ -103,24 +83,18 @@ class IndexLocationsWebPage extends MainWebPage {
 	}				
 
 	function actionViewOrase($html="LocationsWebPageHTML"){
-		$this->setTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
+		$this->setTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageOraseTitle"),$this->getOrase()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
 	function actionViewTopSusLocalitati($html="LocationsWebPageHTML"){
 		$t="Lista a 50 cele mai sus amplasate localitati din Moldova";
 		$this->setTitle($t);
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
-		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
 		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopSusLocalitati()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
 	function actionViewTopJosLocalitati($html="LocationsWebPageHTML"){
@@ -1014,12 +988,21 @@ class IndexLocationsWebPage extends MainWebPage {
 	function getNews(){
 		$out="";			
 		$o2s='<a name="8"></a>'.$this->location->getPrimariaName().' - Ultimile Stiri:';		
-		$n=new News();
+		$n=new News();	
+		$o2b=$n->getNewsByLocalitate($this->location->id);	
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewlocalitate&localitate=".$this->location->id);
+		$o2f=$this->getFooterWithLink($link);	
+		return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+	}
+	function getNewsTitles(){
+		$out="";			
+		$o2s='<a name="8"></a>'.$this->location->getPrimariaName().' - Ultimile Titluri de Stiri:';		
 		$fi=new FeedItem();
 		$o2b=$fi->getNewsByPrimarie($this->location->id);		
-		$o2b.=$n->getNewsByLocalitate($this->location->id);	
-		return $this->getGroupBoxH3($o2s,$o2b);
-	}
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=primarie&id=".$this->location->id);
+		$o2f=$this->getFooterWithLink($link);	
+		return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+	}	
 	function getPhotos(){
 		$out="";			
 		$o2s='<a name="9"></a>'.$this->location->getFullNameDescription().' - Foto/Imagini in raza de 10 km:';		

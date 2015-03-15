@@ -53,8 +53,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$this->setCenterContainer($this->getMapView());
 		//$this->setCenterContainer($this->getTop100Locations());
 		$c='<a name="11"></a>Forum/Comentarii:';
-		//$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'f',$ths->id)));
-		//$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuNume()));
 		$this->setLeftContainer($this->getSelectDate());
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
 		$this->setRightContainer($this->getLeftMenu());
@@ -143,10 +141,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$outm.='</ul>';
 		$outm.='</div>';
 		$out="";
-		//$out.=$this->getGroupBoxH3("Referinte Utile: ",$outm);
 		$out.=$this->getGroupBoxH3("Despre Calendar:",$this->getInfo());
-		//$out.=$this->getGroupBoxH3("Info Nume de Familii:",$this->getInfoNume());
-		//$out.=$this->getGroupBoxH3("Info Prenume:",$this->getInfoPrenume());
 		return $out;		
 	}
 	function getInfo(){
