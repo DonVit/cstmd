@@ -3,7 +3,6 @@ require_once('loader.php');
  
 class FeedsWebPage extends MainWebPage {
 	private $fi;
-	
 	function __construct(){
 		parent::__construct();
 		$this->setCSS(Config::$mainsite."/style/main.css");
@@ -16,7 +15,7 @@ class FeedsWebPage extends MainWebPage {
 	function actionDefault(){	
 		$this->setLeftContainer($this->getGroupBoxH3("Utile:", $this->getMenuFeeds()));
 		$this->setLeftContainer($this->getGroupBoxH3("Stiri pe Surse:", $this->fi->getTopCompanies()));		
-		$todayDate=date("d-m-y");
+		$todayDate=date(FeedItem::$dateFormat);
 		$title="Stiri de Azi";
 		$this->setTitle($title);	
 		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($todayDate,2000)));
@@ -26,19 +25,18 @@ class FeedsWebPage extends MainWebPage {
 	function actionYesterday(){	
 		$this->setLeftContainer($this->getGroupBoxH3("Utile:", $this->getMenuFeeds()));
 		$this->setLeftContainer($this->getGroupBoxH3("Stiri pe Surse:", $this->fi->getTopCompanies()));
-		$todayDate=date("d-m-y");
 		$today=new DateTime();
 		$yesterday=$today->sub(new DateInterval('P1D'));
 		$title="Stiri de Ieri";
 		$this->setTitle($title);	
-		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($yesterday->format('d-m-y'),2000)));
+		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($yesterday->format(FeedItem::$dateFormat),2000)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getRaions(0)));
 		$this->show();
 	}	
 	function actionCalendar(){
 		$this->setLeftContainer($this->getGroupBoxH3("Utile:", $this->getMenuFeeds()));
 		$this->setLeftContainer($this->getGroupBoxH3("Stiri pe Surse:", $this->fi->getTopCompanies()));
-		$date=date("d-m-y",strtotime($this->date));	
+		$date=date(FeedItem::$dateFormat,strtotime($this->date));	
 		$title="Titluri de Stiri din data de ";
 		$this->setTitle($title.$date);
 		$this->setCenterContainer($this->getGroupBoxH1($title.$date,$this->fi->getNewsByDate($date),2000));

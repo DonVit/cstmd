@@ -11,6 +11,7 @@ class FeedItem extends DBManager {
 	public $createdat;
 	public $status;//0-just downloaded/draft; 1- new; 2-mapped; 
 	public $contor;
+	public static $dateFormat="Y-m-d";
 	function getTableName(){
 		return "feeditem";
 	}
@@ -89,7 +90,7 @@ class FeedItem extends DBManager {
 			$out.='<ul style="list-style-type:disc">';
 			$c=count($ns);
 			foreach($ns as $n){
-				$date=date("d-m-y", strtotime($n->date));
+				$date=date(FeedItem::$dateFormat, strtotime($n->date));
 				$urlnews=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=redirect&id=".$n->id);
 				$urlcompany=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=company&id=".$n->c_id);
 				$urldate=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=calendar&date=".$date);

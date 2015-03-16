@@ -101,7 +101,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='<h2 class="groupheader_h2">Titluri de Stiri</h2>';
 		$out.='<table width="100%"><tr><td>';
 		$f=new FeedItem();	
-		$todayDate=date("d-m-y");	
+		$todayDate=date(FeedItem::$dateFormat);	
 		$out.=$f->getNewsByDate($todayDate,25);
 		$out.='</td></tr></table>';
 		$out.='<h2 class="groupfooter_h2"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$feedssite.'/index.php').'">mai multe stiri</a></h2>';		
