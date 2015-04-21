@@ -21,7 +21,8 @@ class FeedLog extends DBManager {
 			$ch = curl_init();
 			
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-					
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,60); 
+			curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 			curl_setopt($ch, CURLOPT_URL,$f->rssfeed);
 			
 			$xml_content = curl_exec ($ch);

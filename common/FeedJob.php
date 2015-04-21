@@ -16,6 +16,9 @@ class FeedJob extends DBManager {
 			$fl->started_at=System::getCurentDateTime();
 			$fl->save();		
 			$fl->getFeed($f);
+			$fi= new FeedItem();
+			$fi->itentifyNewItems();
+			$fi->mapNewsToLocations();	
 		}			
 	}	
 

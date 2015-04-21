@@ -1,4 +1,5 @@
 <?php
+set_time_limit(10720);
 require_once('loader.php');
  
 class IndexWebPage extends MainWebPage {
@@ -17,12 +18,9 @@ class IndexWebPage extends MainWebPage {
 	}
 	function actionCrawl(){
 		$f=new FeedJob();
-		$fi= new FeedItem();
 		$f->started_at=System::getCurentDateTime();
 		$f->save();	
-		$f->getRssFeeds();
-		$fi->itentifyNewItems();
-		$fi->mapNewsToLocations();		
+		$f->getRssFeeds();	
 		$f->ended_at=System::getCurentDateTime();
 		$f->save();			
 		$this->setLeftContainer($this->getGroupBoxH3("Menu", $this->getMenuFeeds()));	

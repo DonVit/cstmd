@@ -128,15 +128,7 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	function getBanner(){   
-		$out='';
-		$b=AdsBanner::getRandomBanner();
-		if (!is_null($b)){
-			$out.='<div id="ad" class="container bar tophorlogo" style="text-align:center;padding: 5px;">';
-			$out.='<a href="'.Config::$adssite.'/banner.php?id='.$b->id.'" target="_blank"><img src="'.$b->image_url.'" alt="'.$b->title.'" style="width: 980px;"></a>';               
-			$out.='<div style="clear: both;"></div>';
-			$out.='</div>';
-		}
-		return $out;
+		return AdsBanner::getRandomBanner();
 	}
 	function getLogo(){	
 		$out='<div id="logo" class="container bar tophorlogo">';
@@ -243,19 +235,6 @@ class MainWebPage extends WebPage {
 			$out.='<div style="clear: both;"></div>';	
 		}
 		return $out;
-	}
-	function getHeadersqq(){
-		$out="";
-		//var_dump(headers_list());
-		//$a=headers_list();
-		//$out.="Headers:";
-		//$out.="<table>";
-		//foreach($a as $i){
-		//	$out.="<tr><td>".$i."</td></tr>";
-		//}
-		//$out.="</table>";
-		//$out=var_export(headers_list(),true)."<p>";
-		//return $out;
 	}
 	function getCurrentConnections(){
 		$c=new DBManager();
