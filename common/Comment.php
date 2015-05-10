@@ -102,26 +102,25 @@ class Comment extends DBManager {
 		// fb end
 		
 
-		$publickey = '6LfKVwATAAAAAHXk7eGPHodON6N5rqr6C1sBkGMy'; 
-		$privatekey = '6LfKVwATAAAAAERFhV7Z3hvCzX2DlDRbW4HHTt08';  
+		//$publickey = '6LfKVwATAAAAAHXk7eGPHodON6N5rqr6C1sBkGMy'; 
+		//$privatekey = '6LfKVwATAAAAAERFhV7Z3hvCzX2DlDRbW4HHTt08';  
 
 			// The response from reCAPTCHA
-		$resp = null;
+		//$resp = null;
 		// The error code from reCAPTCHA, if any
-		$error = null;
+		//$error = null;
 		
-		$reCaptcha = new ReCaptcha($privatekey);
+		//$reCaptcha = new ReCaptcha($privatekey);
 		
 		$errormsg='';
 		$infomsg='';
 		if (!empty($_POST['commentformpost'])){
 			//$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
 			//if (User::getValidationCode()==$webpage->validationcode){
-		    $resp = $reCaptcha->verifyResponse(
-		        $_SERVER["REMOTE_ADDR"],
-		        $_POST["g-recaptcha-response"]
-		    );	
-			if ($resp != null && $resp->success){
+			$recaptcha = new \ReCaptcha\ReCaptcha(Config::$privatekey);
+			$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+			//$resp = $recaptcha->verifyResponse($_SERVER["REMOTE_ADDR"],$_POST["g-recaptcha-response"]);	
+			if ($resp->isSuccess()){
 				if(isset($webpage->name)&&isset($webpage->comment)&&isset($webpage->email)){
 					//$c=new Comment();
 					//$c->item_type=$item_type;
@@ -203,7 +202,7 @@ class Comment extends DBManager {
 		$out.='</script>';
 		
 		$out.='<tr><td>Validare:<span style="color:red">*</span></td><td>';
-		$out.='<div class="g-recaptcha" data-sitekey="'.$publickey.'"></div>';
+		$out.='<div class="g-recaptcha" data-sitekey="'.Config::$publickey.'"></div>';
 		$out.='</td></tr>';	
 		$out.='<tr><td></td><td><input type="submit" name="commentformpost" value="Postează"></td></tr>';
 		if ($errormsg!=""){

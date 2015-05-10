@@ -1,5 +1,5 @@
 <?php
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
 class Properties extends MainWebPage {
 	function __construct() {
 		parent::__construct();

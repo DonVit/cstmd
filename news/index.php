@@ -1,7 +1,6 @@
 <?php
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
  
-//class NewsWebPage extends LocationFilterWebPage {
 class NewsWebPage extends MainWebPage {
 	public $page=0;
 	public $rowsperpage=10;
@@ -120,7 +119,7 @@ class NewsWebPage extends MainWebPage {
 		
 	}
 	function show(){		
-		$out.='<div id="container">';
+		$out='<div id="container">';
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();
 		$out.='</div>';		
@@ -173,7 +172,7 @@ class NewsWebPage extends MainWebPage {
 		$ncs=$nc->getAll();
 		//$out="<div class=\"groupbox\">";
 		//$out.="<h2 class=\"localitatigroup_h2\">Filtru pe Categorie:</h2>";			
-		$out.='<ul>';
+		$out='<ul>';
 		foreach ($ncs as $nc){
 			if ($categid==$nc->id){
 				$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcategorie&categ='.$nc->id).'" title="'.$nc->getFieldValueByName("description").'">'.$nc->getFieldValueByName("name").'</a></li>';
@@ -211,7 +210,7 @@ class NewsWebPage extends MainWebPage {
 		$rs=$r->getAll("","`municipiu` desc,`order`,`name`");
 		//$out="<div class=\"groupbox\">";
 		//$out.="<h2 class=\"localitatigroup_h2\">Filtru pe Localităţi:</h2>";		
-		$out.='<ul>';
+		$out='<ul>';
 		foreach ($rs as $r){
 			if ($raionid==$r->id){
 				$out.='<li><a style="border-bottom: 2px solid rgb(194, 0, 0);" href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewraion&raion='.$r->id).'" title="'.$r->getFullNameDescription().'">'.$r->getFullName().'</a></li>';
@@ -224,11 +223,9 @@ class NewsWebPage extends MainWebPage {
 		return $out;
 	}		
 	function getRssLink(){
-		//$out='<div class="groupbox">';
-		$out.='<ul class="leftmenulist">';
+		$out='<ul class="leftmenulist">';
 		$out.='<li><a href="rss.php" title="Ştiri în format RSS">Ştiri în format RSS <img src="'.Config::$commonsite.'/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"/></a></li>';
 		$out.='</ul>';
-		//$out.='</div>';
 		return $out;
 	}
 	function getNews(){
@@ -319,11 +316,11 @@ class NewsWebPage extends MainWebPage {
 			$cnt=$c->cnt;
 		}
 		if ($this->page!=0){
-			$out.="<a href=\"index.php?$url&amp;page=".($this->page-1)."\" class=\"link_button\">< ştiri mai noi</a>";
+			$out.="<a href=\"index.php?page=".($this->page-1)."\" class=\"link_button\">< ştiri mai noi</a>";
 		}
 		$out.=" ";
-		if ((($$this->page+1)*$this->rowsperpage)<$cnt){
-			$out.="<a href=\"index.php?$url&amp;page=".($this->page+1)."\" class=\"link_button\">ştiri mai vechi ></a>";
+		if ((($this->page+1)*$this->rowsperpage)<$cnt){
+			$out.="<a href=\"index.php?page=".($this->page+1)."\" class=\"link_button\">ştiri mai vechi ></a>";
 		}
 		$out.="</td></tr></table>";
 		$out.='</div>';

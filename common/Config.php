@@ -33,6 +33,7 @@ class Config {
 	public static $mysql_db="db3";
 	
 	public static $loging=true;  //yes/true|no/false
+	public static $phploging=0;  //-1 - all php errors; 0 - // Turn off all error reporting
 	public static $live=false; //yes/true|no/false
 	
 	//Allowed images to upload
@@ -58,6 +59,9 @@ class Config {
 	//Files Folder Path
 	public static $filespath="data";
 	
+	//Recaptcha keys
+	public static $publickey = '6LfKVwATAAAAAHXk7eGPHodON6N5rqr6C1sBkGMy'; 
+	public static $privatekey = '6LfKVwATAAAAERFhV7Z3hvCzX2DlDRbW4HHTt08'; 	
 	
 }
 ?>

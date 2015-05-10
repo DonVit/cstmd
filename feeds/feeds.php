@@ -1,6 +1,6 @@
 <?php
 set_time_limit(10720);
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
  
 class IndexWebPage extends MainWebPage {
 	function __construct(){

@@ -5,7 +5,7 @@
  */
 ini_set("memory_limit","200M"); 
 set_time_limit(10720);
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
 
 class LocationDistanceWebPage extends MainWebPage {
 	function __construct(){

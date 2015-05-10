@@ -1,5 +1,5 @@
 <?php
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
 
 class IndexLocationsWebPage extends MainWebPage {	
 	function __construct(){

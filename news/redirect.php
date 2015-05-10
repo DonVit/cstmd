@@ -3,7 +3,7 @@
  * Created on 14 Apr 2008
  *
  */
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
 class NewsRedirectWebPage extends WebPage {
 	function __construct(){
 		parent::__construct();

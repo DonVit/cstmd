@@ -1,5 +1,5 @@
 <?php
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
  
 class FeedsWebPage extends MainWebPage {
 	private $fi;

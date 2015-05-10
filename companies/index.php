@@ -1,5 +1,5 @@
 <?php
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
  class CompaniesWebPage extends MainWebPage {
 	public $rowsperpage=10;
 	public $page;

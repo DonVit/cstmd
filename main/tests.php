@@ -3,7 +3,7 @@
  * Created on 2 Mar 2009
  *
  */
-require_once('loader.php');
+require_once(__DIR__ . '/../main/loader.php');
 class TestsWebPage extends MainWebPage {
 	function __construct(){
 		MainWebPage::__construct();
