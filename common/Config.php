@@ -3,38 +3,38 @@ class Config {
 	//default language, values:ro,ru,en
 	public static $defaultlanguage="ro";
 
-	public static $mainsite="http://casata.it";
-	public static $commonsite="http://common.casata.it";
-	public static $newssite="http://news.casata.it";
-	public static $imobilsite="http://imobil.casata.it";
-	public static $chiriesite="http://chirie.casata.it";
-	public static $companiesite="http://companies.casata.it";
-	public static $mapssite="http://maps.casata.it";
-	public static $imagessite="http://photos.casata.it";
-	public static $locationssite="http://localitati.casata.it";
-	public static $accountssite="http://accounts.casata.it";
-	public static $statssite="http://stats.casata.it";
-	public static $toolssite="http://tools.casata.it";
-	public static $videosite="http://video.casata.it";
-	public static $distantesite="http://distante.casata.it";
-	public static $telefoanesite="http://telefoane.casata.it";
-	public static $primariisite="http://primarii.casata.it";
-	public static $dictionarsite="http://dictionar.casata.it";
-	public static $calendarsite="http://calendar.casata.it";	
-	public static $numesite="http://nume.casata.it";
-	public static $adssite="http://ads.casata.it";
-	public static $feedssite="http://feeds.casata.it";
-	public static $errorpage="http://casata.it/error.php";
-	public static $cookiedomain=".casata.it";
+	public static $mainsite="http://casata.md";
+	public static $commonsite="http://common.casata.md";
+	public static $newssite="http://news.casata.md";
+	public static $imobilsite="http://imobil.casata.md";
+	public static $chiriesite="http://chirie.casata.md";
+	public static $companiesite="http://companies.casata.md";
+	public static $mapssite="http://maps.casata.md";
+	public static $imagessite="http://photos.casata.md";
+	public static $locationssite="http://localitati.casata.md";
+	public static $accountssite="http://accounts.casata.md";
+	public static $statssite="http://stats.casata.md";
+	public static $toolssite="http://tools.casata.md";
+	public static $videosite="http://video.casata.md";
+	public static $distantesite="http://distante.casata.md";
+	public static $telefoanesite="http://telefoane.casata.md";
+	public static $primariisite="http://primarii.casata.md";
+	public static $dictionarsite="http://dictionar.casata.md";
+	public static $calendarsite="http://calendar.casata.md";	
+	public static $numesite="http://nume.casata.md";
+	public static $adssite="http://ads.casata.md";
+	public static $feedssite="http://feeds.casata.md";
+	public static $errorpage="http://casata.md/error.php";
+	public static $cookiedomain=".casata.md";
 
 	public static $mysql_host="localhost";
 	public static $mysql_user="root";
 	public static $mysql_password="";
-	public static $mysql_db="db3";
+	public static $mysql_db="";
 	
-	public static $loging=true;  //yes/true|no/false
+	public static $loging=false;  //yes/true|no/false
 	public static $phploging=0;  //-1 - all php errors; 0 - // Turn off all error reporting
-	public static $live=false; //yes/true|no/false
+	public static $live=true; //yes/true|no/false
 	
 	//Allowed images to upload
 	public static $file_types = array(
@@ -60,8 +60,8 @@ class Config {
 	public static $filespath="data";
 	
 	//Recaptcha keys
-	public static $publickey = '6LfKVwATAAAAAHXk7eGPHodON6N5rqr6C1sBkGMy'; 
-	public static $privatekey = '6LfKVwATAAAAERFhV7Z3hvCzX2DlDRbW4HHTt08'; 	
-	
+	public static $publickey = '6LdotAYTAAAAAJJDrX13V5UShqo-mEQNWMD6zpZO'; 
+	public static $privatekey = '6LdotAYTAAAAAJYTGqvD9VIHHyzCkEERzOU_5Cc1';
+
 }
 ?>
