@@ -121,6 +121,7 @@ class Comment extends DBManager {
 			$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 			//$resp = $recaptcha->verifyResponse($_SERVER["REMOTE_ADDR"],$_POST["g-recaptcha-response"]);	
 			if ($resp->isSuccess()){
+			//if (true){
 				if(isset($webpage->name)&&isset($webpage->comment)&&isset($webpage->email)){
 					//$c=new Comment();
 					//$c->item_type=$item_type;
