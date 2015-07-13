@@ -219,15 +219,8 @@ class PhotosWebPage extends MainWebPage {
 			//$this->redirect(Config::$imagessite);
 			$p->count();
 		}
-		//$p->contor=$p->contor+1;
-		//$p->save();
-	
-		//$this->setBodyTag('<body onload="SmallViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 
 		$this->setTitle($p->getLongTitle());
-		//$this->setLogoTitle($p->getLongTitle());
-		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 
 		if(!isset($this->id)){
 			$this->id=Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id;
@@ -242,7 +235,31 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p)));
 		$this->setRightContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));						
 		$this->showImage();
-	}	
+	}
+	function actionViewFullImage(){
+
+		$p=new Photo();
+		if ($p->loadById($this->id)){
+			//$this->redirect(Config::$imagessite);
+			$p->count();
+		}
+
+		$this->setTitle($p->getLongTitle());
+
+		if(!isset($this->id)){
+			$this->id=Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id;
+		}
+		
+		$this->setCenterContainer($this->getGroupBoxH1($p->getLongTitle(),$this->getFullImage($p)));
+		$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
+		$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
+		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));		
+		$this->setCenterContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p,6)));
+		$this->setCenterContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p,6)));
+		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
+		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));						
+		$this->showFullImage();
+	}		
 	function show($out=''){
 		$out="";
 		$out.='<div id="container">';
@@ -271,7 +288,18 @@ class PhotosWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
+	}
+	function showFullImage(){
+		$out="";
+		$out.='<div id="container">';
+		$out.='<div id="center" class="container center" style="width:998px;">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		$out.='<div style="clear: both;"></div>';
+		$out.='</div>';
+		MainWebPage::show($out);
 	}	
+	
 	function getRightMenu(){
 		$out='<ul>';
 		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
@@ -459,7 +487,7 @@ class PhotosWebPage extends MainWebPage {
 	}	
 	function getImage($p){
 		$out='<table style="width:100%" ><tr><td style="text-align:center" >';
-  		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"/></a>';
+  		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"/></a>';
 		$prev=$p->getPrevPhotoId();
 		$tmp='';
 		if ($prev!=0){
@@ -472,8 +500,23 @@ class PhotosWebPage extends MainWebPage {
 		$out.='</td></tr><tr><td style="text-align:center">'.$tmp.'</td></tr></table>';
 		return $out;
 	}
-	function getImagesAround($p){
-		$ps=$p->getPhotosInRadius(6);
+	function getFullImage($p){
+		$out='<table style="width:100%" ><tr><td style="text-align:center" >';
+  		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
+		$prev=$p->getPrevPhotoId();
+		$tmp='';
+		if ($prev!=0){
+			$tmp='<a style="margin-right:5px;" href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$prev).'"><img src="img/media_previous_arrow.gif" alt="Precedenta" /></a>';	
+		}
+		$next=$p->getNextPhotoId();
+		if ($next!=0){
+			$tmp.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$next).'"><img src="img/media_next_arrow.gif" alt="Urmatoarea" /></a>';	
+		}
+		$out.='</td></tr><tr><td style="text-align:center">'.$tmp.'</td></tr></table>';
+		return $out;
+	}	
+	function getImagesAround($p,$colums=3){
+		$ps=$p->getPhotosInRadius($colums*2);
 		$out='<table style="width:100%" >';
 		$i=1;
 		$o="";
@@ -482,7 +525,7 @@ class PhotosWebPage extends MainWebPage {
 	  		$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.$p->title.'" class="imageborder" style="width:100px;"/></a></div>';	  		
 	  		$o.='</td>';
 	  		
-	  		if (($i % 3)==0){
+	  		if (($i % $colums)==0){
 	  			$out.='<tr>'.$o.'</tr>';
 	  			$o='';
 	  		}
@@ -491,8 +534,8 @@ class PhotosWebPage extends MainWebPage {
 		$out.='</table>';
 		return $out;
 	}
-	function getLatestImages($p){
-		$ps=$p->getLatestPhotos(6);
+	function getLatestImages($p, $columns=3){
+		$ps=$p->getLatestPhotos($columns*2);
 		$out='<table style="width:100%" >';
 		$i=1;
 		$o="";
@@ -501,7 +544,7 @@ class PhotosWebPage extends MainWebPage {
 			$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.System::getHtmlSpecialChars($p->title).'" class="imageborder" style="width:100px;"/></a></div>';
 			$o.='</td>';
 		  
-			if (($i % 3)==0){
+			if (($i % $columns)==0){
 				$out.='<tr>'.$o.'</tr>';
 				$o='';
 			}

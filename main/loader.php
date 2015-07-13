@@ -1,6 +1,6 @@
 <?php
-//error_reporting(E_ALL ^ E_DEPRECATED);
-error_reporting(0);
+error_reporting(E_ALL ^ E_DEPRECATED);
+//error_reporting(0);
 function __autoload($class_name) {
     $file_name=__DIR__.'/../common/'.$class_name.'.php';
 	if(is_file($file_name)) require_once $file_name;
