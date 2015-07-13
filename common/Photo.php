@@ -23,7 +23,6 @@ class Photo extends DBManager {
 		$r->loadById($this->raion_id);
 		$l=new Location();
 		$l->loadById($this->localitate_id);
-		//$t=$r->getFullNameDescription().', '.$l->getFullNameDescription().', '.$this->title.' (din data: '.date("Y-m-d", strtotime($this->data)).')';
 		if ($r->name==$l->name){
 			$t=$l->getFullNameDescription().', '.$this->title;
 		} else {
