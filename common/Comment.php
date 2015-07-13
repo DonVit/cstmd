@@ -15,8 +15,6 @@ class Comment extends DBManager {
 	public $valid;
 	public $date;
    function __construct() {
-	//$this->publickey = '6LcrnMUSAAAAALynnjZ63OqlyUu2__MLp0t4bES_'; 
-	//$this->privatekey = '6LcrnMUSAAAAAKl3eUf4caIhzI2jMNbX8j2-KSFF';       
    }
  
    public function getAproveLink(){
@@ -57,20 +55,15 @@ class Comment extends DBManager {
 		return $link;						
 	}
 	public static function getComments($webpage,$item_type,$item_id){
-	//public static function getComments($webpage,$item_type,$item_id,$item_id2){	
-
 		$c=new Comment();
 		$c->item_type=$item_type;
 		$c->parent_id=0;
 		$c->user_id=User::getCurrentUser();
 		$c->item_id=$item_id;
-		
-		//$c->item_id2=$item_id2;		
 				
 		$out='';
 				
 		// fb start
-
 		$out.='<div id="fb-root"></div>';
 		$out.='<script>';
 		$out.='window.fbAsyncInit = function() {';
@@ -97,20 +90,9 @@ class Comment extends DBManager {
 		$out.='}(document));';
 		$out.='</script>';		
 
-		$out.='<div class="fb-like" data-send="false" data-width="580" data-show-faces="false"></div>';		
-		$out.='<div class="fb-comments" data-href="'.$c->getLink().'" data-num-posts="10" data-width="580"></div>';		
+		$out.='<div class="fb-like" data-send="false" data-width="100%" data-show-faces="false"></div>';		
+		$out.='<div class="fb-comments" data-href="'.$c->getLink().'" data-num-posts="10" data-width="100%"></div>';		
 		// fb end
-		
-
-		//$publickey = '6LfKVwATAAAAAHXk7eGPHodON6N5rqr6C1sBkGMy'; 
-		//$privatekey = '6LfKVwATAAAAAERFhV7Z3hvCzX2DlDRbW4HHTt08';  
-
-			// The response from reCAPTCHA
-		//$resp = null;
-		// The error code from reCAPTCHA, if any
-		//$error = null;
-		
-		//$reCaptcha = new ReCaptcha($privatekey);
 		
 		$errormsg='';
 		$infomsg='';

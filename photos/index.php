@@ -254,8 +254,8 @@ class PhotosWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));		
-		$this->setCenterContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p,6)));
-		$this->setCenterContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p,6)));
+		$this->setCenterContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p,8)));
+		$this->setCenterContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p,8)));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));						
 		$this->showFullImage();
