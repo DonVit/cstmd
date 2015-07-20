@@ -23,8 +23,9 @@ class FeedLog extends DBManager {
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,60); 
 			curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36');
 			curl_setopt($ch, CURLOPT_URL,$f->rssfeed);
-			
+
 			$xml_content = curl_exec ($ch);
 				
 			if ($xml_content){
@@ -32,7 +33,6 @@ class FeedLog extends DBManager {
 				$xmlDoc = new DOMDocument();
 				if ($xmlDoc->loadXML(trim($xml_content))){
 					$feedparsestatus=1;
-					//get and output "<item>" elements
 					$x=$xmlDoc->getElementsByTagName('item');
 					foreach($x as $item){
 						$item_title=$item->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
