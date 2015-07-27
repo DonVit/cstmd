@@ -1067,7 +1067,16 @@ class MainWebPage extends WebPage {
 		$out.='<a class="link_button" href="'.$link.'" target="_blank">Vezi aici mai multe</a>';
 		$out.='</div>';	
 		return $out;
-	}																				
+	}
+	public function getAddMenu(){
+		$out='<ul class="leftmenulist">';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imobilsite.'/add.php').'">Adauga Imobil</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$chiriesite.'/add.php').'">Adauga Chirie</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/add.php').'">Adauga Companie</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/add.php').'">Adauga Foto</a></li>';				
+		$out.='</ul>';
+		return $out;
+	}																					
 }
 //$b=new WebPage();
 //phpinfo();

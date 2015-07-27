@@ -13,6 +13,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getGroupBoxH2("Lista primariilor dupa Raioane si Municipii",$this->getMain()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Primarie:",$this->getSearchPrimarie()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->show();
 	}
 	function actionViewRaion(){
@@ -35,6 +36,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Primarie:",$this->getSearchPrimarie()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->show();
 	}
 	function actionViewPrimarie(){
@@ -78,7 +80,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuPrimarie()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Primarie:",$this->getSearchPrimarie()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
-		$this->setRightContainer($this->getGroupBoxH3("Referinte Utile",$this->getLeftMenu()));		
+		$this->setRightContainer($this->getGroupBoxH3("Referinte Utile",$this->getLeftMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));		
 		$this->show();
 	}				
 

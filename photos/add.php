@@ -1,8 +1,5 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
+
 require_once(__DIR__ . '/../main/loader.php');
  
 class AddImageWebPage extends MainWebPage {
@@ -14,15 +11,34 @@ class AddImageWebPage extends MainWebPage {
 	
 	function __construct(){
 		parent::__construct();
+		
+			//check if user is login
+		if (!User::isAuthenticated()){
+			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
+		}
+				
 		$this->setJavascript("js/scripts.js");
-		//$this->setCSS("style/styles.css");
+		
 		$this->setTitle('Adauga Foto');
 		$this->setLogoTitle('Adauga Foto');
 		if (isset($this->id)){
 			$p=new Photo();
 			$p->loadById($this->id);
+			
+			if (User::getCurrentUser()->id==0){
+					$this->redirect($this->getUrl('index.php','id='.$this->id));
+			}
+
+			if (($p->user_id!=User::getCurrentUser()->id)){
+				if (User::getCurrentUser()->role_id!=2){
+					$this->redirect($this->getUrl('index.php','id='.$this->id));
+				}
+			}
+			
 			User::setCurrentPhoto($p);
-		}		
+			
+			
+		}
 		$this->currentphoto=User::getCurrentPhoto();
 		foreach ($_POST as $field => $value) {
 			if ($this->currentphoto->isMember($field)){
@@ -45,13 +61,10 @@ class AddImageWebPage extends MainWebPage {
 			Photo::makeIcons_MergeCenter("files/".$this->currentphoto->file, "files/s".$this->currentphoto->file, 300);
 
 			//unlink("files/".$this->currentphoto->file)
-			$e=exif_read_data('files/'.$this->currentphoto->file);
-			//foreach ($e as $name=>$val) {
-        	//		$eis.="$name: $val<br />\n";
-			//}
-			//$this->currentphoto->note=$this->currentphoto->note."<br>".$eis;
-			$this->currentphoto->data = $e['DateTimeOriginal'];		
-		}			
+			$exifinfo=exif_read_data('files/'.$this->currentphoto->file);
+			//$this->currentphoto->exif=$this->getExifInfo($exifinfo);
+			$this->currentphoto->data = $exifinfo['DateTimeOriginal'];		
+		}
 		User::setCurrentPhoto($this->currentphoto);
 		//Logger::setLogs("current photo before=".$this->currentphoto);
 		//echo "1-".User::getValidationCode();	
@@ -157,15 +170,37 @@ class AddImageWebPage extends MainWebPage {
 		$this->show();			
 	}
 	function actionCancel(){
-		if (!empty($this->currentphoto->file)){
-				unlink("files/".$this->currentphoto->file);
-				unlink("files/t".$this->currentphoto->file);
-				unlink("files/s".$this->currentphoto->file);
+		if (!isset($this->id)){
+			if (!empty($this->currentphoto->file)){
+					unlink("files/".$this->currentphoto->file);
+					unlink("files/t".$this->currentphoto->file);
+					unlink("files/s".$this->currentphoto->file);
+			}
 		}
 		User::delCurrentPhoto();
 		
 		$this->redirect($this->getUrl("index.php"));
-	}		
+	}
+	function actionDelete(){
+		$this->step=1;
+		$this->steps=1;
+		$this->steptitle="Sterge Anunt";
+		$this->setTitle($this->steptitle);
+		if (isset($_POST)){
+			if ($_POST["da"]){
+				$this->currentphoto=User::getCurrentPhoto();
+				$this->currentphoto->delete();
+				User::delCurrentPhoto();
+				$this->redirect($this->getUrl(Config::$accountssite."/index.php","action=Fotos"));
+			}
+			if ($_POST["nu"]){
+				User::delCurrentPhoto();	
+				$this->redirect($this->getUrl(Config::$accountssite."/index.php","action=Fotos"));
+			}
+		}		
+		$this->setCenterContainer($this->setDeleteAnunt());	
+		$this->show();
+	}
 	function show($out=''){
 		$out="";
 		$out.='<div id="container">';
@@ -184,21 +219,6 @@ class AddImageWebPage extends MainWebPage {
 	}
 	
 	function setAdress($out=''){
-		//$out.='<div id="form" class="font-size: 16px;">';
-		//form start
-		//$out.='<form id="frmImage" name="frmImage" method="POST" enctype="multipart/form-data">';
-		//header
-		//$out.=' <div id="form_header" style="padding:10px;border-bottom:2px solid #777;">';
-		//$out.='  <div style="float:left">';	
-		//$out.=$this->steptitle;
-		//$out.='  </div>';
-		//$out.='  <div style="float:right">';
-		//$out.='  Pasul '.$this->step.' din '.$this->steps;		
-		//$out.='  </div>';
-		//$out.='  <div style="clear: both;"></div>';				
-		//$out.=' </div>';
-		//body
-		//$out.=' <div id="formbody" style="padding:10px;">';
 		$out.='<table style="height:100px;width:100%">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul:</td>';
@@ -209,20 +229,6 @@ class AddImageWebPage extends MainWebPage {
 		$out.='<td style="width: 70%;">'.$this->getLocationDropDown($this->currentphoto->raion_id,$this->currentphoto->localitate_id).'</td>';
 		$out.='</tr>';
 		$out.='</table>';
-		//$out.='  </div>';
-		//footer
-		//$out.=' <div id="form_footer" style="padding:10px;border-top:2px solid #777;">';
-		//$out.='  <div style="float:left">';		
-		//$out.='   <input name="cancel" type="submit" class="button" value="Anuleaza">';
-		//$out.='  </div>';
-		//$out.='  <div style="float:right">';				
-		//$out.='   <input name="prev" type="submit" class="button" value="<< Inapoi">';
-		//$out.='   <input name="next" type="submit" class="button" value="Inainte >>">';
-		//$out.='  </div>';
-		//$out.='  <div style="clear: both;"></div>';						
-		//$out.=' </div>';
-		//$out.='</form>';
-		//$out.='</div>';
 		return $this->getWizardPage($out);
 	}		
 	function _setMap(){
@@ -239,22 +245,6 @@ class AddImageWebPage extends MainWebPage {
 		$this->show($this->setWizardPage($out));
 	}
 	function setMap1(){
-		//$out.='<div id="form" class="font-size: 16px;">';
-		//$out.='<form id="frmImage" name="frmImage" method="POST" enctype="multipart/form-data">';
-		//$out.=' <input id="action" name="action" type="hidden">';
-		//header
-		//$out.=' <div id="form_header" style="padding:10px;border-bottom:2px solid #777;">';
-		//$out.='  <div style="float:left">';	
-		//$out.=$this->steptitle;
-		//$out.='  </div>';
-		//$out.='  <div style="float:right">';
-		//$out.='  Pasul '.$this->step.' din '.$this->steps;		
-		//$out.='  </div>';
-		//$out.='  <div style="clear: both;"></div>';				
-		//$out.=' </div>';
-		//body
-		//$out.=' <div id="formcontrols" style="padding:10px;">';
-		//$out.='<div class="form_row">';
 		$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$this->currentphoto->centerlat.'"/>';
 		$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$this->currentphoto->centerlng.'"/>';
 		$out.='<input id="maptype" name="maptype" type="hidden" value="'.$this->currentphoto->maptype.'"/>';
@@ -263,39 +253,9 @@ class AddImageWebPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng" value="'.$this->currentphoto->lng.'"/>';
 		$out.='<div id="map"></div>';
 		$out.='</div>';
-		//$out.='  </div>';
-		//footer
-		//$out.=' <div id="form_footer" style="padding:10px;border-top:2px solid #777;">';
-		//$out.='  <div style="float:left">';		
-		//$out.='   <input name="cancel" type="submit" class="button" value="Anuleaza">';
-		//$out.='  </div>';
-		//$out.='  <div style="float:right">';				
-		//$out.='   <input name="prev" type="submit" class="button" value="<< Inapoi">';
-		//$out.='   <input name="next" type="submit" class="button" value="Inainte >>">';
-		//$out.='  </div>';
-		//$out.='  <div style="clear: both;"></div>';						
-		//$out.=' </div>';
-		//$out.='</form>';
-		//$out.='</div>';
 		return $this->getWizardPage($out);
 	}			
 	function setFile(){
-		///$out.='<div id="form" class="font-size: 16px;">';
-		///$out.='<form id="frmImage" name="frmImage" method="POST" enctype="multipart/form-data">';
-		//$out.='<form action="http://travel-maps.commondatastorage.googleapis.com" method="post" enctype="multipart/form-data">';		
-		//$out.=' <input id="action" name="action" type="hidden">';
-		//header
-		///$out.=' <div id="form_header" style="padding:10px;border-bottom:2px solid #777;">';
-		///$out.='  <div style="float:left">';	
-		///$out.=$this->steptitle;
-		///$out.='  </div>';
-		///$out.='  <div style="float:right">';
-		///$out.='  Pasul '.$this->step.' din '.$this->steps;		
-		///$out.='  </div>';
-		///$out.='  <div style="clear: both;"></div>';				
-		///$out.=' </div>';
-		//body
-		//$out.=' <div id="formcontrols" style="padding:10px;">';
 		$out=' <table style="height:100px;width:100%">';
 		if (isset($this->currentphoto->file)){
 			if (isset($this->currentphoto->id)){
@@ -309,19 +269,6 @@ class AddImageWebPage extends MainWebPage {
 		$out.='<tr><td>Data:</td><td><input type="input" id="data" name="data" value="'.$this->currentphoto->data.'"></td><td>Data cind imaginea a fost creata</td></tr>';		
 		$out.='<tr><td>Nota:</td><td><textarea id="note" name="note" style="width:400px;height:60px;">'.$this->currentphoto->note.'</textarea></td><td>Mai mult despre imagine</td></tr>';	
 		$out.='</table>';	
-		//$out.='  </div>';
-		//footer
-		///$out.=' <div id="form_footer" style="padding:10px;border-top:2px solid #777;">';
-		///$out.='  <div style="float:left">';		
-		///$out.='   <input name="cancel" type="submit" class="button" value="Anuleaza">';
-		///$out.='  </div>';
-		///$out.='  <div style="float:right">';				
-		///$out.='   <input name="next" type="submit" class="button" value="Mai depaparte >>">';
-		///$out.='  </div>';
-		///$out.='  <div style="clear: both;"></div>';						
-		///$out.=' </div>';
-		///$out.='</form>';
-		///$out.='</div>';
 		return $this->getWizardPage($out);
 	}	
 	function _setFile1(){
@@ -346,43 +293,18 @@ class AddImageWebPage extends MainWebPage {
 		//$this->show($this->setWizardPage($out));	 
 	}
 	function setValidation(){
-		//$out='<div id="form" class="font-size: 16px;">';
-		//$out.='<form id="frmImage" name="frmImage" method="POST" enctype="multipart/form-data">';
-		//header start
-		//$out.=' <div id="form_header" style="padding:10px;border-bottom:2px solid #777;">';
-		//$out.='  <div style="float:left">';	
-		//$out.=$this->steptitle;
-		//$out.='  </div>';
-		//$out.='  <div style="float:right">';
-		//$out.='  Pasul '.$this->step.' din '.$this->steps;		
-		//$out.='  </div>';
-		///$out.='  <div style="clear: both;"></div>';				
-		//$out.=' </div>';
-		//header end
-		//body start
-		//$out.=' <div id="formcontrols" style="padding:10px;">';
 		$out=' <table style="height:100px;width:100%">';
 		$out.=' <tr><td>Introdu codul din imagine:</td><td><input id="validationcode" type="text" name="validationcode" class="input"><img id="validationimage" src="'.Config::$mainsite.'/validationimage.php" style="vertical-align: middle"></td></tr>';	
 		$out.=' </table>';	
-		//$out.=' </div>';
-		//body end
-		//footer start
-		//$out.=' <div id="form_footer" style="padding:10px;border-top:2px solid #777;">';
-		//$out.='  <div style="float:left">';		
-		//$out.='   <input name="cancel" type="submit" class="button" value="Anuleaza">';
-		//$out.='  </div>';
-		//$out.='  <div style="float:right">';				
-		//$out.='   <input name="prev" type="submit" class="button" value="<< Inapoi">';
-		//$out.='   <input name="save" type="submit" class="button" value="Salveaza >>">';
-		//$out.='  </div>';
-		//$out.='  <div style="clear: both;"></div>';						
-		//$out.=' </div>';
-		//footer end
-		//$out.='</form>';
-		//$out.='</div>';
 		return $this->getWizardPage($out);
 	}	
-
+	function setDeleteAnunt(){
+		$out='';
+		$out.='<table><tr>';
+		$out.='<td><h2>Doresti sa stergi acest Anunt ?</h2></td>';    		
+		$out.='</tr></table>';	
+		return $this->getQuestionPage($out);	 
+	}
 	function getRaionDropDown($raionid){
 		$r=new Raion();
 		$rs=$r->getAll("","`municipiu` desc,`order`,`name`");
@@ -452,6 +374,20 @@ class AddImageWebPage extends MainWebPage {
 		$out.="</select>";
 		$out.="<input type=\"hidden\" id=\"sector_new\" name=\"sector_new\">";
 		return $out;
+	}
+	function getExifInfo($exif){
+		$out='';
+		if (is_array($exif)){
+			foreach ($exif as $key => $section) {
+				if (is_array($section)) {
+					foreach ($section as $name => $val) {
+						$out.="$key.$name: $val<br />\n";
+					}
+					$out.="$section<br />\n";
+				}
+			}
+		}
+		return $out;		
 	}
 }
 $n=new AddImageWebPage();

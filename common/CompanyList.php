@@ -1,10 +1,4 @@
 <?php
-/*
- * Created on 6 Nov 2009
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
- */
 class CompanyList extends Object{
 	public function getUserCompanyList($page=0,$rowsperpage=50){	
 		
@@ -13,7 +7,6 @@ class CompanyList extends Object{
 			$userid=User::getCurrentUser()->id;
 		}
 		$c=new Company();
-		//$rs=$p->getImobilByPage($userid,0,0,0,0,0,0,$page,$rowsperpage);
 		if ($userid!=0){
 			$cs=$c->getAll("user_id=".$userid,"",$page,$rowsperpage);
 		} else {
@@ -32,20 +25,18 @@ class CompanyList extends Object{
 			foreach($cs as $row){
 				$i++;
 				$imobil_result_output.= "" .
-				//print_r($row);
-				//"<tr class=\"gridtr".($i & 1)."\" onclick=\"ImobilTableRowClick(".$row->id.");\" onmouseover=\"ImobilTableRowMouseOver(this,".($i & 1).");\" onmouseout=\"ImobilTableRowMouseOut(this,".($i & 1).");\">" .
 				"<tr class=\"gridtr".($i & 1)."\" onmouseover=\"ImobilTableRowMouseOver(this,".($i & 1).");\" onmouseout=\"ImobilTableRowMouseOut(this,".($i & 1).");\">" .
-				"".$this->getFunctions($row->id, $row->scop_id)."" .
+				"".$this->getFunctions($row->id)."" .
 		  		"<td class=\"gridtd\" align=\"left\">".$row->name."</td>";
 			}
 		}
 		$imobil_result_output.="</table>";
 		return $imobil_result_output;
 	}
-	function getFunctions($imobilid,$scopid){			
-		$r='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/index.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';
+	function getFunctions($id){			
+		$r='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/index.php?id='.$id.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?id='.$id.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?action=delete&id='.$id.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';
 		return $r;
 	}
 

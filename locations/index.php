@@ -14,6 +14,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));	
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->show();
 	}
 	function actionViewRaion(){
@@ -39,6 +40,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'r',$r->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuRaion()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->show();
 	}
@@ -87,6 +89,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'l',$l->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuLocalitate()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Referinte Utile",$this->getLeftMenu()));		
 		$this->show();
 	}				
@@ -94,7 +97,8 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionViewOrase($html="LocationsWebPageHTML"){
 		$this->setTitle($this->getConstants("IndexLocationsWebPageOraseTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
-		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));				
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageOraseTitle"),$this->getOrase()));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
@@ -530,7 +534,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatirusi").'" >Lista localitatilor populate cu Rusi in Moldova</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatigagauzi").'" >Lista localitatilor populate cu Gagauzi in Moldova</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatibulgari").'" >Lista localitatilor populate cu Bulgari in Moldova</a></li>';
-$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatievrei").'" >Lista localitatilor populate cu Evrei in Moldova</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatievrei").'" >Lista localitatilor populate cu Evrei in Moldova</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatipolonezi").'" >Lista localitatilor populate cu Polonezi din Moldova</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitatitigani").'" >Lista localitatilor populate cu Romi/Tigani din Moldova</a></li>';		
 		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=vieworase").'" title="Stiri">Lista a 30 cele mai sus amplasate localitati</a></li>';

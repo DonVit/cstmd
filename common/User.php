@@ -360,6 +360,7 @@ class User extends DBManager{
 			$photo=new Photo();
 			$photo->setRaion(Raion::getTopFirstRaion());
 			$photo->localitate_id=Location::getTopFirstLocationByRaionId($photo->raion_id)->id;
+			$photo->user_id=User::getCurrentUser()->id;
 			$photo->data=System::getCurentDateTime();
 			User::setCurrentPhoto($photo);
 		}

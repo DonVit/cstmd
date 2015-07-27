@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class AddCompanyWebPage extends MainWebPage {
@@ -15,8 +11,6 @@ class AddCompanyWebPage extends MainWebPage {
 
 	function __construct(){
 		parent::__construct();
-		//$this->setJavascript("js/scripts.js");
-		//$this->setCSS("style/styles.css");
 
 		//check if user is login
 		if (!User::isAuthenticated()){
@@ -226,15 +220,17 @@ class AddCompanyWebPage extends MainWebPage {
 		$this->show();
 	}	
 	function actionCancel(){
-		if (!empty($this->currentcompany->logo_file)){
-				//unlink("files/".$this->currentphoto->file);
-				//unlink("files/t".$this->currentphoto->file);
+		if (!isset($this->id)){
+			if (!empty($this->currentcompany->logo_file)){
+				unlink("files/".$this->currentphoto->file);
+				unlink("files/t".$this->currentphoto->file);
 				unlink("files/".$this->currentcompany->logo_file);
+			}
 		}
 		User::delCurrentFiles();
 		User::delCurrentCompany();
 		
-		$this->redirect($this->getUrl("index.php"));
+		$this->redirect($this->getUrl(Config::$accountssite."/index.php","action=companii"));
 	}										
 	function actionDelete(){
 
@@ -242,10 +238,12 @@ class AddCompanyWebPage extends MainWebPage {
 		$this->setTitle($this->steptitle);
 		if (isset($_POST["da"])){
 			$this->currentcompany->delete();
-			$this->redirect($this->getUrl("index.php"));
+			User::delCurrentCompany();
+			$this->redirect($this->getUrl(Config::$accountssite."/index.php","action=companii"));
 		}
 		if (isset($_POST["nu"])){
-				$this->redirect($this->getUrl("index.php"));
+			User::delCurrentCompany();
+			$this->redirect($this->getUrl(Config::$accountssite."/index.php","action=companii"));
 		}			
 		$this->setCenterContainer($this->setDeleteAnunt());	
 		$this->show();

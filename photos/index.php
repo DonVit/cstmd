@@ -22,7 +22,7 @@ class PhotosWebPage extends MainWebPage {
 		3 => "Vara",
 		4 => "Toamna"
 	);	
-	public $rowsperpage=15;
+	public $rowsperpage=21;
 	function __construct(){
 		parent::__construct();
 		$this->setLogoTitle("IMAGINI DIN REPUBLICA MOLDOVA");	
@@ -43,10 +43,11 @@ class PhotosWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexPhotosWebPageRaioaneTitle"),$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));				
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		$this->show();
 	}
@@ -75,10 +76,11 @@ class PhotosWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
@@ -98,8 +100,6 @@ class PhotosWebPage extends MainWebPage {
 		$title="Imagini ".$localitate->getFullNameDescription();
 
 		$this->setTitle($title);
-		//$this->setLogoTitle($title);
-		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 
 		$out=$this->getImagesByLocalitate($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByLocalitate($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitateimages"));
@@ -107,10 +107,11 @@ class PhotosWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));		
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 				
 		$this->show();
@@ -123,15 +124,10 @@ class PhotosWebPage extends MainWebPage {
 		if(!isset($this->page)){
 			$this->page=0;
 		}
-	
-		//$localitate=new Location();
-		//$localitate->loadById($this->id);
-	
+
 		$title='Imagini din Anul '.$this->id.', Republica Moldova';
 	
 		$this->setTitle($title);
-		//$this->setLogoTitle($title);
-		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
 	
 		$out=$this->getImagesByYear($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByYear($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewyearimages"));
@@ -139,10 +135,11 @@ class PhotosWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
@@ -171,10 +168,11 @@ class PhotosWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
@@ -187,26 +185,21 @@ class PhotosWebPage extends MainWebPage {
 		if(!isset($this->page)){
 			$this->page=0;
 		}
-	
-		//$localitate=new Location();
-		//$localitate->loadById($this->id);
-	
 		$title="Imagini de ".$this->seasons[$this->id].", Republica Moldova";
 	
 		$this->setTitle($title);
-		//$this->setLogoTitle($title);
-		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
-	
+		
 		$out=$this->getImagesBySeason($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesBySeason($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewseasonimages"));
 	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
-		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
@@ -418,7 +411,7 @@ class PhotosWebPage extends MainWebPage {
 		return $out;
 	}
 	function getImagesByAll($page,$rowsperpage){
-		$sql="select id, title, file from photos order by data desc";
+		$sql="select id, title, file from photos where deleted=0 order by data desc";
 		$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
 		return $this->getImages($sql);
 	}

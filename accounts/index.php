@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class IndexWebPage extends MainWebPage {
@@ -37,20 +33,26 @@ class IndexWebPage extends MainWebPage {
 	}
 	function actionDefault(){		
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
+		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("",$this->getImobil()));		
 		$this->show();
 	}
 	function actionCompanii(){
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
+		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("",$this->getCompanii()));		
 		$this->show();
-	}	
+	}
+	function actionFotos(){
+		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
+		$this->setRightContainer($this->getGroupBoxH3("",$this->getFotos()));		
+		$this->show();
+	}		
 	function actionSettings(){
 		$this->setTitle("Setari");		
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
+		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
 
 		//check if user is login
 		$u=User::getCurrentUser();
@@ -114,7 +116,7 @@ class IndexWebPage extends MainWebPage {
 	function getLeftContainer1(){
 		$out="";
 		$out.=$this->getMenu();
-		$out.=$this->getAdd();
+		$out.=$this->getAddMenu();
 		return $out;	
 	}	
 	function getCenterContainer1(){
@@ -135,25 +137,13 @@ class IndexWebPage extends MainWebPage {
 		//$out.=$this->getLocalitati();
 		return $out;				
 	}
-	function getAdd(){
-		//$out='<div class="groupbox">';
-		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imobilsite.'/add.php').'">Adauga Imobil</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$chiriesite.'/add.php').'">Adauga Chirie</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/add.php').'">Adauga Companie</a></li>';		
-		$out.='</ul>';
-		//$out.='</div>';
-		return $out;
-	}
 	function getMenu(){
-		//$out='<div class="groupbox">';
 		$out='<ul class="leftmenulist">';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Anunturile Mele</a></li>';
-		//$out.='<li><a href="index.php?action=companii">Companiile Mele</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=companii">Companiile Mele</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=fotos">Fotografiile Mele</a></li>';		
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=settings">Setarile Mele</a></li>';						
 		$out.='</ul>';
-		//$out.='</div>';
 		return $out;
 	}
 	function getImobil(){
@@ -175,6 +165,12 @@ class IndexWebPage extends MainWebPage {
 		$out.=$p->getUserCompanyList();
 		return $out;
 	}
+	function getFotos(){
+		$out="";
+		$p=new FotosList();
+		$out.=$p->getUserFotosList();
+		return $out;
+	}	
 	function setSettingsForm1(){
 		$this->setTitle("Setari");
 		$this->setLogoTitle("Setari");

@@ -1,8 +1,5 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
+
 class Photo extends DBManager {
 	public $id;
 	public $title;
@@ -15,7 +12,8 @@ class Photo extends DBManager {
 	public $lat;
 	public $lng;
 	public $zoom;
-	public $maptype;						
+	public $maptype;
+	public $user_id;
 	public $data;
 	public $contor;
 	function getLongTitle(){
@@ -102,7 +100,22 @@ class Photo extends DBManager {
 			$out.='</table>';
 			//$out.="</div>";
 		}
-	
+		//add footer
+		$out.='<div class="container groupbox">';;
+		$out.="<table width=\"100%\" cellpadding=\"0\" cellspacing=\"1\" class=\"pages1\">";
+		$out.="<tr>";
+		$out.="<td align=\"left\"><a href=\"".Config::$imagessite."/add.php\" class=\"link_button\">Adauga Foto</a></td>";
+		$out.="<td align=\"right\">";
+		
+		$url=Config::$imagessite."/index.php";
+		$out.="<a href=\"".$url."\" class=\"link_button\">Vezi mai multe</a>";
+		
+		$out.="</td>";
+		$out.="</tr>";
+		$out.="</table>";
+		$out.="</div>";
+		
+		
 		return $out;
 	}							
 	function getTableName(){
