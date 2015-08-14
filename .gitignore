@@ -1,5 +1,6 @@
 .buildpath
 .project
+.tern-project
 .settings/
 news/data/
 chirie/data/
