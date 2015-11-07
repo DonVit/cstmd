@@ -32,7 +32,7 @@ class Photo extends DBManager {
 		return System::getHtmlSpecialChars($this->title);	
 	}	
 	function getPrevPhotoId(){
-		$sql="SELECT id FROM `photos` WHERE deleted!=0 and id < $this->id order by id desc limit 0,1";
+		$sql="SELECT id FROM `photos` WHERE deleted!=1 and id < $this->id order by id desc limit 0,1";
 		$ps=$this->doSql($sql);
 		$out=0;
 		if (count($ps)!=0){
@@ -43,7 +43,7 @@ class Photo extends DBManager {
 		return $out;
 	}
 	function getNextPhotoId(){
-		$sql="SELECT id FROM `photos` WHERE deleted!=0 and id > $this->id limit 0,1";
+		$sql="SELECT id FROM `photos` WHERE deleted!=1 and id > $this->id limit 0,1";
 		$ps=$this->doSql($sql);
 		$out=0;
 		if (count($ps)!=0){
