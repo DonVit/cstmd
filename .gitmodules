@@ -1,0 +1,3 @@
+[submodule "common/lib/recaptcha"]
+	path = common/lib/recaptcha
+	url = https://github.com/google/recaptcha
