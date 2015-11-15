@@ -1,12 +1,12 @@
 <?php
-class FotosList extends Object{
-	public function getUserFotosList($page=0,$rowsperpage=50){	
+class MapsList extends Object {
+	public function getUserMapsList($page=0,$rowsperpage=50){	
 		
 		$userid=0;
 		if (User::getCurrentUser()->role_id==1){
 			$userid=User::getCurrentUser()->id;
 		}
-		$p=new Photo();
+		$p=new Map();
 		if ($userid!=0){
 			$ps=$p->getAll("user_id=".$userid,"",$page,$rowsperpage);
 		} else {
@@ -20,6 +20,7 @@ class FotosList extends Object{
 		$result_output.='<th></th>';		
 		$result_output.='<th width="100%">Nume</th>';
 		$result_output.='</tr>';
+		
 		$i=0;
 		if(count($ps)!=0){
 			foreach($ps as $row){
@@ -34,9 +35,9 @@ class FotosList extends Object{
 		return $result_output;
 	}
 	function getFunctions($id){			
-		$r='<td class="gridtd" align="center"><a href="'.Config::$imagessite.'/index.php?id='.$id.'"><span class="glyphicon glyphicon-search"></span></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$imagessite.'/add.php?id='.$id.'"><span class="glyphicon glyphicon-edit"></span></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$imagessite.'/add.php?action=delete&id='.$id.'"><span class="glyphicon glyphicon-remove"></span></a></td>';
+		$r='<td class="gridtd" align="center"><a href="'.Config::$mapssite.'/index.php?action=viewmap&id='.$id.'"><span class="glyphicon glyphicon-search"></span></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$mapssite.'/add.php?id='.$id.'"><span class="glyphicon glyphicon-edit"></span></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$mapssite.'/add.php?action=delete&id='.$id.'"><span class="glyphicon glyphicon-remove"></span></a></td>';
 		return $r;
 	}
 

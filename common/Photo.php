@@ -1,5 +1,4 @@
 <?php
-
 class Photo extends DBManager {
 	public $id;
 	public $title;

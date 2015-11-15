@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class AddMapWebPage extends MainWebPage {
@@ -14,19 +10,28 @@ class AddMapWebPage extends MainWebPage {
 	
 	function __construct(){
 		parent::__construct();
-		//$this->setJavascript("js/scripts.js");
-		//$this->setCSS("style/styles.css");
 
 		//check if user is login
-		//if (!User::isAuthenticated()){
-		//	$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
-		//}			
+		if (!User::isAuthenticated()){
+			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
+		}		
 		
 		$this->setTitle('Adauga Punct pe Harta');
 		$this->setLogoTitle('Adauga Punct pe Harta');
 		if (isset($this->id)){
 			$m=new Map();
 			$m->loadById($this->id);
+
+			if (User::getCurrentUser()->id==0){
+				$this->redirect($this->getUrl('index.php','id='.$this->id));
+			}
+			
+			if (($m->user_id!=User::getCurrentUser()->id)){
+				if (User::getCurrentUser()->role_id!=2){
+					$this->redirect($this->getUrl('index.php','id='.$this->id));
+				}
+			}			
+			
 			User::setCurrentMap($m);
 		}		
 		$this->currentmap=User::getCurrentMap();

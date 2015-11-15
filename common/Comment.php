@@ -136,7 +136,7 @@ class Comment extends DBManager {
 			$out.='<div>';
 			$i=1;
 			foreach($cs as $c){
-				$out.='<div class="newscomment_head" style="font-size:85%;">';
+				$out.='<div class="media">';
 				//if (($c->web=="http://")||($c->web=="")){
 				$out.='<span><a name="'.$i.'"><a><a href="'.$webpage->getRequestURI().'#'.$i.'"># '.$i.'</a> </span>';
 				//} else {
@@ -207,7 +207,8 @@ class Comment extends DBManager {
 		if (count($cs)!=0){
 			$out.='<div>';
 			foreach($cs as $c){
-				$out.='<div class="newscomment_head" style="font-size:85%;">';
+				$out.='<div class="media">';
+				$out.='<div class="media-heading">';
 				$out.='<span><a href="'.$c->getLink().'"># '.$c->id.'</a></span>';
 				if ($c->web==""){
 					$out.='<span><b> Nume:</b> '.System::getHTML($c->name).'</span>';
@@ -222,9 +223,10 @@ class Comment extends DBManager {
 				//}
 				$out.='<span><b> Data:</b> '.$c->date.' </span>';
 				$out.='</div>';
-				$out.='<div class="newscomment_body">';
+				$out.='<div class="media-body">';
 				$out.=$c->comment;
 				$out.=' <a href="'.$c->getLink().'">vezi mai mult</a>';
+				$out.='</div>';
 				$out.='</div>';
 			}
 			$out.="</div>";

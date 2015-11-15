@@ -15,7 +15,9 @@ class MapsWebPage extends MainWebPage {
 	}
 	function actionDefault(){
 		$this->map=User::getCurrentMap();
-		$this->setCSS("style/maps.css");
+		//$this->setCSS("style/maps.css");
+		$this->setCenterContainer($this->getGroupBoxH1("Harta:",$this->getMap()));
+		$this->setCenterContainer($this->getGroupBoxH1("Ultimile:",$this->getLastMaps()));
 		$this->show();
 	}
 	function actionViewMap(){
@@ -62,8 +64,25 @@ class MapsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getGroupBoxH1($this->map->title,$this->getViewPoi()));
 		$this->setCenterContainer($this->getGroupBoxH3("Descriere",$this->getViewMapDescription()));
 		$this->showmap();
-	}			
-	function show($html=""){
+	}
+	function show($out=''){
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+// 		$out.='<div id="left" class="col-xs-3 col-md-3 col-lg-3">';
+// 		$out.=$this->getLeftContainer();
+// 		$out.='</div>';
+		$out.='<div id="center" class="col-xs-12 col-md-12 col-lg-12">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+// 		$out.='<div id="right" class="col-xs-3 col-md-3 col-lg-3">';
+// 		$out.=$this->getRightContainer();
+// 		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}	
+	function show1($html=""){
 		$out='<div id="container">';
 		$out.=$this->getMap();
 		$out.=$this->getLastMaps();
@@ -104,14 +123,14 @@ class MapsWebPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';		
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';		
-		$out.='<div id="map" style="width: 998px;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
+		$out.='<div id="map" style="height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
 		$out.='</form>';
 		return $out;
 	}
 	function getLastMaps($out=''){
 		$lastmaps=$this->map->getAll("","id desc","0","20");
 		$out='';
-		$out.='<div id="maps" style="width: 998px;border:1px solid #777777;margin-top: 2px;">';
+		$out.='<div id="maps" style="margin-top: 2px;">';
 		foreach ($lastmaps as $lm){
 			$url=$this->getUrlWithSpecialCharsConverted(Config::$mapssite."/index.php","action=viewmap&id=".$lm->id);
 			$out.='<div class="newscomment_head" style="font-size:85%;">';

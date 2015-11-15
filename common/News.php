@@ -25,6 +25,8 @@ class News extends DBManager {
 	public $lng;
 	public $map_title;
 	public $map_description;
+	public $user_id;
+	public $created_at;
 	public $contor;
 	public $valid;
 

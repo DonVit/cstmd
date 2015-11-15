@@ -75,10 +75,30 @@ class Properties extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getRssLink()));
-		$this->setRightContainer($this->getGroupBoxH3("",$this->getMain()));
+		$this->setCenterContainer($this->getGroupBoxH3("",$this->getMain()));
 		$this->show();
 	}		
 	function show($out=''){
+		$out="";
+		$out=$this->getLocation();
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='</div>';
+		$out.='<div class="row">';
+		$out.='<div id="left" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';
+		$out.='<div id="center" class="col-xs-9 col-md-9 col-lg-9">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		// 		$out.='<div id="right" class="col-xs-3 col-md-3 col-lg-3">';
+		// 		$out.=$this->getRightContainer();
+		// 		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}	
+	function show1($out=''){
 		$out="";
 		$out=$this->getLocation();
 		$out.='<div id="container" style="font-size:85%;">';		

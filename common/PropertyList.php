@@ -1,10 +1,5 @@
 <?php
-/*
- * Created on 6 Nov 2009
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
- */
+
 class PropertyList extends Object{
 	public function getUserPropertyList($page=0,$rowsperpage=50){	
 		
@@ -13,24 +8,23 @@ class PropertyList extends Object{
 			$userid=User::getCurrentUser()->id;
 		}
 		$p=new Property();
-		//$rs=$p->getImobilByPage($userid,0,0,0,0,0,0,$page,$rowsperpage);
 		$rs=$p->getProperties($userid,0,0,0,0,0,0,0,$page,$rowsperpage);
 		$imobil_result_output="";
-		$imobil_result_output.="<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\" class=\"groupboxtable\" style=\"font-size:85%;\">";
-		$imobil_result_output.="<tr>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";		
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Foto</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Harta</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Data Pub.</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Anunt</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Imobil</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Addresa</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Aria</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Pret</th>";
-		$imobil_result_output.="</tr>";
+		$imobil_result_output.='<table width="100%" class="table table-hover">';
+		$imobil_result_output.='<tr>';
+		$imobil_result_output.='<th></th>';
+		$imobil_result_output.='<th></th>';
+		$imobil_result_output.='<th></th>';
+		$imobil_result_output.='<th></th>';		
+		$imobil_result_output.='<th></th>';
+		$imobil_result_output.='<th></th>';
+		$imobil_result_output.='<th>Data Pub.</th>';
+		$imobil_result_output.='<th>Tip Anunt</th>';
+		$imobil_result_output.='<th>Tip Imobil</th>';
+		//$imobil_result_output.='<th>Addresa</th>';
+		//$imobil_result_output.='<th>Aria</th>';
+		$imobil_result_output.='<th>Pret</th>';
+		$imobil_result_output.='</tr>';
 		$i=0;
 		if(count($rs)!=0){
 			foreach($rs as $row){
@@ -45,8 +39,8 @@ class PropertyList extends Object{
 				"<td class=\"gridtd\" align=\"center\">".date("Y-m-d", strtotime($row->data))."</td>" .
 		  		"<td class=\"gridtd\" align=\"left\">".$row->scop_name."</td>" .
 				"<td class=\"gridtd\" align=\"left\">".$row->tipimobil_name." - ".$row->subtipimobil_name."</td>" .
-				"<td class=\"gridtd\" align=\"left\">".$this->getAdress($row)."</td>" .
-				"<td class=\"gridtd\" align=\"center\">".$this->getAria($row)."</td>" .
+				//"<td class=\"gridtd\" align=\"left\">".$this->getAdress($row)."</td>" .
+				//"<td class=\"gridtd\" align=\"center\">".$this->getAria($row)."</td>" .
 				"<td class=\"gridtd\" align=\"center\">".$this->getPretFormat($row)."</td>";
 			}
 		}
@@ -63,20 +57,20 @@ class PropertyList extends Object{
 		//$rs=$p->getImobilByPage($userid,0,0,0,0,0,0,$page,$rowsperpage);
 		$rs=$p->getProperties();
 		$imobil_result_output="";
-		$imobil_result_output.="<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\" class=\"grid\">";
+		$imobil_result_output.='<table width="100%" class="table table-hover">';
 		$imobil_result_output.="<tr>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">1</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">2</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">3</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">4</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Foto</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Harta</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Data Pub.</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Anunt</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Imobil</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Addresa</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Aria</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Pret</th>";
+		$imobil_result_output.="<th>1</th>";
+		$imobil_result_output.="<th>2</th>";
+		$imobil_result_output.="<th>3</th>";
+		$imobil_result_output.="<th>4</th>";
+		$imobil_result_output.="<th>Foto</th>";
+		$imobil_result_output.="<th>Harta</th>";
+		$imobil_result_output.="<th>Data Pub.</th>";
+		$imobil_result_output.="<th>Tip Anunt</th>";
+		$imobil_result_output.="<th>Tip Imobil</th>";
+		$imobil_result_output.="<th>Addresa</th>";
+		$imobil_result_output.="<th>Aria</th>";
+		$imobil_result_output.="<th>Pret</th>";
 		$imobil_result_output.="</tr>";
 		$i=0;
 		if(count($rs)!=0){
@@ -110,20 +104,20 @@ class PropertyList extends Object{
 		$p=new Property();
 		$rs=$p->getChirieByPage($userid,0,0,0,0,0,0,$page,$rowsperpage);
 		$imobil_result_output="";
-		$imobil_result_output.="<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\" class=\"grid\">";
+		$imobil_result_output.='<table width="100%" class="table table-hover">';
 		$imobil_result_output.="<tr>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\"></th>";						
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Foto</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Harta</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Data Pub.</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Anunt</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Tip Imobil</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Addresa</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Aria</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Pret</th>";
+		$imobil_result_output.="<th></th>";
+		$imobil_result_output.="<th></th>";
+		$imobil_result_output.="<th></th>";
+		$imobil_result_output.="<th></th>";						
+		$imobil_result_output.="<th>Foto</th>";
+		$imobil_result_output.="<th>Harta</th>";
+		$imobil_result_output.="<th>Data Pub.</th>";
+		$imobil_result_output.="<th>Tip Anunt</th>";
+		$imobil_result_output.="<th>Tip Imobil</th>";
+		$imobil_result_output.="<th>Addresa</th>";
+		$imobil_result_output.="<th>Aria</th>";
+		$imobil_result_output.="<th>Pret</th>";
 		$imobil_result_output.="</tr>";
 		$i=0;
 		if(count($rs)!=0){
@@ -149,31 +143,29 @@ class PropertyList extends Object{
 	}	
 	function getFunctions($imobilid,$scopid){
 			if (($scopid==1)||($scopid==3)){
-				$r='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/property.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?action=republish&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/reload.png" border=0 align="middle" alt="republica"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$imobilsite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';
-				
+				$r=$this->getFunctionsRow(Config::$imobilsite,$imobilid);								
 			} else {
-				$r='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/property.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?action=republish&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/reload.png" border=0 align="middle" alt="republica"></a></td>';
-				$r.='<td class="gridtd" align="center"><a href="'.Config::$chiriesite.'/add.php?action=delete&id='.$imobilid.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';			
+				$r=$this->getFunctionsRow(Config::$chiriesite,$imobilid);
 			}
 		return $r;
 	}
+	function getFunctionsRow($url,$imobilid){
+		$r='<td class="gridtd" align="center"><a href="'.$url.'/property.php?id='.$imobilid.'"><span class="glyphicon glyphicon-search" title="click pentru detalii"></span></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.$url.'/add.php?id='.$imobilid.'"><span class="glyphicon glyphicon-edit" title="click pentru editare"></span></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.$url.'/add.php?action=republish&id='.$imobilid.'"><span class="glyphicon glyphicon-refresh" title="click pentru republicare"></span></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.$url.'/add.php?action=delete&id='.$imobilid.'"><span class="glyphicon glyphicon-remove" title="click pentru stergere"></span></a></td>';
+		return $r;		
+	}
 	function getAlbum($row){
 		if (is_numeric($row->image_id)){
-			//return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><img src="'.Config::$commonsite.'/img/photo.gif" border=0 align="middle"></a>';
-			return '<img src="'.Config::$commonsite.'/img/photo.gif" border=0 align="middle">';			
+			return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><span class="glyphicon glyphicon-camera"></span></a>';			
 		} else {
 			return "";
 		}
 	}
 	function getMap($row){
 		if (($row->lat!=0)&&($row->lng!=0)){
-			//return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><img src="'.Config::$commonsite.'/img/map.png" border=0 align="middle"></a>';
-			return '<img src="'.Config::$commonsite.'/img/map.png" border=0 align="middle">';
+			return '<a href="'.Config::$imobilsite.'/property.php?id='.$row->id.'"><span class="glyphicon glyphicon-map-marker"></span></a>';
 		} else {
 			return "";
 		}

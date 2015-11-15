@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class Map extends DBManager {
 	public $id;
 	public $title;
@@ -12,8 +8,9 @@ class Map extends DBManager {
 	public $centerlat;
 	public $centerlng;	
 	public $zoom;
+	public $maptype;
+	public $user_id;
 	public $data;
-	public $maptype;						
 	public $contor;
 	function getTableName(){
 		return "maps";

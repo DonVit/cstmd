@@ -340,7 +340,7 @@ class IndexWebPage extends MainWebPage {
 	function getImagesCount(){
 
 		$i=new Image();
-		$is=$i->doSql("select count(*) as cnt from image where deleted=0");
+		$is=$i->doSql("select count(*) as cnt from photos where deleted=0");
 		
 		$c=0;
 		foreach ($is as $i){

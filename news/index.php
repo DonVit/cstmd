@@ -118,7 +118,24 @@ class NewsWebPage extends MainWebPage {
 		User::delCurrentFiles();					
 		
 	}
-	function show(){		
+	function show($out=''){
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div id="left" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';
+		$out.='<div id="center" class="col-xs-6 col-md-6 col-lg-6">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		$out.='<div id="right" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getRightContainer();
+		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}	
+	function show1(){		
 		$out='<div id="container">';
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();

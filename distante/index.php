@@ -1,32 +1,10 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
+
 require_once(__DIR__ . '/../main/loader.php');
  
 class DistancesWebPage extends MainWebPage {
 	function __construct(){
 		parent::__construct();
-		
-		//if ((isset($this->lat))&&(isset($this->lng))&&(isset($this->title))){
-		/*	
-		if (isset($this->lat)){
-			$m=new Map();
-			$m->centerlat=$this->centerlat;
-			$m->centerlng=$this->centerlng;
-			$m->zoom=$this->zoom;
-			$m->maptype=$this->maptype;
-			$m->lat=$this->lat;
-			$m->lng=$this->lng;
-			$m->title=$this->ptitle;
-			$m->description=$this->pdescription;
-			$m->save();
-			if (isset($m->id)){
-				$this->redirect(Config::$mapssite.'/index.php?id='.$m->id);
-			}
-		}
-		*/
 		
 		if (!SessionManager::isObject('fromraion')) {
 			SessionManager::setObject('fromraion',Raion::getTopFirstRaion());
@@ -90,8 +68,25 @@ class DistancesWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getGroupBoxH3("Descriere",$this->getViewMapDescription()));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'m',$m->id)));
 		$this->showmap();
-	}		
-	function show($html=""){
+	}
+	function show($out=''){
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		// 		$out.='<div id="left" class="col-xs-3 col-md-3 col-lg-3">';
+		// 		$out.=$this->getLeftContainer();
+		// 		$out.='</div>';
+		$out.='<div id="center" class="col-xs-12 col-md-12 col-lg-12">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		// 		$out.='<div id="right" class="col-xs-3 col-md-3 col-lg-3">';
+		// 		$out.=$this->getRightContainer();
+		// 		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}	
+	function show1($html=""){
 		$out="";
 		$out.='<div id="container">';
 		//$out.='<div id="left" class="container left" style="width:198px;">';

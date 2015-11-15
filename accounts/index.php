@@ -9,59 +9,54 @@ class IndexWebPage extends MainWebPage {
 		if ($u->id==0){
 			$this->redirect("login.php");
 		}
-		$this->setCSS("styles/index.css");	
+
 		$t="Contul Personal";
 		$this->setTitle($t);
-		//$this->setLogoTitle($t);
+
 		$this->setLogoTitle("CONTUL PERSONAL");
 		$this->create();		
 	}
-	function _show($html=""){
-		$out='<div id="container">';		
-		$out.='<div id="left">';
-		$out.=$this->getLeftContainer();
-		$out.='</div>';
-		$out.='<div id="maindiv">';
-		$out.=$this->getCenterContainer();
-		$out.='</div>';
-		//$out.='<div id="right">';
-		//$out.=$this->getRightContainer();		
-		//$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
-		$out.='</div>';	
-		MainWebPage::show($out);
-	}
 	function actionDefault(){		
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
-		$this->setRightContainer($this->getGroupBoxH3("",$this->getImobil()));		
-		$this->show();
+		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga",$this->getAddMenu()));
+		$this->setCenterContainer($this->getGroupBoxH3("Lista de Anunturi",$this->getImobil()));		
+		$this->showIn2Columns();
 	}
 	function actionCompanii(){
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
-		$this->setRightContainer($this->getGroupBoxH3("",$this->getCompanii()));		
-		$this->show();
+		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga",$this->getAddMenu()));
+		$this->setCenterContainer($this->getGroupBoxH3("Lista de Companii",$this->getCompanii()));		
+		$this->showIn2Columns();
 	}
 	function actionFotos(){
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
-		$this->setRightContainer($this->getGroupBoxH3("",$this->getFotos()));		
-		$this->show();
-	}		
+		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga",$this->getAddMenu()));
+		$this->setCenterContainer($this->getGroupBoxH3("Lista de Imagini",$this->getFotos()));		
+		$this->showIn2Columns();
+	}
+	function actionMaps(){
+		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga",$this->getAddMenu()));
+		$this->setCenterContainer($this->getGroupBoxH3("Lista de Maps",$this->getMaps()));
+		$this->showIn2Columns();
+	}
+	function actionNews(){
+		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Adauga",$this->getAddMenu()));
+		$this->setCenterContainer($this->getGroupBoxH3("Lista de Stiri",$this->getFotos()));
+		$this->showIn2Columns();
+	}	
 	function actionSettings(){
 		$this->setTitle("Setari");		
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
-		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAddMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenu()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga",$this->getAddMenu()));
 
 		//check if user is login
 		$u=User::getCurrentUser();
 		if ($u->id==0){
 			$this->redirect("login.php");
 		}
-		//$this->setCSS("styles/settings.css");
-		//$this->setTitle("Setari");
-		//$this->setLogoTitle("Setari");
+
 		if (!is_null($this->name)&&!is_null($this->email)&&!is_null($this->password)){
 			$u=User::getCurrentUser();
 			$t=new User;
@@ -69,118 +64,6 @@ class IndexWebPage extends MainWebPage {
 			if (is_null($o)){
 				$t=$u;
 				//$t->name=$this->name;
-				$t->name=$this->name;
-				$t->url=$this->url1;
-				$t->phone=$this->phone;
-				$t->mobile=$this->mobile;
-				$t->email=$this->email;
-				$t->password=$this->password;
-				$t->note=$this->note;
-				$t->save();
-				User::setCurrentUser($t);
-				//Mail::send_registration_email($t->email,$t->password);
-
-			} else {
-				$this->errormessage='Erroare, utilizator cu emailul ['.$this->email.'] exista deja ! Vrei sa recuperzi parola ? intra aici <a href="password.php?email='.$this->email.'">Recupereaza Parola</a>';
-			}
-		}
-		$u=User::getCurrentUser();
-		$this->name=$u->name;
-		$this->url1=$u->url;
-		$this->phone=$u->phone;
-		$this->mobile=$u->mobile;
-		$this->email=$u->email;
-		$this->password=$u->password;
-		$this->repassword=$u->password;
-		$this->note=$u->note;
-		$this->setRightContainer($this->setSettingsForm());
-		$this->show();
-	}				
-	function show($out=''){
-		$out="";
-		$out.='<div id="container">';
-		//$out=$this->getLocation();
-		$out.='<div id="left" class="container left" style="width:198px;">';
-		$out.=$this->getLeftContainer();
-		$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
-		$out.='<div id="right" class="container right" style="width:800px;">';
-		$out.=$this->getRightContainer();
-		$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
-		$out.='</div>';
-		MainWebPage::show($out);
-	}		
-	function getLeftContainer1(){
-		$out="";
-		$out.=$this->getMenu();
-		$out.=$this->getAddMenu();
-		return $out;	
-	}	
-	function getCenterContainer1(){
-		$out="";
-		$p=new PropertyList();
-		/*
-		if($this->action=="chirie"){
-			$out.=$p->getChirieList(0,20);		
-		} else {
-			$out.=$p->getImobilList(0,20);	
-		}
-		*/
-		$out.=$p->getUserPropertyList();
-		return $out;
-	}
-	function getRightContainer1(){
-		$out="";
-		//$out.=$this->getLocalitati();
-		return $out;				
-	}
-	function getMenu(){
-		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Anunturile Mele</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=companii">Companiile Mele</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=fotos">Fotografiile Mele</a></li>';		
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=settings">Setarile Mele</a></li>';						
-		$out.='</ul>';
-		return $out;
-	}
-	function getImobil(){
-		$out="";
-		$p=new PropertyList();
-		/*
-		if($this->action=="chirie"){
-			$out.=$p->getChirieList(0,20);		
-		} else {
-			$out.=$p->getImobilList(0,20);	
-		}
-		*/
-		$out.=$p->getUserPropertyList();
-		return $out;
-	}	
-	function getCompanii(){
-		$out="";
-		$p=new CompanyList();
-		$out.=$p->getUserCompanyList();
-		return $out;
-	}
-	function getFotos(){
-		$out="";
-		$p=new FotosList();
-		$out.=$p->getUserFotosList();
-		return $out;
-	}	
-	function setSettingsForm1(){
-		$this->setTitle("Setari");
-		$this->setLogoTitle("Setari");
-		if (!is_null($this->name)&&!is_null($this->email)&&!is_null($this->password)){
-			$u=User::getCurrentUser();
-			$t=new User;
-			$o=$t->getAll("id!='".$u->id."' and email='".$this->email."'","");
-			if (is_null($o)){
-				$t=$u;
-				$t->name=$this->name;
 				$t->name=$this->name;
 				$t->url=$this->url;
 				$t->phone=$this->phone;
@@ -205,110 +88,124 @@ class IndexWebPage extends MainWebPage {
 		$this->password=$u->password;
 		$this->repassword=$u->password;
 		$this->note=$u->note;
+		$this->setCenterContainer($this->setSettingsForm());
+		$this->showIn3Columns();
+	}
 
-
-		$out='<div id="form_container" class="form_container">';
-		$out.='<div id="form" class="form">';
-		$out.='<div id="form_title" class="form_header">';
-		$out.='Setari';
-		$out.='</div>';
-		$out.='<form id="frmRegister" name="frmRegister" method="POST" action="settings.php">';
-		$out.=' <div id="formcontrols">';
-		$out.='<div class="form_row">';
-		$out.='<label>Nume:</label>';
-		$out.='<input id="name" type="text" name="name" class="input" value="'.$this->name.'"> ! Obligator';			
-		$out.='</div>';    
-		$out.='<div class="form_row">';
-		$out.='<label>Url:</label>';
-		$out.='<input type="text" name="url" class="input" value="'.$this->url.'">';	
-		$out.='</div>';	    				
-		$out.='<div class="form_row">';
-		$out.='<label>Fix:</label>';
-		$out.='<input type="text" name="phone" class="input" value="'.$this->phone.'">';		
-		$out.='</div>';   		    				
-		$out.='<div class="form_row">';
-		$out.='<label>Mobil:</label>';
-		$out.='<input type="text" name="mobile" class="input" value="'.$this->mobile.'">';		
-		$out.='</div>';    
-		$out.='<div class="form_row">';
-		$out.='<label>Email:</label>';
-		$out.='<input id="email" type="text" name="email" class="input" value="'.$this->email.'"> ! Obligator';		
-		$out.='</div>';   
-		$out.='<div class="form_row">';
-		$out.='<label>Parola:</label>';
-		$out.='<input id="password" name="password" type="password" class="input" value="'.$this->password.'"> ! Obligator';
-		$out.='</div>';
-		$out.='<div class="form_row">';
-		$out.='<label>Reintrodu Parola:</label>';
-		$out.='<input id="repassword" name="repassword" type="password" class="input" value="'.$this->password.'"> ! Obligator';
-		$out.='</div>';
-		$out.='<div class="form_row">';
-		$out.='<label>Note:</label>';
-		$out.='<textarea id="note" name="note" class="text">'.$this->note.'</textarea>';			
-		$out.='</div>';  
-		$out.='<div class="error">';
-		$out.=$this->errormessage;
-		$out.='</div>';
-		$out.='</div>';
-		$out.='<div id="form_row_button" class="form_footer">';
-		$out.='<input name="salveaza" type="button" class="button" value="Salveaza" onclick="javascript:SettngsOnSave();">';
-		$out.='</div>';
-		$out.='</form>';
-		$out.='</div>';
+	function getMenu(){
+		$out='<div  class="list-group">';
+		$out.='<a class="list-group-item" href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Anunturile Mele</a>';
+		$out.='<a class="list-group-item" href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=companii">Companiile Mele</a>';
+		$out.='<a class="list-group-item" href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=fotos">Fotografiile Mele</a>';
+		$out.='<a class="list-group-item" href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=maps">Hartile Mele</a>';		
+		$out.='<a class="list-group-item" href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=news">Stirile Mele</a>';						
+		$out.='<a class="list-group-item" href="'.$this->getUrlWithSpecialCharsConverted("index.php").'&action=settings">Setarile Mele</a>';		
 		$out.='</div>';
 		return $out;
+	}
+	function getImobil(){
+		$out="";
+		$p=new PropertyList();
+		$out.=$p->getUserPropertyList();
+		return $out;
 	}	
+	function getCompanii(){
+		$out="";
+		$p=new CompanyList();
+		$out.=$p->getUserCompanyList();
+		return $out;
+	}
+	function getFotos(){
+		$out="";
+		$p=new FotosList();
+		$out.=$p->getUserFotosList();
+		return $out;
+	}
+	function getMaps(){
+		$out="";
+		$m=new MapsList();
+		$out.=$m->getUserMapsList();
+		return $out;
+	}	
+	
 	function setSettingsForm(){
-		//$out='<div id="form_container" class="form_container">';
-		//$out.='<div id="form" class="form">';
-		//$out.='<div id="form_title" class="form_header">';
-		//$out.='Setari';
-		//$out.='</div>';
-		$out.='<form id="frmRegister" name="frmRegister" method="POST">';
-		$out.='<div id="formcontrols">';
-		$out.='<div class="form_row">';
-		$out.='<label>Nume:</label>';
-		$out.='<input id="name" type="text" name="name" class="input" value="'.$this->name.'"> ! Obligator';			
-		$out.='</div>';    
-		$out.='<div class="form_row">';
-		$out.='<label>Url:</label>';
-		$out.='<input id="url1" type="text" name="url1" class="input" value="'.$this->url1.'">';	
-		$out.='</div>';	    				
-		$out.='<div class="form_row">';
-		$out.='<label>Fix:</label>';
-		$out.='<input type="text" name="phone" class="input" value="'.$this->phone.'">';		
-		$out.='</div>';   		    				
-		$out.='<div class="form_row">';
-		$out.='<label>Mobil:</label>';
-		$out.='<input type="text" name="mobile" class="input" value="'.$this->mobile.'">';		
-		$out.='</div>';    
-		$out.='<div class="form_row">';
-		$out.='<label>Email:</label>';
-		$out.='<input id="email" type="text" name="email" class="input" value="'.$this->email.'"> ! Obligator';		
-		$out.='</div>';   
-		$out.='<div class="form_row">';
-		$out.='<label>Parola:</label>';
-		$out.='<input id="password" name="password" type="password" class="input" value="'.$this->password.'"> ! Obligator';
-		$out.='</div>';
-		$out.='<div class="form_row">';
-		$out.='<label>Reintr. Parola:</label>';
-		$out.='<input id="repassword" name="repassword" type="password" class="input" value="'.$this->password.'"> ! Obligator';
-		$out.='</div>';
-		$out.='<div class="form_row">';
-		$out.='<label>Note:</label>';
-		$out.='<textarea id="note" name="note" class="text">'.$this->note.'</textarea>';			
-		$out.='</div>';  
-		$out.='<div class="error">';
-		$out.=$this->errormessage;
+
+		$out='<form id="frmRegister" name="frmRegister" method="POST" class="form-horizontal">';
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label" for="name">Nume:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<input name="name" type="text" class="form-control" id="name" placeholder="Nume" value="'.(isset($this->name)?$this->name:'').'" required>';
 		$out.='</div>';
 		$out.='</div>';
-		$outb.='<div id="form_row_button" class="form_footer" style="text-align: right;">';
-		$outb.='<input name="salveaza" type="button" class="button" value="Salveaza" onclick="javascript:SettngsOnSave();">';
-		$outb.='</div>';
-		$outb.='</form>';
-		//$out.='</div>';
-		//$out.='</div>';
-		return $this->getGroupBoxWizard("Setari",$out,$outb);
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label" for="url">Url:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<input name="url" type="url" class="form-control" id="url" placeholder="http://mysite.com" value="'.(isset($this->url)?$this->url:'').'">';
+		$out.='</div>';
+		$out.='</div>';
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label" for="phone">Fix:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<input name="phone" type="text" class="form-control" id="phone" placeholder="Fix" value="'.(isset($this->phone)?$this->phone:'').'" >';
+		$out.='</div>';
+		$out.='</div>';
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label" for="mobile">Mobil:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<input name="mobile" type="text" class="form-control" id="mobile" placeholder="Mobil" value="'.(isset($this->mobile)?$this->mobile:'').'">';
+		$out.='</div>';
+		$out.='</div>';
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label" for="email">Email:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<input name="email" type="email" class="form-control" id="email" placeholder="Email" value="'.(isset($this->email)?$this->email:'').'" required>';
+		$out.='</div>';
+		$out.='</div>';
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label">Parola:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<input name="password" type="password" class="form-control" id="password" placeholder="Parola" value="" required>';
+		$out.='</div>';
+		$out.='</div>';
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label">Note:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<textarea id="note" name="note" class="form-control" placeholder="Nota">'.(isset($this->note)?$this->note:'').'</textarea>';
+		$out.='</div>';
+		$out.='</div>';
+
+		$out.='<div class="form-group">';
+		$out.='<label class="col-sm-4 control-label">Valideaza:</label>';
+		$out.='<div class="col-sm-8">';
+		$out.='<div class="input-group">';
+		$out.='<input id="validationcode" type="text" name="validationcode" class="form-control" placeholder="Codul din imagine" required>';
+		$out.='<div class="input-group-addon"><img id="validationimage" class="center-block" src="'.Config::$mainsite.'/validationimage.php"/></div>';
+		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		
+		if (!empty($this->errormessage)){
+			$out.='<div class="alert alert-danger">';
+			$out.=$this->errormessage;
+			$out.='</div>';
+		}
+		
+		$out.='<div class="form-group">';
+		$out.='<div class="col-sm-12" >';
+		$out.='<input name="salveaza" type="submit" class="btn btn-default pull-right" value="salveaza">';
+		$out.='</div>';
+		$out.='</div>';
+		
+		$out.='</form>';
+
+		return $this->getGroupBoxWizard("Setari",$out);
 	}
 
 

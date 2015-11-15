@@ -3,6 +3,7 @@ class MainWebPage extends WebPage {
 	private $logotitle="logotitle";
 	private $css="";
 	private $javascript="";
+	private $footerjavascript="";
 	private $bodytag="<body>";
 	private $leftcontainer;
 	private $centercontainer;
@@ -10,14 +11,17 @@ class MainWebPage extends WebPage {
 	public function __construct() {
 		parent::__construct();
 		
-		$this->setCSS(Config::$commonsite."/style/reset.css");
-		$this->setCSS(Config::$commonsite."/style/fonts.css");		
-		$this->setCSS(Config::$commonsite."/style/base.css");			
-
-		$this->setCSS(Config::$commonsite."/style/common.css");
-		$this->setJavascript(Config::$commonsite."/js/scripts.js");
+		//$this->setCSS(Config::$commonsite."/style/reset.css");
+		//$this->setCSS(Config::$commonsite."/style/fonts.css");
+		//$this->setCSS(Config::$commonsite."/style/base.css");
+		$this->setCSS("http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css");
+		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js");
+		$this->setJavascript("http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js");
 		$this->setJavascript("https://www.google.com/recaptcha/api.js?hl=".$this->getLang()->name);
 		$this->setJavascript("http://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
+
+		//$this->setCSS(Config::$commonsite."/style/common.css");
+		$this->setJavascript(Config::$commonsite."/js/scripts.js");		
 	}
 	
 	function show($html="MainWebPageHtml"){
@@ -26,7 +30,37 @@ class MainWebPage extends WebPage {
 		$out.=$this->getFooter();
 		WebPage::show($out);
 	}
-
+	function showIn3Columns(){
+		$out='';
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div id="left" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';
+		$out.='<div id="center" class="col-xs-6 col-md-6 col-lg-6">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		$out.='<div id="right" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getRightContainer();
+		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}
+	function showIn2Columns(){
+		$out='';
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div id="left" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';
+		$out.='<div id="center" class="col-xs-9 col-md-9 col-lg-9">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}	
 	function getLogoTitle(){
 		return $this->logotitle;
 	}
@@ -72,59 +106,81 @@ class MainWebPage extends WebPage {
 		$out.='</head>';
 		$out.=$this->getBodyTag();
 		$out.='<div id="main" class="main">';
-		$out.=$this->getBanner();		
+		//$out.=$this->getBanner();		
 		$out.=$this->getTopMenu();	
-		$out.=$this->getLogo();
-		$out.=$this->getMainMenu();
+		//$out.=$this->getLogo();
+		//$out.=$this->getMainMenu();
 		return $out;
 	}
 	function getTopMenu(){	
-		$out='<div id="topmenu" class="container bar tophormenu">';
-		$out.=$this->getLanguageMenu();	
+		//$out='<div id="topmenu" class="container bar tophormenu">';
+		$out='<nav class="navbar navbar-inverse">';
+		$out.='<div class="container-fluid">';	
+		$out.='<div class="collapse navbar-collapse" id="myNavbar">';	
+		//$out.=$this->getLanguageMenu();
+		$out.=$this->getMainMenu();	
 		$out.=$this->getUserMenu();			
-		$out.='<div style="clear: both;"></div>';
+		//$out.='<div style="clear: both;"></div>';
+		//$out.='</div>';
 		$out.='</div>';	
+		$out.='</div>';
+		$out.='</nav>';
 		return $out;
 	}
 	function getMainMenu(){	
-		$out='<div id="mainmenu" class="container bar mainhormenu">';
-		$out.='<div id="mainmenuleft" style="display:block;float:left">';
-		$out.='<ul>';
-		//$SelectedItem=TopMenu::getSelectedItem();
-		foreach (TopMenu::getItems($this->getLang()) as $ItemKey=>$ItemValue){
-			//if ($SelectedItem==$ItemKey){
-			$host=parse_url($ItemKey,PHP_URL_HOST);
-			//Logger::setLogs($this->getServerName()."-".$ItemKey."-".$host);	
-			if ($this->getServerName()==$host){
-				$out.='<li><a href="'.$ItemKey.'" style="border-bottom:2px solid #C20000;">'.$ItemValue.'</a></li>';
+		$out='';
+		//$out.='<div id="mainmenuleft" style="display:block;float:left">';
+
+		
+		
+		$items=TopMenu::getItems($this->getLang());
+		$out.=$this->getMenuItems($items);
+			
+		
+
+//		$out.='<div id="mainmenuright" style="display:block;float:right">';
+//		$out.='<ul>';
+//		$out.='<li>'.$this->getBookmarks().'</li>';
+//		$out.='</ul>';						
+//		$out.='</div>';	
+		return $out;
+	}
+	function getMenuItems($items){
+		$out='<ul class="nav navbar-nav">';	
+		$out.='<li><a href="'.Config::$mainsite."/index.php?l=".$this->getLang()->name.'"><span class="glyphicon glyphicon-home"></span> </a>';
+		foreach ($items as $ItemKey=>$ItemValue){
+			if (is_array($ItemValue)){
+				$out.='<li class="dropdown"><a  class="dropdown-toggle" data-toggle="dropdown" href="#">'.$ItemKey.'<span class="caret"></span></a>';
+				$out.=$this->getMenuSubItems($ItemValue);
+				$out.='</li>';
 			} else {
-				$out.='<li><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
+				$out.='<li><a href="'.$ItemValue.'">'.$ItemKey.'</a></li>';
 			}
 		}
-		$out.='</ul>';	
-		$out.='</div>';
-		$out.='<div id="mainmenuright" style="display:block;float:right">';
-		$out.='<ul>';
-		$out.='<li>'.$this->getBookmarks().'</li>';
-		$out.='</ul>';						
-		$out.='</div>';
-		$out.='<div style="clear: both;"></div>';		
-		$out.='</div>';	
-		return $out;
+		$out.='</ul>';
+		return $out;		
+	}
+	function getMenuSubItems($items){
+		$o='<ul class="dropdown-menu">';	
+		foreach ($items as $ItemKey=>$ItemValue){
+				$o.='<li><a href="'.$ItemValue.'">'.$ItemKey.'</a></li>';
+		}
+		$o.='</ul>';
+		return $o;		
 	}	
 	function getUserMenu(){	
-		$out='<div id="usermenu" style="display:block;float:right">';
-		$out.='<ul>';
+		$out='<ul class="nav navbar-nav navbar-right">';
+		$out.=$this->getAddMenuInTopMenu();
+		//$out.='<li><a href="'.Config::$accountssite.'/register.php"><span class="glyphicon glyphicon-plus"></span> Adauga</a></li>';
 		if (User::getCurrentUser()->name=="Anonymous"){
-			$out.='<li><a href="'.Config::$accountssite.'/login.php">Login</a></li>';
-			$out.='<li><a href="'.Config::$accountssite.'/register.php">Inregistrare</a></li>';
+			$out.='<li><a href="'.Config::$accountssite.'/register.php"><span class="glyphicon glyphicon-user"></span> Inregistrare</a></li>';
+			$out.='<li><a href="'.Config::$accountssite.'/login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';			
 		} else {
-			$out.='<li><a href="'.Config::$accountssite.'/index.php">Contul Personal</a></li>';
-			$out.='<li><a href="'.Config::$accountssite.'/logout.php">Logout</a></li>';
+			$out.='<li><a href="'.Config::$accountssite.'/index.php"><span class="glyphicon glyphicon-cog"></span> Contul Personal</a></li>';
+			$out.='<li><a href="'.Config::$accountssite.'/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
 		}
-		//$out.='<div style="clear: both;"></div>';
-		$out.='</ul>';	
-		$out.='</div>';	
+		$out.=$this->getLanguageMenu();
+		$out.='</ul>';		
 		return $out;
 	}
 	function getBanner(){   
@@ -152,19 +208,16 @@ class MainWebPage extends WebPage {
 		}	
 	}	
 	function getLanguageMenu(){	
-		$out='<div id="langmenu" style="display:block;float:left">';
-		$out.='<ul>';
+		$out='<li class="dropdown"><a  class="dropdown-toggle" data-toggle="dropdown" href="#">'.$this->getLang()->name_long.'<span class="caret"></span></a>';
+		$out.='<ul class="dropdown-menu">';
 		$l=new Language();
 		$ls=$l->getAll();
 		foreach($ls as $l){
-			if ($l->name==$this->getLang()->name){
-				$out.='<li>'.$l->name_long.'</li>';
-			}else{
+			if ($l->name!=$this->getLang()->name){
 				$out.='<li><a href="'.$this->getUrlInLanguage($l->name).'">'.$l->name_long.'</a></li>';
 			}
 		}
-		$out.='</ul>';	
-		$out.='</div>';	
+		$out.='</ul>';		
 		return $out;
 	}			
 	function getBodyTag(){
@@ -180,6 +233,22 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	function getFooter(){
+		$out='<nav id="footer" class="navbar navbar-default" role="navigation">';
+		$out.='<div class="container-fluid">';
+		$out.=$this->getCounters();
+		$out.=$this->getBottomMenu();
+		$out.='</div>';
+		$out.='</nav>';
+		$out.='<div id="logs">';
+		$out.=$this->getLogs();
+		$out.='</div>';
+		$out.=$this->getFooterJavascript();
+		$out.=$this->getGA();
+		$out.='</body>';
+		$out.='</html>';
+		return $out;
+	}	
+	function getFooter1(){
 		$out='<div id="footer" class="container bar bottomhormenu">';
 		$out.=$this->getCounters();
 		$out.=$this->getBottomMenu();
@@ -191,16 +260,15 @@ class MainWebPage extends WebPage {
 		return $out;		
 	}
 	function getBottomMenu(){	
-		$out='<div id="bottommenu">';		
-		$out.='<ul>';
+		$out='<div class="collapse navbar-collapse" id="footernav">';		
+		$out.='<ul class="nav navbar-nav">';
 		foreach (BottomMenu::$Items as $ItemKey=>$ItemValue){
 				//$out.='<div class="bottommenu_item"><a href="/'.$ItemKey.'">'.$ItemValue.'</a></div>';
 				$out.='<li><a href="'.Config::$accountssite.'/'.$ItemKey.'">'.$ItemValue.'</a></li>';
 		}
-		$out.='<li> | Email la: <a href="mailto:casata.md@outlook.com">casata.md@outlook.com</a></li>';	
+		$out.='<li><a href="mailto:casata.md@outlook.com"> | Email la: casata.md@outlook.com</a></li>';	
 		$out.='</ul>';
 		$out.='</div>';	
-		$out.='<div style="clear: both;"></div>';	
 		return $out;
 	}
 	function getCounters(){	
@@ -311,7 +379,7 @@ class MainWebPage extends WebPage {
 	}			
 	function getGroupBoxH3($header="",$body="",$footer=""){
 		if ($header!=""){
-			$header='<h3>'.$header.'</h3>';			
+			$header='<h3 class="panel-title">'.$header.'</h3>';			
 		}
 		if ($footer!=""){	
 			$footer='<h3>'.$footer.'</h3>';		
@@ -320,7 +388,8 @@ class MainWebPage extends WebPage {
 	}
 	function getGroupBoxH2($header="",$body="",$footer=""){
 		if ($header!=""){
-			$header='<h2>'.$header.'</h2>';			
+			//$header='<h2>'.$header.'</h2>';
+			$header=$header;
 		}
 		if ($footer!=""){	
 			$footer='<h3>'.$footer.'</h3>';		
@@ -329,7 +398,8 @@ class MainWebPage extends WebPage {
 	}		
 	function getGroupBoxH1($header="",$body="",$footer=""){
 		if ($header!=""){
-			$header='<h1>'.$header.'</h1>';			
+			//$header='<h1>'.$header.'</h1>';			
+			$header=$header;
 		}
 		if ($footer!=""){	
 			$footer='<h3>'.$footer.'</h3>';		
@@ -337,15 +407,34 @@ class MainWebPage extends WebPage {
 		return $this->getGroupBoxHtml($header,$body,$footer);
 	}
 	function getGroupBoxHtml($header="",$body="",$footer=""){
-		$out='<div class="container groupbox">';
+		$out='<div class="panel panel-default">';
 		if ($header!=""){
-			$out.='<div class="container groupboxheader">';
+			$out.='<div class="panel-heading">';
+			$out.=$header;
+			$out.='</div>';
+		}
+		$out.='<div class="panel-body">';
+		$out.=$body;
+		$out.='</div>';
+	
+		if ($footer!=""){
+			$out.='<div class="panel-footer1">';
+			$out.=$footer;
+			$out.='</div>';
+		}
+		$out.='</div>';
+		return $out;
+	}	
+	function getGroupBoxHtml1($header="",$body="",$footer=""){
+		$out='<div class1="container groupbox">';
+		if ($header!=""){
+			$out.='<div class1="container groupboxheader">';
 			$out.=$header;		
 			$out.='</div>';	
 		}
 		$out.=$body;	
 		if ($footer!=""){	
-			$out.='<div class="container groupboxfooter">';
+			$out.='<div class1="container groupboxfooter">';
 			$out.=$footer;		
 			$out.='</div>';
 		}
@@ -353,6 +442,24 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	function getGroupBoxWizard($header="",$body="",$footer=""){
+		$out='<div class="panel panel-default">';
+		if ($header!=""){
+			$out.='<div class="panel-heading">';
+			$out.='<h3 class="panel-title">'.$header.'</h3>';
+			$out.='</div>';
+		}
+		$out.='<div class="panel-body">';
+		$out.=$body;
+		$out.='</div>';
+		if ($footer!=""){
+			$out.='<div class="panel-footer">';
+			$out.=$footer;
+			$out.='</div>';
+		}
+		$out.='</div>';
+		return $out;
+	}
+	function getGroupBoxWizard1($header="",$body="",$footer=""){
 		$out='<div class="container groupbox groupboxwizard">';
 		if ($header!=""){
 			$out.='<div class="container groupboxwizardheader">';
@@ -1069,14 +1176,28 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	public function getAddMenu(){
-		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imobilsite.'/add.php').'">Adauga Imobil</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$chiriesite.'/add.php').'">Adauga Chirie</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/add.php').'">Adauga Companie</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/add.php').'">Adauga Foto</a></li>';				
+		$out='<div class="list-group">';
+		foreach (AddMenu::getItems() as $ItemKey=>$ItemValue){
+			$out.='<a class="list-group-item" href="'.$ItemValue.'">'.$ItemKey.'</a>';
+		}
+		$out.='</div>';
+		return $out;
+	}
+	function getAddMenuInTopMenu(){
+		$out='<li class="dropdown"><a  class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-plus-sign"></span> Adauga<span class="caret"></span></a>';
+		$out.='<ul class="dropdown-menu">';
+		foreach (AddMenu::getItems() as $ItemKey=>$ItemValue){
+			$out.='<li><a href="'.$ItemValue.'">'.$ItemKey.'</a></li>';
+		}		
 		$out.='</ul>';
 		return $out;
-	}																					
+	}
+	function getFooterJavascript(){
+		return $this->footerjavascript;
+	}
+	function setFooterJavascript($javascript){
+		$this->footerjavascript.='<script src="'.$javascript.'"></script>';
+	}	
 }
 //$b=new WebPage();
 //phpinfo();

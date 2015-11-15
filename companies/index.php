@@ -111,8 +111,25 @@ require_once(__DIR__ . '/../main/loader.php');
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getLocations($this->id)));
 		$this->show();
-	}						
+	}
 	function show($out=''){
+		$out="";
+		$out.='<div class="container">';
+		$out.='<div class="row">';
+		$out.='<div id="left" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getLeftContainer();
+		$out.='</div>';
+		$out.='<div id="center" class="col-xs-6 col-md-6 col-lg-6">';
+		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		$out.='<div id="right" class="col-xs-3 col-md-3 col-lg-3">';
+		$out.=$this->getRightContainer();
+		$out.='</div>';
+		$out.='</div>';
+		$out.='</div>';
+		MainWebPage::show($out);
+	}	
+	function show1($out=''){
 		$out="";
 		$out.='<div id="container">';
 		$out.='<div id="left" class="container left" style="width:198px;">';
@@ -405,21 +422,6 @@ require_once(__DIR__ . '/../main/loader.php');
 			$out.='</table>';
 		}
 		return $out;
-	}
-	function show1($html=""){
-		$out='<div id="container">';		
-		$out.='<div id="left">';
-		$out.=$this->getLeftContainer();
-		$out.='</div>';
-		$out.='<div id="center">';
-		$out.=$this->getCenterContainer();
-		$out.='</div>';
-		$out.='<div id="right">';
-		$out.=$this->getRightContainer();		
-		$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
-		$out.='</div>';	
-		MainWebPage::show($out);
 	}
 	function getLeftContainer1(){
 		$out="";

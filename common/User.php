@@ -315,7 +315,7 @@ class User extends DBManager{
 			$news->maptype=3;
 			$news->lat="0";
 			$news->lng="0";
-			//$news->valid=1;
+			$news->user_id=User::getCurrentUser()->id;
 			$news->date=System::getCurentDateTime();
 			User::setCurrentNews($news);
 		}
@@ -437,6 +437,7 @@ class User extends DBManager{
 			$map->centerlng="28.839454650878906";		
 			$map->zoom=7;
 			$map->maptype=0;
+			$map->user_id=User::getCurrentUser()->id;
 			$map->data=System::getCurentDateTime();				
 			User::setCurrentMap($map);
 		}

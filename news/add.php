@@ -12,6 +12,12 @@ class AddNewsWebPage extends MainWebPage {
 
 	function __construct(){
 		parent::__construct();
+
+		//check if user is login
+		if (!User::isAuthenticated()){
+			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
+		}		
+		
 		$this->setJavascript("js/scripts.js");
 		$this->setJavascript("http://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
 		//$this->setCSS("style/news.css");
@@ -21,6 +27,17 @@ class AddNewsWebPage extends MainWebPage {
 		if (isset($this->id)){
 			$n=new News();
 			$n->loadById($this->id);
+
+			if (User::getCurrentUser()->id==0){
+				$this->redirect($this->getUrl('index.php','id='.$this->id));
+			}
+			
+			if (($n->user_id!=User::getCurrentUser()->id)){
+				if (User::getCurrentUser()->role_id!=2){
+					$this->redirect($this->getUrl('index.php','id='.$this->id));
+				}
+			}			
+			
 			User::setCurrentNews($n);
 		}				
 		//get news from session
@@ -312,7 +329,7 @@ class AddNewsWebPage extends MainWebPage {
 		$ctid=0;
 		if (!is_null($cs)){
 			foreach($cs as $cc){
-				$name=$cc->name;
+				$name=$cc->company_name;	
 				if ($ctid!=$cc->company_type_id){$out.="<optgroup label=\"".$cc->company_type_name."\">";}
 				if ($cc->company_id==$companyid){
 					$out.= "<option value=".$cc->company_id." selected>".$cc->company_name."</option>";

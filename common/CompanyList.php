@@ -13,13 +13,13 @@ class CompanyList extends Object{
 			$cs=$c->getAll("","id desc",$page,$rowsperpage);
 		}
 		$imobil_result_output="";
-		$imobil_result_output.="<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\" class=\"groupboxtable\" style=\"font-size:85%;\">";
-		$imobil_result_output.="<tr>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Deschide</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Editeaza</th>";
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\">Sterge</th>";		
-		$imobil_result_output.="<th class=\"gridth\" align=\"center\" width=\"100%\">Nume</th>";
-		$imobil_result_output.="</tr>";
+		$imobil_result_output.='<table width="100%" class="table table-hover">';
+		$imobil_result_output.='<tr>';
+		$imobil_result_output.='<th></th>';
+		$imobil_result_output.='<th></th>';
+		$imobil_result_output.='<th></th>';		
+		$imobil_result_output.='<th width="100%">Nume</th>';
+		$imobil_result_output.='</tr>';
 		$i=0;
 		if(count($cs)!=0){
 			foreach($cs as $row){
@@ -34,9 +34,9 @@ class CompanyList extends Object{
 		return $imobil_result_output;
 	}
 	function getFunctions($id){			
-		$r='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/index.php?id='.$id.'"><img src="'.Config::$commonsite.'/img/view.jpg" border=0 align="middle"></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?id='.$id.'"><img src="'.Config::$commonsite.'/img/edit.png" border=0 align="middle"></a></td>';
-		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?action=delete&id='.$id.'"><img src="'.Config::$commonsite.'/img/delete.png" border=0 align="middle"></a></td>';
+		$r='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/index.php?id='.$id.'"><span class="glyphicon glyphicon-search"></span></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?id='.$id.'"><span class="glyphicon glyphicon-edit"></span></a></td>';
+		$r.='<td class="gridtd" align="center"><a href="'.Config::$companiesite.'/add.php?action=delete&id='.$id.'"><span class="glyphicon glyphicon-remove"></span></a></td>';
 		return $r;
 	}
 
