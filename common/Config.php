@@ -24,6 +24,7 @@ class Config {
 	public static $numesite="http://nume.casata.it";
 	public static $adssite="http://ads.casata.it";
 	public static $feedssite="http://feeds.casata.it";
+	public static $fmsite="http://fm.casata.it";
 	public static $errorpage="http://casata.md/error.php";
 	public static $cookiedomain=".casata.it";
 
