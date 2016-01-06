@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 2 Mar 2009
- *
- */
 class Logger {
 	private static $logs="";
 	public static function setLogs($logs){

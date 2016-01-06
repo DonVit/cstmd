@@ -143,7 +143,10 @@ require_once(__DIR__ . '/../main/loader.php');
 		$out='<ul class="leftmenulist">';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("add.php").'">Adauga Companie</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Lista Tipuri Companii</a></li>';		
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies").'">Lista Companii</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewcompanies").'">Lista Companii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("activities.php","action=viewcompaniesbyraion&id=100").'">Lista Companiilor pe Localitati</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("activities.php","action=viewactivitiesbyraion&id=100").'">Lista Activitatilor Economice Licentiate</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("activities.php","action=viewnotlicencedactivitiesbyraion&id=100").'">Lista Activitatilor Economice Nelicentiate</a></li>';		
 		$out.='</ul>';
 		return $out;
 	}

@@ -40,6 +40,9 @@ class Comment extends DBManager {
 		if ($this->item_type=="c"){
 			$link=$this->getUrlWithSpecialCharsConverted(Config::$companiesite."/index.php","action=viewcompany&id=".$this->item_id);
 		}		
+		if ($this->item_type=="i"){
+			$link=$this->getUrlWithSpecialCharsConverted(Config::$companiesite."/companies.php","action=viewcompany&id=".$this->item_id);
+		}		
 		if ($this->item_type=="d"){
 			$link=$this->getUrlWithSpecialCharsConverted(Config::$dictionarsite."/index.php","action=viewdictionar&id=".$this->item_id);
 		}

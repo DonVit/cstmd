@@ -34,7 +34,7 @@ class Config {
 	public static $mysql_db="db3";
 	
 	public static $loging=true;  //yes/true|no/false
-	public static $phploging=0;  //-1 - all php errors; 0 - // Turn off all error reporting
+	public static $phploging=-1;  //-1 - all php errors; 0 - // Turn off all error reporting
 	public static $live=false; //yes/true|no/false
 	
 	//Allowed images to upload

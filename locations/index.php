@@ -79,13 +79,16 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getLocalitatiCuAcelasNume());	
 		$this->setCenterContainer($this->getNewsTitles());		
 		$this->setCenterContainer($this->getNews());		
-		$this->setCenterContainer($this->getImobilList($this->raion->id, $this->location->id));
+		$this->setCenterContainer($this->getImobilList($this->raion->id, $this->location->id));		
+		$this->setCenterContainer($this->getTopAgentiEconomici($l));
+		$this->setCenterContainer($this->getTopActivitatiEconomiceL($l));	
+		$this->setCenterContainer($this->getTopActivitatiEconomiceNL($l));		
 		$this->setCenterContainer($this->getContacts($l));
 		$this->setCenterContainer($this->getDictionar($l));
 		$this->setCenterContainer($this->getTopNames($l));
 		$this->setCenterContainer($this->getSystemDetails($l));		
 		
-		$c='<a name="14"></a>Forum/Comentarii:';
+		$c='<a name="16"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'l',$l->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuLocalitate()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
@@ -266,10 +269,12 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#8").'">Imagini in raza de 10 km</a></li>';		
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#9").'">Știri</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#10").'">Imobile</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#11").'">Telefoane</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#12").'">Nume de Familii</a></li>';				
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#13").'">Vizualizări</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#14").'">Forum/Comentarii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#11").'">Agenti Economici</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#12").'">Activitati Economice</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#13").'">Telefoane</a></li>';		
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#14").'">Nume de Familii</a></li>';				
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#15").'">Vizualizări</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$this->id."#16").'">Forum/Comentarii</a></li>';
 		
 		$out.='</ul>';
 		return $out;
@@ -950,7 +955,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
-		return $this->getGroupBoxH3('<a name="13"></a>Alte date:',$out);
+		return $this->getGroupBoxH3('<a name="15"></a>Alte date:',$out);
 	}
 	function getImobilList($raionid,$locationid){
 	
@@ -991,7 +996,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.="</table>";
 		$out.="</div>";		
 		
-		return $this->getGroupBoxH2("<a name=\"12\"></a>Top 50 Nume de Familii cele mai populare",$out);
+		return $this->getGroupBoxH2("<a name=\"14\"></a>Top 50 Nume de Familii cele mai populare",$out);
 	}
 	function getContacts($l){
 		
@@ -999,7 +1004,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 		$out='<div class="groupboxtable">';
 		$out.='<table style="width:100%;">';
-		$out.='<tr><th style="width:20%;">Nr de ordine</th><th style="width:50%;">Contact</th><th style="width:30%;text-align:center">Telefon</th></tr>';
+		$out.='<tr style="text-align:center"><th>Nr de ordine</th><th>Contact</th><th>Telefon</th></tr>';
 		if (count($ns)!=0){
 			$c=1;
 			foreach($ns as $n){
@@ -1020,7 +1025,7 @@ class IndexLocationsWebPage extends MainWebPage {
 					$tmp="(".$tmp.")";
 				}
 					
-				$out.='<tr><td>'.$c.'</td><td>'.$n->type.' '.$tmp.'</a></td><td>0-'.$n->phoneprefix.'-'.$n->phonenumber.'</td></tr>';
+				$out.='<tr style="text-align:center"><td>'.$c.'</td><td style="text-align:left">'.$n->type.' '.$tmp.'</a></td><td>0-'.$n->phoneprefix.'-'.$n->phonenumber.'</td></tr>';
 				$c=$c+1;
 			}
 		}
@@ -1028,8 +1033,105 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$this->id).'">Mai multe contacte vezi aici</a>';
 		$out.="</div>";
 	
-		return $this->getGroupBoxH2("<a name=\"11\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
-	}																			
+		return $this->getGroupBoxH2("<a name=\"13\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
+	}
+	function getTopActivitatiEconomiceNL($l){
+		
+		$page=0;
+		$rowsperpage=25;
+		
+		$p=new CoCaemNL();
+		$ps=$p->getActivitatiByLocalitate($l->id,"3 desc",$page,$rowsperpage);
+		$cnt=$p->getNumarActivitatiByLocalitate($l->id);
+		
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setDataSet($ps);
+		$table->setRowsCount($cnt);
+		$table->setRowsPerPage($rowsperpage);
+		$table->setPage($page);		
+		$openlink=function($row){
+			return '<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/companies.php','action=viewnotlicencedactivitycompaniesbylocalitate&lid='.$this->id.'&id='.$row->id).'">'.$row->denumire.'</a>';
+		};
+		
+		$table->addField(new TableField(1, "Denumirea Activitatii", "denumire", "",$openlink));
+		$table->addField(new TableField(2, "Total activitati", "contor", "text-align: center;",""));
+		
+		$out=$table->show();		
+		
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$companiesite."/activities.php","action=viewnotlicencedactivitiesbylocation&id=".$this->location->id);
+		$o2f=$this->getFooterWithLink($link);
+		
+		return $this->getGroupBoxH2("<a name=\"12\"></a>Top Activitati Economice Nelicentiate",$out,$o2f);
+	}
+	function getTopActivitatiEconomiceL($l){
+
+		$page=0;
+		$rowsperpage=25;
+		
+		$p=new CoCaemL();
+		
+		$ps=$p->getActivitatiByLocalitate($l->id,"3 desc",$page,$rowsperpage);
+		$cnt=$p->getNumarActivitatiByLocalitate($l->id);
+		
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setDataSet($ps);
+		$table->setRowsCount($cnt);
+		$table->setRowsPerPage($rowsperpage);
+		$table->setPage($page);
+		
+		$openlink=function($row){
+			return '<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/companies.php','action=viewlicencedactivitycompaniesbylocalitate&lid='.$this->id.'&id='.$row->id).'">'.$row->denumire.'</a>';
+		};
+		
+		$table->addField(new TableField(1, "Denumirea Activitatii", "denumire", "",$openlink));
+		$table->addField(new TableField(2, "Total activitati", "contor", "text-align: center;",""));
+		
+		$out=$table->show();
+				
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$companiesite."/activities.php","action=viewactivitiesbylocation&id=".$this->location->id);
+		$o2f=$this->getFooterWithLink($link);
+	
+		return $this->getGroupBoxH2("<a name=\"12\"></a>Top Activitati Economice Licentiate",$out,$o2f);
+	}	
+	function getTopAgentiEconomici($l){
+		$page=0;
+		$rowsperpage=25;
+		$p=new CoCompany();
+		$ps=$p->getCompaniesByLocalitate($l->id,"2 desc",$page,$rowsperpage);
+		$cnt=$p->getNumarCompaniesByLocalitate($l->id);
+		
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setDataSet($ps);
+		$table->setRowsCount($cnt);
+		$table->setRowsPerPage($rowsperpage);
+		$table->setPage($page);
+
+		$openlink=function($row){
+			return '<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/companies.php','action=viewcompany&lid='.$this->id.'&id='.$row->id).'">'.$row->nume_scurt.'</a>';
+		};
+		
+		$table->addField(new TableField(1, "Denumirea Companiei", "nume_scurt", "",$openlink));
+		$table->addField(new TableField(2, "Data inregistrarii", "data_inregistrarii", "text-align: center;",""));
+		$statusvalue=function($row){
+			if ($row->statutul=="") {
+				return "Activa";
+			} else {
+				return "Lichidata";
+			}
+		};
+		$table->addField(new TableField(3, "Statutul", "statutul", "text-align: center;",$statusvalue));
+		$out=$table->show();	
+		
+		$link=$this->getUrlWithSpecialCharsConverted(Config::$companiesite."/activities.php","action=viewcompaniesbylocation&id=".$this->location->id);
+		$o2f=$this->getFooterWithLink($link);
+		
+		return $this->getGroupBoxH2("<a name=\"11\"></a>Agenti Economici",$out,$o2f);
+		
+	}	
+	
 	function getPopulationInTime(){
 		$out="";
 		$o2s='';
