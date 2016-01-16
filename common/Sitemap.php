@@ -26,10 +26,10 @@ class Sitemap extends Object {
 		
 		if (!(is_bool($this->getDataSet()) === true)) {
 			while($row = mysql_fetch_object($this->getDataSet())){
-				$out.='<loc>';
-				$out.='<url>'.$locfunc($row).'</url>';
+				$out.='<url>';
+				$out.='<loc>'.$locfunc($row).'</loc>';
 				$out.='<lastmod>'.$lastmodfunc($row).'</lastmod>';				
-				$out.='</loc>';
+				$out.='</url>';
 			}
 		}
 		$out.='</urlset>';		
