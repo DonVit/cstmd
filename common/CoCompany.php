@@ -81,7 +81,7 @@ class CoCompany extends DBManager {
 		return $cnt;
 	}	
 	public function getCompaniesByRaion($raion_id,$orderbycolumns="data_inregistrarii desc",$page=0,$limit=50){
-		$sql="SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul FROM co_co as c where c.raion_id=".$raion_id." order by ".$orderbycolumns." limit ".$page*$limit.",".$limit;
+		$sql="SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul,created_at FROM co_co as c where c.raion_id=".$raion_id." order by ".$orderbycolumns." limit ".$page*$limit.",".$limit;
 		$cs=DBManager::sql($sql);
 		return $cs;
 	}
