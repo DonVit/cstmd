@@ -14,7 +14,7 @@ class SitemapCompaniesWebPage extends WebPage {
 		if (isset($this->id)){
 			WebPage::show($this->getSitemapByRaion($this->id));
 		} else {
-			WebPage::show($this->getSitemap());
+			WebPage::show($this->getSitemapIndex());
 		}
 	}
 	function getSitemapByRaion($raionid){
@@ -38,12 +38,12 @@ class SitemapCompaniesWebPage extends WebPage {
 		$out=$sitemap->show();
 		return $out;
 	}
-	function getSitemap(){
+	function getSitemapIndex(){
 	
 		$r=new Raion();
 		$rs=$r->sql("select id, name from raion");
 	
-		$sitemap=new Sitemap();
+		$sitemap=new SitemapIndex();
 		$sitemap->setDataSet($rs);
 		$locfunc=function($row){
 			return htmlspecialchars(Config::$companiesite."/companiessitemap.php?id=".$row->id);
