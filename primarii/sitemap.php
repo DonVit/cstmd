@@ -26,7 +26,7 @@ class SitemapLocationsWebPage extends WebPage {
 
 		foreach($ls as $l){
 			$link = htmlspecialchars(Config::$primariisite."/index.php?action=viewprimarie&id=".$l->location_id);		
-			$pubDate = "2013-09-02";
+			$pubDate = "2016-02-15";
 			$out.='<url>';
 			$out.='<loc>'.$link.'</loc>';
 			$out.='<lastmod>'.$pubDate.'</lastmod>';
