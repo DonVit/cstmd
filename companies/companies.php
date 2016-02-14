@@ -328,7 +328,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		$out.='<tr><td>Denumirea Scurta:</td><td>'.$c->nume_scurt.'</td></tr>';
 		$out.='<tr><td>Denumirea Lunga:</td><td>'.$c->nume_lung.'</td></tr>';
 		$out.='<tr><td>Data inregistraii:</td><td>'.$c->data_inregistrarii.'</td></tr>';
-		$out.='<tr><td>Code Fiscal (IDNO):</td><td>'.$c->idno_cod_fiscal.'</td></tr>';
+		$out.='<tr><td>Cod Fiscal (IDNO):</td><td>'.$c->idno_cod_fiscal.'</td></tr>';
 		$out.='<tr><td>Forma Juridica:</td><td>'.$c->forma_juridica.'</td></tr>';
 		$out.='<tr><td>Statutul:</td><td>'.($c->statutul ==null?'Activa':'Lichidata').'</td></tr>';		
 		$out.='</table>';

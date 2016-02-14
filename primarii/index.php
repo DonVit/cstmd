@@ -605,9 +605,17 @@ class IndexLocationsWebPage extends MainWebPage {
 		$o1b=$this->location->getPrimariaName().' este  in  componenta <a href='.$url.'>'.$this->raion->getFullNameDescription().'</a> situata la latitudinea '.$this->location->getLatShort().' longitudinea '.$this->location->getLngShort().' si altitudinea de '.$this->location->elevation.' metri fata de nivelul marii.';
 		
 		$primar=$this->location->getPrimarName();
+		$primarPartid=$this->location->getPrimarPartid();
+		
+		
 		if (!is_null($primar)){
-			$o1b.=' Primarul este '.$primar->prenume.' '.$primar->nume.' '.$primar->partid_text.' ('.$primar->partid.') ales din '.$primar->tur.'. ';	
+			$o1b.=' Primarul este '.$primar->prenume.' '.$primar->nume;	
 		} 
+		if ($primarPartid->partidcod=='CI'){
+			$o1b.=' la alegeri fiind '.$primarPartid->partidname.'. ';
+		} else {
+			$o1b.=' din partea ('.$primarPartid->partidcod.' - '.$primarPartid->partidname.'). ';
+		}
 		
 		if ($this->location->p>0){
 			if ($this->location->isComuna()){
@@ -760,7 +768,8 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function getPartidColor($partid){
 			$rtcl="008000";
-			$partidcolors=array("PCRM"=>"FF0000","PLDM"=>"008000","PDM"=>"224499","PL"=>"ADD8E6","CI"=>"A52A2A","PPCD"=>"FFA500","PRM"=>"800080","PSD"=>"FF6464","BEFT"=>"FFB272","PNL"=>"FFFF32","PCNM"=>"B23232","PEAVM"=>"B29D32","PPNT"=>"88B232","PPPSRM"=>"942914","PM"=>"C65B46","MSPR"=>"801500","PPDM"=>"B2B232","UCM"=>"B25D32","PE"=>"FF32FF","PPPM"=>"FF3377","PLD"=>"33FFFF");
+						
+			$partidcolors=array("BLP"=>"C22E1D", "BEPPEM"=>"111E8F", "CI"=>"A52A2A", "MPA"=>"9C0918", "MSPR"=>"B39C57", "PCNM"=>"CF0000", "PCRM"=>"FF0000", "PDM"=>"224499", "PL"=>"ADD8E6", "PLDM"=>"008000", "PNL"=>"FFFF32", "PPPN"=>"120C10", "PPPVE"=>"3E7306", "PPRM"=>"9656A3", "PR"=>"BD2A2A", "PRM"=>"1F93D1", "PSM"=>"CC020C", "PSRM"=>"ED1C23");
 			foreach($partidcolors as $p=>$c){
 				if ($partid==$p){
 					$rtcl=$c;
@@ -768,7 +777,8 @@ class IndexLocationsWebPage extends MainWebPage {
 				}
 			}
 			return $rtcl;
-	}		
+	}
+
 	function getLocalitatiInJur(){
 		$out="";
 		

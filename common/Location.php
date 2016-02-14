@@ -136,7 +136,7 @@ class Location extends DBManager {
 		return $ls;
 	}
 	function getPrimariiInRadius(){
-		$sql="SELECT localitate.*, (6371*acos(cos(radians($this->lat))*cos(radians(lat))*cos(radians(lng)-radians($this->lng))+sin(radians($this->lat))*sin(radians(lat)))) AS distance FROM localitate inner join primari2011 on localitate.id=primari2011.localitate_id where id!=$this->id and (6371*acos(cos(radians($this->lat))*cos(radians(lat))*cos(radians(lng)-radians($this->lng))+sin(radians($this->lat))*sin(radians(lat))))<10 ORDER BY distance ";
+		$sql="SELECT localitate.*, (6371*acos(cos(radians($this->lat))*cos(radians(lat))*cos(radians(lng)-radians($this->lng))+sin(radians($this->lat))*sin(radians(lat)))) AS distance FROM localitate inner join al_primari on localitate.id=al_primari.localitate_id where al_primari.alegeri_id='2015' and localitate.id!=$this->id and (6371*acos(cos(radians($this->lat))*cos(radians(lat))*cos(radians(lng)-radians($this->lng))+sin(radians($this->lat))*sin(radians(lat))))<10 ORDER BY distance ";
 		$ls=$this->doSql($sql);
 		return $ls;
 	}	
@@ -157,22 +157,27 @@ class Location extends DBManager {
 		return $ls[0]->p;
 	}
 	function getPrimarName(){
-		$sql="SELECT * FROM primari2011 where localitate_id=".$this->id;
+		$sql="SELECT * FROM al_primari where alegeri_id='2015' and localitate_id=".$this->id;
 		$ls=$this->doSql($sql);
 		return $ls[0];
 	}
+	function getPrimarPartid(){
+		$sql="SELECT a2.* FROM al_primari as a1 inner join al_partid as a2 on a1.alegeri_id=a2.alegeri_id and a1.partid=a2.partidcod where a1.alegeri_id='2015' and a1.localitate_id=".$this->id;
+		$ls=$this->doSql($sql);
+		return $ls[0];
+	}	
 	function getPrimarieConsilieri(){
-		$sql="SELECT * FROM consilierilocali2011 where localitate_id=".$this->id;
+		$sql="SELECT * FROM al_consilierilocali where alegeri_id='2015' and localitate_id=".$this->id;
 		$ls=$this->doSql($sql);
 		return $ls;
 	}
 	function getPrimarieConsilieriTotal(){
-		$sql="SELECT count(*) as c FROM consilierilocali2011 where localitate_id=".$this->id;
+		$sql="SELECT count(*) as c FROM  al_consilierilocali where alegeri_id='2015' and localitate_id=".$this->id;
 		$ls=$this->doSql($sql);
 		return $ls[0]->c;
 	}
 	function getPrimarieConsilieriPerPartid(){
-		$sql="SELECT partid,count(*) as c FROM consilierilocali2011 where localitate_id=".$this->id." group by partid order by 2 desc";
+		$sql="SELECT partid,count(*) as c FROM al_consilierilocali where alegeri_id='2015' and localitate_id=".$this->id." group by partid order by 2 desc";
 		$ls=$this->doSql($sql);
 		return $ls;
 	}						
