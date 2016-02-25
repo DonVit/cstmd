@@ -39,6 +39,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="3"></a>Lista Conducatorilor si Fondatorilor:',$this->getListConducatorilorFondatorilor($c)));
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="4"></a>Lista de Activitati Licentiate:',$this->getCompanyActivitatiLicentiate($c)));
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="5"></a>Lista de Activitati Nelicentiate:',$this->getCompanyActivitatiNelicentiate($c)));
+		$this->setCenterContainer($this->getGroupBoxH3('Despre Informatie:',$this->getDataInfo()));
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="6"></a>Alte Date:',$this->getSystemDetails($c)));
 		
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));
@@ -411,6 +412,12 @@ require_once(__DIR__ . '/../main/loader.php');
 		$out.='</div>';
 		return $out;
 	}
+	
+	function getDataInfo(){
+		$out='Datele despre companie sunt de pe <a href="http://date.gov.md">date.gov.md</a> din data de 14.08.2015.';
+		return $out;
+	}	
+	
 }
 $n=new CompaniesWebPage();
 
