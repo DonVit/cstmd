@@ -36,11 +36,20 @@ class Raion extends DBManager {
 	public function getFullNameDescription(){
 		$fn="";
 		if (isset($this->id)){
-			if ($this->municipiu==1){
-				$fn=$this->getConstants("RaionNameMunicipiu")." ".$this->getName();
-			}else{
-				$fn=$this->getConstants("RaionNameRaion")." ".$this->getName();
-			}
+// 			if ($this->municipiu==1){
+// 				$fn=$this->getConstants("RaionNameMunicipiu")." ".$this->getName();
+// 			}else{
+// 				$fn=$this->getConstants("RaionNameRaion")." ".$this->getName();
+// 			}
+			$fn=Raion::getRaionPrefix($this,$this->municipiu)." ".$this->getName();
+		}
+		return $fn;
+	}
+	public static function getRaionPrefix($parent,$municipiu){
+		if ($municipiu==1){
+			$fn=$parent->getConstants("RaionNameMunicipiu");
+		}else{
+			$fn=$parent->getConstants("RaionNameRaion");
 		}
 		return $fn;
 	}
@@ -140,6 +149,124 @@ class Raion extends DBManager {
 		} else {	
 			return null;
 		}
-	}		
+	}
+	function getRaionsList1(){
+		return $this->sql("select *, (select count(*) from localitate where raion_id=raion.id) as contorloc from raion order by municipiu desc, `order`, name");
+	}
+	public static function getRaionsList($currentPage){
+		$sql="select raion.* from raion order by raion.municipiu desc, raion.order, raion.name";	
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setSql($sql);
+		$table->setPagination(false);
+		$namelink=function($row) use ($currentPage){
+			$url=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion&id=".$row->id);
+			return '<a href="'.$url.'">'.Raion::getRaionPrefix($currentPage,$row->municipiu)." ".$row->name.'</a>';
+		};
+		$table->addField(new TableField(1, "Denumire", "name", "text-align: left;width:85%",$namelink));
+		//$table->addField(new TableField(2, "Localitati", "contorloc", "text-align: center;width:20%",""));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	}
+	public static function getRaionsListForPrimarii($currentPage){
+		$sql="select raion.* from raion order by raion.municipiu desc, raion.order, raion.name";
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setSql($sql);
+		$table->setPagination(false);
+		$namelink=function($row) use ($currentPage){
+			$url=$currentPage->getUrlWithSpecialCharsConverted(Config::$primariisite."/index.php","action=viewraion&id=".$row->id);
+			return '<a href="'.$url.'">'.Raion::getRaionPrefix($currentPage,$row->municipiu)." ".$row->name.'</a>';
+		};
+		$table->addField(new TableField(1, "Denumire", "name", "text-align: left;width:85%",$namelink));
+		//$table->addField(new TableField(2, "Localitati", "contorloc", "text-align: center;width:20%",""));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	}
+	public static function getPrimariiListByRaion($currentPage, $raionId){
+		$sql="select l.*, (select count(*) from localitate where parent_id=l.id) as nr_loc from localitate as l where l.statut in (3,8) and l.raion_id=".$raionId." order by l.oras desc, l.name";
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setRowsPerPage(100);		
+		$table->setSql($sql);
+				
+		$namelink=function($row) use ($currentPage){
+			$name="Primaria ";
+			$url=$currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$row->id);
+			if ($row->oras==1){
+				$name.="Orasului ";
+			} else {
+				if ($row->nr_loc!=0){
+					$name.="Comunei ";
+				} else {
+					$name.="Satului ";
+				}
+			}
+			$name.=$row->name;
+			return '<a href="'.$url.'">'.$name.'</a>';
+		};
+		$contorlink=function($row) use ($currentPage){
+			$cnt=1;
+			if ($row->raion_center==0){
+				$cnt+=$row->nr_loc;
+			}
+			return $cnt;
+		};		
+		$table->addField(new TableField(1, "Denumire", "name", "text-align: left;width:70%",$namelink));
+		$table->addField(new TableField(2, "Localitati in componenta", "nr_loc", "text-align: center;width:20%",$contorlink));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	}	
+	public static function getLocalitatiListByRaion($currentPage, $raionId){
+		$sql="select l.id, l.name, l.oras, l.p from localitate as l where l.raion_id=".$raionId." order by l.oras desc, l.name";
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setRowsPerPage(100);
+		$table->setSql($sql);
+	
+		$namelink=function($row) use ($currentPage){
+			$name="Satul ";
+			$url=$currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$row->id);
+			if ($row->oras==1){
+				$name="Orasul ";
+			}
+			$name.=$row->name;
+			return '<a href="'.$url.'">'.$name.'</a>';
+		};
+		$nrpoplink=function($row) use ($currentPage){
+			return number_format($row->p, 0, ',', ' ');;
+		};
+		$table->addField(new TableField(1, "Denumire localitate", "name", "text-align: left;width:70%",$namelink));
+		$table->addField(new TableField(2, "Nr. Locuitori", "p", "text-align: center;width:20%",$nrpoplink));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	}
+	
 }
 ?>

@@ -12,7 +12,7 @@ class IndexLocationsWebPage extends MainWebPage {
 	function actionDefault(){
 		$this->setTitle($this->getConstants("IndexLocationsWebPageRaioaneTitle"));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));	
-		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageRaioaneTitle"),$this->getMain()));
+		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageRaioaneTitle"),Raion::getRaionsList($this)));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
 		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->show();
@@ -102,7 +102,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
 		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));				
-		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageOraseTitle"),$this->getOrase()));
+		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexLocationsWebPageOraseTitle"),Location::getListaOrase($this)));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -111,7 +111,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopSusLocalitati()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopSusLocalitati()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopSusJosLocalitati($this, 'sus')));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -120,7 +121,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopJosLocalitati()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopSusJosLocalitati($this, 'jos')));
 		$this->show();
 	}
 	function actionViewTopUpPopLocalitati($html="LocationsWebPageHTML"){
@@ -128,7 +129,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopUpPopLocalitati()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopUpPopLocalitati()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopUpDownPopLocalitati($this,'up')));
 		$this->show();
 	}
 	function actionViewTopDownPopLocalitati($html="LocationsWebPageHTML"){
@@ -136,7 +138,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopDownPopLocalitati()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopUpDownPopLocalitati($this,'down')));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -145,7 +147,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiUcraineni()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiUcraineni($this)));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "ucraineni")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -154,7 +157,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiRusi()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiRusi($this)));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "rusi")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -163,7 +167,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiGagauzi()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiGagauzi()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "gagauzi")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -172,7 +177,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiBulgari()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiBulgari()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "bulgari")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -181,7 +187,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiEvrei()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiEvrei()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "evrei")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -192,7 +199,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiPolonezi()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiPolonezi()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "polonezi")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}
@@ -203,7 +211,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
-		$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiTigani()));
+		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiTigani()));
+		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "tigani")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
 	}														
@@ -224,26 +233,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		MainWebPage::show($out);
 	}
 		
-	function getMain(){
-		$r=new Raion();
-		$rs=$r->getAll("","municipiu desc, `order`, name");
-		$out='<div class="groupboxtable">';
-		$out.='<table style="width:100%;">';
-		$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>".$this->getConstants("IndexLocationsWebPageRaioaneName")."</th></tr>";		
-		if (count($rs)!=0){			
-			$c=1;
-			foreach($rs as $r){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$r->id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$r->getFullNameDescription().'</a></td></tr>';
-				$c=$c+1;	
-			}
-		}
-		$out.="</table>";
-		$out.="</div>";		
-		
-		return $out;
-	}
 	function getMenuRaion(){
 		$out='<ul class="leftmenulist">';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$this->id."#1").'">Descriere</a></li>';
@@ -279,253 +268,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='</ul>';
 		return $out;
 	}		
-	function getOrase(){			
-		$l=new Location();
-		$ls=$l->getAll("oras=1","name");
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>".$this->getConstants("IndexLocationsWebPageRaioaneName")."</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a></td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopSusLocalitati(){			
-		$l=new Location();
-		$ls=$l->getAll("","elevation desc",0,50);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Altitudinea (m.)</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a> din <a href="'.$urlr.'">'.$l->getRaion()->getFullNameDescription().'</a></td><td style="text-align:center;">'.$l->elevation.'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopJosLocalitati(){			
-		$l=new Location();
-		$ls=$l->getAll("elevation>0","elevation",0,50);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Altitudinea (m.)</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a> din <a href="'.$urlr.'">'.$l->getRaion()->getFullNameDescription().'</a></td><td style="text-align:center;">'.$l->elevation.'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}		
-	function getTopUpPopLocalitati(){			
-		$l=new Location();
-		$ls=$l->getAll("p>0","p desc",0,50);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				//$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a></td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopDownPopLocalitati(){			
-		$l=new Location();
-		$ls=$l->getAll("p>0","p",0,50);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->getFullNameDescription().'</a> din <a href="'.$urlr.'">'.$l->getRaion()->getFullNameDescription().'</a></td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopLocalitatiUcraineni(){
-		$sql="select * from localitate l inner join popnat p on l.id=p.id where ucraineni>0 order by ucraineni desc";
-		$l=new Location();
-		$ls=$l->doSql($sql);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Ucraineni</th><th>% Ucraineni</th><th>Total Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->ucraineni, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->ucraineni/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopLocalitatiRusi(){			
-		$sql="select * from localitate l inner join popnat p on l.id=p.id where rusi>0 order by rusi desc";
-		$l=new Location();
-		$ls=$l->doSql($sql);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Rusi</th><th>% Rusi</th><th>Total Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->rusi, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->rusi/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopLocalitatiGagauzi(){			
-		$sql="select * from localitate l inner join popnat p on l.id=p.id where gagauzi>0 order by gagauzi desc";
-		$l=new Location();
-		$ls=$l->doSql($sql);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Gagauzi</th><th>% Gagauzi</th><th>Total Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->gagauzi, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->gagauzi/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopLocalitatiBulgari(){			
-		$sql="select * from localitate l inner join popnat p on l.id=p.id where bulgari>0 order by bulgari desc";
-		$l=new Location();
-		$ls=$l->doSql($sql);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Bulgari</th><th>% Bulgari</th><th>Total Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->bulgari, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->bulgari/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopLocalitatiEvrei(){			
-		$sql="select * from localitate l inner join popnat p on l.id=p.id where evrei>0 order by evrei desc";
-		$l=new Location();
-		$ls=$l->doSql($sql);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Evrei</th><th>% Evrei</th><th>Total Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->evrei, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->evrei/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopLocalitatiPolonezi(){			
-		$sql="select * from localitate l inner join popnat p on l.id=p.id where polonezi>0 order by polonezi desc";
-		$l=new Location();
-		$ls=$l->doSql($sql);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Polonezi</th><th>% Polonezi</th><th>Total Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->polonezi, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->polonezi/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}
-	function getTopLocalitatiTigani(){			
-		$sql="select * from localitate l inner join popnat p on l.id=p.id where tigani>0 order by tigani desc";
-		$l=new Location();
-		$ls=$l->doSql($sql);
-		$c=1;
-		if (count($ls)!=0){			
-			$out='<div class="groupboxtable">';
-			$out.='<table style="width:100%;">';
-			$out.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th><th>Nr. Romi/Tigani</th><th>% Romi/Tigani</th><th>Total Populatie</th></tr>";
-			foreach($ls as $l){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$urlr=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->raion_id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$l->name.'</a></td><td style="text-align:center;">'.number_format($l->tigani, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format(($l->tigani/$l->p)*100, 0, ',', ' ').'</td><td style="text-align:center;">'.number_format($l->p, 0, ',', ' ').'</td></tr>';
-				$c=$c+1;	
-			}
-			$out.="</table>";
-			$out.="</div>";
-		}
-		return $out;
-	}											
+
 	function getLeftMenu(){
 		$out='<ul>';
 		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
@@ -569,17 +312,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
 
 		$o2s='<a name="2"></a>'.$this->getConstants("IndexLocationsWebPageRaionComponenta")." ".$this->raion->getFullNameDescription().':';	
-		$o2b='<div class="groupboxtable">';
-		$o2b.='<table style="width:100%;">';
-		$o2b.="<tr><th>".$this->getConstants("IndexLocationsWebPageRaioaneNr")."</th><th>Denumire localitate</th></tr>";
-		$c=1;
-		foreach($ls as $l){	
-			$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-			$o2b.='<tr><td style="text-align:center;">'.$c.'</td><td><a href="'.$url.'">'.$l->getFullName().'</a></td></tr>';
-			$c=$c+1;
-		}
-		$o2b.='</table>';
-		$o2b.='</div>';
+		$o2b=Raion::getLocalitatiListByRaion($this, $this->raion->id);
 		$out.=$this->getGroupBoxH3($o2s,$o2b);
 
 		$o3s='<a name="3"></a>'.$this->getConstants("IndexLocationsWebPageRaionHarta")." ".$this->raion->getFullNameDescription();
@@ -758,20 +491,21 @@ class IndexLocationsWebPage extends MainWebPage {
 			$o2b.='<br>';
 			$o2b.='Componenta pe nationalitati:';
 			$o2b.='<br>';
-			$o2b.='<div class="groupboxtable">';
-			$o2b.='<table style="width:100%;">';			
-			$o2b.='<tr><th>Nationalitate</th><th>Numar de Locuitori</th><th>% de Locuitori</th></tr>';
-			$o2b.='<tr><td>Moldoveni/Romani</td><td style="text-align:center;">'.$moldoveni.'</td><td style="text-align:center;">'.$moldovenip.'</td></tr>';
-			$o2b.='<tr><td>Ucraineni</td><td style="text-align:center;">'.$ucraineni.'</td><td style="text-align:center;">'.$ucrainenip.'</td></tr>';
-			$o2b.='<tr><td>Rusi</td><td style="text-align:center;">'.$rusi.'</td><td style="text-align:center;">'.$rusip.'</td></tr>';
-			$o2b.='<tr><td>Gagauzi</td><td style="text-align:center;">'.$gagauzi.'</td><td style="text-align:center;">'.$gagauzip.'</td></tr>';
-			$o2b.='<tr><td>Bulgari</td><td style="text-align:center;">'.$bulgari.'</td><td style="text-align:center;">'.$bulgarip.'</td></tr>';
-			$o2b.='<tr><td>Evrei</td><td style="text-align:center;">'.$evrei.'</td><td style="text-align:center;">'.$evreip.'</td></tr>';
-			$o2b.='<tr><td>Polonezi</td><td style="text-align:center;">'.$polonezi.'</td><td style="text-align:center;">'.$polonezip.'</td></tr>';
-			$o2b.='<tr><td>Romi/Tigani</td><td style="text-align:center;">'.$tigani.'</td><td style="text-align:center;">'.$tiganip.'</td></tr>';		
-			$o2b.='<tr><td>Altele</td><td style="text-align:center;">'.$altele.'</td><td style="text-align:center;">'.$altelep.'</td></tr>';
-			$o2b.='</table>';
-			$o2b.='</div>';
+// 			$o2b.='<div class="groupboxtable">';
+// 			$o2b.='<table style="width:100%;">';			
+// 			$o2b.='<tr><th>Nationalitate</th><th>Numar de Locuitori</th><th>% de Locuitori</th></tr>';
+// 			$o2b.='<tr><td>Moldoveni/Romani</td><td style="text-align:center;">'.$moldoveni.'</td><td style="text-align:center;">'.$moldovenip.'</td></tr>';
+// 			$o2b.='<tr><td>Ucraineni</td><td style="text-align:center;">'.$ucraineni.'</td><td style="text-align:center;">'.$ucrainenip.'</td></tr>';
+// 			$o2b.='<tr><td>Rusi</td><td style="text-align:center;">'.$rusi.'</td><td style="text-align:center;">'.$rusip.'</td></tr>';
+// 			$o2b.='<tr><td>Gagauzi</td><td style="text-align:center;">'.$gagauzi.'</td><td style="text-align:center;">'.$gagauzip.'</td></tr>';
+// 			$o2b.='<tr><td>Bulgari</td><td style="text-align:center;">'.$bulgari.'</td><td style="text-align:center;">'.$bulgarip.'</td></tr>';
+// 			$o2b.='<tr><td>Evrei</td><td style="text-align:center;">'.$evrei.'</td><td style="text-align:center;">'.$evreip.'</td></tr>';
+// 			$o2b.='<tr><td>Polonezi</td><td style="text-align:center;">'.$polonezi.'</td><td style="text-align:center;">'.$polonezip.'</td></tr>';
+// 			$o2b.='<tr><td>Romi/Tigani</td><td style="text-align:center;">'.$tigani.'</td><td style="text-align:center;">'.$tiganip.'</td></tr>';		
+// 			$o2b.='<tr><td>Altele</td><td style="text-align:center;">'.$altele.'</td><td style="text-align:center;">'.$altelep.'</td></tr>';
+// 			$o2b.='</table>';
+// 			$o2b.='</div>';
+			$o2b.=Population::getPopulationVeiwByLocalitate($this, $this->location->id);
 			$chco='008000|224499|FF0000|FF9900|AA0033|7777CC|80C65A|AB8F3C|AD4949';
 			$chd='t:'.$moldovenip.','.$ucrainenip.','.$rusip.','.$gagauzip.','.$bulgarip.','.$evreip.','.$polonezip.','.$tiganip.','.$altelep;
 			$chdl='Moldoveni|Ucraineni|Rusi|Gagauzi|Bulgari|Evrei|Polonezi|Romi/Tigani|Altele';
@@ -801,7 +535,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		if (!$popnat->total==""){
 			$total=$popnat->total;		
 			$o2s='<a name="4"></a>'.$this->raion->getFullNameDescription().' - Populatia:';		
-			$o2b='Conform recensamintului din anul 2004 populatia este de - '.number_format($total, 0, ',', ' ').' <br>';
+			$o2b='Conform recensamintului din anul 2004 populatia este de - '.number_format($total, 0, ',', ' ').' locuitori.<br>';
 			$moldoveni=$popnat->moldoveni+$popnat->romani;
 			$moldovenip=round($moldoveni*100/$total,2);
 			$ucraineni=$popnat->ucraineni;
@@ -824,20 +558,21 @@ class IndexLocationsWebPage extends MainWebPage {
 			$o2b.='<br>';
 			$o2b.='Componenta pe nationalitati este:';
 			$o2b.='<br>';
-			$o2b.='<div class="groupboxtable">';
-			$o2b.='<table style="width:100%;">';			
-			$o2b.='<tr><th>Nationalitate</th><th>Numar de Locuitori</th><th>% de Locuitori</th></tr>';
-			$o2b.='<tr><td>Moldoveni/Romani</td><td style="text-align:center;">'.$moldoveni.'</td><td style="text-align:center;">'.$moldovenip.'</td></tr>';
-			$o2b.='<tr><td>Ucraineni</td><td style="text-align:center;">'.$ucraineni.'</td><td style="text-align:center;">'.$ucrainenip.'</td></tr>';
-			$o2b.='<tr><td>Rusi</td><td style="text-align:center;">'.$rusi.'</td><td style="text-align:center;">'.$rusip.'</td></tr>';
-			$o2b.='<tr><td>Gagauzi</td><td style="text-align:center;">'.$gagauzi.'</td><td style="text-align:center;">'.$gagauzip.'</td></tr>';
-			$o2b.='<tr><td>Bulgari</td><td style="text-align:center;">'.$bulgari.'</td><td style="text-align:center;">'.$bulgarip.'</td></tr>';
-			$o2b.='<tr><td>Evrei</td><td style="text-align:center;">'.$evrei.'</td><td style="text-align:center;">'.$evreip.'</td></tr>';
-			$o2b.='<tr><td>Polonezi</td><td style="text-align:center;">'.$polonezi.'</td><td style="text-align:center;">'.$polonezip.'</td></tr>';
-			$o2b.='<tr><td>Romi/Tigani</td><td style="text-align:center;">'.$tigani.'</td><td style="text-align:center;">'.$tiganip.'</td></tr>';		
-			$o2b.='<tr><td>Altele</td><td style="text-align:center;">'.$altele.'</td><td style="text-align:center;">'.$altelep.'</td></tr>';
-			$o2b.='</table>';
-			$o2b.='</div>';
+// 			$o2b.='<div class="groupboxtable">';
+// 			$o2b.='<table style="width:100%;">';			
+// 			$o2b.='<tr><th>Nationalitate</th><th>Numar de Locuitori</th><th>% de Locuitori</th></tr>';
+// 			$o2b.='<tr><td>Moldoveni/Romani</td><td style="text-align:center;">'.$moldoveni.'</td><td style="text-align:center;">'.$moldovenip.'</td></tr>';
+// 			$o2b.='<tr><td>Ucraineni</td><td style="text-align:center;">'.$ucraineni.'</td><td style="text-align:center;">'.$ucrainenip.'</td></tr>';
+// 			$o2b.='<tr><td>Rusi</td><td style="text-align:center;">'.$rusi.'</td><td style="text-align:center;">'.$rusip.'</td></tr>';
+// 			$o2b.='<tr><td>Gagauzi</td><td style="text-align:center;">'.$gagauzi.'</td><td style="text-align:center;">'.$gagauzip.'</td></tr>';
+// 			$o2b.='<tr><td>Bulgari</td><td style="text-align:center;">'.$bulgari.'</td><td style="text-align:center;">'.$bulgarip.'</td></tr>';
+// 			$o2b.='<tr><td>Evrei</td><td style="text-align:center;">'.$evrei.'</td><td style="text-align:center;">'.$evreip.'</td></tr>';
+// 			$o2b.='<tr><td>Polonezi</td><td style="text-align:center;">'.$polonezi.'</td><td style="text-align:center;">'.$polonezip.'</td></tr>';
+// 			$o2b.='<tr><td>Romi/Tigani</td><td style="text-align:center;">'.$tigani.'</td><td style="text-align:center;">'.$tiganip.'</td></tr>';		
+// 			$o2b.='<tr><td>Altele</td><td style="text-align:center;">'.$altele.'</td><td style="text-align:center;">'.$altelep.'</td></tr>';
+// 			$o2b.='</table>';
+// 			$o2b.='</div>';
+			$o2b.=Population::getPopulationVeiwByRaion($this,$this->raion->id);
 			$chco='008000|224499|FF0000|FF9900|AA0033|7777CC|80C65A|AB8F3C|AD4949';
 			$chd='t:'.$moldovenip.','.$ucrainenip.','.$rusip.','.$gagauzip.','.$bulgarip.','.$evreip.','.$polonezip.','.$tiganip.','.$altelep;
 			$chdl='Moldoveni|Ucraineni|Rusi|Gagauzi|Bulgari|Evrei|Polonezi|Romi/Tigani|Altele';
@@ -980,58 +715,31 @@ class IndexLocationsWebPage extends MainWebPage {
 	function getTopNames($l){
 		$n=new Nume();
 		$ns=$n->getTopNamesByLocation($l->id);
-		$out="";
-		$out='<div class="groupboxtable">';
-		$out.='<table style="width:100%;">';
-		$out.='<tr><th style="width:20%;">Nr de ordine</th><th style="width:50%;">Nume de familie</th><th style="width:30%;text-align:center">Numarul total de familii</th></tr>';		
-		if (count($ns)!=0){			
-			$c=1;
-			foreach($ns as $n){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$n->id);
-				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$n->name.'</a></td><td>'.$n->counter.'</td></tr>';
-				$c=$c+1;	
-			}
-		}
-		$out.="</table>";
+		$out='';
+		$out.='<div class="groupboxtable">';
+
+		$table=new Table();
+		$table->setDataSet($ns);
+		$namelink=function($row){
+			$url=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$row->id);					
+			return '<a href="'.$url.'">'.$row->name.'</a>';
+		};
+		$table->addField(new TableField(1, "Nume de familie", "name", "",$namelink));
+		$table->addField(new TableField(2, "Numarul total de familii", "counter", "text-align: center;",""));
+		
+		$out.=$table->show();
+		
+		
 		$out.="</div>";		
 		
 		return $this->getGroupBoxH2("<a name=\"14\"></a>Top 50 Nume de Familii cele mai populare",$out);
 	}
 	function getContacts($l){
-		
-		$ns=$l->getContacts();
-		$out="";
-		$out='<div class="groupboxtable">';
-		$out.='<table style="width:100%;">';
-		$out.='<tr style="text-align:center"><th>Nr de ordine</th><th>Contact</th><th>Telefon</th></tr>';
-		if (count($ns)!=0){
-			$c=1;
-			foreach($ns as $n){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				//$url=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$n->id);
-				$tmp="";
-				if ($n->SubdivizionName!=""){
-					$tmp.=$n->SubdivizionName;
-				}
-				if ($n->SectorName!=""){
-					if ($tmp!=""){
-						$tmp.=", ".$n->SectorName;
-					} else {
-						$tmp.=$n->SectorName;
-					}
-				}
-				if ($tmp!=""){
-					$tmp="(".$tmp.")";
-				}
-					
-				$out.='<tr style="text-align:center"><td>'.$c.'</td><td style="text-align:left">'.$n->type.' '.$tmp.'</a></td><td>0-'.$n->phoneprefix.'-'.$n->phonenumber.'</td></tr>';
-				$c=$c+1;
-			}
-		}
-		$out.="</table>";
+		$out='';		
+		$out.='<div class="groupboxtable">';
+		$out.=$l->getContacts();
+		$out.='</div>';
 		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$this->id).'">Mai multe contacte vezi aici</a>';
-		$out.="</div>";
 	
 		return $this->getGroupBoxH2("<a name=\"13\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
 	}
@@ -1158,7 +866,6 @@ class IndexLocationsWebPage extends MainWebPage {
 					
 					$o2s=$this->location->getFullNameDescription().' - Evolutia numarului de locuitori in ultimii 100 ani:';
 					
-					//$o2b.='Componenta pe nationalitati:';
 					$o2b.='<br>';
 					$o2b.='<div class="groupboxtable">';
 					$o2b.='<table style="width:100%;">';

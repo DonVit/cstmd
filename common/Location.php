@@ -46,14 +46,23 @@ class Location extends DBManager {
 	public function getFullNameDescription(){
 		$fn="";
 		if (isset($this->id)){
-			if ($this->oras==1){
-				$fn="Orasul ".$this->getName();
-			}else{
-				$fn="Satul ".$this->getName();
-			}
+// 			if ($this->oras==1){
+// 				$fn="Orasul ".$this->getName();
+// 			}else{
+// 				$fn="Satul ".$this->getName();
+// 			}
+			$fn=Location::getLocationPrefix($this,$this->oras)." ".$this->getName();
 		}
 		return $fn;
 	}
+	public static function getLocationPrefix($parent,$oras){
+		if ($oras==1){
+			$fn='Orasul';
+		}else{
+			$fn='Satul';
+		}
+		return $fn;
+	}	
 	public function getPrimariaName(){
 		$fn="";
 		if (isset($this->id)){
@@ -68,6 +77,20 @@ class Location extends DBManager {
 		}
 		return $fn;
 	}
+	public static function getPrimariaPrefix($parent,$oras){
+		$fn="Primaria ";
+		if (isset($this->id)){
+			if ($this->oras==1){
+				$fn.="Orasului ".$this->getName();
+			}elseif ($this->isComuna()){
+				$fn.="Comunei ".$this->getName();
+			} else {
+				$fn.="Satului ".$this->getName();
+			}
+				
+		}
+		return $fn;
+	}	
 	public function isComuna(){
 		$r=false;
 		if ($this->oras!=1){
@@ -167,8 +190,8 @@ class Location extends DBManager {
 		return $ls[0];
 	}	
 	function getPrimarieConsilieri(){
-		$sql="SELECT * FROM al_consilierilocali where alegeri_id='2015' and localitate_id=".$this->id;
-		$ls=$this->doSql($sql);
+		$sql="SELECT * FROM al_consilierilocali where alegeri_id='2015' and localitate_id=".$this->id." order by nr";
+		$ls=$this->sql($sql);
 		return $ls;
 	}
 	function getPrimarieConsilieriTotal(){
@@ -178,7 +201,7 @@ class Location extends DBManager {
 	}
 	function getPrimarieConsilieriPerPartid(){
 		$sql="SELECT partid,count(*) as c FROM al_consilierilocali where alegeri_id='2015' and localitate_id=".$this->id." group by partid order by 2 desc";
-		$ls=$this->doSql($sql);
+		$ls=$this->sql($sql);
 		return $ls;
 	}						
 	function getDistanceToLocation($locationid){	
@@ -188,10 +211,26 @@ class Location extends DBManager {
 	}
 	function getContacts(){
 		$sql="SELECT xcompany.type,xsubdivizion.new_name as SubdivizionName, xsubsector.new_name as SectorName,phoneprefix,phonenumber FROM xsubcompany inner join xcompany on xsubcompany.companyid=xcompany.id left join xsubdivizion on xsubcompany.subdivizionid=xsubdivizion.id left join xsubsector on xsubcompany.subsectorid=xsubsector.id where localitateid=".$this->id." and xcompany.type in ('Primaria','Scoala','Gradinita','Medic','Politia','Casa De Cultura','Posta','Biblioteca','Banca','Biserica','Gimnaziu') order by xcompany.type LIMIT 0,100";
-		$ls=$this->doSql($sql);
-		return $ls;
-		
+		$ls=$this->sql($sql);
+		$out='';
+		if (count($ls)){
+		$table=new Table();
+		$table->setDataSet($ls);
+		$contactvalue=function($row){
+			return $row->type.' ('.$row->SectorName.')';
+		};
+		$table->addField(new TableField(1, "Contact", "type", "width: 70%;",$contactvalue));
+		$phonevalue=function($row){
+			return '0-'.$row->phoneprefix.'-'.$row->phonenumber;
+		};
+		$table->addField(new TableField(2, "Telefon", "phoneprefix", "text-align: center;",$phonevalue));
+	
+		$out.=$table->show();
+	
+		}
+		return $out;
 	}	
+	
 	function getName(){						
 		
 		$fn="name_".$this->getLang()->name;
@@ -216,5 +255,173 @@ class Location extends DBManager {
 	function finLocationsInText($text){
 		
 	}		
+	function getOraseList(){
+		return $this->sql("select * from localitate where oras=1 order by name");
+	}
+	function getTopSusLocalitati(){
+		return $this->sql("select l.id as l_id, l.oras as l_oras, l.name as l_name, l.elevation as l_elevation, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name from localitate l inner join raion r on l.raion_id=r.id order by l.elevation desc limit 0,50");
+	}
+	function getTopJosLocalitati(){
+		return $this->sql("select l.id as l_id, l.oras as l_oras, l.name as l_name, l.elevation as l_elevation, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name from localitate l inner join raion r on l.raion_id=r.id where l.elevation>0 order by l.elevation limit 0,50");
+	}
+	function getTopUpPopLocalitati(){
+		return $this->sql("select l.id as l_id, l.oras as l_oras, l.name as l_name, l.p as l_p, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name from localitate l inner join raion r on l.raion_id=r.id where l.p>0 order by l.p desc limit 0,50");
+	}
+	
+
+	
+	public static function getListaOrase($currentPage){
+		$sql="select * from localitate where oras=1 order by name";	
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setRowsPerPage(100);
+		$table->setSql($sql);
+		$table->setPagination(false);
+				
+		$namelink=function($row) use ($currentPage){
+			$url=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$row->id);
+			return '<a href="'.$url.'">'.Location::getLocationPrefix($currentPage,$row->oras)." ".$row->name.'</a>';
+		};
+		$table->addField(new TableField(1, "Denumire", "name", "width:85%",$namelink));
+		//$table->addField(new TableField(2, "Total locuitori", "p", "text-align: center;",""));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	
+	}
+	
+	
+	public static function getTopSusJosLocalitati($currentPage, $susjos){
+		$sql="select l.id as l_id, l.oras as l_oras, l.name as l_name, l.elevation as l_elevation, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name from localitate l inner join raion r on l.raion_id=r.id where l.elevation>0 order by l.elevation";
+		if ($susjos=='sus'){
+			$sql.=" desc";
+		}		
+
+		$out='';
+		$out.='<div class="groupboxtable">';
+
+		$table=new Table();
+		$navigationlink=function() use ($currentPage,$susjos){
+			return $currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewtop".$susjos."localitati");
+		};
+		$table->setNavigationLink($navigationlink);
+		
+		
+		if (!isset($currentPage->page)){
+			$currentPage->page=0;
+		}
+		$table->setPage($currentPage->page);
+		$table->setSql($sql);
+				
+		$namelink=function($row) use ($currentPage,$susjos){
+			$urll=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$row->l_id);
+			$urlr=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion&id=".$row->r_id);
+			return '<a href="'.$urll.'">'.Location::getLocationPrefix($currentPage,$row->l_oras)." ".$row->l_name.'</a> din <a href="'.$urlr.'">'.Raion::getRaionPrefix($currentPage, $row->r_municipiu)." ".$row->r_name."</a>";
+		};
+		$table->addField(new TableField(1, "Denumire", "name", "width:65%",$namelink));
+		$table->addField(new TableField(2, "Altitudinea (m.)", "l_elevation", "text-align: center;width:20%",""));
+
+		$out.=$table->show();
+
+		$out.="</div>";
+
+		return $out;
+	}	
+	
+	public static function getTopUpDownPopLocalitati($currentPage, $updown){
+		
+		$sql="select l.id as l_id, l.oras as l_oras, l.name as l_name, l.p as l_p, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name from localitate l inner join raion r on l.raion_id=r.id where l.p>0 order by l.p";
+		if ($updown=='up'){
+		$sql.=" desc";
+		}
+		
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$navigationlink=function() use ($currentPage,$updown){
+			return $currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewtop".$updown."poplocalitati");
+		};
+		$table->setNavigationLink($navigationlink);
+		
+		
+		if (!isset($currentPage->page)){
+			$currentPage->page=0;
+		}
+		$table->setPage($currentPage->page);
+		$table->setSql($sql);
+		
+		$namelink=function($row) use ($currentPage,$updown) {
+			$urll=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$row->l_id);
+			$urlr=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion&id=".$row->r_id);
+			return '<a href="'.$urll.'">'.Location::getLocationPrefix($currentPage,$row->l_oras)." ".$row->l_name.'</a> din <a href="'.$urlr.'">'.Raion::getRaionPrefix($currentPage, $row->r_municipiu)." ".$row->r_name."</a>";
+		};
+						
+		$poplink=function($row){
+			return number_format($row->l_p, 0, ',', ' ');
+		};
+		
+		$table->addField(new TableField(1, "Denumire", "name", "width:65%",$namelink));
+		$table->addField(new TableField(2, "Populatie", "l_p", "text-align: center;width:20%",$poplink));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	}	
+	
+	public static function getTopLocalitatiNationality($currentPage, $nationality){
+	
+		$sql="select l.id as l_id, l.oras as l_oras, l.name as l_name, l.p as l_p, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name, l.p as l_p, p.".$nationality." as l_".$nationality." from localitate l inner join raion r on l.raion_id=r.id inner join popnat p on l.id=p.id where ".$nationality.">0 order by ".$nationality." desc";
+	
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$navigationlink=function() use ($currentPage,$nationality){
+			return $currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewtoplocalitati".$nationality);
+		};
+		$table->setNavigationLink($navigationlink);
+	
+		if (!isset($currentPage->page)){
+			$currentPage->page=0;
+		}
+		$table->setPage($currentPage->page);
+		$table->setSql($sql);
+	
+		$namelink=function($row) use ($currentPage,$nationality){
+			$urll=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$row->l_id);
+			$urlr=$currentPage->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion&id=".$row->r_id);
+			return '<a href="'.$urll.'">'.self::getLocationPrefix($currentPage,$row->l_oras)." ".$row->l_name.'</a> din <a href="'.$urlr.'">'.Raion::getRaionPrefix($currentPage, $row->r_municipiu)." ".$row->r_name."</a>";		
+		};
+		
+		$popNrLink=function($row) use ($currentPage,$nationality){
+				$col="l_".$nationality;
+				return number_format($row->$col, 0, ',', ' ');
+			};
+		$popProcLink=function($row) use ($currentPage,$nationality){
+				$col="l_".$nationality;
+				return number_format(($row->$col/$row->l_p)*100, 0, ',', ' ');
+			};
+		$popTotLink=function($row) use ($currentPage,$nationality){
+				return number_format($row->l_p, 0, ',', ' ');
+			};		
+			
+		$table->addField(new TableField(1, "Denumire localitate", "name", "width:52%",$namelink));
+		$table->addField(new TableField(2, "Nr. ".ucfirst($nationality), "l_".$nationality, "text-align: center;width:12%",$popNrLink));
+		$table->addField(new TableField(2, "% ".ucfirst($nationality), "l_".$nationality, "text-align: center;width:12%",$popProcLink));
+		$table->addField(new TableField(2, "Total Populatie", "l_p", "text-align: center;width:12%",$popTotLink));
+
+		$out.=$table->show();
+		$out.="</div>";
+		return $out;
+	}	
+
 }
 ?>

@@ -3,12 +3,13 @@ class Table extends Object {
 	private $pagination=true;
 	private $sql;
 	private $sqlcount;
+	private $showNrOrd=true;
 	private $name;
 	private $fields=array();
 	private $dataset;
 	private $rowscount;
-	private $page;
-	private $rowsperpage;
+	private $page=0;
+	private $rowsperpage=50;
 	private $navigationlink;
 	
 	
@@ -23,7 +24,10 @@ class Table extends Object {
 	public function setPage($page){
 		$this->page=$page;
 	}
-	
+	public function setShowNrOrd($showNrOrd){
+		$this->showNrOrd=$showNrOrd;
+	}
+		
 	public function setRowsPerPage($rowsperpage){
 		$this->rowsperpage=$rowsperpage;
 	}
@@ -34,16 +38,28 @@ class Table extends Object {
 		return $this->rowscount;
 	}	
 	public function setSql($sql){
-		$this->sql=$sql;
-		$this->sqlcount="select count(*) as contor from ".$this->after("from", $this->sql);
+		$this->sql=$sql." limit ".$this->page*$this->rowsperpage.",".$this->rowsperpage;
+		if (is_null($this->dataset)){
+			$this->dataset=DBManager::sql($this->sql);
+		}
+		$this->sqlcount="select count(*) as contor from ".$this->after("from", $sql);
+		
+		$cs=DBManager::sql($this->sqlcount);
+		if (is_null($this->rowscount)){
+			
+			$this->rowscount=0;
+			while($row=mysql_fetch_assoc($cs)){
+				$this->rowscount=$row["contor"];
+			}
+		}		
 	}	
 	public function setDataSet($dataset){
 		$this->dataset=$dataset;
+		if (mysql_num_rows($this->dataset)!=0){
+			mysql_data_seek($this->dataset, 0);
+		}
 	}
 	public function getDataSet(){
-		if (is_null($this->dataset)){
-			$this->dataset=$this->getResultSet();
-		}
 		return $this->dataset;
 	}
 	public function setPagination($pagination){
@@ -54,7 +70,9 @@ class Table extends Object {
 		$out.='<table style="width: 100%;border:1px;">';		
 		if (count($this->fields)!=0){
 			$out.='<tr>';
-			$out.='<th>Nr. Ord.</th>';
+			if ($this->showNrOrd){
+				$out.='<th>Nr. Ord.</th>';
+			}
 			foreach($this->fields as $field){
 				$out.='<th>'.$field->title.'</th>';
 			}
@@ -66,7 +84,9 @@ class Table extends Object {
 				$cnt=$this->page*$this->rowsperpage+1;
 				while($row = mysql_fetch_object($this->getDataSet())){
 					$out.='<tr>';
-					$out.='<td style="text-align: center;">'.$cnt.'</td>';
+					if ($this->showNrOrd){
+						$out.='<td style="text-align: center;">'.$cnt.'</td>';
+					}
 					foreach($this->fields as $field){
 						$n=$field->source;
 						$s=$field->style;
@@ -135,8 +155,8 @@ class Table extends Object {
 		return DBManager::sql($this->sql);
 	}
 	public function after ($this1, $inthat){
-		if (!is_bool(strpos($inthat, $this1)))
-			return substr($inthat, strpos($inthat,$this1)+strlen($this1));
+		if (!is_bool(stripos($inthat, $this1)))
+			return substr($inthat, strripos($inthat,$this1)+strlen($this1));
 	}
 }
 ?>

@@ -66,9 +66,6 @@ class PhotosWebPage extends MainWebPage {
 		$title="Imagini ".$raion->getFullNameDescription();
 
 		$this->setTitle($title);
-		//$this->setLogoTitle($title);
-		//$this->setLogoTitle("Fotografii, Imagini din Republica Moldova");
-
 
 		$out=$this->getImagesByRaion($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByRaion($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewraionimages"));
@@ -220,7 +217,8 @@ class PhotosWebPage extends MainWebPage {
 		}
 		
 		$this->setCenterContainer($this->getGroupBoxH2($p->getLongTitle(),$this->getImage($p)));
-		$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
+		//$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
+		$this->setCenterContainer($this->getImageDescription($p));
 		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
 		$this->setRightContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
@@ -233,7 +231,6 @@ class PhotosWebPage extends MainWebPage {
 
 		$p=new Photo();
 		if ($p->loadById($this->id)){
-			//$this->redirect(Config::$imagessite);
 			$p->count();
 		}
 
@@ -244,7 +241,7 @@ class PhotosWebPage extends MainWebPage {
 		}
 		
 		$this->setCenterContainer($this->getGroupBoxH1($p->getLongTitle(),$this->getFullImage($p)));
-		$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
+		$this->setCenterContainer($this->getImageDescription($p));
 		$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));		
 		$this->setCenterContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p,8)));
@@ -352,7 +349,9 @@ class PhotosWebPage extends MainWebPage {
 		$ys=$y->doSql("SELECT year(data) as year, count(*) as cnt FROM photos GROUP BY year(data)");
 		$out="<ul>";
 		foreach($ys as $y){	
-			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewyearimages&id='.$y->year).'">'.$y->year.' ('.$y->cnt.')</a></li>';			
+			if ($y->year!=0){
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewyearimages&id='.$y->year).'">'.$y->year.' ('.$y->cnt.')</a></li>';
+			}
 		}
 		$out.="</ul>";
 		return $out;
@@ -362,7 +361,9 @@ class PhotosWebPage extends MainWebPage {
 		$ys=$y->doSql("SELECT month(data) as month, count(*) as cnt FROM photos GROUP BY month(data)");
 		$out="<ul>";
 		foreach($ys as $y){
-			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewmonthimages&id='.$y->month).'">'.$this->months[$y->month].' ('.$y->cnt.')</a></li>';
+			if ($y->month!=0){
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewmonthimages&id='.$y->month).'">'.$this->months[$y->month].' ('.$y->cnt.')</a></li>';
+			}
 		}
 		$out.="</ul>";
 		return $out;
@@ -463,7 +464,7 @@ class PhotosWebPage extends MainWebPage {
   			}
 
 		  	$o.='<td  style="align:center;padding:10px;vertical-align:top;width:33%">';
-	  		$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.System::getHtmlSpecialChars($p->title).'" class="imageborder"/><p style="font-size:80%;">'.System::getHtmlSpecialChars($p->title).'</p></a></div>';	  		
+	  		$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.System::getHtmlSpecialChars($p->title).'" class="imageborder" style="width: 145px; height: 119px;" /><p style="font-size:80%;">'.System::getHtmlSpecialChars($p->title).'</p></a></div>';	  		
 	  		$o.='</td>';
 	  		
 	  		if ($i==3){
@@ -495,7 +496,12 @@ class PhotosWebPage extends MainWebPage {
 	}
 	function getFullImage($p){
 		$out='<table style="width:100%" ><tr><td style="text-align:center" >';
-  		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
+		//pina la photo id cu nr 5912 nu salvam full image
+  		if ($p->id>5912){
+			$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
+  		} else {
+  			$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
+  		}
 		$prev=$p->getPrevPhotoId();
 		$tmp='';
 		if ($prev!=0){
@@ -573,6 +579,9 @@ class PhotosWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
+	}
+	function getImageDescription($p){
+		return $this->getGroupBoxH3("Descriere:",$p->note,$this->getSystemDetails($p));;
 	}	
 	function getPagesByAll($page,$rowsperpage,$url){
 		$sql="select count(*) as cnt from photos where deleted=0";

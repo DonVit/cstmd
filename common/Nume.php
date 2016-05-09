@@ -30,7 +30,7 @@ inner join localitate on localitate.id=p.localitateid inner join raion on locali
 	}
 	function getTopNamesByLocation($locationid){
 		$sql="select id, name, counter from family inner join (SELECT lastnameid,count(*) as counter FROM person WHERE localitateid=".$locationid." group by lastnameid) as c on family.id=c.lastnameid ORDER BY counter DESC limit 0,50";
-		$ls=$this->doSql($sql);
+		$ls=$this->sql($sql);
 		return $ls;
 	}
 	function getFamiliesNumber(){
