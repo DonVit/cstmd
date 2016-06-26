@@ -170,16 +170,16 @@ class Table extends Object {
 				}
 				$out.='</td></tr></table>';				
 				$out.='</div>';
-			} else {
-				$out.='<div class="groupbox">';
-				$out.='<table style="width:100%" ><tr><td style="text-align:center;border-style:none;" >';
-				if ((($this->page+1)*$this->rowsperpage)>$this->rowscount){
-					$out.=' '.(($this->page*$this->rowsperpage)+1).' - '.$this->rowscount.' din '.$this->rowscount.' ';
-				} else {
-					$out.=' '.(($this->page*$this->rowsperpage)+1).' - '.(($this->page+1)*$this->rowsperpage).' din '.$this->rowscount.' ';
-				}
-				$out.='</td></tr></table>';
-				$out.='</div>';
+// 			} else {
+// 				$out.='<div class="groupbox">';
+// 				$out.='<table style="width:100%" ><tr><td style="text-align:center;border-style:none;" >';
+// 				if ((($this->page+1)*$this->rowsperpage)>$this->rowscount){
+// 					$out.=' '.(($this->page*$this->rowsperpage)+1).' - '.$this->rowscount.' din '.$this->rowscount.' ';
+// 				} else {
+// 					$out.=' '.(($this->page*$this->rowsperpage)+1).' - '.(($this->page+1)*$this->rowsperpage).' din '.$this->rowscount.' ';
+// 				}
+// 				$out.='</td></tr></table>';
+// 				$out.='</div>';
 				
 			}
 		}
