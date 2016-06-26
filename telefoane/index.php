@@ -23,16 +23,10 @@ require_once(__DIR__ . '/../main/loader.php');
 			$this->redirect($this->getUrl(Config::$telefoanesite.'/index.php','action=viewprefixbylocation&id='.$this->id));
 		}
 		$this->setTitle($t);	
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyTypeList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getCompanyList()));
-		//$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRaions($this->raion)));				
 		$this->setCenterContainer($this->getGroupBoxH1($t,$this->getMain()));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setRightContainer($this->getGroupBoxH3("Prefix dupa Localitate:",$this->getSearchPrefixByLocation()));
 		$this->setRightContainer($this->getGroupBoxH3("Localitate dupa Telefon:",$this->getSearchLocationByTelefone()));		
-		$this->setLeftContainer($this->getGroupBoxH3("Prefixe pe Localitati:",$this->getRaions(0)));
-		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
+		$this->setLeftContainer($this->getGroupBoxH3("Prefixe pe Localitati:",$this->getRaions(0)));		
 		$this->show();
 	}
 

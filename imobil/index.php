@@ -101,9 +101,15 @@ class Properties extends MainWebPage {
 		return $out;
 	}
 	function getMain(){
-		$out=$this->getImobilList($this->page,20);
-		$out.=$this->getPages($this->page,20);
-		return $out;
+		//$out=$this->getImobilList($this->page,20);
+		//$out.=$this->getPages($this->page,20);
+		//return $out;
+		$page=0;
+		if (isset($this->page)){
+			$page=$this->page;
+		}
+		$rowsperpage=20;
+		return PropertyView::getPropertiesListView($this,0,0,User::getImobilCurrentScop(),User::getImobilCurrentTipImobil(),User::getImobilCurrentSubTipImobil(),User::getImobilCurrentRaion()->id,User::getImobilCurrentLocation()->id,User::getImobilCurrentSector()->id);
 	}
 	function getMenu(){	
 		$out='';
@@ -181,240 +187,98 @@ class Properties extends MainWebPage {
 		return $out;
 	}
 	function getImobilList($page,$rowsperpage){	
+		return PropertyView::getPropertiesSnapListView($this,0,User::getImobilCurrentScop(),User::getImobilCurrentTipImobil(),User::getImobilCurrentSubTipImobil(),User::getImobilCurrentRaion()->id,User::getImobilCurrentLocation()->id,User::getImobilCurrentSector()->id,$page,$rowsperpage);
+	}
 	
-		$p=new Property();
-		$rs=$p->getImobilByPage(0,User::getImobilCurrentScop(),User::getImobilCurrentTipImobil(),User::getImobilCurrentSubTipImobil(),User::getImobilCurrentRaion()->id,User::getImobilCurrentLocation()->id,User::getImobilCurrentSector()->id,$page,$rowsperpage);
-		$imobil_result_output='<div class="groupboxtable">';
-		$imobil_result_output.='<table style="width:100%;border: 0;cellpadding:0;cellspacing:1;" class="grid">';
-		$imobil_result_output.='<tr>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Link</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Foto</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Harta</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Data Pub.</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Tip Anunt</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Tip Imobil</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Addresa</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Aria</th>';
-		$imobil_result_output.='<th class="gridth" style="align:center;">Pret</th>';
-		$imobil_result_output.='</tr>';
-		$i=0;
-		if(count($rs)!=0){
-			foreach($rs as $row){
-				$i++;
-				$imobil_result_output.= "" .
-				//print_r($row);
-				"<tr class=\"gridtr".($i & 1)."\" onclick=\"ImobilTableRowClick(".$row->id.");\" onmouseover=\"ImobilTableRowMouseOver(this,".($i & 1).");\" onmouseout=\"ImobilTableRowMouseOut(this,".($i & 1).");\">" .
-				"<td class=\"gridtd\" style=\"align:center;\">".$this->getFunctions($row->id)."</td>" .
-				"<td class=\"gridtd\" style=\"align:center;\">".$this->getAlbum($row)."</td>" .
-				"<td class=\"gridtd\" style=\"align:center;\">".$this->getMap($row)."</td>" .
-				"<td class=\"gridtd\" style=\"align:center;\">".date("Y-m-d", strtotime($row->data))."</td>" .
-		  		"<td class=\"gridtd\" style=\"align:left;\">".$row->scop_name."</td>" .
-				"<td class=\"gridtd\" style=\"align:left;\">".$row->tipimobil_name." - ".$row->subtipimobil_name."</td>" .
-				"<td class=\"gridtd\" style=\"align:left;\">".$this->getAdress($row)."</td>" .
-				"<td class=\"gridtd\" style=\"align:center;\">".$this->getAria($row)."</td>" .
-				"<td class=\"gridtd\" style=\"align:center;\">".$this->getPret($row)."</td>";
-			}
-		}
-		$imobil_result_output.="</table>";
-		$imobil_result_output.="</div>";
-		return $imobil_result_output;
-	}
-function getPages($page,$rowsperpage){
-	//global $filter;
-	//Numarul de requesturi la ficare pagina vizualizata poate fi optimizat adaugind countul in session
-	//$imobil= new DBImobil();
-	$p=new Property();
-	//$cnt=$p->getImobilCount();
-	$cnt=$p->getImobilCount(0,User::getImobilCurrentScop(),User::getImobilCurrentTipImobil(),User::getImobilCurrentSubTipImobil(),User::getImobilCurrentRaion()->id,User::getImobilCurrentLocation()->id,User::getImobilCurrentSector()->id);
-	//$cnt=0;	
-	$out='<div class="container groupbox">';;
-	$out.="<table width=\"100%\" cellpadding=\"0\" cellspacing=\"1\" class=\"pages1\">";
-	$out.="<tr>";
-	$out.="<td align=\"left\"><a href=\"add.php\" class=\"link_button\">Adauga Anunt</a></td>";
-	$out.="<td align=\"right\">";
 
-	$url=$this->getBaseName()."?scopid=".User::getImobilCurrentScop()."&tipimobil=".User::getImobilCurrentTipImobil()."&subtipimobil=".User::getImobilCurrentSubTipImobil()."&raionid=".User::getImobilCurrentRaion()->id."&locationid=".User::getImobilCurrentLocation()->id."&sectorid=".User::getImobilCurrentSector()->id;
-	if ($cnt==0){
-		return "";
-	}
-	if ($page!=0){
-		$out.="<a href=/".$url."&page=".($page-1)." class=\"link_button\"><<<</a>";
-	}
-	if ((($page+1)*$rowsperpage)>$cnt){
-		$out.=" ".(($page*$rowsperpage)+1)." - ".$cnt." din ".$cnt." ";
-	} else {
-		$out.=" ".(($page*$rowsperpage)+1)." - ".(($page+1)*$rowsperpage)." din ".$cnt." ";
-	}
-	if ((($page+1)*$rowsperpage)<$cnt){
-		$out.="<a href=/".$url."&page=".($page+1)." class=\"link_button\">>>></a>";
-	}
-	$out.="</td>";
-	$out.="</tr>";  
-	$out.="</table>";
-	$out.="</div>";	
-	return $out;
-}
-function getFunctions($imobilid){
-		return '<a href="'.$this->getUrlWithSpecialCharsConverted('add.php','id='.$imobilid).'"><img src="'.Config::$commonsite.'/img/view.jpg" style="border:0;align:middle" alt="deschide anutul"></a>';
-}
-function getAlbum($row){
-	if (is_numeric($row->image_id)){
-		return '<a href="'.$this->getUrlWithSpecialCharsConverted('add.php','id='.$row->id).'"><img src="'.Config::$commonsite.'/img/photo.gif" style="border:0;align:middle" alt="deschide anutul cu foto"></a>';
-		
-	} else {
-		return '';
-	}
-}
-function getMap($row){
-	if (($row->lat!=0)&&($row->lng!=0)){
-		return '<a href="'.$this->getUrlWithSpecialCharsConverted('add.php','id='.$row->id).'"><img src="'.Config::$commonsite.'/img/map.png" style="border:0;align:middle" alt="deschide anutul cu harta"></a>';
-	} else {
-		return "";
-	}
-}
-function getAdress($row){
-		if ($row->municipiu){
-			$address="m. ".$row->raion_name;
-		} else {
-			$address="r. ".$row->raion_name;
-		}
-		if ($row->localitate_name!=""){
-				$address.=", ".$row->localitate_tip." ".$row->localitate_name;
-		}
-		if ($row->sector_name!=""){
-				$address.=", sect. ".$row->sector_name;
-		}
-		return $address;
-}
-function getTelefon($row){
-		$telefon="";
-		if ($row->contact_phone!=""){
-			$telefon.=$row->contact_phone.", ";
-		}
-		if ($row->contact_mobile!=""){
-			$telefon.=$row->contact_mobile;
-		}
-		return $telefon;
-}
-function getPret($row){
-		$pret="";
-		if ($row->pret!=0){
-			$pret=number_format($row->pret,0,"."," ")." ".$row->valuta_name."/".$row->masura_name;
-		}
-		return $pret;
-}
-function getAria($row){
-		$aria="";
-		if ($row->aria_lot!=0){
-			if ($row->aria_lot!=0){
-				$aria.=number_format($row->aria_lot,1,"."," ")." ".$row->aria_masura_name;	
-			} else {
-				$aria.="";
-			}
-		} else {
-			if ($row->aria_totala!=0){
-				$aria.=number_format($row->aria_totala,1,"."," ")." m2";	
-			} else {
-				$aria.="";
-			}
-		}
-		return $aria;
-}
-function getAriaTotala($row){
-		$ariatotala="";
-		if ($row->aria_totala!=0){
-			$ariatotala.=number_format($row->aria_totala,1,"."," ");
-		}
-		return $ariatotala;
-}
-	function getLocation(){	
-		$lsrs="";
-		if (isset($this->lsearch)){
-			$l=new Location();
-			$r=new Raion();
-			$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".$this->lsearch."%' LIMIT 0,30");
-			if (!is_null($ls)){
-			foreach ($ls as $v){
-				$l->loadById($v->location_id);
-				$r->loadById($l->raion_id);
-				$lsrs.="<a href=".$this->getBaseName()."?raionid=".$r->id."&locationid=".$l->id.">".$r->getFullName()."->".$l->getFullName()."</a><br>";
-			}
-			}else {
-				$lsrs="Localitati *".$this->lsearch."* nu exista!";
-			}
-		}
-		$out='<div id="location" class="container groupbox" style="margin:0px;margin-top:2px;font-size:85%;">';
-		$out.='<form id="locationform" name="locationform" method="post">';
-		$out.='<div id="location-raion">Municipiu/Raion:'.$this->getRaionDropDown(User::getImobilCurrentRaion()->id).'</div>';
-		//if (User::getImobilCurrentRaion()->id!=0){
-			$out.='<div id="location-localitate">Oras/Sat:'.$this->getLocationDropDown(User::getImobilCurrentRaion()->id,User::getImobilCurrentLocation()->id).'</div>';
-		//}
-		//if (User::getImobilCurrentLocation()->id!=0){
-			$out.='<div id="location-sector">Sector:'.$this->getSectorDropDown(User::getImobilCurrentLocation()->id,User::getImobilCurrentSector()->id).'</div>';
-		//}
-		//$out.='<div id="location-search-label">Cauta Localitate:</div>';
-		$out.='<div id="location-search-box">Cauta Localitate:<input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
-		//$out.='<div id="location-search-box"><input type="text" id="lsearch" name="lsearch" value="Cauta Localitate" onblur="if (this.value==\'\') this.value=\'Cauta Localitate\';" onfocus="if (this.value==\'Cauta Localitate\') this.value=\'\';"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
-		//$out.='<div id="location-search">'.$lsrs.'</div>';
-		$out.='<div style="clear: both;"></div>';
-		$out.='</form>';
-		$out.='</div>';
-		return $out;
-	}	
 
-	function getRaionDropDown($raionid){
-		$r=new Raion();
-		$rs=$r->getAll("","`municipiu` desc,`order`,`name`");
-		$out="<select id=\"raionid\" name=\"raionid\" class=\"select\" size=\"1\" onchange=\"javascript:FilterOnRaionChange('".($this->getBaseName())."')\">";
-		$out.="<option value=\"0\">Toate</option>";
-		if (!is_null($rs)){
-			foreach($rs as $rr){
-				$name=($rr->municipiu==1)?"m. ".$rr->name:"r. ".$rr->name;
-				if ($rr->id==$raionid){
-					$out.= "<option value=".$rr->id." selected>".$name."</option>";
-				} else {
-					$out.= "<option value=".$rr->id.">".$name."</option>";
-				}
-			}
-		}
-		$out.="</select>";
-		return $out;
-	}	
-	function getLocationDropDown($raionid,$locationid){
+function getLocation(){	
+	$lsrs="";
+	if (isset($this->lsearch)){
 		$l=new Location();
-		$ls=$l->getAll("raion_id=".$raionid,"`order`,`oras` desc,`name`");
-		$out="<select id=\"locationid\" name=\"locationid\" class=\"select\" size=\"1\" onchange=\"javascript:FilterOnLocationChange('".($this->getBaseName())."')\">";
-		$out.="<option value=\"0\">Toate</option>";
+		$r=new Raion();
+		$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".$this->lsearch."%' LIMIT 0,30");
 		if (!is_null($ls)){
-			foreach($ls as $ll){
-				if ($ll->id==$locationid){
-					$out.= "<option value=".$ll->id." selected>".$ll->tip." ".$ll->name_ro."</option>";
-				} else {
-					$out.= "<option value=".$ll->id.">".$ll->tip." ".$ll->name_ro."</option>";
-				}
+		foreach ($ls as $v){
+			$l->loadById($v->location_id);
+			$r->loadById($l->raion_id);
+			$lsrs.="<a href=".$this->getBaseName()."?raionid=".$r->id."&locationid=".$l->id.">".$r->getFullName()."->".$l->getFullName()."</a><br>";
+		}
+		}else {
+			$lsrs="Localitati *".$this->lsearch."* nu exista!";
+		}
+	}
+	$out='<div id="location" class="container groupbox" style="margin:0px;margin-top:2px;font-size:85%;">';
+	$out.='<form id="locationform" name="locationform" method="post">';
+	$out.='<div id="location-raion">Municipiu/Raion:'.$this->getRaionDropDown(User::getImobilCurrentRaion()->id).'</div>';
+	//if (User::getImobilCurrentRaion()->id!=0){
+		$out.='<div id="location-localitate">Oras/Sat:'.$this->getLocationDropDown(User::getImobilCurrentRaion()->id,User::getImobilCurrentLocation()->id).'</div>';
+	//}
+	//if (User::getImobilCurrentLocation()->id!=0){
+		$out.='<div id="location-sector">Sector:'.$this->getSectorDropDown(User::getImobilCurrentLocation()->id,User::getImobilCurrentSector()->id).'</div>';
+	//}
+	//$out.='<div id="location-search-label">Cauta Localitate:</div>';
+	$out.='<div id="location-search-box">Cauta Localitate:<input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
+	//$out.='<div id="location-search-box"><input type="text" id="lsearch" name="lsearch" value="Cauta Localitate" onblur="if (this.value==\'\') this.value=\'Cauta Localitate\';" onfocus="if (this.value==\'Cauta Localitate\') this.value=\'\';"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
+	//$out.='<div id="location-search">'.$lsrs.'</div>';
+	$out.='<div style="clear: both;"></div>';
+	$out.='</form>';
+	$out.='</div>';
+	return $out;
+}	
+
+function getRaionDropDown($raionid){
+	$r=new Raion();
+	$rs=$r->getAll("","`municipiu` desc,`order`,`name`");
+	$out="<select id=\"raionid\" name=\"raionid\" class=\"select\" size=\"1\" onchange=\"javascript:FilterOnRaionChange('".($this->getBaseName())."')\">";
+	$out.="<option value=\"0\">Toate</option>";
+	if (!is_null($rs)){
+		foreach($rs as $rr){
+			$name=($rr->municipiu==1)?"m. ".$rr->name:"r. ".$rr->name;
+			if ($rr->id==$raionid){
+				$out.= "<option value=".$rr->id." selected>".$name."</option>";
+			} else {
+				$out.= "<option value=".$rr->id.">".$name."</option>";
 			}
 		}
-		$out.="</select>";
-		return $out;
-	}	
-	function getSectorDropDown($locationid,$sectorid){
-		$s=new Sector();
-		$ss=$s->getAll("localitate_id=".$locationid,"`order`,`name`");
-		$out="<select id=\"sectorid\" name=\"sectorid\" class=\"select\" size=\"1\" onchange=\"javascript:FilterOnSectorChange('".($this->getBaseName())."')\">";
-		$out.="<option value=\"0\">Toate</option>";
-		if (!is_null($ss)){
-			foreach($ss as $s){
-				if ($s->id==$sectorid){
-					$out.= "<option value=".$s->id." selected>".$s->name."</option>";
-				} else {
-					$out.= "<option value=".$s->id.">".$s->name."</option>";
-				}
+	}
+	$out.="</select>";
+	return $out;
+}	
+function getLocationDropDown($raionid,$locationid){
+	$l=new Location();
+	$ls=$l->getAll("raion_id=".$raionid,"`order`,`oras` desc,`name`");
+	$out="<select id=\"locationid\" name=\"locationid\" class=\"select\" size=\"1\" onchange=\"javascript:FilterOnLocationChange('".($this->getBaseName())."')\">";
+	$out.="<option value=\"0\">Toate</option>";
+	if (!is_null($ls)){
+		foreach($ls as $ll){
+			if ($ll->id==$locationid){
+				$out.= "<option value=".$ll->id." selected>".$ll->tip." ".$ll->name_ro."</option>";
+			} else {
+				$out.= "<option value=".$ll->id.">".$ll->tip." ".$ll->name_ro."</option>";
 			}
 		}
-		$out.="</select>";
-		return $out;
-	}	
+	}
+	$out.="</select>";
+	return $out;
+}	
+function getSectorDropDown($locationid,$sectorid){
+	$s=new Sector();
+	$ss=$s->getAll("localitate_id=".$locationid,"`order`,`name`");
+	$out="<select id=\"sectorid\" name=\"sectorid\" class=\"select\" size=\"1\" onchange=\"javascript:FilterOnSectorChange('".($this->getBaseName())."')\">";
+	$out.="<option value=\"0\">Toate</option>";
+	if (!is_null($ss)){
+		foreach($ss as $s){
+			if ($s->id==$sectorid){
+				$out.= "<option value=".$s->id." selected>".$s->name."</option>";
+			} else {
+				$out.= "<option value=".$s->id.">".$s->name."</option>";
+			}
+		}
+	}
+	$out.="</select>";
+	return $out;
+}	
 }
 $p=new Properties();
-//phpinfo();
 ?>

@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class Property extends DBManager {
 	//imobil id
 	public $id;
@@ -78,6 +74,85 @@ class Property extends DBManager {
 	}
 	function getTableName(){
 		return "imobil";
+	}
+	public static function getColums(){
+		$columns=
+		"imobil.id, " .
+		"contact_id, " .
+		"tipcontact.id as tipcontact_id, " .
+		"tipcontact.name as tipcontact_name, " .
+		"tipcompanie.id as tipcompanie_id, " .
+		"tipcompanie.name as tipcompanie_name, " .
+		"contact.contactname as contact_name, " .
+		"contact.contacturl as contact_url, " .
+		"contact.phone as contact_phone, " .
+		"contact.mobile as contact_mobile, " .
+		"contact.email as contact_email, " .
+		"contact.notecontact as contact_note, " .
+		"imobil.scop_id, " .
+		"scop.name as scop_name, " .
+		"scop.menu_name as scop_menu_name, " .
+		"scop.note as scop_note, " .
+		"imobil.tipimobil_id, " .
+		"tipimobil.name as tipimobil_name, " .
+		"subtipimobil_id, " .
+		"subtipimobil.name as subtipimobil_name, " .
+		"tipconstructie_id, " .
+		"tipconstructie.name as tipconstructie_name, " .
+		"aria_totala , " .
+		"aria_locuibila , " .
+		"aria_lot, ".
+		"aria_masura_id, ".
+		"ariamasura.name as aria_masura_name, ".
+		"etaj, " .
+		"totaletaje, " .
+		"balcoane ,".
+		"an ,".
+		"model_id ," .
+		"model.name as model_name, ".
+		"stare_id ," .
+		"stare.name as stare_name, ".
+		"pret ,".
+		"valuta_id ," .
+		"valuta.name as valuta_name, ".
+		"masura_id ," .
+		"masura.name as masura_name, ".
+		"negociabil ,".
+		"electricitate ,".
+		"apeduct ,".
+		"canalizare ,".
+		"garaj ,".
+		"subsol ,".
+		"incalzire ,".
+		"telefon ,".
+		"gaz, ".
+		"bonitate, ".
+		"imobil.raion_id ," .
+		"raion.name as raion_name, ".
+		"raion.municipiu as municipiu, ".
+		"imobil.localitate_id ," .
+		"localitate.tip as localitate_tip, ".
+		"localitate.name_ro as localitate_name, ".
+		"sector_id ," .
+		"sector.name as sector_name, ".
+		"strada ,".
+		"casa_nr ,".
+		"scara_nr ,".
+		"apartament_nr ," .
+		"noteadresa, ".
+		"centerlat ,".
+		"centerlng ,".
+		"imobil.zoom ,".
+		"maptype ,".
+		"imobil.lat ,".
+		"imobil.lng ,".
+		"imobil.note ,".
+		"imobil.data ,".
+		"image.id as image_id, ".
+		"image.imagepath as image_filepath ";
+		
+		return $columns;
+		
 	}
 	function getContact(){
 		if (!isset($this->contact)){
@@ -516,403 +591,10 @@ class Property extends DBManager {
 		}
 		return $this->previous;
 	}			
-	function getImobilCount1(){
-		$sql="select count(*) as cnt from imobil where imobil.status = 0";
-		$rs=DBManager::doSql($sql);
-		$cnt=0;
-		foreach($rs as $r){
-			$cnt=$r->cnt;
-		}
-		return $cnt;
-	}
-  function getByPage($userid,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid,$page,$rowsperpage){
+	public static function getPropertiesByPageSql($userid,$imobilsauchirie,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid,$aroundlocalitateid=0){
 
-       $sql="select " .
-			"imobil.id, " .
-			"contact_id, " .
-			"tipcontact.id as tipcontact_id, " .
-			"tipcontact.name as tipcontact_name, " .
-			"tipcompanie.id as tipcompanie_id, " .
-			"tipcompanie.name as tipcompanie_name, " .
-			"contact.name as contact_name, " .
-			"contact.url as contact_url, " .
-			"contact.phone as contact_phone, " .
-			"contact.mobile as contact_mobile, " .
-			"contact.email as contact_email, " .
-			"contact.note as contact_note, " .
-			"imobil.scop_id, " .
-			"scop.name as scop_name, " .
-			"scop.menu_name as scop_menu_name, " .
-			"scop.note as scop_note, " .
-			"imobil.tipimobil_id, " .
-			"tipimobil.name as tipimobil_name, " .
-			"subtipimobil_id, " .
-			"subtipimobil.name as subtipimobil_name, " .
-			"tipconstructie_id, " .
-			"tipconstructie.name as tipconstructie_name, " .
-			"aria_totala , " .
-			"aria_locuibila , " .
-			"aria_lot, ".
-			"aria_masura_id, ".
-			"ariamasura.name as aria_masura_name, ".
-			"etaj, " .
-			"totaletaje, " .
-			"balcoane ,".
-			"an ,".
-			"model_id ," .
-			"model.name as model_name, ".
-			"stare_id ," .
-			"stare.name as stare_name, ".
-			"pret ,".
-			"valuta_id ," .
-			"valuta.name as valuta_name, ".
-			"masura_id ," .
-			"masura.name as masura_name, ".
-			"negociabil ,".
-			"electricitate ,".
-			"apeduct ,".
-			"canalizare ,".
-			"garaj ,".
-			"subsol ,".
-			"incalzire ,".
-			"telefon ,".
-			"gaz, ".
-			"bonitate, ".
-			"imobil.raion_id ," .
-			"raion.name as raion_name, ".
-			"raion.municipiu as municipiu, ".
-			"imobil.localitate_id ," .
-			"localitate.tip as localitate_tip, ".
-			"localitate.name as localitate_name, ".
-			"sector_id ," .
-			"sector.name as sector_name, ".						
-			"strada ,".
-			"casa_nr ,".
-			"scara_nr ,".
-			"apartament_nr ," .
-			"noteadresa, ".
-			"centerlat ,".
-			"centerlng ,".
-			"imobil.zoom ,".
-			"maptype ,".
-			"imobil.lat ,".
-			"imobil.lng ,".
-			"imobil.note ,".
-			"imobil.data ,".
-			"image.id as image_id ".
-			"from imobil " .
-			"join contact on imobil.contact_id=contact.id " .
-			"join tipcontact on contact.tipcontact_id=tipcontact.id " .
-			"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
-			"join scop on imobil.scop_id=scop.id " .
-			"join tipimobil on imobil.tipimobil_id=tipimobil.id " .
-			"left join subtipimobil on imobil.subtipimobil_id=subtipimobil.id " .
-			"left join tipconstructie on imobil.tipconstructie_id=tipconstructie.id " .
-			"left join model on imobil.model_id=model.id " .
-			"left join stare on imobil.stare_id=stare.id " .
-			"left join valuta on imobil.valuta_id = valuta.id " .
-			"left join masura on imobil.masura_id = masura.id " .
-			"left join ariamasura on imobil.aria_masura_id = ariamasura.id " .
-			"join raion on imobil.raion_id = raion.id " .
-			"left join localitate on imobil.localitate_id = localitate.id " .
-			"left join sector on imobil.sector_id = sector.id " .
-			"left join image on imobil.id = image.imobil_id and main=1 " .
-			"where imobil.status = 0";
-			if ($userid!=0){
-				$sql.=" and imobil.user_id=$userid";
-			}
-			if ($scopid!=0){
-				$sql.=" and imobil.scop_id=$scopid";
-			}
-			if ($tipimobilid!=0){
-				$sql.=" and imobil.tipimobil_id=$tipimobilid";
-			}
-			if ($subtipimobilid!=0){
-				$sql.=" and imobil.subtipimobil_id=$subtipimobilid";
-			}
-			if ($raionid!=0){
-				$sql.=" and imobil.raion_id=$raionid";
-			}
-			if ($localitateid!=0){
-				$sql.=" and imobil.localitate_id=$localitateid";
-			}
-			if ($sectorid!=0){
-				$sql.=" and imobil.sector_id=$sectorid";
-			}
-			$sql.=" order by imobil.id desc";
-			$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
-			
-		$rs=DBManager::doSql($sql);
-		return $rs;
-   }
-  /*
-   * $type values: 
-   * 0 - include si imobil si chirii
-   * 1 - include imobil
-   * 2 - include chirii 
-   */
-
-  function getProperties($userid=0,$type=0,$scopid=0,$tipimobilid=0,$subtipimobilid=0,$raionid=0,$localitateid=0,$sectorid=0,$page=0,$rowsperpage=10){
-
-       $sql="select " .
-		"imobil.id, " .
-		"contact_id, " .
-		"tipcontact.id as tipcontact_id, " .
-		"tipcontact.name as tipcontact_name, " .
-		"tipcompanie.id as tipcompanie_id, " .
-		"tipcompanie.name as tipcompanie_name, " .
-		"contact.contactname as contact_name, " .
-		"contact.contacturl as contact_url, " .
-		"contact.phone as contact_phone, " .
-		"contact.mobile as contact_mobile, " .
-		"contact.email as contact_email, " .
-		"contact.notecontact as contact_note, " .
-		"imobil.scop_id, " .
-		"scop.name as scop_name, " .
-		"scop.menu_name as scop_menu_name, " .
-		"scop.note as scop_note, " .
-		"imobil.tipimobil_id, " .
-		"tipimobil.name as tipimobil_name, " .
-		"subtipimobil_id, " .
-		"subtipimobil.name as subtipimobil_name, " .
-		"tipconstructie_id, " .
-		"tipconstructie.name as tipconstructie_name, " .
-		"aria_totala , " .
-		"aria_locuibila , " .
-		"aria_lot, ".
-		"aria_masura_id, ".
-		"ariamasura.name as aria_masura_name, ".
-		"etaj, " .
-		"totaletaje, " .
-		"balcoane ,".
-		"an ,".
-		"model_id ," .
-		"model.name as model_name, ".
-		"stare_id ," .
-		"stare.name as stare_name, ".
-		"pret ,".
-		"valuta_id ," .
-		"valuta.name as valuta_name, ".
-		"masura_id ," .
-		"masura.name as masura_name, ".
-		"negociabil ,".
-		"electricitate ,".
-		"apeduct ,".
-		"canalizare ,".
-		"garaj ,".
-		"subsol ,".
-		"incalzire ,".
-		"telefon ,".
-		"gaz, ".
-		"bonitate, ".
-		"imobil.raion_id ," .
-		"raion.name as raion_name, ".
-		"raion.municipiu as municipiu, ".
-		"imobil.localitate_id ," .
-		"localitate.tip as localitate_tip, ".
-		"localitate.name as localitate_name, ".
-		"sector_id ," .
-		"sector.name as sector_name, ".						
-		"strada ,".
-		"casa_nr ,".
-		"scara_nr ,".
-		"apartament_nr ," .
-		"noteadresa, ".
-		"centerlat ,".
-		"centerlng ,".
-		"imobil.zoom ,".
-		"maptype ,".
-		"imobil.lat ,".
-		"imobil.lng ,".
-		"imobil.note ,".
-		"imobil.data ,".
-		"image.id as image_id, ".
-		"image.imagepath as image_filepath ".		
-		"from imobil " .
-		"join contact on imobil.contact_id=contact.id " .
-		"join tipcontact on contact.tipcontact_id=tipcontact.id " .
-		"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
-		"join scop on imobil.scop_id=scop.id " .
-		"join tipimobil on imobil.tipimobil_id=tipimobil.id " .
-		"left join subtipimobil on imobil.subtipimobil_id=subtipimobil.id " .
-		"left join tipconstructie on imobil.tipconstructie_id=tipconstructie.id " .
-		"left join model on imobil.model_id=model.id " .
-		"left join stare on imobil.stare_id=stare.id " .
-		"left join valuta on imobil.valuta_id = valuta.id " .
-		"left join masura on imobil.masura_id = masura.id " .
-		"left join ariamasura on imobil.aria_masura_id = ariamasura.id " .
-		"join raion on imobil.raion_id = raion.id " .
-		"left join localitate on imobil.localitate_id = localitate.id " .
-		"left join sector on imobil.sector_id = sector.id " .
-		"left join image on imobil.id = image.reftypeid and imagemain=1 " .
-		"where imobil.status = 0 and imobil.deleted=0";
-		if ($type==1){
-			$sql.=" and imobil.scop_id in (1,3)";
-		}
-		if ($type==2){
-			$sql.=" and imobil.scop_id in (2,4)";
-		}
-		if ($userid!=0){
-			$sql.=" and imobil.user_id=$userid";
-		}
-		if ($scopid!=0){
-			$sql.=" and imobil.scop_id=$scopid";
-		}
-		if ($tipimobilid!=0){
-			$sql.=" and imobil.tipimobil_id=$tipimobilid";
-		}
-		if ($subtipimobilid!=0){
-			$sql.=" and imobil.subtipimobil_id=$subtipimobilid";
-		}
-		if ($raionid!=0){
-			$sql.=" and imobil.raion_id=$raionid";
-		}
-		if ($localitateid!=0){
-			$sql.=" and imobil.localitate_id=$localitateid";
-		}
-		if ($sectorid!=0){
-			$sql.=" and imobil.sector_id=$sectorid";
-		}
-		$sql.=" order by imobil.id desc";
-		$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
-			
-		$rs=DBManager::doSql($sql);
-		return $rs;
-   }   
-  function getPropertiesByPage($userid,$imobilsauchirie,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid,$page,$rowsperpage){
-
-       $sql="select " .
-		"imobil.id, " .
-		"contact_id, " .
-		"tipcontact.id as tipcontact_id, " .
-		"tipcontact.name as tipcontact_name, " .
-		"tipcompanie.id as tipcompanie_id, " .
-		"tipcompanie.name as tipcompanie_name, " .
-		"contact.contactname as contact_name, " .
-		"contact.contacturl as contact_url, " .
-		"contact.phone as contact_phone, " .
-		"contact.mobile as contact_mobile, " .
-		"contact.email as contact_email, " .
-		"contact.notecontact as contact_note, " .
-		"imobil.scop_id, " .
-		"scop.name as scop_name, " .
-		"scop.menu_name as scop_menu_name, " .
-		"scop.note as scop_note, " .
-		"imobil.tipimobil_id, " .
-		"tipimobil.name as tipimobil_name, " .
-		"subtipimobil_id, " .
-		"subtipimobil.name as subtipimobil_name, " .
-		"tipconstructie_id, " .
-		"tipconstructie.name as tipconstructie_name, " .
-		"aria_totala , " .
-		"aria_locuibila , " .
-		"aria_lot, ".
-		"aria_masura_id, ".
-		"ariamasura.name as aria_masura_name, ".
-		"etaj, " .
-		"totaletaje, " .
-		"balcoane ,".
-		"an ,".
-		"model_id ," .
-		"model.name as model_name, ".
-		"stare_id ," .
-		"stare.name as stare_name, ".
-		"pret ,".
-		"valuta_id ," .
-		"valuta.name as valuta_name, ".
-		"masura_id ," .
-		"masura.name as masura_name, ".
-		"negociabil ,".
-		"electricitate ,".
-		"apeduct ,".
-		"canalizare ,".
-		"garaj ,".
-		"subsol ,".
-		"incalzire ,".
-		"telefon ,".
-		"gaz, ".
-		"bonitate, ".
-		"imobil.raion_id ," .
-		"raion.name as raion_name, ".
-		"raion.municipiu as municipiu, ".
-		"imobil.localitate_id ," .
-		"localitate.tip as localitate_tip, ".
-		"localitate.name_ro as localitate_name, ".
-		"sector_id ," .
-		"sector.name as sector_name, ".						
-		"strada ,".
-		"casa_nr ,".
-		"scara_nr ,".
-		"apartament_nr ," .
-		"noteadresa, ".
-		"centerlat ,".
-		"centerlng ,".
-		"imobil.zoom ,".
-		"maptype ,".
-		"imobil.lat ,".
-		"imobil.lng ,".
-		"imobil.note ,".
-		"imobil.data ,".
-		"image.id as image_id, ".
-		"image.imagepath as image_filepath ".		
-		"from imobil " .
-		"join contact on imobil.contact_id=contact.id " .
-		"join tipcontact on contact.tipcontact_id=tipcontact.id " .
-		"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
-		"join scop on imobil.scop_id=scop.id " .
-		"join tipimobil on imobil.tipimobil_id=tipimobil.id " .
-		"left join subtipimobil on imobil.subtipimobil_id=subtipimobil.id " .
-		"left join tipconstructie on imobil.tipconstructie_id=tipconstructie.id " .
-		"left join model on imobil.model_id=model.id " .
-		"left join stare on imobil.stare_id=stare.id " .
-		"left join valuta on imobil.valuta_id = valuta.id " .
-		"left join masura on imobil.masura_id = masura.id " .
-		"left join ariamasura on imobil.aria_masura_id = ariamasura.id " .
-		"join raion on imobil.raion_id = raion.id " .
-		"left join localitate on imobil.localitate_id = localitate.id " .
-		"left join sector on imobil.sector_id = sector.id " .
-		"left join image on imobil.id = image.reftypeid and imagemain=1 " .
-		"where imobil.status = 0 and imobil.deleted=0";
-		if ($userid!=0){
-			$sql.=" and imobil.user_id=$userid";
-		}
-		if ($imobilsauchirie==0) {
-			$sql.=" and imobil.scop_id in (1,3)"; //imobil
-		} else {
-			$sql.=" and imobil.scop_id in (2,4)"; //chirie
-		}
-		if ($scopid!=0){
-			$sql.=" and imobil.scop_id=$scopid";
-		}
-		if ($tipimobilid!=0){
-			$sql.=" and imobil.tipimobil_id=$tipimobilid";
-		}
-		if ($subtipimobilid!=0){
-			$sql.=" and imobil.subtipimobil_id=$subtipimobilid";
-		}
-		if ($raionid!=0){
-			$sql.=" and imobil.raion_id=$raionid";
-		}
-		if ($localitateid!=0){
-			$sql.=" and (imobil.localitate_id=$localitateid";
-			$l=new Location();
-			$l->loadById($localitateid);
-			$sql.=" or (6371*acos(cos(radians($l->lat))*cos(radians(imobil.lat))*cos(radians(imobil.lng)-radians($l->lng))+sin(radians($l->lat))*sin(radians(imobil.lat))))<=10)";
-			
-		}
-		if ($sectorid!=0){
-			$sql.=" and imobil.sector_id=$sectorid";
-		}
-		$sql.=" order by imobil.data desc";
-		$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
-			
-		$rs=DBManager::doSql($sql);
-		return $rs;
-   }
-   function getPropertiesByCount($userid,$imobilsauchirie,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid){
-   
-   	$sql="select count(*) as cnt " .
-   			"from imobil " .
+   	$sql="select " . Property::getColums().
+   			" from imobil " .
    			"join contact on imobil.contact_id=contact.id " .
    			"join tipcontact on contact.tipcontact_id=tipcontact.id " .
    			"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
@@ -951,314 +633,21 @@ class Property extends DBManager {
    		$sql.=" and imobil.raion_id=$raionid";
    	}
    	if ($localitateid!=0){
-   		$sql.=" and imobil.localitate_id=$localitateid";
-   	}
-   	if ($sectorid!=0){
-   		$sql.=" and imobil.sector_id=$sectorid";
-   	}
-   	//$sql.=" order by imobil.data desc";
-   	//$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
-   		
-   	$rs=DBManager::doSql($sql);
-   	$cnt=0;
-	foreach($rs as $r){
-		$cnt=$r->cnt;
-	}
-	return $cnt;	
-   }  
-   function getImobilByPage($userid,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid,$page,$rowsperpage){
-   
-   	$sql="select " .
-   			"imobil.id, " .
-   			"contact_id, " .
-   			"tipcontact.id as tipcontact_id, " .
-   			"tipcontact.name as tipcontact_name, " .
-   			"tipcompanie.id as tipcompanie_id, " .
-   			"tipcompanie.name as tipcompanie_name, " .
-   			"contact.contactname as contact_name, " .
-   			"contact.contacturl as contact_url, " .
-   			"contact.phone as contact_phone, " .
-   			"contact.mobile as contact_mobile, " .
-   			"contact.email as contact_email, " .
-   			"contact.notecontact as contact_note, " .
-   			"imobil.scop_id, " .
-   			"scop.name as scop_name, " .
-   			"scop.menu_name as scop_menu_name, " .
-   			"scop.note as scop_note, " .
-   			"imobil.tipimobil_id, " .
-   			"tipimobil.name as tipimobil_name, " .
-   			"subtipimobil_id, " .
-   			"subtipimobil.name as subtipimobil_name, " .
-   			"tipconstructie_id, " .
-   			"tipconstructie.name as tipconstructie_name, " .
-   			"aria_totala , " .
-   			"aria_locuibila , " .
-   			"aria_lot, ".
-   			"aria_masura_id, ".
-   			"ariamasura.name as aria_masura_name, ".
-   			"etaj, " .
-   			"totaletaje, " .
-   			"balcoane ,".
-   			"an ,".
-   			"model_id ," .
-   			"model.name as model_name, ".
-   			"stare_id ," .
-   			"stare.name as stare_name, ".
-   			"pret ,".
-   			"valuta_id ," .
-   			"valuta.name as valuta_name, ".
-   			"masura_id ," .
-   			"masura.name as masura_name, ".
-   			"negociabil ,".
-   			"electricitate ,".
-   			"apeduct ,".
-   			"canalizare ,".
-   			"garaj ,".
-   			"subsol ,".
-   			"incalzire ,".
-   			"telefon ,".
-   			"gaz, ".
-   			"bonitate, ".
-   			"imobil.raion_id ," .
-   			"raion.name as raion_name, ".
-   			"raion.municipiu as municipiu, ".
-   			"imobil.localitate_id ," .
-   			"localitate.tip as localitate_tip, ".
-   			"localitate.name_ro as localitate_name, ".
-   			"sector_id ," .
-   			"sector.name as sector_name, ".
-   			"strada ,".
-   			"casa_nr ,".
-   			"scara_nr ,".
-   			"apartament_nr ," .
-   			"noteadresa, ".
-   			"centerlat ,".
-   			"centerlng ,".
-   			"imobil.zoom ,".
-   			"maptype ,".
-   			"imobil.lat ,".
-   			"imobil.lng ,".
-   			"imobil.note ,".
-   			"imobil.data ,".
-   			"image.id as image_id, ".
-   			"image.imagepath as image_filepath ".
-   			"from imobil " .
-   			"join contact on imobil.contact_id=contact.id " .
-   			"join tipcontact on contact.tipcontact_id=tipcontact.id " .
-   			"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
-   			"join scop on imobil.scop_id=scop.id " .
-   			"join tipimobil on imobil.tipimobil_id=tipimobil.id " .
-   			"left join subtipimobil on imobil.subtipimobil_id=subtipimobil.id " .
-   			"left join tipconstructie on imobil.tipconstructie_id=tipconstructie.id " .
-   			"left join model on imobil.model_id=model.id " .
-   			"left join stare on imobil.stare_id=stare.id " .
-   			"left join valuta on imobil.valuta_id = valuta.id " .
-   			"left join masura on imobil.masura_id = masura.id " .
-   			"left join ariamasura on imobil.aria_masura_id = ariamasura.id " .
-   			"join raion on imobil.raion_id = raion.id " .
-   			"left join localitate on imobil.localitate_id = localitate.id " .
-   			"left join sector on imobil.sector_id = sector.id " .
-   			"left join image on imobil.id = image.reftypeid and imagemain=1 " .
-   			"where imobil.status = 0 and imobil.deleted=0 and imobil.scop_id in (1,3)";
-   	if ($userid!=0){
-   		$sql.=" and imobil.user_id=$userid";
-   	}
-   	if ($scopid!=0){
-   		$sql.=" and imobil.scop_id=$scopid";
-   	}
-   	if ($tipimobilid!=0){
-   		$sql.=" and imobil.tipimobil_id=$tipimobilid";
-   	}
-   	if ($subtipimobilid!=0){
-   		$sql.=" and imobil.subtipimobil_id=$subtipimobilid";
-   	}
-   	if ($raionid!=0){
-   		$sql.=" and imobil.raion_id=$raionid";
-   	}
-   	if ($localitateid!=0){
-   		$sql.=" and imobil.localitate_id=$localitateid";
+		if($aroundlocalitateid!=0){
+   			$sql.=" and (imobil.localitate_id=$localitateid";
+   			$l=new Location();
+   			$l->loadById($localitateid);
+   			$sql.=" or (6371*acos(cos(radians($l->lat))*cos(radians(imobil.lat))*cos(radians(imobil.lng)-radians($l->lng))+sin(radians($l->lat))*sin(radians(imobil.lat))))<=10)";
+		} else {
+			$sql.=" and imobil.localitate_id=$localitateid";
+		}   			
    	}
    	if ($sectorid!=0){
    		$sql.=" and imobil.sector_id=$sectorid";
    	}
    	$sql.=" order by imobil.data desc";
-   	$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
-   		
-   	$rs=DBManager::doSql($sql);
-   	return $rs;
-   }
-    
-  function getChirieByPage($userid,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid,$page,$rowsperpage){
-
-       $sql="select " .
-		"imobil.id, " .
-		"contact_id, " .
-		"tipcontact.id as tipcontact_id, " .
-		"tipcontact.name as tipcontact_name, " .
-		"tipcompanie.id as tipcompanie_id, " .
-		"tipcompanie.name as tipcompanie_name, " .
-		"contact.contactname as contact_name, " .
-		"contact.contacturl as contact_url, " .
-		"contact.phone as contact_phone, " .
-		"contact.mobile as contact_mobile, " .
-		"contact.email as contact_email, " .
-		"contact.notecontact as contact_note, " .
-		"imobil.scop_id, " .
-		"scop.name as scop_name, " .
-		"scop.menu_name as scop_menu_name, " .
-		"scop.note as scop_note, " .
-		"imobil.tipimobil_id, " .
-		"tipimobil.name as tipimobil_name, " .
-		"subtipimobil_id, " .
-		"subtipimobil.name as subtipimobil_name, " .
-		"tipconstructie_id, " .
-		"tipconstructie.name as tipconstructie_name, " .
-		"aria_totala , " .
-		"aria_locuibila , " .
-		"aria_lot, ".
-		"aria_masura_id, ".
-		"ariamasura.name as aria_masura_name, ".
-		"etaj, " .
-		"totaletaje, " .
-		"balcoane ,".
-		"an ,".
-		"model_id ," .
-		"model.name as model_name, ".
-		"stare_id ," .
-		"stare.name as stare_name, ".
-		"pret ,".
-		"valuta_id ," .
-		"valuta.name as valuta_name, ".
-		"masura_id ," .
-		"masura.name as masura_name, ".
-		"negociabil ,".
-		"electricitate ,".
-		"apeduct ,".
-		"canalizare ,".
-		"garaj ,".
-		"subsol ,".
-		"incalzire ,".
-		"telefon ,".
-		"gaz, ".
-		"bonitate, ".
-		"imobil.raion_id ," .
-		"raion.name as raion_name, ".
-		"raion.municipiu as municipiu, ".
-		"imobil.localitate_id ," .
-		"localitate.tip as localitate_tip, ".
-		"localitate.name_ro as localitate_name, ".
-		"sector_id ," .
-		"sector.name as sector_name, ".						
-		"strada ,".
-		"casa_nr ,".
-		"scara_nr ,".
-		"apartament_nr ," .
-		"noteadresa, ".
-		"centerlat ,".
-		"centerlng ,".
-		"imobil.zoom ,".
-		"maptype ,".
-		"imobil.lat ,".
-		"imobil.lng ,".
-		"imobil.note ,".
-		"imobil.data ,".
-		"image.id as image_id ".
-		"from imobil " .
-		"join contact on imobil.contact_id=contact.id " .
-		"join tipcontact on contact.tipcontact_id=tipcontact.id " .
-		"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
-		"join scop on imobil.scop_id=scop.id " .
-		"join tipimobil on imobil.tipimobil_id=tipimobil.id " .
-		"left join subtipimobil on imobil.subtipimobil_id=subtipimobil.id " .
-		"left join tipconstructie on imobil.tipconstructie_id=tipconstructie.id " .
-		"left join model on imobil.model_id=model.id " .
-		"left join stare on imobil.stare_id=stare.id " .
-		"left join valuta on imobil.valuta_id = valuta.id " .
-		"left join masura on imobil.masura_id = masura.id " .
-		"left join ariamasura on imobil.aria_masura_id = ariamasura.id " .
-		"join raion on imobil.raion_id = raion.id " .
-		"left join localitate on imobil.localitate_id = localitate.id " .
-		"left join sector on imobil.sector_id = sector.id " .
-		"left join image on imobil.id = image.reftypeid and imagemain=1 " .
-		"where imobil.status = 0 and imobil.deleted=0 and imobil.scop_id in (2,4)";
-		if ($userid!=0){
-			$sql.=" and imobil.user_id=$userid";
-		}
-		if ($scopid!=0){
-			$sql.=" and imobil.scop_id=$scopid";
-		}
-		if ($tipimobilid!=0){
-			$sql.=" and imobil.tipimobil_id=$tipimobilid";
-		}
-		if ($subtipimobilid!=0){
-			$sql.=" and imobil.subtipimobil_id=$subtipimobilid";
-		}
-		if ($raionid!=0){
-			$sql.=" and imobil.raion_id=$raionid";
-		}
-		if ($localitateid!=0){
-			$sql.=" and imobil.localitate_id=$localitateid";
-		}
-		if ($sectorid!=0){
-			$sql.=" and imobil.sector_id=$sectorid";
-		}
-		$sql.=" order by imobil.data desc";
-		$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
-			
-		$rs=DBManager::doSql($sql);
-		return $rs;
-   }		   		
-  function getByPageCount($userid,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid){
-       $sql="select count(*) as cnt " .
-			"from imobil " .
-			"join contact on imobil.contact_id=contact.id " .
-			"join tipcontact on contact.tipcontact_id=tipcontact.id " .
-			"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
-			"join scop on imobil.scop_id=scop.id " .
-			"join tipimobil on imobil.tipimobil_id=tipimobil.id " .
-			"left join subtipimobil on imobil.subtipimobil_id=subtipimobil.id " .
-			"left join tipconstructie on imobil.tipconstructie_id=tipconstructie.id " .
-			"left join model on imobil.model_id=model.id " .
-			"left join stare on imobil.stare_id=stare.id " .
-			"left join valuta on imobil.valuta_id = valuta.id " .
-			"left join masura on imobil.masura_id = masura.id " .
-			"left join ariamasura on imobil.aria_masura_id = ariamasura.id " .
-			"join raion on imobil.raion_id = raion.id " .
-			"left join localitate on imobil.localitate_id = localitate.id " .
-			"left join sector on imobil.sector_id = sector.id " .
-			"left join image on imobil.id = image.reftypeid and imagemain=1 " .
-			"where imobil.status = 0";
-			if ($userid!=0){
-				$sql.=" and imobil.user_id=$userid";
-			}
-			if ($scopid!=0){
-				$sql.=" and imobil.scop_id=$scopid";
-			}
-			if ($tipimobilid!=0){
-				$sql.=" and imobil.tipimobil_id=$tipimobilid";
-			}
-			if ($subtipimobilid!=0){
-				$sql.=" and imobil.subtipimobil_id=$subtipimobilid";
-			}
-			if ($raionid!=0){
-				$sql.=" and imobil.raion_id=$raionid";
-			}
-			if ($localitateid!=0){
-				$sql.=" and imobil.localitate_id=$localitateid";
-			}
-			if ($sectorid!=0){
-				$sql.=" and imobil.sector_id=$sectorid";
-			}
-			//$sql.=" order by imobil.id desc";
-			//$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
-			
-		$rs=DBManager::doSql($sql);
-		$cnt=0;
-		foreach($rs as $r){
-			$cnt=$r->cnt;
-		}
-		return $cnt;
-   }
+   	return $sql;
+   }   
   public function get3ImobilWithImages(){
   	$sql="select imobil.* from imobil inner join image on imobil.id=image.reftypeid and image.reftype='i' and image.imagemain=1 where imobil.deleted=0 and scop_id in (1,3) order by imobil.id desc limit 0,3";
   	return $this->getResult($this->sql($sql));
@@ -1316,55 +705,6 @@ class Property extends DBManager {
 		}
 		return $cnt;
    }	
-  public static function getChirieCount($userid,$scopid,$tipimobilid,$subtipimobilid,$raionid,$localitateid,$sectorid){
-       $sql="select count(*) as cnt " .
-			"from imobil " .
-			"join contact on imobil.contact_id=contact.id " .
-			"join tipcontact on contact.tipcontact_id=tipcontact.id " .
-			"left join tipcompanie on contact.tipcompanie_id=tipcompanie.id " .
-			"join scop on imobil.scop_id=scop.id " .
-			"join tipimobil on imobil.tipimobil_id=tipimobil.id " .
-			"left join subtipimobil on imobil.subtipimobil_id=subtipimobil.id " .
-			"left join tipconstructie on imobil.tipconstructie_id=tipconstructie.id " .
-			"left join model on imobil.model_id=model.id " .
-			"left join stare on imobil.stare_id=stare.id " .
-			"left join valuta on imobil.valuta_id = valuta.id " .
-			"left join masura on imobil.masura_id = masura.id " .
-			"left join ariamasura on imobil.aria_masura_id = ariamasura.id " .
-			"join raion on imobil.raion_id = raion.id " .
-			"left join localitate on imobil.localitate_id = localitate.id " .
-			"left join sector on imobil.sector_id = sector.id " .
-			"left join image on imobil.id = image.reftypeid and image.reftype='i' and imagemain=1 " .
-			"where imobil.status = 0 and imobil.scop_id in (2,4)";
-			if ($userid!=0){
-				$sql.=" and imobil.user_id=$userid";
-			}
-			if ($scopid!=0){
-				$sql.=" and imobil.scop_id=$scopid";
-			}
-			if ($tipimobilid!=0){
-				$sql.=" and imobil.tipimobil_id=$tipimobilid";
-			}
-			if ($subtipimobilid!=0){
-				$sql.=" and imobil.subtipimobil_id=$subtipimobilid";
-			}
-			if ($raionid!=0){
-				$sql.=" and imobil.raion_id=$raionid";
-			}
-			if ($localitateid!=0){
-				$sql.=" and imobil.localitate_id=$localitateid";
-			}
-			if ($sectorid!=0){
-				$sql.=" and imobil.sector_id=$sectorid";
-			}
-
-		$rs=DBManager::doSql($sql);
-		$cnt=0;
-		foreach($rs as $r){
-			$cnt=$r->cnt;
-		}
-		return $cnt;
-	}
 	function getYouTubeId(){
 		return $this->getQueryParamFromUrl("v",$this->youtubeurl);
 	}		

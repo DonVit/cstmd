@@ -11,15 +11,30 @@ class Table extends Object {
 	private $page=0;
 	private $rowsperpage=50;
 	private $navigationlink;
+	private $currentPage;
+	private $footer=false;
+	private $footerlink;
 	
 	
 	public function __construct(){
+	}
+	public function setCurrentPage($currentPage){
+		$this->currentPage=$currentPage;
+		if(isset($currentPage->page)){
+			$this->setPage($currentPage->page);
+		}
+	}	
+	public function getCurrentPage(){
+		return $this->currentPage;
 	}
 	public function addField($field){
 		array_push($this->fields,$field);
 	}
 	public function setNavigationLink($navigationlink){
 		$this->navigationlink=$navigationlink;
+	}
+	public function setFooterLink($footerlink){
+		$this->footerlink=$footerlink;
 	}	
 	public function setPage($page){
 		$this->page=$page;
@@ -42,7 +57,7 @@ class Table extends Object {
 		if (is_null($this->dataset)){
 			$this->dataset=DBManager::sql($this->sql);
 		}
-		$this->sqlcount="select count(*) as contor from ".$this->after("from", $sql);
+		$this->sqlcount="select count(*) as contor from ".$this->getFromSql($sql);
 		
 		$cs=DBManager::sql($this->sqlcount);
 		if (is_null($this->rowscount)){
@@ -64,6 +79,9 @@ class Table extends Object {
 	}
 	public function setPagination($pagination){
 		$this->pagination=$pagination;
+	}
+	public function setFooter($footer){
+		$this->footer=$footer;
 	}	
 	public function show(){
 		$out='<div class="groupboxtable">';
@@ -132,29 +150,59 @@ class Table extends Object {
 		$out.='</table>';
 		$out.='</div>';
 		
+		//echo $this->rowsperpage;
 		if ($this->pagination){
 			if ($this->rowscount>$this->rowsperpage){
 				$out.='<div class="groupbox">';
-				$out.='<table style="width:100%" ><tr><td style="align:center;" >';
+				$out.='<table style="width:100%" ><tr><td style="text-align:center;border-style:none;" >';
 				$n=$this->navigationlink;
 				if ($this->page!=0){
 					$out.='<a href="'.$n().'&page='.($this->page-1).'" class="link_button">< Inapoi</a>';
 				}
 				$out.=" ";
+				if ((($this->page+1)*$this->rowsperpage)>$this->rowscount){
+					$out.=" ".(($this->page*$this->rowsperpage)+1)." - ".$this->rowscount." din ".$this->rowscount." ";
+				} else {
+					$out.=" ".(($this->page*$this->rowsperpage)+1)." - ".(($this->page+1)*$this->rowsperpage)." din ".$this->rowscount." ";
+				}
 				if ((($this->page+1)*$this->rowsperpage)<$this->rowscount){
 					$out.='<a href="'.$n().'&page='.($this->page+1).'" class="link_button">Inainte ></a>';
 				}
+				$out.='</td></tr></table>';				
+				$out.='</div>';
+			} else {
+				$out.='<div class="groupbox">';
+				$out.='<table style="width:100%" ><tr><td style="text-align:center;border-style:none;" >';
+				if ((($this->page+1)*$this->rowsperpage)>$this->rowscount){
+					$out.=' '.(($this->page*$this->rowsperpage)+1).' - '.$this->rowscount.' din '.$this->rowscount.' ';
+				} else {
+					$out.=' '.(($this->page*$this->rowsperpage)+1).' - '.(($this->page+1)*$this->rowsperpage).' din '.$this->rowscount.' ';
+				}
+				$out.='</td></tr></table>';
+				$out.='</div>';
+				
+			}
+		}
+		if ($this->footer){
+			$n=$this->footerlink;
+			if (isset($n)){
+				$out.='<div class="groupbox">';
+				$out.='<table style="width:100%" ><tr><td style="align:center;" >';
+				$out.=$n();
 				$out.='</td></tr></table>';
 				$out.='</div>';
 			}
 		}
+		
 		
 		return $out;	
 	}
 	public function getResultSet(){
 		return DBManager::sql($this->sql);
 	}
-	public function after ($this1, $inthat){
+	public function getFromSql($inthat){
+		$this1="from";
+		$this2="from as main";
 		if (!is_bool(stripos($inthat, $this1)))
 			return substr($inthat, strripos($inthat,$this1)+strlen($this1));
 	}

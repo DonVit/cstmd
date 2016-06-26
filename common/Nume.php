@@ -42,7 +42,48 @@ inner join localitate on localitate.id=p.localitateid inner join raion on locali
 		$sql="select count(distinct localitateid) as counter from person WHERE lastnameid=".$this->id;
 		$ls=$this->doSql($sql);
 		return $ls[0]->counter;
-	}						
+	}
+	public static function getTopFamiliiList($currentPage){
+		$sql="select `id`, `name`, `suma`, `contor`, `deleted` from `family` where deleted=0 order by suma desc";
+		return Nume::getTopNumeList($currentPage, $sql);
+		
+	}
+	public static function getTopFamiliiAmplasateGeograficList($currentPage){
+		$sql="SELECT lastnameid as id, name, count as suma FROM (SELECT lastnameid, COUNT( DISTINCT localitateid ) AS count FROM person GROUP BY lastnameid ) AS c INNER JOIN family ON c.lastnameid = family.id ORDER BY suma desc, name";
+		return Nume::getTopNumeList($currentPage, $sql);
+	
+	}	
+	public static function getTopNumeList($currentPage,$sql){
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setCurrentPage($currentPage);
+		$table->setRowsPerPage(100);
+		$table->setSql($sql);
+	
+		$navigationlink=function() use ($currentPage){
+			return $currentPage->getUrlWithSpecialCharsConverted("index.php");
+		};
+		$table->setNavigationLink($navigationlink);
+	
+		$namelink=function($row) use ($currentPage){
+				
+			$url=$currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$row->id);
+			return '<a href="'.$url.'">'.$row->name.'</a>';
+		};
+		$table->addField(new TableField(1, "Nume de familie", "name", "text-align: left;width:60%",$namelink));
+		$table->addField(new TableField(2, "Numarul total de familii", "suma", "text-align: center;width:30%",""));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	
+	}	
+	
 }
 
 ?>

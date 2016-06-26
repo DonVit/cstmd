@@ -693,9 +693,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		return $this->getGroupBoxH3('<a name="15"></a>Alte date:',$out);
 	}
 	function getImobilList($raionid,$locationid){
-	
 		$p=new PropertyView();
-		$rs=$p->getPropertiesSnapListView(0,0,0,0,0,$raionid,$locationid,0,0,10);
+		$rs=PropertyView::getPropertiesSnapListView($this,0,0,0,0,0,$raionid,$locationid,0,1);
 		return $this->getGroupBoxH3('<a name="10"></a>Cereri si Oferte de Imobile în raza de 10km:',$rs);
 	}
 	function getDictionar($l){
@@ -724,8 +723,8 @@ class IndexLocationsWebPage extends MainWebPage {
 			$url=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$row->id);					
 			return '<a href="'.$url.'">'.$row->name.'</a>';
 		};
-		$table->addField(new TableField(1, "Nume de familie", "name", "",$namelink));
-		$table->addField(new TableField(2, "Numarul total de familii", "counter", "text-align: center;",""));
+		$table->addField(new TableField(1, "Nume de familie", "name", "center;width: 60%",$namelink));
+		$table->addField(new TableField(2, "Numarul total de familii", "counter", "text-align: center;width: 30%",""));
 		
 		$out.=$table->show();
 		
