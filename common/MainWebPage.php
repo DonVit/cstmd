@@ -3,6 +3,7 @@ class MainWebPage extends WebPage {
 	private $logotitle="logotitle";
 	private $css="";
 	private $javascript="";
+	private $footerjavascript="";
 	private $bodytag="<body>";
 	private $leftcontainer;
 	private $centercontainer;
@@ -55,6 +56,12 @@ class MainWebPage extends WebPage {
 	function setJavascript($javascript){
 		$this->javascript.='<script src="'.$javascript.'"></script>';
 	}
+	function getFooterJavascript(){
+		return $this->footerjavascript;
+	}
+	function setFooterJavascript($javascript){
+		$this->footerjavascript.='<script src="'.$javascript.'"></script>';
+	}	
 	function getHeader(){
 		$out='<!doctype html>';
 		$out.='<html>';
@@ -63,6 +70,7 @@ class MainWebPage extends WebPage {
 		$out.='<meta charset="utf-8">';
 		$out.='<meta content="'.$this->getDescription().'" name="description"/>';
 		$out.='<meta content="'.$this->getKeywords().'" name="keywords"/>';
+		//$out.='<meta name=viewport content="width=device-width, initial-scale=1">';
 		$out.=$this->getTheShiv();
 		$out.=$this->getFavIcon();
 		$out.=$this->getCSS();
@@ -185,7 +193,8 @@ class MainWebPage extends WebPage {
 		$out.=$this->getBottomMenu();
 		$out.='</div>';
 		$out.=$this->getLogs();
-		$out.='</div>';	
+		$out.='</div>';
+		$out.=$this->getFooterJavascript();
 		$out.='</body>';
 		$out.='</html>';
 		return $out;		
@@ -718,12 +727,15 @@ class MainWebPage extends WebPage {
 		
 		//$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
 		//$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js");
-		
-		$this->setCSS(Config::$commonsite."/js/lightbox2.51/css/lightbox.css");
-		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-1.7.2.min.js");
-		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-ui-1.8.18.custom.min.js");
-		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery.smooth-scroll.min.js");				
-		$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/lightbox.js");
+		//2.51
+		//$this->setCSS(Config::$commonsite."/js/lightbox2.51/css/lightbox.css");
+		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-1.7.2.min.js");
+		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-ui-1.8.18.custom.min.js");
+		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery.smooth-scroll.min.js");				
+		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/lightbox.js");
+		//2
+		$this->setCSS(Config::$commonsite."/js/lightbox2/css/lightbox.css");
+		$this->setFooterJavascript(Config::$commonsite."/js/lightbox2/js/lightbox-plus-jquery.min.js");
 		
 		
 		$out='';
@@ -734,9 +746,8 @@ class MainWebPage extends WebPage {
 			foreach ($files as $i){
 				if (isset($i->imagepath)){
 					//$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" rel="lightbox[list]"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
-					$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" rel="lightbox[roadtrip]"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
-				//} else {
-					//$out.='<a href="'.Config::$commonsite.'/img/no_image_100x100.jpg" ><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" class="imageborder"></a>&nbsp';
+					//$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" rel="lightbox[roadtrip]"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
+					$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" data-lightbox="roadtrip"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
 				}				
 		    }
 		    if ($outt==''){

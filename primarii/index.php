@@ -381,7 +381,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			$o2b.='<th>Denumirea localitatii</th><th>Numarul de locuitori</th>';
 			foreach($ls as $l){
 				$url=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
-				$o2b.='<tr><td><a href="'.$url.'">'.$l->getFullName().'</a><td>'.$l->p.'</td></td></tr>';
+				$o2b.='<tr><td><a href="'.$url.'">'.$l->getFullName().'</a><td>'.number_format($l->p, 0, ',', ' ').'</td></td></tr>';
 				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';	
 			}
 			$o2b.='</table>';
