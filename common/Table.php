@@ -57,14 +57,14 @@ class Table extends Object {
 		if (is_null($this->dataset)){
 			$this->dataset=DBManager::sql($this->sql);
 		}
-		$this->sqlcount="select count(*) as contor from ".$this->getFromSql($sql);
-		
+		//$this->sqlcount="select count(*) as contor from ".$this->getFromSql($sql);
+		$this->sqlcount=$this->getSqlWithCount($sql);
 		$cs=DBManager::sql($this->sqlcount);
 		if (is_null($this->rowscount)){
 			
 			$this->rowscount=0;
 			while($row=mysql_fetch_assoc($cs)){
-				$this->rowscount=$row["contor"];
+				$this->rowscount=$row["total_rows_counter"];
 			}
 		}		
 	}	
@@ -85,7 +85,7 @@ class Table extends Object {
 	}	
 	public function show(){
 		$out='<div class="groupboxtable">';
-		$out.='<table style="width: 100%;border:1px;">';		
+		$out.='<table style="width: 100%;border:1px;color:red;">';		
 		if (count($this->fields)!=0){
 			$out.='<tr>';
 			if ($this->showNrOrd){
@@ -187,7 +187,7 @@ class Table extends Object {
 			$n=$this->footerlink;
 			if (isset($n)){
 				$out.='<div class="groupbox">';
-				$out.='<table style="width:100%" ><tr><td style="align:center;" >';
+				$out.='<table style="width:100%" ><tr><td style="align:center;border-style:none;" >';
 				$out.=$n();
 				$out.='</td></tr></table>';
 				$out.='</div>';
@@ -203,8 +203,15 @@ class Table extends Object {
 	public function getFromSql($inthat){
 		$this1="from";
 		$this2="from as main";
+		if (!is_bool(stripos($inthat, $this2)))
+			return substr($inthat, strripos($inthat,$this2)+strlen($this2));
 		if (!is_bool(stripos($inthat, $this1)))
 			return substr($inthat, strripos($inthat,$this1)+strlen($this1));
+		
+	}
+	public function getSqlWithCount($sql){
+		$newsql=substr(trim($sql),6);
+		return "select count(*) as total_rows_counter, ".$newsql;
 	}
 }
 ?>

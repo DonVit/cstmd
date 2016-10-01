@@ -78,6 +78,9 @@ class IndexNumeWebPage extends MainWebPage {
 		return Nume::getTopFamiliiAmplasateGeograficList($this);
 	}
 	function getTop100Prenume(){
+		return Prenume::getTopPrenumePopulareList($this);
+	}
+	function getTop100Prenume1(){
 		$n=new Prenume();
 		$ns=$n->getAll("","suma desc","0","100");
 		$out='<div class="groupboxtable">';
@@ -177,41 +180,7 @@ class IndexNumeWebPage extends MainWebPage {
 		return $out;
 	}	
 	function getTop100Locations(){
-		$out="";
-		
-		$ls=$this->nume->getTop100Locations();
-		if (count($ls)!=0){				
-			$o2s='';
-			$o2b='';
-			$o2s.='<a name="5"></a> Top 100 Localitati in care numele de familie  "'.$this->nume->name.'"  se intilneste:';
-			$o2b.='<div class="groupboxtable">';
-			$o2b.='<table style="width:100%;">';
-			$o2b.='<tr><th style="width:20%;">Nr Ordine</th><th style="width:50%;">Nume de Localitate</th><th style="width:30%;text-align:center">Numarul de familii</th></tr>';
-			$c=1;
-			foreach($ls as $l){	
-				$urll=$this->getUrlWithSpecialCharsConverted(config::$locationssite."/index.php","action=viewlocalitate&id=".$l->localitate_id);
-				$urlr=$this->getUrlWithSpecialCharsConverted(config::$locationssite."/index.php","action=viewraion&id=".$l->raion_id);
-				$locname='';
-				if ($l->oras==1){
-					$locname.='<a href="'.$urll.'">or. '.$l->localitate_name.'</a>';
-				} else {
-					$locname.='<a href="'.$urll.'">sat. '.$l->localitate_name.'</a>';
-					
-					if ($l->municipiu==1){
-						$locname.=' din <a href="'.$urlr.'">m. '.$l->raion_name.'</a>';
-					} else {
-						$locname.=' din <a href="'.$urlr.'">r. '.$l->raion_name.'</a>';
-					}
-				}
-				$o2b.='<tr><td style="text-align:center;">'.$c.'</td><td>'.$locname.'</td><td>'.$l->contor.'</td></tr>';
-				$c=$c+1;
-			}
-			$o2b.='</table>';
-			$o2b.='</div>';
-			$out.=$this->getGroupBoxH3($o2s,$o2b);		
-		}			
-
-		return $out;
+		return Nume::getTop100LocationsByFamily($this,$this->nume->id);
 	}
 
 }
