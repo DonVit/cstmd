@@ -85,7 +85,7 @@ class Table extends Object {
 	}	
 	public function show(){
 		$out='<div class="groupboxtable">';
-		$out.='<table style="width: 100%;border:1px;color:red;">';		
+		$out.='<table style="width: 100%;border:1px;">';		
 		if (count($this->fields)!=0){
 			$out.='<tr>';
 			if ($this->showNrOrd){
