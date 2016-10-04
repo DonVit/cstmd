@@ -43,8 +43,8 @@ class Population extends DBManager {
 	}	
 
 	public static function getPopulationVeiw($currentPage, $filter){
-	
-		$sql='SELECT "Moldoveni/Romani" as Nationalitate, "008000" as color, sum(total) as Total, sum(moldoveni+romani) as totalNationalitate FROM `popnat` '.$filter.' union ';
+		$sql='select * from (';
+		$sql.='SELECT "Moldoveni/Romani" as Nationalitate, "008000" as color, sum(total) as Total, sum(moldoveni+romani) as totalNationalitate FROM `popnat` '.$filter.' union ';
 		$sql.='SELECT "Ucraineni" as Nationalitate, "224499" as color, sum(total) as Total, sum(ucraineni) as totalNationalitate FROM `popnat` '.$filter.' union ';
 		$sql.='SELECT "Rusi" as Nationalitate, "FF0000" as color, sum(total) as Total, sum(rusi) as totalNationalitate FROM `popnat` '.$filter.' union ';
 		$sql.='SELECT "Gagauzi" as Nationalitate, "FF9900" as color, sum(total) as Total, sum(gagauzi) as totalNationalitate FROM `popnat` '.$filter.' union ';
@@ -53,7 +53,8 @@ class Population extends DBManager {
 		$sql.='SELECT "Polonezi" as Nationalitate, "80C65A" as color, sum(total) as Total, sum(polonezi) as totalNationalitate FROM `popnat` '.$filter.' union ';
 		$sql.='SELECT "Romi/Tigani" as Nationalitate, "AB8F3C" as color, sum(total) as Total, sum(tigani) as totalNationalitate FROM `popnat` '.$filter.' union ';
 		$sql.='SELECT "Altele" as Nationalitate, "AD4949" as color, sum(total) as Total, sum(altele) as totalNationalitate FROM `popnat` '.$filter;
-	
+		$sql.=') as t';
+		
 		$out='';
 		$out.='<div class="groupboxtable">';
 	
