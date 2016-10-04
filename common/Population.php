@@ -43,7 +43,7 @@ class Population extends DBManager {
 	}	
 
 	public static function getPopulationVeiw($currentPage, $filter){
-		$sql='select * from (';
+		$sql='select t.* from (';
 		$sql.='SELECT "Moldoveni/Romani" as Nationalitate, "008000" as color, sum(total) as Total, sum(moldoveni+romani) as totalNationalitate FROM `popnat` '.$filter.' union ';
 		$sql.='SELECT "Ucraineni" as Nationalitate, "224499" as color, sum(total) as Total, sum(ucraineni) as totalNationalitate FROM `popnat` '.$filter.' union ';
 		$sql.='SELECT "Rusi" as Nationalitate, "FF0000" as color, sum(total) as Total, sum(rusi) as totalNationalitate FROM `popnat` '.$filter.' union ';
