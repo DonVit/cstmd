@@ -82,6 +82,19 @@ class IndexDictionarWebPage extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta in Dictionar:",$this->getSearchDictionar()));
 		$this->setRightContainer($this->getGroupBoxH3("Filtru Tip:",$this->getMenuTip()));
 		$this->show();
+	}
+	function actionViewDictionarByLocalitate(){
+		if (isset($this->id)){
+			$d=new Dictionar();
+			$ds=$d->getAll("localitate_id=".$this->id);
+			if (count($ds)>0){
+				$this->redirect(Config::$dictionarsite."/index.php?action=viewdictionar&id=".$ds[0]->id);
+			} else {
+				$this->redirect(Config::$dictionarsite."/index.php");
+			}
+		} else{
+			$this->redirect(Config::$dictionarsite."/index.php");
+		}
 	}	
 			
 

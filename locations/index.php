@@ -316,21 +316,12 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.=$this->getGroupBoxH3($o2s,$o2b);
 
 		$o3s='<a name="3"></a>'.$this->getConstants("IndexLocationsWebPageRaionHarta")." ".$this->raion->getFullNameDescription();
-		//$o3b.=$this->getMap($this->raion->lat,$this->raion->lng,12,3,$this->raion->lat,$this->raion->lng,$this->raion->getFullNameDescription());
 		$this->raion->zoom=12;
 		$this->raion->maptype=3;
 		$this->raion->centerlat=$this->raion->lat;
 		$this->raion->centerlng=$this->raion->lng;
 		$o3b=$this->getMap($this->raion);
 		$out.=$this->getGroupBoxH3($o3s,$o3b);
-		///$o4s='<a name="4"></a>Acoperirea GSM';
-		//$o3b.=$this->getMap($this->raion->lat,$this->raion->lng,12,3,$this->raion->lat,$this->raion->lng,$this->raion->getFullNameDescription());
-		///$this->raion->zoom=12;
-		///$this->raion->maptype=3;
-		///$this->raion->centerlat=$this->raion->lat;
-		///$this->raion->centerlng=$this->raion->lng;
-		///$o4b.=$this->getGSMMap($this->raion);
-		///$out.=$this->getGroupBoxH3($o4s,$o4b);
 
 		return $out;
 	}
@@ -360,20 +351,11 @@ class IndexLocationsWebPage extends MainWebPage {
 		}
 				
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
-		
-		//$ls=$this->location->getLocations();
-		//if (count($ls)!=0){				
-			$o2s='';
-			$o2b='';
-			$o2s.='<a name="2"></a>'.$this->location->getFullNameDescription().' - Primaria:';		
-			//foreach($ls as $l){
-			//	$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-			//	$o2b.='<a href="'.$url.'">'.$l->getFullName().'</a>; ';
-				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';	
-			//}
-			$o2b.='Vezi <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$primariisite."/index.php","action=viewprimarie&id=".$this->location->getPrimarieLocation()->id).'">'.$this->location->getPrimarieLocation()->getPrimariaName().'</a> pentru mai multe informatii depsre primaria localitatii';
-			$out.=$this->getGroupBoxH3($o2s,$o2b);		
-		//}			
+		$o2s='';
+		$o2b='';
+		$o2s.='<a name="2"></a>'.$this->location->getFullNameDescription().' - Primaria:';		
+		$o2b.='Vezi <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$primariisite."/index.php","action=viewprimarie&id=".$this->location->getPrimarieLocation()->id).'">'.$this->location->getPrimarieLocation()->getPrimariaName().'</a> pentru mai multe informatii depsre primaria localitatii';
+		$out.=$this->getGroupBoxH3($o2s,$o2b);		
 
 		$o3s='<a name="3"></a>'.$this->location->getFullNameDescription()." - Date geografice";
 		$o3b='Latitudinea: '.$this->location->lat.'<br>';
@@ -463,64 +445,47 @@ class IndexLocationsWebPage extends MainWebPage {
 		if (($this->location->p>0)){				
 			$o2s='<a name="5"></a>'.$this->location->getFullNameDescription().' - Populatia (Conform recensamintului din anul 2004):';		
 			$o2b='Locuitori - '.number_format($this->location->p, 0, ',', ' ').' din care:<br>';
-			//$o2b.='Din care:<br>';
 			$o2b.='Barbati - '.number_format($this->location->m, 0, ',', ' ').'<br>';
 			$o2b.='Femei - '.number_format($this->location->f, 0, ',', ' ').'<br>';	
-			$popnat=new Population();
-			$popnat->loadById($this->location->id);
-			$total=$popnat->total;
-			$moldoveni=$popnat->moldoveni+$popnat->romani;
-			$moldovenip=round($moldoveni*100/$total,2);
-			$ucraineni=$popnat->ucraineni;
-			$ucrainenip=round($ucraineni*100/$total,2);
-			$rusi=$popnat->rusi;
-			$rusip=round($rusi*100/$total,2);
-			$gagauzi=$popnat->gagauzi;
-			$gagauzip=round($gagauzi*100/$total,2);
-			$bulgari=$popnat->bulgari;
-			$bulgarip=round($bulgari*100/$total,2);
-			$evrei=$popnat->evrei;
-			$evreip=round($evrei*100/$total,2);
-			$polonezi=$popnat->polonezi;
-			$polonezip=round($polonezi*100/$total,2);
-			$tigani=$popnat->tigani;
-			$tiganip=round($tigani*100/$total,2);
-			$altele=$popnat->altele;
-			$altelep=round($altele*100/$total,2);
 			
-			$o2b.='<br>';
-			$o2b.='Componenta pe nationalitati:';
-			$o2b.='<br>';
-// 			$o2b.='<div class="groupboxtable">';
-// 			$o2b.='<table style="width:100%;">';			
-// 			$o2b.='<tr><th>Nationalitate</th><th>Numar de Locuitori</th><th>% de Locuitori</th></tr>';
-// 			$o2b.='<tr><td>Moldoveni/Romani</td><td style="text-align:center;">'.$moldoveni.'</td><td style="text-align:center;">'.$moldovenip.'</td></tr>';
-// 			$o2b.='<tr><td>Ucraineni</td><td style="text-align:center;">'.$ucraineni.'</td><td style="text-align:center;">'.$ucrainenip.'</td></tr>';
-// 			$o2b.='<tr><td>Rusi</td><td style="text-align:center;">'.$rusi.'</td><td style="text-align:center;">'.$rusip.'</td></tr>';
-// 			$o2b.='<tr><td>Gagauzi</td><td style="text-align:center;">'.$gagauzi.'</td><td style="text-align:center;">'.$gagauzip.'</td></tr>';
-// 			$o2b.='<tr><td>Bulgari</td><td style="text-align:center;">'.$bulgari.'</td><td style="text-align:center;">'.$bulgarip.'</td></tr>';
-// 			$o2b.='<tr><td>Evrei</td><td style="text-align:center;">'.$evrei.'</td><td style="text-align:center;">'.$evreip.'</td></tr>';
-// 			$o2b.='<tr><td>Polonezi</td><td style="text-align:center;">'.$polonezi.'</td><td style="text-align:center;">'.$polonezip.'</td></tr>';
-// 			$o2b.='<tr><td>Romi/Tigani</td><td style="text-align:center;">'.$tigani.'</td><td style="text-align:center;">'.$tiganip.'</td></tr>';		
-// 			$o2b.='<tr><td>Altele</td><td style="text-align:center;">'.$altele.'</td><td style="text-align:center;">'.$altelep.'</td></tr>';
-// 			$o2b.='</table>';
-// 			$o2b.='</div>';
-			$o2b.=Population::getPopulationVeiwByLocalitate($this, $this->location->id);
-			$chco='008000|224499|FF0000|FF9900|AA0033|7777CC|80C65A|AB8F3C|AD4949';
-			$chd='t:'.$moldovenip.','.$ucrainenip.','.$rusip.','.$gagauzip.','.$bulgarip.','.$evreip.','.$polonezip.','.$tiganip.','.$altelep;
-			$chdl='Moldoveni|Ucraineni|Rusi|Gagauzi|Bulgari|Evrei|Polonezi|Romi/Tigani|Altele';
-			$chl=$moldovenip.'%|'.$ucrainenip.'%|'.$rusip.'%|'.$gagauzip.'%|'.$bulgarip.'%|'.$evreip.'%|'.$polonezip.'%|'.$tiganip.'%|'.$altelep;
-			$chtt='Nationalitati '.$this->location->getFullNameDescription();
-			$o2b.='<br>';
-			//$o2b.='Componenta pe nationalitati:';
-			//$o2b.='<br>';
-			$o2b.='<div style="text-align:center">';
-			$o2b.='<img src="http://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
-			$o2b.='</div>';
-			
-			//http://chart.apis.google.com/chart?chs=400x225&cht=p&chd=t:90.25,0.73,1,0.31,1,0,0,6.29,0.42&chdl=Moldoveni|Ucraineni|Rusi|Gagauzi|Bulgari|Evrei|Polonezi|Tigani|Altele&chl=90.25%25|0.73%25|1%25|0.31%25|1%25|0%25|0%25|6.29%25|0.42%25&chtt=Nationalitati+in+satul+XXXX
-			
-		
+			$p=new Population();
+			$popnatall=$p->getAll("an=2004 and localitate_id=".$this->location->id);
+			if  (count($popnatall)!=0){
+				$popnat=$popnatall[0];
+				$total=$popnat->total;
+				$moldoveni=$popnat->moldoveni+$popnat->romani;
+				$moldovenip=round($moldoveni*100/$total,2);
+				$ucraineni=$popnat->ucraineni;
+				$ucrainenip=round($ucraineni*100/$total,2);
+				$rusi=$popnat->rusi;
+				$rusip=round($rusi*100/$total,2);
+				$gagauzi=$popnat->gagauzi;
+				$gagauzip=round($gagauzi*100/$total,2);
+				$bulgari=$popnat->bulgari;
+				$bulgarip=round($bulgari*100/$total,2);
+				$evrei=$popnat->evrei;
+				$evreip=round($evrei*100/$total,2);
+				$polonezi=$popnat->polonezi;
+				$polonezip=round($polonezi*100/$total,2);
+				$tigani=$popnat->tigani;
+				$tiganip=round($tigani*100/$total,2);
+				$altele=$popnat->altele;
+				$altelep=round($altele*100/$total,2);
+				
+				$o2b.='<br>';
+				$o2b.='Componenta pe nationalitati:';
+				$o2b.='<br>';
+				$o2b.=Population::getPopulationVeiwByLocalitate($this, $this->location->id);
+				$chco='008000|224499|FF0000|FF9900|AA0033|7777CC|80C65A|AB8F3C|AD4949';
+				$chd='t:'.$moldovenip.','.$ucrainenip.','.$rusip.','.$gagauzip.','.$bulgarip.','.$evreip.','.$polonezip.','.$tiganip.','.$altelep;
+				$chdl='Moldoveni|Ucraineni|Rusi|Gagauzi|Bulgari|Evrei|Polonezi|Romi/Tigani|Altele';
+				$chl=$moldovenip.'%|'.$ucrainenip.'%|'.$rusip.'%|'.$gagauzip.'%|'.$bulgarip.'%|'.$evreip.'%|'.$polonezip.'%|'.$tiganip.'%|'.$altelep;
+				$chtt='Nationalitati '.$this->location->getFullNameDescription();
+				$o2b.='<br>';
+				$o2b.='<div style="text-align:center">';
+				$o2b.='<img src="http://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
+				$o2b.='</div>';			
+			}
 		}
 		$out.=$this->getGroupBoxH3($o2s,$o2b);					
 		return $out;
@@ -840,60 +805,70 @@ class IndexLocationsWebPage extends MainWebPage {
 	}	
 	
 	function getPopulationInTime(){
-		$out="";
+		$out='';
 		$o2s='';
 		$o2b='';
-		if (($this->location->p>0)){
-			$d=new Dictionar();
-			$ds=$d->getAll("localitate_id=".$this->location->id);
-			$out="";
-			if (count($ds)){			
-
-				$pop1904=$ds[0]->populatie;
-				$pop2004=$this->location->p;
-				
-				if ((!empty($pop1904))&&(!empty($pop2004))){
-
-					$min=$pop1904=$ds[0]->populatie;
-					$max=$pop2004=$this->location->p;
-						
-					
-					if ($pop2004<$pop1904){
-						$max=$min;
-						$min=$pop2004;
-					}
+		$p=new Population();
+		$popnatall=$p->getAll("localitate_id=".$this->location->id,"an asc");
+		if (count($popnatall)>1){
 					
 					$o2s=$this->location->getFullNameDescription().' - Evolutia numarului de locuitori in ultimii 100 ani:';
-					
-					$o2b.='<br>';
-					$o2b.='<div class="groupboxtable">';
-					$o2b.='<table style="width:100%;">';
-					$o2b.='<tr><th>Anul</th><th>Numar de Locuitori</th><th>Sursa</th></tr>';
-					$o2b.='<tr><td>2004</td><td style="text-align:center;">'.number_format($pop2004, 0, ',', ' ').'</td><td style="text-align:left;">Conform recensamintului din anul 2004</td></tr>';
-					$link='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$dictionarsite."/index.php","action=viewdictionar&id=".$ds[0]->id).'">Vezi aici</a>';
-					$o2b.='<tr><td>1904</td><td style="text-align:center;">'.number_format($pop1904, 0, ',', ' ').'</td><td style="text-align:left;">Conform Dictionarului Geografic an. 1904 de Zamfir Arbore '.$link.'</td></tr>';
-					$o2b.='</table>';
-					$o2b.='</div>';
-					$o2b.='<br>';
+							
+					$o2b.=Population::getPopulationInTimeVeiwByLocalitate($this, $this->location->id);					
 					
 					$o2b.='<div style="text-align:center">';
-					$chxl='0:|an.+1904|an.+2004|1:|'.$pop1904.'+loc.|'.$pop2004.'+loc.';
-					$chxp='0,1904,2004|1,'.$pop1904.','.$pop2004;
-					$chxr='0,1904,2004|1,0,'.($pop2004+$pop1904);
-					$chds='1904,2004,0,'.($pop2004+$pop1904);
-					$chd='t:1904,2004|'.$pop1904.','.$pop2004;
+					
+					$chxl0='';
+					$chxl1='';
+					$chxp0='';
+					$chxp1='';
+					$anmin=0;
+					$anmax=0;					
+					$popnatmin=0;
+					$popnatmax=0;	
+					$chd0='';
+					$chd1='';
+					foreach($popnatall as $popnat){
+						$chxl0.=$popnat->an.'|';
+						$chxp0.=','.$popnat->an;
+						$chd0.=($chd0==''?'':',').$popnat->an;
+						$chxl1.=$popnat->total.'+loc|';
+						$chxp1.=','.$popnat->total;
+						$chd1.=($chd1==''?'':',').$popnat->total;
+						if ($anmin==0){
+							$anmin=$popnat->an;
+						}
+						if ($popnat->an<$anmin){
+							$anmin=$popnat->an;
+						}												
+						if ($popnat->an>$anmax){
+							$anmax=$popnat->an;
+						}
+						if ($popnat->total>$popnatmax){
+							$popnatmax=$popnat->total;
+						}						
+						
+					}
+					$popnatmax=$this->getMaxValueRounded($popnatmax);
+					$chxl='0:|'.$chxl0.'1:|'.$chxl1;
+					$chxp='0'.$chxp0.'|1'.$chxp1;
+					$chxr="0,$anmin,$anmax|1,$popnatmin,$popnatmax";
+					$chds="$anmin,$anmax,$popnatmin,$popnatmax";
+					$chd='t:'.$chd0.'|'.$chd1;
+
 					$chtt='Evolutia numarului de locuitori in ultimii 100 ani in '.$this->location->getFullName();
 					$o2b.='<img src="//chart.googleapis.com/chart?chf=bg,s,EEEEEE&chxl='.$chxl.'&chxp='.$chxp.'&chxr='.$chxr.'&chxs=0,000000,14,0,lt,000000|1,000000,14,0,lt,000000&chxt=x,y&chs=580x360&cht=lxy&chco=3D7930&chds='.$chds.'&chd='.$chd.'&chg=10,10,1,1&chls=3&chma=10,10,10,10&chm=B,C5D4B5BB,0,0,0,1&chtt='.$chtt.'&chts=000000,16" width="580" height="360" alt="" />';
 					
-					$o2b.='</div>';
-					
-					//http://chart.googleapis.com/chart?chxl=0:|an.+1904|an.+2004|1:|1090+loc.|3450+loc.&chxp=0,1904,2004|1,1090,3450&chxr=0,1904,2004|1,0,3450&chxs=0,676767,11.5,0,lt,676767|1,676767,12.5,0,lt,676767&chxt=x,y&chs=580x360&cht=lxy&chco=3D7930&chds=1904,2004,0,3450&chd=t:1904,2004|1090,3450&chg=10,10,1,1&chls=4&chma=10,10,10,10&chm=B,80C65A,0,0,0,1&chtt=Populatia+
-				}
-			}
-	
+					$o2b.='</div>';					
 		}
-		$out.=$this->getGroupBoxH3($o2s,$o2b);
+		if ($o2s!=''){
+			$out.=$this->getGroupBoxH3($o2s,$o2b);
+		}
 		return $out;
+	}
+	function getMaxValueRounded($maxvalue){
+		$len=strlen($maxvalue);
+		return $maxvalue+pow(10,$len-1);
 	}
 	function showElectoralPreferences(){
 		$this->setJavascript("https://www.google.com/jsapi");

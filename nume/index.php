@@ -46,7 +46,7 @@ class IndexNumeWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getNameDescription());	
 		$this->setCenterContainer($this->getMapView());
 		$this->setCenterContainer($this->getTop100Locations());
-		$c='<a name="11"></a>Forum/Comentarii:';
+		$c='<a name="4"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'f',$n->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuNume()));
 		$this->setLeftContainer($this->getSearchNume());
@@ -78,30 +78,9 @@ class IndexNumeWebPage extends MainWebPage {
 		return Nume::getTopFamiliiAmplasateGeograficList($this);
 	}
 	function getTop100Prenume(){
-		return Prenume::getTopPrenumePopulareList($this);
+		return Prenume::getTopPrenumePopulareList($this);		
 	}
-	function getTop100Prenume1(){
-		$n=new Prenume();
-		$ns=$n->getAll("","suma desc","0","100");
-		$out='<div class="groupboxtable">';
-		$out.='<table style="width:100%;">';
-		//$out.='<tr><th style="width:20%;">Nr</th><th style="width:50%;">Prenume</th><th style="width:30%;text-align:center">Oameni cu acest nume</th></tr>';
-		$out.='<tr><th style="width:20%;">Nr</th><th style="width:50%;">Prenume</th>';
-		if (count($ns)!=0){
-			$c=1;
-			foreach($ns as $n){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
-				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$n->id);
-				$out.='<tr><td>'.$c.'</td><td>'.$n->name.'</td></tr>';
-				//$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$n->name.'</a></td><td>'.$n->suma.'</td></tr>';
-				$c=$c+1;
-			}
-		}
-		$out.="</table>";
-		$out.="</div>";
-	
-		return $out;
-	}	
+
 	function getMenuNume(){
 		$out='<ul class="leftmenulist">';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$this->id."#1").'">Descriere</a></li>';
@@ -147,7 +126,6 @@ class IndexNumeWebPage extends MainWebPage {
 
 		$out="";
 		$o1s='<a name="1"></a>Familia '.$this->nume->name;
-		//$o1b='Numele de familie '.$this->nume->name.' este pe locul XXX dupa popularitate si pe locul YYY dupa raspindirea geografica, conform cartii de telefoane exista <b>'.$this->nume->getFamiliesNumber().'</b> familii cu acest nume si sunt presente in <b>'.$this->nume->getLacalitiesNumber().'</b> localitati din RM, vezi mai jos';
 		$o1b='Conform datelor din cartea de telefoane (anul 2007), numele de familie <b>'.$this->nume->name.'</b> se intilneste in <b>'.$this->nume->getLacalitiesNumber().'</b> localitati din Republica Moldova in care exista <b>'.$this->nume->getFamiliesNumber().'</b> familii cu acest nume.';
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
 
@@ -164,7 +142,11 @@ class IndexNumeWebPage extends MainWebPage {
 		$m->zoom="7";
 		$m->centerlat="47.0200004577636719";
 		$m->centerlng="28.5458335876464844";
-		return $this->getGroupBoxH3('Distributia familiei "'.$this->nume->name.'" pe Harta in forma de HeatMap:',$this->getMap($m));		
+
+		$o1s='<a name="2"></a>Distributia familiei "'.$this->nume->name.'" pe Harta in forma de HeatMap:';
+		$o1b=$this->getMap($m);
+		return $this->getGroupBoxH3($o1s,$o1b);
+		
 	}
 	function getMap($out=''){
 	
@@ -179,8 +161,10 @@ class IndexNumeWebPage extends MainWebPage {
 	
 		return $out;
 	}	
-	function getTop100Locations(){
-		return Nume::getTop100LocationsByFamily($this,$this->nume->id);
+	function getTop100Locations(){	
+		$o1s='<a name="3"></a>Top Localitati cu numele de famile '.$this->nume->name;
+		$o1b=Nume::getTop100LocationsByFamily($this,$this->nume->id);
+		return $this->getGroupBoxH3($o1s,$o1b);
 	}
 
 }

@@ -1,12 +1,8 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
-
-
 class Population extends DBManager {
 	public $id;
+	public $an;
+	public $localitate_id;
 	public $total;
 	public $moldoveni;
 	public $ucraineni;
@@ -23,21 +19,21 @@ class Population extends DBManager {
 		return "popnat";
 	}
 	function getPopulationByRaion($raionid){
-		$sql="SELECT ".$raionid." as id, sum(total) as total,sum(moldoveni) as moldoveni,sum(ucraineni) as ucraineni,sum(rusi) as rusi,sum(gagauzi) as gagauzi,sum(bulgari) as bulgari ,sum(romani) as romani,sum(evrei) as evrei,sum(polonezi) as polonezi,sum(tigani) as tigani,sum(altele) as altele, 0 as deleted FROM `popnat` inner join localitate on popnat.id=localitate.id where raion_id=".$raionid;
+		$sql="SELECT ".$raionid." as id, sum(total) as total,sum(moldoveni) as moldoveni,sum(ucraineni) as ucraineni,sum(rusi) as rusi,sum(gagauzi) as gagauzi,sum(bulgari) as bulgari ,sum(romani) as romani,sum(evrei) as evrei,sum(polonezi) as polonezi,sum(tigani) as tigani,sum(altele) as altele, 0 as deleted FROM `popnat` inner join localitate on popnat.localitate_id=localitate.id where raion_id=".$raionid;
 		$o=Population::doSql($sql);
 		return $o;
 	}
 
 	public static function getPopulationVeiwByRaion($currentPage, $raionId){
 
-		$filter="inner join localitate on popnat.id=localitate.id where raion_id=$raionId";
+		$filter="inner join localitate on popnat.localitate_id=localitate.id where popnat.an=2004 and raion_id=$raionId";
 		
 		return Population::getPopulationVeiw($currentPage, $filter);
 	}
 	
 	public static function getPopulationVeiwByLocalitate($currentPage, $localitateId){
 	
-		$filter="where popnat.id=$localitateId";
+		$filter="where popnat.an=2004 and popnat.localitate_id=$localitateId";
 	
 		return Population::getPopulationVeiw($currentPage, $filter);
 	}	
@@ -84,6 +80,37 @@ class Population extends DBManager {
 	
 		return $out;
 	}
+	public static function getPopulationInTimeVeiwByLocalitate($currentPage,$localitate_id){
+		$sql='SELECT p.localitate_id, p.an, p.total, r.sursa FROM popnat as p inner join recensamint as r on p.an=r.an where p.localitate_id='.$localitate_id.' order by p.an desc';
+	
+		$out='';
+	
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setShowNrOrd(false);
+		$table->setRowsPerPage(100);
+		$table->setSql($sql);
+	
+		$total=function($row) use ($currentPage){
+			return number_format($row->total, 0, ',', ' ');
+		};
+		
+		$sursaLink=function($row) use ($currentPage){
+			$rtn=$row->sursa;
+			if ($row->an=='1904'){
+				$rtn.=' <a href="'.$currentPage->getUrlWithSpecialCharsConverted(Config::$dictionarsite."/index.php","action=viewdictionarbylocalitate&id=".$row->localitate_id).'">Vezi aici</a>';
+			}
+			return $rtn;
+		};
+	
+		$table->addField(new TableField(1, "Anul", "an", "text-align: center;width:10%",""));
+		$table->addField(new TableField(2, "Nr. Locuitori", "total", "text-align: center;width:15%",$total));
+		$table->addField(new TableField(3, "Sursa de Date", "sursa", "text-align: left;width:75%",$sursaLink));
+	
+		$out.=$table->show();
+	
+		return $out;
+	}	
 }
 
 ?>
