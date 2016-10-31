@@ -106,6 +106,23 @@ class Alegeri extends DBManager {
 		}
 		return $url;	
 	}				
+	public static function getPresidentialImageUrlByPrimarie($raion_id,$localitate_id){
+		$old_url="http://www.voteaza.md/r/r/52";
+		$new_url="http://cec.md/r/procese-verbale/prezidentiale2016/79";
+		$url="";
+		if ($localitate_id!=101){
+			$sql="select image_url from `rezultate-141130-imagini` where  r_id=$raion_id and l_id=$localitate_id and sectia=0";
+			$rs=DBManager::doSql($sql);
+			if ((count($rs)!=0)){
+				foreach($rs as $r){
+					$url.='<div class="groupboxtable">';
+					$url.='<img style="width:100%" src="'.str_replace($old_url, $new_url, $r->image_url).'">';
+					$url.='</div>';
+				}
+			}
+		}
+		return $url;
+	}
 }
 
 ?>
