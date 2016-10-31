@@ -316,7 +316,10 @@ class MainWebPage extends WebPage {
 		$this->rightcontainer.=$value;	
 	}
 	function getRightContainer(){
-		return $this->rightcontainer;		
+		$out='';
+		//$out.=$this->getPrivescEuWidget();
+		$out.=$this->rightcontainer;
+		return $out;		
 	}			
 	function getGroupBoxH3($header="",$body="",$footer=""){
 		if ($header!=""){
@@ -1081,13 +1084,20 @@ class MainWebPage extends WebPage {
 	}
 	public function getAddMenu(){
 		$out='<ul class="leftmenulist">';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imobilsite.'/add.php').'">Adauga Imobil</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$chiriesite.'/add.php').'">Adauga Chirie</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/add.php').'">Adauga Companie</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/add.php').'">Adauga Foto</a></li>';				
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imobilsite.'/add.php').'">Adaugă Imobil</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$chiriesite.'/add.php').'">Adaugă Chirie</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/add.php').'">Adaugă Companie</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/add.php').'">Adaugă Foto</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/add.php').'">Adaugă Telefon</a></li>';
 		$out.='</ul>';
 		return $out;
-	}																					
+	}
+	public function getPrivescEuWidget(){
+		
+		$out='<iframe src="//www.privesc.eu/Widget/embeded/�nregistrare/Moldova,Parlament,Guvern,Conferinte,Offlineuri,Emisiuni,RIA,Concerte,Retransmisiuni,Sport,Monden,Altele," frameborder="0" width="180" height="140" scrolling="no" title="Televizor Privesc.Eu"></iframe>';
+		
+		return $this->getGroupBoxH2("Privesc Eu TV",$out);
+	}
 }
 //$b=new WebPage();
 //phpinfo();
