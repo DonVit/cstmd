@@ -9,10 +9,6 @@ require_once(__DIR__ . '/../main/loader.php');
 	public $page;
 	function __construct(){
 		parent::__construct();
-		//$this->setCSS("style/styles.css");
-		//$t="COMPANII, TIPURI COMPANII DIN REPUBLICA MOLDOVA";
-		//$this->setTitle($t);
-		//$this->setLogoTitle($t);
 		$t="PREFIXE, TELEFOANE DIN REPUBLICA MOLDOVA";
 		$this->setLogoTitle($t);		
 		$this->create();		
@@ -25,8 +21,10 @@ require_once(__DIR__ . '/../main/loader.php');
 		$this->setTitle($t);	
 		$this->setCenterContainer($this->getGroupBoxH1($t,$this->getMain()));
 		$this->setRightContainer($this->getGroupBoxH3("Prefix dupa Localitate:",$this->getSearchPrefixByLocation()));
-		$this->setRightContainer($this->getGroupBoxH3("Localitate dupa Telefon:",$this->getSearchLocationByTelefone()));		
-		$this->setLeftContainer($this->getGroupBoxH3("Prefixe pe Localitati:",$this->getRaions(0)));		
+		$this->setRightContainer($this->getGroupBoxH3("Localitate dupa Telefon:",$this->getSearchLocationByTelefone()));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
+		$this->setLeftContainer($this->getGroupBoxH3("Prefixe pe Localitati:",$this->getRaions(0)));
+		
 		$this->show();
 	}
 
@@ -61,7 +59,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setRightContainer($this->getGroupBoxH3("Prefix dupa Localitate:",$this->getSearchPrefixByLocation()));
 		$this->setRightContainer($this->getGroupBoxH3("Localitate dupa Telefon:",$this->getSearchLocationByTelefone()));
-
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		$this->setLeftContainer($this->getGroupBoxH3("Prefixe pe Localitati:",$this->getRaions($this->id)));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
 		$this->show();
@@ -102,7 +100,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRssLink()));
 		$this->setRightContainer($this->getGroupBoxH3("Prefix dupa Localitate:",$this->getSearchPrefixByLocation()));
 		$this->setRightContainer($this->getGroupBoxH3("Localitate dupa Telefon:",$this->getSearchLocationByTelefone()));
-		
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
 		//$this->setLeftContainer($this->getGroupBoxH3("Companii pe Raioane:",$this->getLocations($this->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Prefixe pe Localitati:",$this->getLocations($this->id)));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getNewsCompanies()));		
