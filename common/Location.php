@@ -271,7 +271,7 @@ class Location extends DBManager {
 
 	
 	public static function getListaOrase($currentPage){
-		$sql="select * from localitate where oras=1 order by name";	
+		$sql="select l.* from localitate l where l.oras=1 order by l.name";	
 		$out='';
 		$out.='<div class="groupboxtable">';
 	
