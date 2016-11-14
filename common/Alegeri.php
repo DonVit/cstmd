@@ -108,7 +108,8 @@ class Alegeri extends DBManager {
 	}				
 	public static function getPresidentialImageUrlByPrimarie($raion_id,$localitate_id){
 		$old_url="http://www.voteaza.md/r/r/52";
-		$new_url="http://cec.md/r/procese-verbale/prezidentiale2016/79";
+		$new_url_t1="http://cec.md/r/procese-verbale/prezidentiale2016/79";
+		$new_url_t2="http://cec.md/r/procese-verbale/prezidentiale-t2-2016/82";
 		$url="";
 		if ($localitate_id!=101){
 			$sql="select image_url from `rezultate-141130-imagini` where  r_id=$raion_id and l_id=$localitate_id and sectia=0";
@@ -116,7 +117,8 @@ class Alegeri extends DBManager {
 			if ((count($rs)!=0)){
 				foreach($rs as $r){
 					$url.='<div class="groupboxtable">';
-					$url.='<img style="width:100%" src="'.str_replace($old_url, $new_url, $r->image_url).'">';
+					$url.='<img style="width:100%" src="'.str_replace($old_url, $new_url_t2, $r->image_url).'">';
+					$url.='<img style="width:100%" src="'.str_replace($old_url, $new_url_t1, $r->image_url).'">';
 					$url.='</div>';
 				}
 			}
