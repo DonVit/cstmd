@@ -866,8 +866,14 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function showAlegeriPresidentiale161030Image(){
 	
-		$o2s='<a name="6"></a>Alegerile Prezidentiale din 30 octombrie 2016 - Rezultatele din '.$this->location->getPrimariaName();
-		$o2b=Alegeri::getPresidentialImageUrlByPrimarie($this->location->raion_id,$this->location->id);
+		$o2s='<a name="7"></a>Alegerile Prezidentiale din 30 octombrie 2016 - Rezultatele din '.$this->location->getPrimariaName();
+		
+		//$o2b='<b>Rezultate Tur 2:</b>';
+		//$o2b.=Alegeri::getAlegeriPresidentialeByLocaliateAndTur($this,$this->location->raion_id,$this->location->id,2);
+		//$o2b.='<b>Rezultate Tur 1:</b>';
+		//$o2b.=Alegeri::getAlegeriPresidentialeByLocaliateAndTur($this,$this->location->raion_id,$this->location->id,1);
+		$o2b.='<b>Imagini Sursa:</b>';
+		$o2b.=Alegeri::getPresidentialImageUrlByPrimarie($this->location->raion_id,$this->location->id);
 		$o2f="Sursa: www.cec.md";
 		if (empty($o2b)){
 			return "";

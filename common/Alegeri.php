@@ -117,14 +117,68 @@ class Alegeri extends DBManager {
 			if ((count($rs)!=0)){
 				foreach($rs as $r){
 					$url.='<div class="groupboxtable">';
-					$url.='<img style="width:100%" src="'.str_replace($old_url, $new_url_t2, $r->image_url).'">';
-					$url.='<img style="width:100%" src="'.str_replace($old_url, $new_url_t1, $r->image_url).'">';
+					$url.='<a href="'.str_replace($old_url, $new_url_t2, $r->image_url).'">Imagine Tur 2</a><br>';
+					$url.='<a href="'.str_replace($old_url, $new_url_t1, $r->image_url).'">Imagine Tur 1</a>';
 					$url.='</div>';
 				}
 			}
 		}
 		return $url;
 	}
+	
+	public static function getAlegeriPresidentialeByLocaliateAndTur($currentPage, $raion_id,$localitate_id, $tur){
+		$out="";
+		$sql='SELECT "1" as ordine , candidat, sum(voturi)  as voturi FROM ap_voturi v inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where s.localitate_id='.$localitate_id.' and tur='.$tur.' group by candidat';
+		$sql.=' UNION';
+		$sql.=' SELECT "2" as ordine , "TOTAL:", sum(voturi)  as voturi FROM ap_voturi v inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where s.localitate_id='.$localitate_id.' and tur='.$tur;
+		$sql.=' order by ordine, voturi desc';
+		$rs=Alegeri::getAlegeriInstance()->sql($sql);
+
+	
+		$voturi=function($row) use ($currentPage){
+			return number_format($row->voturi, 0, ',', ' ');
+		};
+
+		if (count($rs)!=0){
+			$out.='<div class="groupboxtable">';
+			$table=new Table();
+			$table->setDataSet($rs);
+			//$table->setShowNrOrd(false);
+			$table->addField(new TableField(1, "Candidat", "candidat", "text-align: left;",""));
+			$table->addField(new TableField(2, "Voturi", "voturi", "text-align: center;",$voturi));
+			$out.=$table->show();
+			$out.="</div>";
+		}
+
+		//$out.=Alegeri::getPresidentialImageUrlByPrimarie($raion_id, $localitate_id);
+		//$out.=Alegeri::getAlegeriDatePresidentialeByLocaliateAndTur($currentPage, $localitate_id, $tur);
+		
+		return $out;
+	}
+	public static function getAlegeriDatePresidentialeByLocaliateAndTur($currentPage, $localitate_id, $tur){
+		$out="";
+		$sql='SELECT  v.k, k.description, sum(v) as v FROM ap_prezenta v inner join ap_keys k on v.k=k.key inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where s.localitate_id='.$localitate_id.' and tur='.$tur.' group by k order by k';
+		
+		$rs=Alegeri::getAlegeriInstance()->sql($sql);
+	
+	
+		$voturi=function($row) use ($currentPage){
+			return number_format($row->v, 0, ',', ' ');
+		};
+	
+		if (count($rs)!=0){
+			$out.='<div class="groupboxtable">';
+			$table=new Table();
+			$table->setDataSet($rs);
+			//$table->setShowNrOrd(false);
+			$table->addField(new TableField(1, "Candidat", "description", "text-align: left;",""));
+			$table->addField(new TableField(2, "Voturi", "v", "text-align: center;",$voturi));
+			$out.=$table->show();
+			$out.="</div>";
+		}
+	
+		return $out;
+	}	
 }
 
 ?>

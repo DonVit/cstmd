@@ -79,6 +79,7 @@ class MainWebPage extends WebPage {
 		$out.=$this->getGA();
 		$out.='</head>';
 		$out.=$this->getBodyTag();
+		$out.=$this->getFacebookSDK();
 		$out.='<div id="main" class="main">';
 		$out.=$this->getBanner();		
 		$out.=$this->getTopMenu();	
@@ -143,7 +144,8 @@ class MainWebPage extends WebPage {
 		//$out.='<div id="logo-title-left"><span style="color:#000099;">casa</span><span style="color:#FFFF33;">ta</span><span style="color:#FF0000;">.md</span></div>';
 		$out.='<div id="logo-title-left" style="display:block;float:left">CASATA.MD</div>';
 		$out.='<div id="logo-title-right" style="display:block;float:left">'.$this->getLogoTitle().'</div>';
-		$out.=$this->getGooglePlus();
+		$out.=$this->getFacebookButton();
+		$out.=$this->getGooglePlus();		
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
@@ -158,7 +160,31 @@ class MainWebPage extends WebPage {
 		} else {
 			return '';
 		}	
+	}
+	function getFacebookButton(){
+		if (Config::$live){
+			$out='<div class="fb-like" data-href="https://www.facebook.com/casata.moldova/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>';
+			return $out;
+		} else {
+			return '';
+		}
 	}	
+	function getFacebookSDK(){
+		if (Config::$live){
+			$out='<div id="fb-root"></div>';
+			$out.='<script>(function(d, s, id) {';
+			$out.='  var js, fjs = d.getElementsByTagName(s)[0];';
+			$out.='  if (d.getElementById(id)) return;';
+			$out.='  js = d.createElement(s); js.id = id;';
+			$out.='  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=209032902551666";';
+			$out.='  fjs.parentNode.insertBefore(js, fjs);';
+			$out.='}(document, \'script\', \'facebook-jssdk\'));</script>';
+			return $out;
+		} else {
+			return '';
+		}
+	}
+	
 	function getLanguageMenu(){	
 		$out='<div id="langmenu" style="display:block;float:left">';
 		$out.='<ul>';
