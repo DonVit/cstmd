@@ -168,6 +168,11 @@ class Location extends DBManager {
 		$ls=$this->doSql($sql);
 		return $ls;
 	}
+	function getChildLocationsAsResultSet(){
+		$sql="SELECT * FROM localitate where id=$this->id or parent_id=$this->id order by oras desc, p desc, name";
+		$ls=$this->sql($sql);
+		return $ls;
+	}	
 	function getChildLocations(){
 		
 		$l=new Location();
@@ -422,6 +427,5 @@ class Location extends DBManager {
 		$out.="</div>";
 		return $out;
 	}	
-
 }
 ?>

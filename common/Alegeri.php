@@ -144,8 +144,8 @@ class Alegeri extends DBManager {
 			$table=new Table();
 			$table->setDataSet($rs);
 			//$table->setShowNrOrd(false);
-			$table->addField(new TableField(1, "Candidat", "candidat", "text-align: left;",""));
-			$table->addField(new TableField(2, "Voturi", "voturi", "text-align: center;",$voturi));
+			$table->addField(new TableField(1, "Candidat", "candidat", "text-align: left; width: 65%;",""));
+			$table->addField(new TableField(2, "Voturi", "voturi", "text-align: center; width: 20%;",$voturi));
 			$out.=$table->show();
 			$out.="</div>";
 		}

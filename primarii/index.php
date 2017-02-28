@@ -372,41 +372,31 @@ class IndexLocationsWebPage extends MainWebPage {
 		}
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
 		
-		$ls=$this->location->getChildLocations();
-		if (($this->location->raion_center==0) and (count($ls)!=0)){				
+		$ls=$this->location->getChildLocationsAsResultSet();
+		if (($this->location->raion_center==0) and (mysql_num_rows($ls)!=0)){
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="2"></a>'.$this->location->getPrimariaName().' - Localitati in componenta:';
-			$o2b.='<div class="groupboxtable">';					
-			$o2b.='<table style="width:100%;">';
-			$o2b.='<th>Denumirea localitatii</th><th>Numarul de locuitori</th>';
-			foreach($ls as $l){
-				$url=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
-				$o2b.='<tr><td><a href="'.$url.'">'.$l->getFullName().'</a><td>'.number_format($l->p, 0, ',', ' ').'</td></td></tr>';
-				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';	
-			}
-			$o2b.='</table>';
+			$o2b.='<div class="groupboxtable">';
+		
+			$table=new Table();
+			$table->setDataSet($ls);
+			$url=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=");
+		
+			$denumirelocalitati=function($row) use ($url){				
+				return '<a href="'.$url.$row->id.'">'.$row->tip.' '.$row->name.'</a>';
+			};
+			
+			$numarlocuitori=function($row){
+				return number_format($row->p, 0, ',', ' ');
+			};			
+			$table->addField(new TableField(1, "Denumirea localitatii", "name", "",$denumirelocalitati));
+			$table->addField(new TableField(2, "Numarul de locuitori", "p", "text-align: center;",$numarlocuitori));
+		
+			$o2b.=$table->show();
 			$o2b.='</div>';
 			$out.=$this->getGroupBoxH3($o2s,$o2b);
-		}			
-
-// 		$ls=$this->location->getPrimarieConsilieri();
-// 		if (count($ls)!=0){
-// 			$o2s='';
-// 			$o2b='';
-// 			$o2s.='<a name="2"></a>'.$this->location->getPrimariaName().' - Lista consilierilor:';
-// 			$o2b.='<div class="groupboxtable">';
-// 			$o2b.='<table style="width:100%;">';
-// 			$o2b.='<th>Numele Cosilierui</th><th>Partidul</th>';
-// 			foreach($ls as $l){
-// 				$url=$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate&id=".$l->id);
-// 				$o2b.='<tr><td>'.$l->prenume.' '.$l->nume.'</td><td>'.$l->partid.'</td></tr>';
-// 				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';
-// 			}
-// 			$o2b.='</table>';
-// 			$o2b.='</div>';
-// 			$out.=$this->getGroupBoxH3($o2s,$o2b);
-// 		}		
+		}		
 		
 		$o3s='<a name="3"></a>'.$this->location->getPrimariaName()." - Date geografice:";
 		$o3b='Latitudinea: '.$this->location->lat.'<br>';
@@ -455,10 +445,6 @@ class IndexLocationsWebPage extends MainWebPage {
 			$o2b='';
 			$o2s.='<a name="2"></a>'.$this->location->getPrimariaName().' - Lista Partidelor in Consiliu:';
 			$o2b.='<div class="groupboxtable">';
-			//$o2b.='<table style="width:100%;">';
-			//$o2b.='<th>Partidul</th><th>Numarul de consilieri</th><th>Procent %</th>';
-			//$lp='';
-			//$lc='';
 
 			$chd='t:';
 			$chdl='';
@@ -483,10 +469,6 @@ class IndexLocationsWebPage extends MainWebPage {
 				//$o2b.='<tr><td>'.$l->partid.'</td><td>'.$l->c.'</td><td>'.round($l->c*100/$c,2).'</td></tr>';
 				$cnt++;
 			}
-			//$o2b.='</table>';
-			//$o2b.='</div>';
-			
-			
 			
 			$table=new Table();
 			$table->setDataSet($ls);
@@ -872,7 +854,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$o2b.=Alegeri::getAlegeriPresidentialeByLocaliateAndTur($this,$this->location->raion_id,$this->location->id,2);
 		//$o2b.='<b>Rezultate Tur 1:</b>';
 		//$o2b.=Alegeri::getAlegeriPresidentialeByLocaliateAndTur($this,$this->location->raion_id,$this->location->id,1);
-		$o2b.='<b>Imagini Sursa:</b>';
+		$o2b='<b>Imagini Sursa:</b>';
 		$o2b.=Alegeri::getPresidentialImageUrlByPrimarie($this->location->raion_id,$this->location->id);
 		$o2f="Sursa: www.cec.md";
 		if (empty($o2b)){
