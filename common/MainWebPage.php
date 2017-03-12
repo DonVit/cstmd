@@ -112,11 +112,11 @@ class MainWebPage extends WebPage {
 		}
 		$out.='</ul>';	
 		$out.='</div>';
-		$out.='<div id="mainmenuright" style="display:block;float:right">';
-		$out.='<ul>';
-		$out.='<li>'.$this->getBookmarks().'</li>';
-		$out.='</ul>';						
-		$out.='</div>';
+// 		$out.='<div id="mainmenuright" style="display:block;float:right">';
+// 		$out.='<ul>';
+// 		$out.='<li>'.$this->getBookmarks().'</li>';
+// 		$out.='</ul>';						
+// 		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';		
 		$out.='</div>';	
 		return $out;
@@ -234,6 +234,8 @@ class MainWebPage extends WebPage {
 		}
 		$out.='<li> | Email la: <a href="mailto:casata.md@outlook.com">casata.md@outlook.com</a></li>';	
 		$out.='</ul>';
+		$out.=$this->getFacebookButton();
+		$out.=$this->getGooglePlus();		
 		$out.='</div>';	
 		$out.='<div style="clear: both;"></div>';	
 		return $out;
@@ -306,8 +308,8 @@ class MainWebPage extends WebPage {
 			//addthis
 			$out='<div class="addthis_toolbox addthis_default_style " style="width:120px;">';
 			$out.='<a class="addthis_button_preferred_1"></a>';
-			$out.='<a class="addthis_button_preferred_2"></a>';
-			$out.='<a class="addthis_button_preferred_3"></a>';
+			//$out.='<a class="addthis_button_preferred_2"></a>';
+			//$out.='<a class="addthis_button_preferred_3"></a>';
 			//$out.='<a class="addthis_button_preferred_4"></a>';
 			//$out.='<a class="addthis_button_preferred_5"></a>';
 			//$out.='<a class="addthis_button_preferred_6"></a>';
