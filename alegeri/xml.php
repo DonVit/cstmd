@@ -23,12 +23,12 @@ class XmlMapsWebPage extends WebPage {
 		$out='<?xml version="1.0" encoding="utf-8"?>';
 		$out.='<markers>';
 
-		$m=new Sectiidevot();
+		$m=new Map();
 		$ms=$m->getAll();
 		foreach($ms as $m){
 			$out.='<marker ';
-			$out.='title="'.$this->parseToXML($m->localitate).'" ';
-			$out.='description="'.$this->parseToXML($m->adresa).'" ';
+			$out.='title="'.$this->parseToXML($m->title).'" ';
+			$out.='description="'.$this->parseToXML($m->description).'" ';
 			$out.='lat="'.$m->lat.'" ';
 			$out.='lng="'.$m->lng.'" ';
 			$out.='type="link" ';	
@@ -36,7 +36,50 @@ class XmlMapsWebPage extends WebPage {
 			//$out.='link="'.Config::$mapssite.'/index.php?action=viewmap&id='.$m->id.'" ';								
 			$out.='/>';								
 		}
-								
+
+		$n=new News();
+		$ns=$n->getAll("lat!=\"\"");
+		foreach($ns as $n){
+			$out.='<marker ';
+			$out.='title="'.$this->parseToXML($n->title).'" ';
+			$out.='description="'.$this->parseToXML($n->description).'" ';
+			$out.='lat="'.$n->lat.'" ';
+			$out.='lng="'.$n->lng.'" ';
+			$out.='type="news" ';		
+			$out.='link="'.Config::$newssite.'/index.php?id='.$n->id.'" ';									
+			$out.='/>';								
+		}
+
+		$p=new Property();
+		$ps=$p->getAll("lat!=\"\"");
+		foreach($ps as $p){
+			$out.='<marker ';
+			$out.='title="'.$this->parseToXML($p->getShortDescription()).'" ';
+			$out.='description="'.$this->parseToXML($p->getShortDescription()).'" ';
+			$out.='lat="'.$p->lat.'" ';
+			$out.='lng="'.$p->lng.'" ';
+			if ($p->scop_id==1){
+				$out.='type="imobil" ';		
+				$out.='link="'.Config::$imobilsite.'/property.php?id='.$p->id.'" ';
+			}else {
+				$out.='type="chirie" ';		
+				$out.='link="'.Config::$chiriesite.'/property.php?id='.$p->id.'" ';				
+			}								
+			$out.='/>';								
+		}
+		$p=new Photo();
+		$ps=$p->getAll();
+		foreach($ps as $p){
+			$out.='<marker ';
+			$out.='title="'.$this->parseToXML($p->title).'" ';
+			$out.='description="'.$this->parseToXML($p->note).'" ';
+			$out.='lat="'.$p->lat.'" ';
+			$out.='lng="'.$p->lng.'" ';
+			$out.='type="photo" ';
+			$out.='link="'.Config::$imagessite.'/index.php?id='.$p->id.'" ';
+			$out.='/>';
+		}							
+		
 		$out.='</markers>';
 		return $out;
 	}

@@ -67,6 +67,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		Logger::setLogs($this->location);		
 		$l->count();
 		$this->setTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->location->getFullNameDescription().' din '.$this->location->getRaion()->getFullNameDescription());
+		$this->setLogoTitle(strtoupper($this->location->getFullNameDescription()));
 		$this->setCenterContainer($this->getLocalitate());
 		$this->setCenterContainer($this->getPopulation());
 		$this->setCenterContainer($this->getPopulationInTime());

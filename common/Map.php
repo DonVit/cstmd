@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class Map extends DBManager {
 	public $id;
 	public $title;
@@ -24,7 +20,6 @@ class Map extends DBManager {
 		return $d; 
 	}
 	function getData(){
-		//return System::getDate(date_parse($this->data));
 		return substr($this->data,0,10);
 	}		
 }

@@ -126,19 +126,29 @@ class Alegeri extends DBManager {
 		return $url;
 	}
 	
+	public static function getAlegeriPresidentialeBySectieAndTur($currentPage, $sectie_id, $tur){
+		$conditie='s.sectie_id='.$sectie_id;
+		$out=Alegeri::getAlegeriPresidentialeByConditieAndTur($currentPage, $conditie, $tur);		
+		return $out;
+	}
 	public static function getAlegeriPresidentialeByLocaliateAndTur($currentPage, $raion_id,$localitate_id, $tur){
+		$conditie='s.localitate_id='.$localitate_id;
+		$out.=Alegeri::getAlegeriPresidentialeByConditieAndTur($currentPage, $conditie, $tur);
+		return $out;
+	}	
+	public static function getAlegeriPresidentialeByConditieAndTur($currentPage, $conditie, $tur){
 		$out="";
-		$sql='SELECT "1" as ordine , candidat, sum(voturi)  as voturi FROM ap_voturi v inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where s.localitate_id='.$localitate_id.' and tur='.$tur.' group by candidat';
+		$sql='SELECT "1" as ordine , candidat, sum(voturi)  as voturi FROM ap_voturi v inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where '.$conditie.' and tur='.$tur.' group by candidat';
 		$sql.=' UNION';
-		$sql.=' SELECT "2" as ordine , "TOTAL:", sum(voturi)  as voturi FROM ap_voturi v inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where s.localitate_id='.$localitate_id.' and tur='.$tur;
+		$sql.=' SELECT "2" as ordine , "TOTAL:", sum(voturi)  as voturi FROM ap_voturi v inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where '.$conditie.' and tur='.$tur;
 		$sql.=' order by ordine, voturi desc';
 		$rs=Alegeri::getAlegeriInstance()->sql($sql);
-
+	
 	
 		$voturi=function($row) use ($currentPage){
 			return number_format($row->voturi, 0, ',', ' ');
 		};
-
+	
 		if (count($rs)!=0){
 			$out.='<div class="groupboxtable">';
 			$table=new Table();
@@ -148,37 +158,47 @@ class Alegeri extends DBManager {
 			$table->addField(new TableField(2, "Voturi", "voturi", "text-align: center; width: 20%;",$voturi));
 			$out.=$table->show();
 			$out.="</div>";
-		}
-
-		//$out.=Alegeri::getPresidentialImageUrlByPrimarie($raion_id, $localitate_id);
-		//$out.=Alegeri::getAlegeriDatePresidentialeByLocaliateAndTur($currentPage, $localitate_id, $tur);
-		
+		}	
+		return $out;
+	}	
+	public static function getAlegeriDatePresidentialeBySectieAndTur($currentPage, $sectie_id, $tur){
+		$conditie='s.sectie_id='.$sectie_id;
+		$out=Alegeri::getAlegeriDatePresidentialeByConditieAndTur($currentPage, $conditie, $tur);
 		return $out;
 	}
 	public static function getAlegeriDatePresidentialeByLocaliateAndTur($currentPage, $localitate_id, $tur){
+		$conditie='s.localitate_id='.$localitate_id;
+		$out=Alegeri::getAlegeriDatePresidentialeByConditieAndTur($currentPage, $conditie, $tur);
+		return $out;
+	}	
+	public static function getAlegeriDatePresidentialeByConditieAndTur($currentPage, $conditie, $tur){
 		$out="";
-		$sql='SELECT  v.k, k.description, sum(v) as v FROM ap_prezenta v inner join ap_keys k on v.k=k.key inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where s.localitate_id='.$localitate_id.' and tur='.$tur.' group by k order by k';
-		
+		$sql='SELECT  v.k, k.description, sum(v) as v FROM ap_prezenta v inner join ap_keys k on v.k=k.key inner join ap_sectiidevot s on v.sectie_id=s.sectie_id where '.$conditie.' and tur='.$tur.' group by k order by k';
+	
 		$rs=Alegeri::getAlegeriInstance()->sql($sql);
 	
 	
 		$voturi=function($row) use ($currentPage){
-			return number_format($row->v, 0, ',', ' ');
+			$out=number_format($row->v, 0, ',', ' ');
+			if ($row->k=='p'){
+				$out=number_format($row->v/100, 2, ',', ' ');
+			}
+			return $out;
 		};
 	
 		if (count($rs)!=0){
 			$out.='<div class="groupboxtable">';
 			$table=new Table();
 			$table->setDataSet($rs);
-			//$table->setShowNrOrd(false);
-			$table->addField(new TableField(1, "Candidat", "description", "text-align: left;",""));
-			$table->addField(new TableField(2, "Voturi", "v", "text-align: center;",$voturi));
+			$table->addField(new TableField(1, "Indicatori", "description", "text-align: left;",""));
+			$table->addField(new TableField(2, "Valori", "v", "text-align: center;",$voturi));
 			$out.=$table->show();
 			$out.="</div>";
 		}
 	
 		return $out;
-	}	
+	}
+	
 }
 
 ?>

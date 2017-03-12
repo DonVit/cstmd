@@ -1,12 +1,8 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class Contact extends DBManager {
 
 	function __construct(){
-		$this->tipcontact_id=1;	
+		$this->tipcontact_id=1;
 	}
 	public $id;
 	public $tipcontact_id;
@@ -22,5 +18,4 @@ class Contact extends DBManager {
 	public $data;
 
 }
-
 ?>

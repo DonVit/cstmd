@@ -196,6 +196,162 @@ function MapViewOnMapLoad(isFull) {
 	  }
 	}	
 }
+function MapAlegeriViewOnMapLoad(isFull) {
+	
+	isFull = typeof isFull !== 'undefined' ? isFull : false;	
+	
+	var osmOptions = {
+	  getTileUrl: function(coord, zoom) {
+	    return "http://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
+	  },
+	  tileSize: new google.maps.Size(256, 256),
+	  maxZoom: 19,
+	  isPng: true,
+	  name: "OSM",
+	  alt: "OpenStreetMap"
+	};
+	var osmMapType = new google.maps.ImageMapType(osmOptions);
+	var lat=document.getElementById("lat").value;
+	var lng=document.getElementById("lng").value;
+	var zoom=parseInt(document.getElementById("zoom").value);			
+	var maptype=parseInt(document.getElementById("maptype").value);
+    var centerlat=document.getElementById("centerlat").value;
+    var centerlng=document.getElementById("centerlng").value;
+	
+	var OSM_MAPTYPE_ID = 'OSM';
+	var mapTypeIdValue=GetMapTypeConstant(maptype);
+	var centerlatlng = new google.maps.LatLng(centerlat,centerlng);
+	var mapOptions = {
+		zoom: zoom,
+		center:centerlatlng,
+		panControl: true,
+		streetViewControl: true,
+		mapTypeControlOptions: {mapTypeIds:[google.maps.MapTypeId.HYBRID,google.maps.MapTypeId.ROADMAP,google.maps.MapTypeId.SATELLITE,google.maps.MapTypeId.TERRAIN,OSM_MAPTYPE_ID],style:google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
+		mapTypeId: mapTypeIdValue,
+		overviewMapControl: true,
+		overviewMapControlOptions:{opened:true},
+		scaleControl: true,
+		zoomControl: true,
+		zoomControlOptions: {style:google.maps.ZoomControlStyle.LARGE}
+	};
+
+	var mapOptions = {
+			zoom: zoom,
+			center:centerlatlng,
+			panControl: false,
+			streetViewControl: false,
+			mapTypeControlOptions: {mapTypeIds:[google.maps.MapTypeId.HYBRID,google.maps.MapTypeId.ROADMAP,google.maps.MapTypeId.SATELLITE,google.maps.MapTypeId.TERRAIN,OSM_MAPTYPE_ID],style:google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
+			mapTypeId: mapTypeIdValue,
+			overviewMapControl: true,
+			overviewMapControlOptions:{opened:true},
+			scaleControl: true,
+			zoomControl: true,
+			zoomControlOptions: {style:google.maps.ZoomControlStyle.LARGE}
+		};	
+	
+	if (isFull){
+		mapOptions = {
+				zoom: zoom,
+				center:centerlatlng,
+				panControl: true,
+				streetViewControl: true,
+				mapTypeControlOptions: {mapTypeIds:[google.maps.MapTypeId.HYBRID,google.maps.MapTypeId.ROADMAP,google.maps.MapTypeId.SATELLITE,google.maps.MapTypeId.TERRAIN,OSM_MAPTYPE_ID],style:google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
+				mapTypeId: mapTypeIdValue,
+				overviewMapControl: true,
+				overviewMapControlOptions:{opened:true},
+				scaleControl: true,
+				zoomControl: true,
+				zoomControlOptions: {style:google.maps.ZoomControlStyle.LARGE}
+			};
+	}
+	
+	var map;
+	var pmc;
+	var xmldata;
+	var markersArray1 = [];
+	 
+	map = new google.maps.Map(document.getElementById("map"),mapOptions);
+	map.mapTypes.set(OSM_MAPTYPE_ID, osmMapType);
+
+	if (!isFull){	
+		var latlng = new google.maps.LatLng(lat,lng);
+		var marker = new google.maps.Marker({position: latlng,map: map});
+		google.maps.event.addListener(marker, 'click', function() {
+	        window.location = "http://maps.casata.md/index.php?action=viewpoi&lat="+marker.getPosition().lat()+"&lng="+marker.getPosition().lng();
+	 });	
+	}
+	var myLinkControl = new LinkControl('Adauga','add.php','Adauga un punct pe harta');
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(myLinkControl);
+	
+
+	if (isFull){
+		showdata();
+	}	
+	
+	function showdata(){
+		if (typeof xmldata == 'undefined'){
+			$(document).ready(function(){
+			  $.ajax({
+			    type: "GET",
+			    url: "alegeri.php",
+			    dataType: "xml",	    
+			    success: parseXml
+			  });
+			});
+		} else {
+			parseXml();
+		}
+	}
+
+	function parseXml(xml){
+		xmldata = typeof xml !== 'undefined' ? xml : xmldata;	
+
+		deleteOverlays();
+
+		$(xmldata).find("marker").each(function(){
+			lat=$(this).attr("lat");
+			lng=$(this).attr("lng");
+			var title=$(this).attr("title");
+			var description=$(this).attr("description");
+			var link=$(this).attr("link");
+			var content='<strong>'+title+'</strong><br/>'+description+'<br/><a href="'+link+'">'+link+'</a>';
+			var type=$(this).attr("type");
+			var Latlng = new google.maps.LatLng(lat,lng);
+			//alert(newsCheckBox.getCheckedState());
+			if (type=='yellow'){
+				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_yellow.png');
+				addMarker(mi,Latlng,content);
+			}
+			if (type=='red'){
+				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_red.png');
+				addMarker(mi,Latlng,content);
+			}
+		  });
+	}		
+	function addMarker(mi, location,content) {
+	  var ms=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_shadow.png');
+	  var mc=new google.maps.InfoWindow({content:content});
+	  var marker = new google.maps.Marker({position: location, map: map, icon: mi, shadow: ms});
+	  google.maps.event.addListener(marker, 'click', function() {
+       if (pmc!=undefined) {
+        pmc.close();
+       }
+       mc.open(map,this);
+       pmc=mc;
+	  });
+	  
+	  markersArray1.push(marker);
+	}
+	// Deletes all markers in the array by removing references to them
+	function deleteOverlays() {
+	  if (markersArray1.length>0) {
+	    for (i in markersArray1) {
+	      markersArray1[i].setMap(null);
+	    }
+	    markersArray1.length = 0;
+	  }
+	}	
+}
 function MapViewOnMapLoad1() {
 	var osmOptions = {
 	  getTileUrl: function(coord, zoom) {

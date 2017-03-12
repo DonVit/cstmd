@@ -64,7 +64,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		Logger::setLogs($this->location);
 		Logger::setLogs("point11".$this->location->parent_id);
 		$l->count();
-		$this->setTitle('Primarii Moldova: '.$this->location->getPrimariaName());		
+		$this->setTitle('Primarii Moldova: '.$this->location->getPrimariaName());
+		$this->setLogoTitle(strtoupper($this->location->getPrimariaName()));
 		$this->setCenterContainer($this->getLocalitate());
 		$this->setCenterContainer($this->getPrimarieConsilieri());
 		$this->setCenterContainer($this->showAlegeriPresidentiale161030Image());
