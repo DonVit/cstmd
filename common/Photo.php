@@ -2,6 +2,7 @@
 
 class Photo extends DBManager {
 	public $id;
+	public $album_id;
 	public $title;
 	public $note;	
 	public $file;

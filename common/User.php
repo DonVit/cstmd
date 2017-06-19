@@ -368,11 +368,51 @@ class User extends DBManager{
 	}
 	public static function delCurrentPhoto(){
 		if (isset($_SESSION["photo"])){
-			$photo=unserialize($_SESSION["photo"]);			
-			//session_unregister("photo");
+			$photo=unserialize($_SESSION["photo"]);
 			unset($_SESSION["photo"]);
 		}
+	}	
+	public static function setCurrentAlbum($album){
+		$_SESSION["album"]=serialize($album);
+	}	
+	public static function getCurrentAlbum(){
+		if (isset($_SESSION["album"])){
+			$album=unserialize($_SESSION["album"]);
+		} else {
+			$album=new Album();
+			$album->setRaion(Raion::getTopFirstRaion());
+			$album->localitate_id=Location::getTopFirstLocationByRaionId($album->raion_id)->id;
+			$album->user_id=User::getCurrentUser()->id;
+			$album->data=System::getCurentDateTime();
+			User::setCurrentAlbum($album);
+		}
+		return $album;
+	}	
+	public static function delCurrentAlbum(){
+		if (isset($_SESSION["album"])){
+			$album=unserialize($_SESSION["album"]);			
+			unset($_SESSION["album"]);
+		}
 	}
+	public static function setCurrentAlbumFiles($albumfiles){
+		$_SESSION["albumfiles"]=serialize($albumfiles);
+	}
+	public static function getCurrentAlbumFiles(){
+		if (isset($_SESSION["albumfiles"])){
+			$albumfiles=unserialize($_SESSION["albumfiles"]);
+		} else {
+			$albumfiles=array();
+			User::setCurrentAlbumFiles($albumfiles);
+		}
+		return $albumfiles;
+	}
+	public static function delCurrentAlbumFiles(){
+		if (isset($_SESSION["albumfiles"])){
+			$albumfiles=unserialize($_SESSION["albumfiles"]);
+			//session_unregister("photo");
+			unset($_SESSION["albumfiles"]);
+		}
+	}	
 	public static function setCurrentCompany($company){
 		$_SESSION["company"]=serialize($company);
 	}
