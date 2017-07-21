@@ -18,7 +18,7 @@ class FeedsWebPage extends MainWebPage {
 		$todayDate=date(FeedItem::$dateFormat);
 		$title="Stiri de Azi";
 		$this->setTitle($title);	
-		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($todayDate,2000)));
+		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($this,$todayDate,2000)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getRaions(0)));
 		$this->show();
 	}
@@ -50,7 +50,7 @@ class FeedsWebPage extends MainWebPage {
 		$c->loadById($this->id);
 		$title="Titluri de Stiri al ";
 		$this->setTitle($title.$c->name);
-		$this->setCenterContainer($this->getGroupBoxH1($title."\"".$c->name."\"",$this->fi->getNewsByCompany($c->id,2000)));
+		$this->setCenterContainer($this->getGroupBoxH1($title."\"".$c->name."\"",$this->fi->getNewsByCompany($this,$c->id,2000)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getRaions(0)));		
 		$this->show();
 	}	
@@ -61,7 +61,7 @@ class FeedsWebPage extends MainWebPage {
 		$l->loadById($this->id);
 		$title="Titluri de Stiri din ";
 		$this->setTitle($title.$l->getFullNameDescription());
-		$this->setCenterContainer($this->getGroupBoxH1($title.$l->getFullNameDescription(),$this->fi->getNewsByLocalitate($l->id,2000)));
+		$this->setCenterContainer($this->getGroupBoxH1($title.$l->getFullNameDescription(),$this->fi->getNewsByLocalitate($this,$l->id,2000)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getLocations($l->id)));		
 		$this->show();
 	}
@@ -83,7 +83,7 @@ class FeedsWebPage extends MainWebPage {
 		$l->loadById($this->id);
 		$title="Titluri de Stiri din Primaria ";
 		$this->setTitle($title.$l->getFullNameDescription());
-		$this->setCenterContainer($this->getGroupBoxH1($title.$l->getFullNameDescription(),$this->fi->getNewsByPrimarie($l->id,2000)));
+		$this->setCenterContainer($this->getGroupBoxH1($title.$l->getFullNameDescription(),$this->fi->getNewsByPrimarie($this,$l->id,2000)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getRaions(0)));		
 		$this->show();
 	}			
@@ -195,6 +195,36 @@ class FeedsWebPage extends MainWebPage {
 		$out.='</div>';	
 		return $out;
 	}
+	function getNewsTableNew($currentPage,$sql){
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setCurrentPage($currentPage);
+		//$table->setRowsPerPage(100);
+		$table->setSql($sql);
+	
+		$navigationlink=function() use ($currentPage){
+			return $currentPage->getUrlWithSpecialCharsConverted("index.php");
+		};
+		$table->setNavigationLink($navigationlink);
+	
+		$namelink=function($row) use ($currentPage){
+	
+			$url=$currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$row->id);
+			return '<a href="'.$url.'">'.$row->name.'</a>';
+		};
+		$table->addField(new TableField(1, "Compania", "name", "text-align: left;width:60%",$namelink));
+		$table->addField(new TableField(2, "Titlu", "title", "text-align: center;width:30%",""));
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	
+	}	
 	function getRaions($raionid){		
 		$r=new Raion();
 		$rs=$r->getAll("","municipiu desc");

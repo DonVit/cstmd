@@ -25,17 +25,18 @@ class Config {
 	public static $adssite="http://ads.casata.it";
 	public static $feedssite="http://feeds.casata.it";
 	public static $fmsite="http://fm.casata.it";
+	public static $alegerisite="http://alegeri.casata.it";
 	public static $errorpage="http://casata.md/error.php";
 	public static $cookiedomain=".casata.it";
 
 	public static $mysql_host="localhost";
 	public static $mysql_user="root";
 	public static $mysql_password="";
-	public static $mysql_db="db3";
+	public static $mysql_db="cst090516";
 	
 	public static $loging=true;  //yes/true|no/false
 	public static $phploging=-1;  //-1 - all php errors; 0 - // Turn off all error reporting
-	public static $live=false; //yes/true|no/false
+	public static $live=true; //yes/true|no/false
 	
 	//Allowed images to upload
 	public static $file_types = array(

@@ -45,36 +45,36 @@ class FeedItem extends DBManager {
 		DBManager::doSql("insert into feeditemlocation(feeditemid,localitateid)SELECT feeditem.id as feeditem_id, localitate.id as localitate_id FROM feeditem inner join localitate on ((feeditem.description LIKE CONCAT('%', localitate.name, '%')) or (feeditem.description LIKE CONCAT('%', localitate.name_ro, '%'))) or ((feeditem.title LIKE CONCAT('%', localitate.name, '%')) or (feeditem.title LIKE CONCAT('%', localitate.name_ro, '%'))) where status=1");
 		DBManager::doSql("update feeditem set status=2 where status=1");	
 	}
-	public function getNewsByRaion($raion_id,$limit=50){
-		$sql="SELECT t4.feeditemid as id, t2.title, t2.createdat as date, t5.id as c_id, t5.name as c_name  from (select t1.feeditemid FROM feeditemlocation t1 inner join localitate t3 on t1.localitateid=t3.id where t3.raion_id=".$raion_id." group by t1.feeditemid) as t4 inner join feeditem t2 on t4.feeditemid=t2.id inner join company t5 on t2.companyid=t5.id order by t4.feeditemid desc limit 0,".$limit;
-		$ns=DBManager::doSql($sql);
-		$out=$this->getNewsTable($ns);
+	public function getNewsByRaion($parent,$raion_id,$limit=50){
+		$sql="SELECT t4.feeditemid as news_id, t2.title as news_title, t2.createdat as news_date, t5.id as company_id, t5.name as company_name  from (select t1.feeditemid FROM feeditemlocation t1 inner join localitate t3 on t1.localitateid=t3.id where t3.raion_id=".$raion_id." group by t1.feeditemid) as t4 inner join feeditem t2 on t4.feeditemid=t2.id inner join company t5 on t2.companyid=t5.id order by t4.feeditemid desc";
+		//$ns=DBManager::doSql($sql);
+		$out=$this->getNewsTableNew($parent,$sql);
 		return $out;
 	}
-	public function getNewsByPrimarie($primarie_id,$limit=50){
-		$sql="SELECT t1.feeditemid as id,  t2.title, t2.createdat as date, t5.id as c_id, t5.name as c_name  FROM feeditemlocation t1 inner join feeditem t2 on t1.feeditemid=t2.id inner join localitate t3 on t1.localitateid=t3.id inner join company t5 on t2.companyid=t5.id where (t3.id=$primarie_id or t3.parent_id=$primarie_id) order by t1.feeditemid desc limit 0,".$limit;
-		$ns=DBManager::doSql($sql);
-		$out=$this->getNewsTable($ns);
+	public function getNewsByPrimarie($parent,$primarie_id,$limit=50){
+		$sql="SELECT t2.id as news_id, t2.title as news_title, t2.createdat as news_date, t5.id as company_id, t5.name as company_name FROM feeditemlocation t1 inner join feeditem t2 on t1.feeditemid=t2.id inner join localitate t3 on t1.localitateid=t3.id inner join company t5 on t2.companyid=t5.id where (t3.id=$primarie_id or t3.parent_id=$primarie_id) order by t1.feeditemid desc";
+		//$ns=DBManager::doSql($sql);
+		$out=$this->getNewsTableNew($parent,$sql);
 		return $out;
 	}	
-	public function getNewsByLocalitate($localitate_id,$limit=50){
-		$sql="SELECT t1.feeditemid as id, t2.title, t2.createdat as date, t5.id as c_id, t5.name as c_name  FROM feeditemlocation t1 inner join feeditem t2 on t1.feeditemid=t2.id inner join company t5 on t2.companyid=t5.id where t1.localitateid=".$localitate_id." order by t1.feeditemid desc limit 0,".$limit;
-		$ns=DBManager::doSql($sql);
-		$out=$this->getNewsTable($ns);
+	public function getNewsByLocalitate($parent,$localitate_id,$limit=50){
+		$sql="SELECT t2.id as news_id, t2.title as news_title, t2.createdat as news_date, t5.id as company_id, t5.name as company_name FROM feeditemlocation t1 inner join feeditem t2 on t1.feeditemid=t2.id inner join company t5 on t2.companyid=t5.id where t1.localitateid=".$localitate_id." order by t1.feeditemid desc";
+		//$ns=DBManager::doSql($sql);
+		$out=$this->getNewsTableNew($parent,$sql);
 		return $out;
 		
 	}
-	public function getNewsByCompany($company_id,$limit=50){
-		$sql="SELECT t2.id, t2.title, t2.createdat as date, t5.id as c_id, t5.name as c_name  FROM feeditem t2 inner join company t5 on t2.companyid=t5.id where t2.companyid=".$company_id." order by t2.id desc limit 0,".$limit;
-		$ns=DBManager::doSql($sql);
-		$out=$this->getNewsTable($ns);
+	public function getNewsByCompany($parent,$company_id,$limit=50){
+		$sql="SELECT t2.id as news_id, t2.title as news_title, t2.createdat as news_date, t5.id as company_id, t5.name as company_name FROM feeditem t2 inner join company t5 on t2.companyid=t5.id where t2.companyid=".$company_id." order by t2.id desc";
+		//$ns=DBManager::doSql($sql);
+		$out=$this->getNewsTableNew($parent,$sql);
 		return $out;
 		
 	}
-	public function getNewsByDate($date,$limit=50){
-		$sql="SELECT t2.id, t2.title, t2.createdat as date, t5.id as c_id, t5.name as c_name from feeditem t2 inner join company t5 on t2.companyid=t5.id where date(t2.createdat)=\"".$date."\" order by t2.id desc limit 0,".$limit;
-		$ns=DBManager::doSql($sql);
-		$out=$this->getNewsTable($ns);
+	public function getNewsByDate($parent,$date,$limit=50){
+		$sql="SELECT t2.id as news_id, t2.title as news_title, t2.createdat as news_date, t5.id as company_id, t5.name as company_name from feeditem t2 inner join company t5 on t2.companyid=t5.id where date(t2.createdat)=\"".$date."\" order by t2.id desc";
+		//$ns=DBManager::doSql($sql);
+		$out=$this->getNewsTableNew($parent,$sql);
 		return $out;
 	}
 	public function getTopCompanies(){
@@ -102,6 +102,42 @@ class FeedItem extends DBManager {
 		}
 		return $out;
 	}
+	function getNewsTableNew($currentPage,$sql){
+		$out='';
+		$out.='<div class="groupboxtable">';
+	
+		$table=new Table();
+		$table->setPagination(false);
+		$table->setShowNrOrd(false);
+		$table->setCurrentPage($currentPage);
+		//$table->setRowsPerPage(100);
+		$table->setSql($sql);
+	
+		$navigationlink=function() use ($currentPage){
+			return $currentPage->getUrlWithSpecialCharsConverted("index.php");
+		};
+		$table->setNavigationLink($navigationlink);
+	
+		$namelink=function($row) use ($currentPage){
+	
+			$newsurl=$currentPage->getUrlWithSpecialCharsConverted("index.php","action=redirect&id=".$row->news_id);
+			$companyurl=$currentPage->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$row->company_id);
+			$title='<a href="'.$newsurl.'">'.$row->news_title.'</a>';
+			$source='<a href="'.$companyurl.'">'.$row->company_name.'</a>';
+			
+			return "&#8226;".$title." (ref. ".$source.").";
+		};
+		
+		$table->addField(new TableField(1, "Titlu", "news_title", "text-align: left;width:80%;padding:5px;",$namelink));
+	
+	
+		$out.=$table->show();
+	
+		$out.="</div>";
+	
+		return $out;
+	
+	}	
 	public function getNewsList($ns){
 		$out='';
 		if (count($ns)!=0){

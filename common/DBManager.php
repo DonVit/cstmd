@@ -22,7 +22,8 @@ class DBManager extends Object {
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
-			$n->redirect(Config::$errorpage);	
+			//$n->redirect(Config::$errorpage);	
+
 			//die('sql query: ['.$sql.'] faild with error: '.mysql_error());
 		//}else{
 		//	DBManager::logsql($sql,'0');

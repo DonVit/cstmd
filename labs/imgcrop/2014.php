@@ -1,7 +1,7 @@
 <?php
 ini_set('max_execution_time', 500);
-$in_path='E:\projects\cst\src\labs\imgcrop\input\2016t2';
-$out_path='E:\projects\cst\src\labs\imgcrop\output\2016t2';
+$in_path='E:\projects\cst\src\labs\imgcrop\input\2014';
+$out_path='E:\projects\cst\src\labs\imgcrop\output\2014';
 
 //1st crop area
 $x11=558;
