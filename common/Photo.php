@@ -61,7 +61,7 @@ class Photo extends DBManager {
 		$this->lat=0;
 		$this->lng=0;	
 		$this->zoom=$raion->zoom;
-		$this->maptype=3;
+		$this->maptype=0;
 	}
 	function getPhotosInRadius($n=10){
 		$sql="SELECT photos.*, (6371*acos(cos(radians($this->lat))*cos(radians(lat))*cos(radians(lng)-radians($this->lng))+sin(radians($this->lat))*sin(radians(lat)))) AS distance FROM photos ORDER BY distance LIMIT 0 , ".$n;

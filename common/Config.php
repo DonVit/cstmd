@@ -25,13 +25,14 @@ class Config {
 	public static $adssite="http://ads.casata.it";
 	public static $feedssite="http://feeds.casata.it";
 	public static $fmsite="http://fm.casata.it";
-	public static $errorpage="http://casata.md/error.php";
+	public static $errorpage="http://casata.it/error.php";
+	public static $alegerisite="http://alegeri.casata.it";
 	public static $cookiedomain=".casata.it";
 
 	public static $mysql_host="localhost";
 	public static $mysql_user="root";
 	public static $mysql_password="";
-	public static $mysql_db="db3";
+	public static $mysql_db="cst";
 	
 	public static $loging=true;  //yes/true|no/false
 	public static $phploging=-1;  //-1 - all php errors; 0 - // Turn off all error reporting
@@ -55,7 +56,7 @@ class Config {
 
 	//Allowed File Size in bytes
 	//public static $file_size = "1048576";
-	public static $file_size = "3145728";
+	public static $file_size = "5145728";
 
 	//Files Folder Path
 	public static $filespath="data";
