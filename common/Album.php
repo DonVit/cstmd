@@ -25,13 +25,13 @@ class Album extends DBManager {
 		$this->lat=0;
 		$this->lng=0;
 		$this->zoom=$raion->zoom;
-		$this->maptype=3;
+		$this->maptype=0;
 	}	
 	function getPhotos(){
 		$files=array();
 		$sql="SELECT photos.* FROM photos where album_id=".$this->id;
 		$ps=$this->doSql($sql);
-		return $ps;		
+		return $ps;
 		
 	}
 }
