@@ -80,9 +80,14 @@ class AlbumsWebPage extends MainWebPage {
 						move_uploaded_file($_FILES["file"]["tmp_name"][$count], "files/".$f->file);
 						Photo::makeIcons_MergeCenter("files/".$f->file, "files/t".$f->file, 100);
 						Photo::makeIcons_MergeCenter("files/".$f->file	, "files/s".$f->file, 300);
-						$exifinfo=exif_read_data('files/'.$f->file);
+						$exifinfo=exif_read_data('files/'.$f->file, 0, true);
 						//$this->currentalbum->exif=$this->getExifInfo($exifinfo);
-						$f->data = $exifinfo['DateTimeOriginal'];		
+						$f->data = Photo::get_datetimeoriginal($exifinfo);
+						$latlng = Photo::get_location($exifinfo);
+						$f->centerlat = $latlng['latitude'];
+						$f->centerlng = $latlng['longitude'];
+						$f->lat = $latlng['latitude'];
+						$f->lng = $latlng['longitude'];
 						$this->currentalbumfiles[$count]=$f;
 					}
 					$count=$count+1;					
@@ -129,10 +134,19 @@ class AlbumsWebPage extends MainWebPage {
 							$photo->user_id=$this->currentalbum->user_id;
 							$photo->raion_id=$this->currentalbum->raion_id;
 							$photo->localitate_id=$this->currentalbum->localitate_id;
-							$photo->centerlat=$this->currentalbum->centerlat;
-							$photo->centerlng=$this->currentalbum->centerlng;
-							$photo->lat=$this->currentalbum->lat;
-							$photo->lng=$this->currentalbum->lng;
+
+							if (empty($file->centerlat)) {
+								$photo->centerlat=$this->currentalbum->centerlat;
+								$photo->centerlng=$this->currentalbum->centerlng;
+								$photo->lat=$this->currentalbum->lat;
+								$photo->lng=$this->currentalbum->lng;
+							} else {
+								$photo->centerlat=$file->centerlat;
+								$photo->centerlng=$file->centerlng;
+								$photo->lat=$file->lat;
+								$photo->lng=$file->lng;
+							}
+
 							$photo->zoom=$this->currentalbum->zoom;
 							$photo->maptype=$this->currentalbum->maptype;
 							$photo->data=$file->data;
@@ -280,8 +294,7 @@ class AlbumsWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
-	}
-	
+	}	
 	function setAdress($out=''){
 		$out.='<table style="height:100px;width:100%">';
 		$out.='<tr>';
@@ -392,20 +405,6 @@ class AlbumsWebPage extends MainWebPage {
 		$out.="</select>";
 		$out.="<input type=\"hidden\" id=\"sector_new\" name=\"sector_new\">";
 		return $out;
-	}
-	function getExifInfo($exif){
-		$out='';
-		if (is_array($exif)){
-			foreach ($exif as $key => $section) {
-				if (is_array($section)) {
-					foreach ($section as $name => $val) {
-						$out.="$key.$name: $val<br />\n";
-					}
-					$out.="$section<br />\n";
-				}
-			}
-		}
-		return $out;		
 	}
 }
 $n=new AlbumsWebPage();

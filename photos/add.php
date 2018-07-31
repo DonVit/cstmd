@@ -63,8 +63,8 @@ class AddImageWebPage extends MainWebPage {
 			//unlink("files/".$this->currentphoto->file)
 			$exifinfo=exif_read_data('files/'.$this->currentphoto->file, 0, true);
 			//$this->currentphoto->exif=$this->getExifInfo($exifinfo);
-			$this->currentphoto->data = $exifinfo['EXIF']['DateTimeOriginal'];
-			$latlng = $this->get_location($exifinfo);
+			$this->currentphoto->data = Photo::get_datetimeoriginal($exifinfo);
+			$latlng = Photo::get_location($exifinfo);
 			$this->currentphoto->centerlat = $latlng['latitude'];
 			$this->currentphoto->centerlng = $latlng['longitude'];
 			$this->currentphoto->lat = $latlng['latitude'];
@@ -380,55 +380,6 @@ class AddImageWebPage extends MainWebPage {
 		$out.="</select>";
 		$out.="<input type=\"hidden\" id=\"sector_new\" name=\"sector_new\">";
 		return $out;
-	}
-	function getExifInfo($exif){
-		$out='';
-		if (is_array($exif)){
-			foreach ($exif as $key => $section) {
-				if (is_array($section)) {
-					foreach ($section as $name => $val) {
-						$out.="$key.$name: $val<br />\n";
-					}
-					$out.="$section<br />\n";
-				}
-			}
-		}
-		return $out;		
-	}
-
-	function get_location($exif){
-		if($exif && isset($exif['GPS'])){
-			$GPSLatitudeRef = $exif['GPS']['GPSLatitudeRef'];
-			$GPSLatitude    = $exif['GPS']['GPSLatitude'];
-			$GPSLongitudeRef= $exif['GPS']['GPSLongitudeRef'];
-			$GPSLongitude   = $exif['GPS']['GPSLongitude'];
-
-			$lat_degrees = count($GPSLatitude) > 0 ? $this->gps2Num($GPSLatitude[0]) : 0;
-			$lat_minutes = count($GPSLatitude) > 1 ? $this->gps2Num($GPSLatitude[1]) : 0;
-			$lat_seconds = count($GPSLatitude) > 2 ? $this->gps2Num($GPSLatitude[2]) : 0;
-
-			$lon_degrees = count($GPSLongitude) > 0 ? $this->gps2Num($GPSLongitude[0]) : 0;
-			$lon_minutes = count($GPSLongitude) > 1 ? $this->gps2Num($GPSLongitude[1]) : 0;
-			$lon_seconds = count($GPSLongitude) > 2 ? $this->gps2Num($GPSLongitude[2]) : 0;
-
-			$lat_direction = ($GPSLatitudeRef == 'W' or $GPSLatitudeRef == 'S') ? -1 : 1;
-			$lon_direction = ($GPSLongitudeRef == 'W' or $GPSLongitudeRef == 'S') ? -1 : 1;
-
-			$latitude = $lat_direction * ($lat_degrees + ($lat_minutes / 60) + ($lat_seconds / (60*60)));
-			$longitude = $lon_direction * ($lon_degrees + ($lon_minutes / 60) + ($lon_seconds / (60*60)));
-
-			return array('latitude'=>$latitude, 'longitude'=>$longitude);
-		}else{
-			return false;
-		}
-	}
-	function gps2Num($coordPart){
-		$parts = explode('/', $coordPart);
-		if(count($parts) <= 0)
-		return 0;
-		if(count($parts) == 1)
-		return $parts[0];
-		return floatval($parts[0]) / floatval($parts[1]);
 	}
 }
 $n=new AddImageWebPage();
