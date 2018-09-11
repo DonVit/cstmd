@@ -47,6 +47,7 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));				
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		$this->show();
@@ -77,6 +78,7 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
@@ -108,6 +110,7 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 				
@@ -136,6 +139,7 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
@@ -169,6 +173,7 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
@@ -196,34 +201,78 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
 		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
 		
 		$this->show();
 		
 	}					
-	function actionViewImage(){
+	function actionViewAlbumImages(){
+	
+		if(!isset($this->id)){
+			$this->redirect(Config::$imagessite);
+			exit;
+		}
+		if(!isset($this->page)){
+			$this->page=0;
+		}
+		$a = new Album();
+		if ($a->loadById($this->id)){
+			$a->count();
+		} else {
+			$this->redirect(Config::$imagessite);
+			exit;
+		}
+		
+		
+		$title="Albumul ".$a->title;
+	
+		$this->setTitle($title);
+		
+		$out=$this->getImagesByAlbum($this->id,$this->page,$this->rowsperpage);
+		$out.=$this->getPagesByAlbum($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewalbumimages"));
+	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
+		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
+		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
+		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
+		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
+		$this->setCenterContainer($this->getGroupBoxH3('Alte Albume:',$this->getAlbums()));
+		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
+		
+		$this->show();
+		
+	}					
 
+	function actionViewImage(){
+		
 		$p=new Photo();
 		if ($p->loadById($this->id)){
-			//$this->redirect(Config::$imagessite);
 			$p->count();
+		} else {
+			$this->redirect(Config::$imagessite);
+			exit;
 		}
-
-		$this->setTitle($p->getLongTitle());
+		
+		$longTitle = $p->getLongTitle();
+		$this->setTitle($longTitle);
 
 		if(!isset($this->id)){
 			$this->id=Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id;
 		}
 		
-		$this->setCenterContainer($this->getGroupBoxH2($p->getLongTitle(),$this->getImage($p)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Alte Date:",$this->getSystemDetails($p)));
+		$this->setCenterContainer($this->getGroupBoxH2($longTitle,$this->getImage($p)));
 		$this->setCenterContainer($this->getImageDescription($p));
 		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
 		$this->setRightContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
 		$this->setRightContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p)));
 		$this->setRightContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p)));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));						
 		$this->showImage();
 	}
@@ -247,6 +296,7 @@ class PhotosWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p,8)));
 		$this->setCenterContainer($this->getGroupBoxH3("Imagini recente:",$this->getLatestImages($p,8)));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
+		$this->setCenterContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));						
 		$this->showFullImage();
 	}		
@@ -346,7 +396,7 @@ class PhotosWebPage extends MainWebPage {
 	}
 	function getYears(){
 		$y=new DBManager();
-		$ys=$y->doSql("SELECT year(data) as year, count(*) as cnt FROM photos GROUP BY year(data)");
+		$ys=$y->doSql("SELECT year(data) as year, count(*) as cnt FROM photos GROUP BY year(data) ORDER BY year(data) DESC ");
 		$out="<ul>";
 		foreach($ys as $y){	
 			if ($y->year!=0){
@@ -405,6 +455,16 @@ class PhotosWebPage extends MainWebPage {
 		}
 		return 1;
 	}							
+	function getAlbums(){
+		$a=new Album();
+		$as=$a->getAll("","data desc");
+		$out="<ul>";
+		foreach($as as $a){	
+			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewalbumimages&id='.$a->id).'" title="'.$a->description.'">'.$a->title.'</a></li>';			
+		}
+		$out.="</ul>";
+		return $out;
+	}
 	function getRssLink(){
 		$out='<ul class="leftmenulist">';
 		$out.='<li><a href="rss.php">Imagini in format RSS <img src="img/rss.png" alt="Foto in format RSS" title="Foto in format RSS"/></a></li>';
@@ -451,32 +511,40 @@ class PhotosWebPage extends MainWebPage {
 		$sql='select id, title, file from photos where deleted=0 and month(data) in ('.$seasoncond.') order by data desc';
 		$sql.=' limit '.$page*$rowsperpage.','.$rowsperpage;
 		return $this->getImages($sql);
-	}				
+	}
+	function getImagesByAlbum($album,$page,$rowsperpage){
+		$sql='select id, title, file from photos where deleted=0 and album_id='.$album.' order by data desc';
+		$sql.=' limit '.$page*$rowsperpage.','.$rowsperpage;
+		return $this->getImages($sql);
+	}	
 	function getImages($sql){
 		$p=new Photo();
 		$ps=$p->doSql($sql);
-		$out='<table style="width:100%">';
-		$i=1;
-		$o='';
-		foreach($ps as $p){
-	  		if ($i==1){
-	  			$o='<tr>';
-  			}
+		$out = '';
+		if ($ps) {
+			$out.='<table style="width:100%">';
+			$i=1;
+			$o='';
+			foreach($ps as $p){
+				if ($i==1){
+					$o='<tr>';
+				}
 
-		  	$o.='<td  style="align:center;padding:10px;vertical-align:top;width:33%">';
-	  		$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.System::getHtmlSpecialChars($p->title).'" class="imageborder" style="width: 145px; height: 119px;" /><p style="font-size:80%;">'.System::getHtmlSpecialChars($p->title).'</p></a></div>';	  		
-	  		$o.='</td>';
-	  		
-	  		if ($i==3){
-	  			$out.=$o.'</tr>';
-	  			$o='';
-	  			$i=0;  			}
-	  		$i=$i+1;
+				$o.='<td  style="align:center;padding:10px;vertical-align:top;width:33%">';
+				$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.System::getHtmlSpecialChars($p->title).'" class="imageborder" style="width: 145px; height: 119px;" /><p style="font-size:80%;">'.System::getHtmlSpecialChars($p->title).'</p></a></div>';	  		
+				$o.='</td>';
+				
+				if ($i==3){
+					$out.=$o.'</tr>';
+					$o='';
+					$i=0;  			}
+				$i=$i+1;
+			}
+			if ($i!=1){
+				$out.=$o.'</tr>';
+			}
+			$out.='</table>';
 		}
-		if ($i!=1){
-			$out.=$o.'</tr>';
-		}
-		$out.='</table>';
 		return $out;
 	}	
 	function getImage($p){
@@ -566,6 +634,12 @@ class PhotosWebPage extends MainWebPage {
 		$out.='<br/>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$r->id).'" target="_self" title="'.$r->getFullName().'">'.$r->getFullNameDescription().'</a>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate&id='.$l->id).'" target="_self" title="'.$l->getFullName().'">'.$l->getFullNameDescription().'</a>';						
+		if ($p->album_id) {
+			$a = $p->getAlbum();
+			$albumTitle = 'Album: '.$a->title;
+			$out.='<br/>';
+			$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewalbumimages&id='.$a->id).'" target="_self" title="'.$albumTitle.'">'.$albumTitle.'</a>';						
+		}
 		return $out;
 	}
 	function getSystemDetails($p){
@@ -618,7 +692,11 @@ class PhotosWebPage extends MainWebPage {
 		
 
 		return $this->getPages($sql,$page,$rowsperpage,$url,$season);
-	}									
+	}
+	function getPagesByAlbum($album,$page,$rowsperpage,$url){
+		$sql='select count(*) as cnt from photos where deleted=0 and album_id='.$album;
+		return $this->getPages($sql,$page,$rowsperpage,$url,$album);
+	}	
 	function getPages($sql,$page,$rowsperpage,$url="",$id=0){
 		$p=new Photo();
 		$ps=$p->doSql($sql);

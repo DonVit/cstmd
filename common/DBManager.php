@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class DBManager extends Object {
     //Common basic fields
     public $deleted;
@@ -22,7 +18,8 @@ class DBManager extends Object {
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
-			$n->redirect(Config::$errorpage);	
+			$n->redirect(Config::$errorpage);
+			exit;
 			//die('sql query: ['.$sql.'] faild with error: '.mysql_error());
 		//}else{
 		//	DBManager::logsql($sql,'0');
@@ -36,6 +33,7 @@ class DBManager extends Object {
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
 			$n->redirect(Config::$errorpage);
+			exit;
 			//die('sql query: ['.$sql.'] faild with error: '.mysql_error());
 		//} else {
 		//	DBManager::logsql($sql,'0');
@@ -249,7 +247,6 @@ class DBManager extends Object {
 		}
 
 		return $rv;
-		///return "eee";
 	}
 	public static function logsql($sql,$status){
 		$sql=mysql_real_escape_string($sql);
