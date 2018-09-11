@@ -54,6 +54,11 @@ class Photo extends DBManager {
 		}
 		return $out;
 	}
+	function getAlbum(){
+		$a=new Album();
+		$a->loadById($this->album_id);
+		return $a;
+	}	
 	function setRaion($raion){
 		$this->raion_id=$raion->id;
 		$this->centerlat=$raion->lat;
@@ -80,7 +85,6 @@ class Photo extends DBManager {
 	}
 	function getPhotosTable($ps){
 		$out="";
-		//$ps=$n->getNewsByCategory();
 		if (count($ps)!=0){
 			$out.='<table style="font-size:85%;width:100%">';
 			$i=0;
@@ -91,7 +95,6 @@ class Photo extends DBManager {
 				if ($i==4){
 					$out.='</tr><tr>';
 				}
-				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$p->id\"><img src=\"".Config::$imagessite."/thumbs/".$p->image_file."\" alt=\"".$p->image_description."\" class=\"newsgroup_img\"/><p class=\"newsgroup_p\">$p->title</p></a></div></td>";
 				$out.='<td style="width:25%"><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite."/index.php","action=viewimage").'&id='.$p->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$imagessite.'/files/s'.$p->file.'" class="imageborder"  style="width:120px;"/><p class="newsgroup_p">'.$p->title.'</p></a></div></td>';
 				if ($i==8){
 					$out.='</tr>';
@@ -99,7 +102,6 @@ class Photo extends DBManager {
 				$i=$i+1;
 			}
 			$out.='</table>';
-			//$out.="</div>";
 		}
 		//add footer
 		$out.='<div class="container groupbox">';;
@@ -115,7 +117,6 @@ class Photo extends DBManager {
 		$out.="</tr>";
 		$out.="</table>";
 		$out.="</div>";
-		
 		
 		return $out;
 	}							
