@@ -7,7 +7,8 @@ class MainWebPage extends WebPage {
 	private $bodytag="<body>";
 	private $leftcontainer;
 	private $centercontainer;
-	private $rightcontainer;	
+	private $rightcontainer;
+	private $ogp;
 	public function __construct() {
 		parent::__construct();
 		
@@ -70,6 +71,7 @@ class MainWebPage extends WebPage {
 		$out.='<meta charset="utf-8">';
 		$out.='<meta content="'.$this->getDescription().'" name="description"/>';
 		$out.='<meta content="'.$this->getKeywords().'" name="keywords"/>';
+		$out.=$this->getOGP();
 		//$out.='<meta name=viewport content="width=device-width, initial-scale=1">';
 		$out.=$this->getTheShiv();
 		$out.=$this->getFavIcon();
@@ -184,7 +186,6 @@ class MainWebPage extends WebPage {
 			return '';
 		}
 	}
-	
 	function getLanguageMenu(){	
 		$out='<div id="langmenu" style="display:block;float:left">';
 		$out.='<ul>';
@@ -1126,6 +1127,21 @@ class MainWebPage extends WebPage {
 		
 		return $this->getGroupBoxH2("Privesc Eu TV",$out);
 	}
+	public function setOGP($title, $type, $url, $image){
+		$this->ogp=array(
+			"title" => $title,
+			"type" => $type,
+			"url" => $url,
+			"image" => $image
+		);
+	}	
+	public function getOGP(){
+		$out = '';
+		foreach ((array)$this->ogp as $key => $value) {
+			$out.='<meta property="og:'.$key.'" content="'.$value.'" />';
+		}
+		return $out;
+	}	
 }
 //$b=new WebPage();
 //phpinfo();

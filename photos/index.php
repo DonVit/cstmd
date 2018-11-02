@@ -247,7 +247,11 @@ class PhotosWebPage extends MainWebPage {
 		$this->show();
 		
 	}					
-
+	function setOpenGraph($title, $p){
+		$articleUrl = $this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewfullimage&id='.$this->id);
+		$imageUrl = Config::$imagessite.'/files/s'.$p->file;
+		$this->setOGP($title, "article", $articleUrl, $imageUrl);
+	}
 	function actionViewImage(){
 		
 		$p=new Photo();
@@ -260,6 +264,8 @@ class PhotosWebPage extends MainWebPage {
 		
 		$longTitle = $p->getLongTitle();
 		$this->setTitle($longTitle);
+
+		$this->setOpenGraph($longTitle, $p);
 
 		if(!isset($this->id)){
 			$this->id=Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id;
@@ -283,13 +289,16 @@ class PhotosWebPage extends MainWebPage {
 			$p->count();
 		}
 
-		$this->setTitle($p->getLongTitle());
+		$longTitle = $p->getLongTitle();
+		$this->setTitle($longTitle);
 
+		$this->setOpenGraph($longTitle, $p);
+		
 		if(!isset($this->id)){
 			$this->id=Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id;
 		}
 		
-		$this->setCenterContainer($this->getGroupBoxH1($p->getLongTitle(),$this->getFullImage($p)));
+		$this->setCenterContainer($this->getGroupBoxH1($longTitle, $this->getFullImage($p)));
 		$this->setCenterContainer($this->getImageDescription($p));
 		$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));		
@@ -371,7 +380,7 @@ class PhotosWebPage extends MainWebPage {
 		$ls=$l->getAll("id in (".$st.")","oras desc, `order`, name");
 		$out="<ul>";
 		foreach($ls as $l){	
-			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewlocalitateimages&id='.$l->id).'">'.$l->getFullName().'</a></li>';			
+			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewlocalitateimages&id='.$l->id).'">'.$l->getFullName().'</a></li>';			
 		}
 		$out.="</ul>";
 		return $out;
@@ -389,7 +398,7 @@ class PhotosWebPage extends MainWebPage {
 		$rs=$r->getAll("id in (".$st.")","municipiu desc, `order`, name");
 		$out="<ul>";
 		foreach($rs as $r){	
-			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewraionimages&id='.$r->id).'">'.$r->getFullName().'</a></li>';			
+			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewraionimages&id='.$r->id).'">'.$r->getFullName().'</a></li>';			
 		}
 		$out.="</ul>";
 		return $out;
@@ -400,7 +409,7 @@ class PhotosWebPage extends MainWebPage {
 		$out="<ul>";
 		foreach($ys as $y){	
 			if ($y->year!=0){
-				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewyearimages&id='.$y->year).'">'.$y->year.' ('.$y->cnt.')</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewyearimages&id='.$y->year).'">'.$y->year.' ('.$y->cnt.')</a></li>';
 			}
 		}
 		$out.="</ul>";
@@ -412,7 +421,7 @@ class PhotosWebPage extends MainWebPage {
 		$out="<ul>";
 		foreach($ys as $y){
 			if ($y->month!=0){
-				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewmonthimages&id='.$y->month).'">'.$this->months[$y->month].' ('.$y->cnt.')</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewmonthimages&id='.$y->month).'">'.$this->months[$y->month].' ('.$y->cnt.')</a></li>';
 			}
 		}
 		$out.="</ul>";
@@ -422,10 +431,10 @@ class PhotosWebPage extends MainWebPage {
 		$y=new DBManager();
 		$ys=$y->doSql("select month(data) as month, count(*) as cnt from photos group by month(data)");
 		$out="<ul>";
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewseasonimages&id=1').'">'.$this->seasons[1].' ('.($ys[11]->cnt+$ys[0]->cnt+$ys[1]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewseasonimages&id=2').'">'.$this->seasons[2].' ('.($ys[2]->cnt+$ys[3]->cnt+$ys[4]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewseasonimages&id=3').'">'.$this->seasons[3].' ('.($ys[5]->cnt+$ys[6]->cnt+$ys[7]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewseasonimages&id=4').'">'.$this->seasons[4].' ('.($ys[8]->cnt+$ys[9]->cnt+$ys[10]->cnt).')</a></li>';						
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=1').'">'.$this->seasons[1].' ('.($ys[11]->cnt+$ys[0]->cnt+$ys[1]->cnt).')</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=2').'">'.$this->seasons[2].' ('.($ys[2]->cnt+$ys[3]->cnt+$ys[4]->cnt).')</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=3').'">'.$this->seasons[3].' ('.($ys[5]->cnt+$ys[6]->cnt+$ys[7]->cnt).')</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=4').'">'.$this->seasons[4].' ('.($ys[8]->cnt+$ys[9]->cnt+$ys[10]->cnt).')</a></li>';						
 		$out.="</ul>";
 		return $out;
 	}		
@@ -460,7 +469,7 @@ class PhotosWebPage extends MainWebPage {
 		$as=$a->getAll("","data desc");
 		$out="<ul>";
 		foreach($as as $a){	
-			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewalbumimages&id='.$a->id).'" title="'.$a->description.'">'.$a->title.'</a></li>';			
+			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewalbumimages&id='.$a->id).'" title="'.$a->description.'">'.$a->title.'</a></li>';			
 		}
 		$out.="</ul>";
 		return $out;
@@ -531,7 +540,7 @@ class PhotosWebPage extends MainWebPage {
 				}
 
 				$o.='<td  style="align:center;padding:10px;vertical-align:top;width:33%">';
-				$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.System::getHtmlSpecialChars($p->title).'" class="imageborder" style="width: 145px; height: 119px;" /><p style="font-size:80%;">'.System::getHtmlSpecialChars($p->title).'</p></a></div>';	  		
+				$o.='<div><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewimage&id='.$p->id).'"><img src="files/t'.$p->file.'" alt="'.System::getHtmlSpecialChars($p->title).'" class="imageborder" style="width: 145px; height: 119px;" /><p style="font-size:80%;">'.System::getHtmlSpecialChars($p->title).'</p></a></div>';	  		
 				$o.='</td>';
 				
 				if ($i==3){
@@ -549,15 +558,15 @@ class PhotosWebPage extends MainWebPage {
 	}	
 	function getImage($p){
 		$out='<table style="width:100%" ><tr><td style="text-align:center" >';
-  		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"/></a>';
+  		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewfullimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder"/></a>';
 		$prev=$p->getPrevPhotoId();
 		$tmp='';
 		if ($prev!=0){
-			$tmp='<a style="margin-right:5px;" href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$prev).'"><img src="img/media_previous_arrow.gif" alt="Precedenta" /></a>';	
+			$tmp='<a style="margin-right:5px;" href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewimage&id='.$prev).'"><img src="img/media_previous_arrow.gif" alt="Precedenta" /></a>';	
 		}
 		$next=$p->getNextPhotoId();
 		if ($next!=0){
-			$tmp.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewimage&id='.$next).'"><img src="img/media_next_arrow.gif" alt="Urmatoarea" /></a>';	
+			$tmp.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewimage&id='.$next).'"><img src="img/media_next_arrow.gif" alt="Urmatoarea" /></a>';	
 		}
 		$out.='</td></tr><tr><td style="text-align:center">'.$tmp.'</td></tr></table>';
 		return $out;
@@ -566,18 +575,18 @@ class PhotosWebPage extends MainWebPage {
 		$out='<table style="width:100%" ><tr><td style="text-align:center" >';
 		//pina la photo id cu nr 5912 nu salvam full image
   		if ($p->id>5912){
-			$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
+			$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewfullimage&id='.$p->id).'"><img src="files/'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
   		} else {
-  			$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
+  			$out.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewfullimage&id='.$p->id).'"><img src="files/s'.$p->file.'" alt="'.$p->getLongTitle().'" class="imageborder" style="width:900px;"/></a>';
   		}
 		$prev=$p->getPrevPhotoId();
 		$tmp='';
 		if ($prev!=0){
-			$tmp='<a style="margin-right:5px;" href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$prev).'"><img src="img/media_previous_arrow.gif" alt="Precedenta" /></a>';	
+			$tmp='<a style="margin-right:5px;" href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewfullimage&id='.$prev).'"><img src="img/media_previous_arrow.gif" alt="Precedenta" /></a>';	
 		}
 		$next=$p->getNextPhotoId();
 		if ($next!=0){
-			$tmp.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewfullimage&id='.$next).'"><img src="img/media_next_arrow.gif" alt="Urmatoarea" /></a>';	
+			$tmp.='<a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewfullimage&id='.$next).'"><img src="img/media_next_arrow.gif" alt="Urmatoarea" /></a>';	
 		}
 		$out.='</td></tr><tr><td style="text-align:center">'.$tmp.'</td></tr></table>';
 		return $out;
