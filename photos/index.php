@@ -360,7 +360,7 @@ class PhotosWebPage extends MainWebPage {
 	}
 	function getLocations(){
 		$lt=new Location();
-		$lts=$lt->doSql("SELECT l.id FROM photos AS p INNER JOIN localitate AS l ON p.localitate_id = l.id GROUP BY l.id");
+		$lts=$lt->doSql("select l.id from photos as p inner join localitate as l on p.localitate_id = l.id group by l.id");
 		$st='';
 		foreach($lts as $lt){	
 			$st.=$lt->id.',';			
@@ -378,7 +378,7 @@ class PhotosWebPage extends MainWebPage {
 	}
 	function getRaions(){
 		$rt=new Raion();
-		$rts=$rt->doSql("SELECT r.id FROM photos AS p INNER JOIN raion AS r ON p.raion_id = r.id GROUP BY r.id");
+		$rts=$rt->doSql("select r.id from photos as p inner join raion as r on p.raion_id = r.id group by r.id");
 		$st='';
 		foreach($rts as $rt){	
 			$st.=$rt->id.',';			
@@ -396,7 +396,7 @@ class PhotosWebPage extends MainWebPage {
 	}
 	function getYears(){
 		$y=new DBManager();
-		$ys=$y->doSql("SELECT year(data) as year, count(*) as cnt FROM photos GROUP BY year(data) ORDER BY year(data) DESC ");
+		$ys=$y->doSql("select year(data) as year, count(*) as cnt from photos group by year(data) order by year(data) desc ");
 		$out="<ul>";
 		foreach($ys as $y){	
 			if ($y->year!=0){
@@ -408,7 +408,7 @@ class PhotosWebPage extends MainWebPage {
 	}
 	function getMonths(){
 		$y=new DBManager();
-		$ys=$y->doSql("SELECT month(data) as month, count(*) as cnt FROM photos GROUP BY month(data)");
+		$ys=$y->doSql("select month(data) as month, count(*) as cnt from photos group by month(data)");
 		$out="<ul>";
 		foreach($ys as $y){
 			if ($y->month!=0){
@@ -420,7 +420,7 @@ class PhotosWebPage extends MainWebPage {
 	}
 	function getSeasons(){
 		$y=new DBManager();
-		$ys=$y->doSql("SELECT month(data) as month, count(*) as cnt FROM photos GROUP BY month(data)");
+		$ys=$y->doSql("select month(data) as month, count(*) as cnt from photos group by month(data)");
 		$out="<ul>";
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewseasonimages&id=1').'">'.$this->seasons[1].' ('.($ys[11]->cnt+$ys[0]->cnt+$ys[1]->cnt).')</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','&action=viewseasonimages&id=2').'">'.$this->seasons[2].' ('.($ys[2]->cnt+$ys[3]->cnt+$ys[4]->cnt).')</a></li>';

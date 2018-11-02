@@ -33,7 +33,7 @@ class Photo extends DBManager {
 		return System::getHtmlSpecialChars($this->title);	
 	}	
 	function getPrevPhotoId(){
-		$sql="SELECT id FROM `photos` WHERE deleted!=1 and id < $this->id order by id desc limit 0,1";
+		$sql="select id from `photos` where deleted!=1 and id < $this->id order by id desc limit 0,1";
 		$ps=$this->doSql($sql);
 		$out=0;
 		if (count($ps)!=0){
@@ -44,7 +44,7 @@ class Photo extends DBManager {
 		return $out;
 	}
 	function getNextPhotoId(){
-		$sql="SELECT id FROM `photos` WHERE deleted!=1 and id > $this->id limit 0,1";
+		$sql="select id from `photos` where deleted!=1 and id > $this->id limit 0,1";
 		$ps=$this->doSql($sql);
 		$out=0;
 		if (count($ps)!=0){
@@ -69,17 +69,17 @@ class Photo extends DBManager {
 		$this->maptype=0;
 	}
 	function getPhotosInRadius($n=10){
-		$sql="SELECT photos.*, (6371*acos(cos(radians($this->lat))*cos(radians(lat))*cos(radians(lng)-radians($this->lng))+sin(radians($this->lat))*sin(radians(lat)))) AS distance FROM photos ORDER BY distance LIMIT 0 , ".$n;
+		$sql="select photos.*, (6371*acos(cos(radians($this->lat))*cos(radians(lat))*cos(radians(lng)-radians($this->lng))+sin(radians($this->lat))*sin(radians(lat)))) as distance from photos where deleted=0 order by distance limit 0 , ".$n;
 		$ps=$this->doSql($sql);
 		return $ps;
 	}
 	function getLatestPhotos($n=10){
-		$sql="SELECT photos.* FROM photos ORDER BY data DESC LIMIT 0, ".$n;
+		$sql="select photos.* from photos where deleted=0 order by data desc limit 0, ".$n;
 		$ps=$this->doSql($sql);
 		return $ps;
 	}	
 	function getPhotosByLatLng($lat,$lng,$n=8){
-		$sql="SELECT photos.*, (6371*acos(cos(radians($lat))*cos(radians(lat))*cos(radians(lng)-radians($lng))+sin(radians($lat))*sin(radians(lat)))) AS distance FROM photos where (6371*acos(cos(radians($lat))*cos(radians(lat))*cos(radians(lng)-radians($lng))+sin(radians($lat))*sin(radians(lat))))<=10 ORDER BY distance LIMIT 0 , ".$n;
+		$sql="select photos.*, (6371*acos(cos(radians($lat))*cos(radians(lat))*cos(radians(lng)-radians($lng))+sin(radians($lat))*sin(radians(lat)))) as distance from photos where (6371*acos(cos(radians($lat))*cos(radians(lat))*cos(radians(lng)-radians($lng))+sin(radians($lat))*sin(radians(lat))))<=10 and deleted=0 order by distance limit 0 , ".$n;
 		$ps=$this->doSql($sql);
 		return $this->getPhotosTable($ps);
 	}

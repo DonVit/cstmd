@@ -185,7 +185,7 @@ class IndexWebPage extends MainWebPage {
 	}
 
 	function getLastImages(){
-		$sql="select id, title, file from photos order by data desc";
+		$sql="select id, title, file from photos where deleted=0 order by data desc";
 		$sql.=" limit 0,8";
 		$p=new Photo();
 		$ps=$p->doSql($sql);
@@ -340,7 +340,7 @@ class IndexWebPage extends MainWebPage {
 	function getImagesCount(){
 
 		$i=new Image();
-		$is=$i->doSql("select count(*) as cnt from image where deleted=0");
+		$is=$i->doSql("select count(*) as cnt from photos where deleted=0");
 		
 		$c=0;
 		foreach ($is as $i){
