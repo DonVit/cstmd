@@ -826,14 +826,16 @@ class IndexLocationsWebPage extends MainWebPage {
 		return $this->getGroupBoxH2("<a name=\"7\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
 	}				
 	function showElectoralPreferences(){
-		$this->setJavascript("https://www.google.com/jsapi");
-		$o2s='<a name="6"></a>Preferintele Electorale pe parcursul anilor ale locuitorilor din '.$this->location->getPrimariaName();
-		$o2b=Alegeri::getResultsByPrimarie($this->location->raion_id,$this->location->id);
-		$o2f="Sursa: www.cec.md";
-		if (empty($o2b)){
-			return "";
-		} else {
-			return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+		if (($this->location->raion_id!=500)&&($this->location->raion_id!=700)){
+			$this->setJavascript("https://www.google.com/jsapi");
+			$o2s='<a name="6"></a>Preferintele Electorale pe parcursul anilor ale locuitorilor din '.$this->location->getPrimariaName();
+			$o2b=Alegeri::getResultsByPrimarie($this->location->raion_id,$this->location->id);
+			$o2f="Sursa: www.cec.md";
+			if (empty($o2b)){
+				return "";
+			} else {
+				return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+			}
 		}
 	}
 	function showAlegeri141130Image(){
@@ -848,20 +850,17 @@ class IndexLocationsWebPage extends MainWebPage {
 		}
 	}
 	function showAlegeriPresidentiale161030Image(){
-	
-		$o2s='<a name="7"></a>Alegerile Prezidentiale din 30 octombrie 2016 - Rezultatele din '.$this->location->getPrimariaName();
-		
-		//$o2b='<b>Rezultate Tur 2:</b>';
-		//$o2b.=Alegeri::getAlegeriPresidentialeByLocaliateAndTur($this,$this->location->raion_id,$this->location->id,2);
-		//$o2b.='<b>Rezultate Tur 1:</b>';
-		//$o2b.=Alegeri::getAlegeriPresidentialeByLocaliateAndTur($this,$this->location->raion_id,$this->location->id,1);
-		$o2b='<b>Imagini Sursa:</b>';
-		$o2b.=Alegeri::getPresidentialImageUrlByPrimarie($this->location->raion_id,$this->location->id);
-		$o2f="Sursa: www.cec.md";
-		if (empty($o2b)){
-			return "";
-		} else {
-			return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+		if (($this->location->raion_id!=500)&&($this->location->raion_id!=700)){
+			$o2s='<a name="7"></a>Alegerile Prezidentiale din 30 octombrie 2016 - Rezultatele din '.$this->location->getPrimariaName();
+			
+			$o2b='<b>Imagini Sursa:</b>';
+			$o2b.=Alegeri::getPresidentialImageUrlByPrimarie($this->location->raion_id,$this->location->id);
+			$o2f="Sursa: www.cec.md";
+			if (empty($o2b)){
+				return "";
+			} else {
+				return $this->getGroupBoxH3($o2s,$o2b,$o2f);
+			}
 		}
 	}	
 }

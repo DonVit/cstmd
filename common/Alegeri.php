@@ -133,7 +133,7 @@ class Alegeri extends DBManager {
 	}
 	public static function getAlegeriPresidentialeByLocaliateAndTur($currentPage, $raion_id,$localitate_id, $tur){
 		$conditie='s.localitate_id='.$localitate_id;
-		$out.=Alegeri::getAlegeriPresidentialeByConditieAndTur($currentPage, $conditie, $tur);
+		$out=Alegeri::getAlegeriPresidentialeByConditieAndTur($currentPage, $conditie, $tur);
 		return $out;
 	}	
 	public static function getAlegeriPresidentialeByConditieAndTur($currentPage, $conditie, $tur){

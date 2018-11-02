@@ -243,7 +243,7 @@ class Raion extends DBManager {
 	
 		$table=new Table();
 		$table->setPagination(false);
-		$table->setRowsPerPage(100);
+		$table->setRowsPerPage(200);
 		$table->setSql($sql);
 	
 		$namelink=function($row) use ($currentPage){
@@ -256,7 +256,11 @@ class Raion extends DBManager {
 			return '<a href="'.$url.'">'.$name.'</a>';
 		};
 		$nrpoplink=function($row) use ($currentPage){
-			return number_format($row->p, 0, ',', ' ');;
+			$rez = number_format($row->p, 0, ',', ' ');
+			if ($row->p==0) {
+				$rez = "Nu sunt date";
+			}
+			return $rez;
 		};
 		$table->addField(new TableField(1, "Denumire localitate", "name", "text-align: left;width:70%",$namelink));
 		$table->addField(new TableField(2, "Nr. Locuitori", "p", "text-align: center;width:20%",$nrpoplink));
