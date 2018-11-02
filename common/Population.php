@@ -19,7 +19,7 @@ class Population extends DBManager {
 		return "popnat";
 	}
 	function getPopulationByRaion($raionid){
-		$sql="SELECT ".$raionid." as id, sum(total) as total,sum(moldoveni) as moldoveni,sum(ucraineni) as ucraineni,sum(rusi) as rusi,sum(gagauzi) as gagauzi,sum(bulgari) as bulgari ,sum(romani) as romani,sum(evrei) as evrei,sum(polonezi) as polonezi,sum(tigani) as tigani,sum(altele) as altele, 0 as deleted FROM `popnat` inner join localitate on popnat.localitate_id=localitate.id where raion_id=".$raionid;
+		$sql="select ".$raionid." as id, sum(total) as total,sum(moldoveni) as moldoveni,sum(ucraineni) as ucraineni,sum(rusi) as rusi,sum(gagauzi) as gagauzi,sum(bulgari) as bulgari ,sum(romani) as romani,sum(evrei) as evrei,sum(polonezi) as polonezi,sum(tigani) as tigani,sum(altele) as altele, 0 as deleted from `popnat` inner join localitate on popnat.localitate_id=localitate.id where raion_id=".$raionid;
 		$o=Population::doSql($sql);
 		return $o;
 	}
@@ -40,15 +40,15 @@ class Population extends DBManager {
 
 	public static function getPopulationVeiw($currentPage, $filter){
 		$sql='select t.* from (';
-		$sql.='SELECT "Moldoveni/Romani" as Nationalitate, "008000" as color, sum(total) as Total, sum(moldoveni+romani) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Ucraineni" as Nationalitate, "224499" as color, sum(total) as Total, sum(ucraineni) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Rusi" as Nationalitate, "FF0000" as color, sum(total) as Total, sum(rusi) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Gagauzi" as Nationalitate, "FF9900" as color, sum(total) as Total, sum(gagauzi) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Bulgari" as Nationalitate, "AA0033" as color, sum(total) as Total, sum(bulgari) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Evrei" as Nationalitate, "7777CC" as color, sum(total) as Total, sum(evrei) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Polonezi" as Nationalitate, "80C65A" as color, sum(total) as Total, sum(polonezi) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Romi/Tigani" as Nationalitate, "AB8F3C" as color, sum(total) as Total, sum(tigani) as totalNationalitate FROM `popnat` '.$filter.' union ';
-		$sql.='SELECT "Altele" as Nationalitate, "AD4949" as color, sum(total) as Total, sum(altele) as totalNationalitate FROM `popnat` '.$filter;
+		$sql.='select "Moldoveni/Romani" as Nationalitate, "008000" as color, sum(total) as Total, sum(moldoveni+romani) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Ucraineni" as Nationalitate, "224499" as color, sum(total) as Total, sum(ucraineni) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Rusi" as Nationalitate, "FF0000" as color, sum(total) as Total, sum(rusi) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Gagauzi" as Nationalitate, "FF9900" as color, sum(total) as Total, sum(gagauzi) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Bulgari" as Nationalitate, "AA0033" as color, sum(total) as Total, sum(bulgari) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Evrei" as Nationalitate, "7777CC" as color, sum(total) as Total, sum(evrei) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Polonezi" as Nationalitate, "80C65A" as color, sum(total) as Total, sum(polonezi) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Romi/Tigani" as Nationalitate, "AB8F3C" as color, sum(total) as Total, sum(tigani) as totalNationalitate from `popnat` '.$filter.' union ';
+		$sql.='select "Altele" as Nationalitate, "AD4949" as color, sum(total) as Total, sum(altele) as totalNationalitate from `popnat` '.$filter;
 		$sql.=') as t';
 		
 		$out='';
@@ -81,7 +81,7 @@ class Population extends DBManager {
 		return $out;
 	}
 	public static function getPopulationInTimeVeiwByLocalitate($currentPage,$localitate_id){
-		$sql='SELECT p.localitate_id, p.an, p.total, r.sursa FROM popnat as p inner join recensamint as r on p.an=r.an where p.localitate_id='.$localitate_id.' order by p.an desc';
+		$sql='select p.localitate_id, p.an, p.total, r.sursa from popnat as p inner join recensamint as r on p.an=r.an where p.localitate_id='.$localitate_id.' order by p.an desc';
 	
 		$out='';
 	
