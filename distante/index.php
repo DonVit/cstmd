@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class DistancesWebPage extends MainWebPage {
@@ -172,9 +168,9 @@ class DistancesWebPage extends MainWebPage {
 	function getMap($out=''){
 
 		$this->setBodyTag('<body onload="DirectionsMapViewOnMapLoad()">');
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
-		$this->setJavascript("http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false");			
+		$this->setJavascript("https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false");			
 		$this->setJavascript(Config::$commonsite."/js/directions.js");		
 
 		$out='<div id="map" style="width: 100%;height: 400px;border:1px solid #777777;margin-top: 2px;"></div>';
@@ -185,7 +181,7 @@ class DistancesWebPage extends MainWebPage {
 	function getViewMap1(){
 
 		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		
 		$out='';

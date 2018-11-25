@@ -151,29 +151,29 @@ function MapViewOnMapLoad(isFull) {
 			var Latlng = new google.maps.LatLng(lat,lng);
 			//alert(newsCheckBox.getCheckedState());
 			if ((type=='news')&&(newsCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_yellow.png');
+				var mi=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_yellow.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='imobil')&&(imobilCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_red.png');
+				var mi=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_red.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='chirie')&&(chirieCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_green.png');
+				var mi=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_green.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='link')&&(photoCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_blue.png');
+				var mi=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_blue.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='photo')&&(photoCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_blue.png');
+				var mi=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_blue.png');
 				addMarker(mi,Latlng,content);
 			}		
 		  });
 	}		
 	function addMarker(mi, location,content) {
-	  var ms=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_shadow.png');
+	  var ms=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_shadow.png');
 	  var mc=new google.maps.InfoWindow({content:content});
 	  var marker = new google.maps.Marker({position: location, map: map, icon: mi, shadow: ms});
 	  google.maps.event.addListener(marker, 'click', function() {
@@ -319,17 +319,17 @@ function MapAlegeriViewOnMapLoad(isFull) {
 			var Latlng = new google.maps.LatLng(lat,lng);
 			//alert(newsCheckBox.getCheckedState());
 			if (type=='yellow'){
-				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_yellow.png');
+				var mi=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_yellow.png');
 				addMarker(mi,Latlng,content);
 			}
 			if (type=='red'){
-				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_red.png');
+				var mi=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_red.png');
 				addMarker(mi,Latlng,content);
 			}
 		  });
 	}		
 	function addMarker(mi, location,content) {
-	  var ms=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_shadow.png');
+	  var ms=new google.maps.MarkerImage('https://common.casata.md/img/mm_20_shadow.png');
 	  var mc=new google.maps.InfoWindow({content:content});
 	  var marker = new google.maps.Marker({position: location, map: map, icon: mi, shadow: ms});
 	  google.maps.event.addListener(marker, 'click', function() {
