@@ -139,7 +139,7 @@ class IndexPage extends MainWebPage {
 	function getAllMap($out=''){
 
 		$this->setBodyTag('<body onload="MapAlegeriViewOnMapLoad(true)">');
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		$this->setJavascript(Config::$commonsite."/js/controls.js");
@@ -181,7 +181,7 @@ class IndexPage extends MainWebPage {
 	function getViewMap(){
 
 		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		
 		$out='';
@@ -202,7 +202,7 @@ class IndexPage extends MainWebPage {
 	function getViewPoi(){
 	
 		$this->setBodyTag('<body onload="MapViewPoiOnMapLoad()">');
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 	
 		$out='';
