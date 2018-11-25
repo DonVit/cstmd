@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class GeoRSSMapsWebPage extends WebPage {
@@ -27,19 +23,6 @@ class GeoRSSMapsWebPage extends WebPage {
 		$p=new Property();
 		$ps=$p->getAll("lat!=\"\"");
 		foreach($ps as $p){
-			//$out.='<marker ';
-			//$out.='title="'.$this->parseToXML($p->getShortDescription()).'" ';
-			//$out.='description="'.$this->parseToXML($p->getShortDescription()).'" ';
-			//$out.='lat="'.$p->lat.'" ';
-			//$out.='lng="'.$p->lng.'" ';
-			//if ($p->scop_id==1){
-			//	$out.='type="imobil" ';		
-			//	$out.='link="'.Config::$imobilsite.'/property.php?id='.$p->id.'" ';
-			//}else {
-			//	$out.='type="chirie" ';		
-			//	$out.='link="'.Config::$chiriesite.'/property.php?id='.$p->id.'" ';				
-			//}								
-			//$out.='/>';
 			$link=Config::$chiriesite.'/property.php?id='.$p->id;
 			$description='<a href="'.$link.'">'.$link.'</a>';	
 			$out.=$this->getEntry($this->parseToXML($p->getShortDescription()),$this->parseToXML($description),$p->lat,$p->lng,$link);							
@@ -54,7 +37,6 @@ class GeoRSSMapsWebPage extends WebPage {
 		$out.='<link href="'.$link.'"/>';
 		$out.='<content type="html">'.$description.'</content>';
 		$out.='<georss:point>'.$lat.' '.$lng.'</georss:point>';
-		
 		$out.='</entry>';
 		return $out; 
 	}
@@ -63,8 +45,7 @@ class GeoRSSMapsWebPage extends WebPage {
 		$xmlStr=str_replace('>','&gt;',$xmlStr); 
 		$xmlStr=str_replace('"','&quot;',$xmlStr); 
 		$xmlStr=str_replace("'",'&#39;',$xmlStr); 
-		$xmlStr=str_replace("&",'&amp;',$xmlStr); 
-		//return $xmlStr; 
+		$xmlStr=str_replace("&",'&amp;',$xmlStr);
 		return htmlspecialchars($htmlStr);
 	} 	
 }

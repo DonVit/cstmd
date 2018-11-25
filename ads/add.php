@@ -20,24 +20,7 @@ class AddCompanyWebPage extends MainWebPage {
 		$t="Adauga Ad";
 		$this->setTitle($t);
 		$this->setLogoTitle($t);
-//		//modify
-//		if (isset($this->id)){
-//			$c=new Company();
-//			$c->loadById($this->id);
-//
-//			$i=new Image();
-//			$is=$i->getAll("reftype='f' and reftypeid=".$c->id);			
-//
-//			$fs=User::getCurrentFiles();
-//			for ($i = 0; $i <= 4; $i++) {
-//				if (isset($is[$i])){
-//					$fs[$i]=$is[$i];
-//					$fs[$i]->error=0;
-//				}
-//			}
-//			User::setCurrentCompany($c);
-//			User::setCurrentFiles($fs);
-//		}	
+
 		//get company from session
 		$this->currentcompany=User::getCurrentCompany();
 		$this->currentfiles=User::getCurrentFiles();
@@ -51,20 +34,7 @@ class AddCompanyWebPage extends MainWebPage {
 				$this->currentcompany->$field=$this->getParamValue($value);
 			}
 		}
-/*		
-		//if (isset($_FILES["logo_file"])){
-		if (!empty($_FILES["logo_file"]["name"])){
-			$newfilename=System::getRandomFileName($_FILES["logo_file"]["name"]);
-			$this->currentcompany->logo_file=$newfilename;
-			move_uploaded_file($_FILES["logo_file"]["tmp_name"], "files/".$this->currentcompany->logo_file);
-			//Image::makeIcons_MergeCenter("files/".$this->currentcompany->file, "files/t".$this->currentcompany->file, 100);
-			//Image::makeIcons_MergeCenter("files/".$this->currentcompany->file, "files/s".$this->currentcompany->file, 300);
-			//unlink("files/".$this->currentcompany->file);
-			Photo::makeIcons_MergeCenter("files/".$this->currentcompany->logo_file, "files/t".$this->currentcompany->logo_file, 100);
-			Photo::makeIcons_MergeCenter("files/".$this->currentcompany->logo_file, "files/s".$this->currentcompany->logo_file, 300);
-			unlink("files/".$this->currentcompany->logo_file);		
-		}
-*/		
+
 		//Logger::setLogs("current photo after=".$this->currentcompany);
 		if($tmpraionid!=$this->currentcompany->raion_id){
 			$r=new Raion();
@@ -147,8 +117,6 @@ class AddCompanyWebPage extends MainWebPage {
 		$this->show();
 	}
 	function actionMap(){
-		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 		$this->step=4;
 		$this->steptitle="Adauga Companie - Harta";
 		$this->setTitle($this->steptitle);
