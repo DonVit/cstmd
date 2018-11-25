@@ -58,10 +58,10 @@ class System{
 		return nl2br(htmlspecialchars($text));
 	}
 	public static function getValidUrl($url){
-	   	if (substr($url,0,7)=="http://")   		
+	   	if (substr($url,0,7)=="https://")   		
 	   		return $url;
 	   	else
-	   		return "http://".$url;
+	   		return "https://".$url;
    }
 	public static function getHtmlSpecialChars($text){
 		return htmlspecialchars($text);

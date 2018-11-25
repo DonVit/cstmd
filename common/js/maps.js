@@ -4,7 +4,7 @@ function MapViewOnMapLoad(isFull) {
 	
 	var osmOptions = {
 	  getTileUrl: function(coord, zoom) {
-	    return "http://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
+	    return "https://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
 	  },
 	  tileSize: new google.maps.Size(256, 256),
 	  maxZoom: 19,
@@ -79,7 +79,7 @@ function MapViewOnMapLoad(isFull) {
 		var latlng = new google.maps.LatLng(lat,lng);
 		var marker = new google.maps.Marker({position: latlng,map: map});
 		google.maps.event.addListener(marker, 'click', function() {
-	        window.location = "http://maps.casata.md/index.php?action=viewpoi&lat="+marker.getPosition().lat()+"&lng="+marker.getPosition().lng();
+	        window.location = "https://maps.casata.md/index.php?action=viewpoi&lat="+marker.getPosition().lat()+"&lng="+marker.getPosition().lng();
 	 });	
 	}
 	var myLinkControl = new LinkControl('Adauga','add.php','Adauga un punct pe harta');
@@ -151,29 +151,29 @@ function MapViewOnMapLoad(isFull) {
 			var Latlng = new google.maps.LatLng(lat,lng);
 			//alert(newsCheckBox.getCheckedState());
 			if ((type=='news')&&(newsCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_yellow.png');
+				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_yellow.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='imobil')&&(imobilCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_red.png');
+				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_red.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='chirie')&&(chirieCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_green.png');
+				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_green.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='link')&&(photoCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_blue.png');
+				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_blue.png');
 				addMarker(mi,Latlng,content);
 			}
 			if ((type=='photo')&&(photoCheckBox.getCheckedState())){
-				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_blue.png');
+				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_blue.png');
 				addMarker(mi,Latlng,content);
 			}		
 		  });
 	}		
 	function addMarker(mi, location,content) {
-	  var ms=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_shadow.png');
+	  var ms=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_shadow.png');
 	  var mc=new google.maps.InfoWindow({content:content});
 	  var marker = new google.maps.Marker({position: location, map: map, icon: mi, shadow: ms});
 	  google.maps.event.addListener(marker, 'click', function() {
@@ -202,7 +202,7 @@ function MapAlegeriViewOnMapLoad(isFull) {
 	
 	var osmOptions = {
 	  getTileUrl: function(coord, zoom) {
-	    return "http://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
+	    return "https://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
 	  },
 	  tileSize: new google.maps.Size(256, 256),
 	  maxZoom: 19,
@@ -277,7 +277,7 @@ function MapAlegeriViewOnMapLoad(isFull) {
 		var latlng = new google.maps.LatLng(lat,lng);
 		var marker = new google.maps.Marker({position: latlng,map: map});
 		google.maps.event.addListener(marker, 'click', function() {
-	        window.location = "http://maps.casata.md/index.php?action=viewpoi&lat="+marker.getPosition().lat()+"&lng="+marker.getPosition().lng();
+	        window.location = "https://maps.casata.md/index.php?action=viewpoi&lat="+marker.getPosition().lat()+"&lng="+marker.getPosition().lng();
 	 });	
 	}
 	var myLinkControl = new LinkControl('Adauga','add.php','Adauga un punct pe harta');
@@ -319,17 +319,17 @@ function MapAlegeriViewOnMapLoad(isFull) {
 			var Latlng = new google.maps.LatLng(lat,lng);
 			//alert(newsCheckBox.getCheckedState());
 			if (type=='yellow'){
-				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_yellow.png');
+				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_yellow.png');
 				addMarker(mi,Latlng,content);
 			}
 			if (type=='red'){
-				var mi=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_red.png');
+				var mi=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_red.png');
 				addMarker(mi,Latlng,content);
 			}
 		  });
 	}		
 	function addMarker(mi, location,content) {
-	  var ms=new google.maps.MarkerImage('http://labs.google.com/ridefinder/images/mm_20_shadow.png');
+	  var ms=new google.maps.MarkerImage('https://labs.google.com/ridefinder/images/mm_20_shadow.png');
 	  var mc=new google.maps.InfoWindow({content:content});
 	  var marker = new google.maps.Marker({position: location, map: map, icon: mi, shadow: ms});
 	  google.maps.event.addListener(marker, 'click', function() {
@@ -355,7 +355,7 @@ function MapAlegeriViewOnMapLoad(isFull) {
 function MapViewOnMapLoad1() {
 	var osmOptions = {
 	  getTileUrl: function(coord, zoom) {
-	    return "http://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
+	    return "https://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
 	  },
 	  tileSize: new google.maps.Size(256, 256),
 	  maxZoom: 19,
@@ -396,13 +396,13 @@ function MapViewOnMapLoad1() {
 	var latlng = new google.maps.LatLng(lat,lng);
 	var marker = new google.maps.Marker({position: latlng,map: map});
 	google.maps.event.addListener(marker, 'click', function() {
-        window.location = "http://maps.casata.md/index.php?action=viewpoi&lat="+marker.getPosition().lat()+"&lng="+marker.getPosition().lng();
+        window.location = "https://maps.casata.md/index.php?action=viewpoi&lat="+marker.getPosition().lat()+"&lng="+marker.getPosition().lng();
  });	
 }
 function MapViewPoiOnMapLoad() {
 	var osmOptions = {
 	  getTileUrl: function(coord, zoom) {
-	    return "http://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
+	    return "https://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
 	  },
 	  tileSize: new google.maps.Size(256, 256),
 	  maxZoom: 19,
@@ -507,7 +507,7 @@ function MapViewPoiOnMapLoad() {
 function MapEditOnMapLoad(){
 	var osmOptions = {
 	  getTileUrl: function(coord, zoom) {
-	    return "http://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
+	    return "https://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
 	  },
 	  tileSize: new google.maps.Size(256, 256),
 	  maxZoom: 19,

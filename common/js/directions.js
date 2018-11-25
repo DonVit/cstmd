@@ -1,7 +1,7 @@
 function DirectionsMapViewOnMapLoad() {
 	var osmOptions = {
 	  getTileUrl: function(coord, zoom) {
-	    return "http://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
+	    return "https://a.tile.openstreetmap.org/"+zoom+"/"+coord.x+"/"+coord.y+".png";
 	  },
 	  tileSize: new google.maps.Size(256, 256),
 	  maxZoom: 19,

@@ -46,8 +46,8 @@
 //  Configurationl
 //
 LightboxOptions = Object.extend({
-    fileLoadingImage:        'http://common.casata.md/img/loading.gif',     
-    fileBottomNavCloseImage: 'http://common.casata.md/img/closelabel.gif',
+    fileLoadingImage:        'https://common.casata.md/img/loading.gif',     
+    fileBottomNavCloseImage: 'https://common.casata.md/img/closelabel.gif',
 
     overlayOpacity: 0.8,   // controls transparency of shadow overlay
 
