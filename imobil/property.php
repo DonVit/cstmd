@@ -520,7 +520,7 @@ class PropertyWebPage extends MainWebPage {
 		if ($this->currentproperty->getScop()->id==1){	
 			if ($this->currentproperty->getYouTubeId()!=""){ 
 				$out.='<div style="text-align: center;">';
-				$out.='<iframe width="560" height="315" src="http://www.youtube.com/embed/'.$this->currentproperty->getYouTubeId().'" frameborder="0" allowfullscreen></iframe>';
+				$out.='<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$this->currentproperty->getYouTubeId().'" frameborder="0" allowfullscreen></iframe>';
 				$out.='</div>';
 			} else {
 				$out.='<div style="text-align: center;">';

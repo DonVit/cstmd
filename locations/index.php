@@ -470,7 +470,7 @@ class IndexLocationsWebPage extends MainWebPage {
 				$chtt='Nationalitati '.$this->location->getFullNameDescription();
 				$o2b.='<br>';
 				$o2b.='<div style="text-align:center">';
-				$o2b.='<img src="http://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
+				$o2b.='<img src="https://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
 				$o2b.='</div>';			
 			}
 		}
@@ -518,7 +518,7 @@ class IndexLocationsWebPage extends MainWebPage {
 				$chtt='Nationalitati '.$this->raion->getFullNameDescription();
 				$o2b.='<br>';
 				$o2b.='<div style="text-align:center">';
-				$o2b.='<img src="http://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
+				$o2b.='<img src="https://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
 				$o2b.='</div>';
 				$out.=$this->getGroupBoxH3($o2s,$o2b);
 			}
@@ -568,7 +568,7 @@ class IndexLocationsWebPage extends MainWebPage {
 	}								
 	function getMap1($m){
 		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		
 		if ($m->lat==0){
 			$m->maptype=3;

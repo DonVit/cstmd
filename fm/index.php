@@ -1,5 +1,4 @@
 <?php
-
 require_once(__DIR__ . '/../main/loader.php');
 
 class IndexLocationsWebPage extends MainWebPage {
@@ -7,7 +6,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		parent::__construct();
 		
 		$this->map=User::getCurrentMap();
-		$this->redirect("http://fm.casata.md/index.htm");
+		$this->redirect("https://fm.casata.md/index.htm");
 		
 		if (!isset($this->localitate_id)){
 			$this->localitate_id=0;
