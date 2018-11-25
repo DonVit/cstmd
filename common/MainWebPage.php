@@ -19,7 +19,7 @@ class MainWebPage extends WebPage {
 		$this->setCSS(Config::$commonsite."/style/common.css");
 		$this->setJavascript(Config::$commonsite."/js/scripts.js");
 		$this->setJavascript("https://www.google.com/recaptcha/api.js?hl=".$this->getLang()->name);
-		$this->setJavascript("http://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
+		$this->setJavascript("https://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
 	}
 	
 	function show($html="MainWebPageHtml"){
@@ -41,7 +41,7 @@ class MainWebPage extends WebPage {
 	function getTheShiv(){
 		$out='';
 		$out.='<!--[if lt IE 9]>';
-		$out.='<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>';
+		$out.='<script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>';
 		$out.='<![endif]-->';
 		return $out;
 	}			
@@ -247,10 +247,10 @@ class MainWebPage extends WebPage {
 			$out.='<div id="counters" class="counters">';
 			$out.='<!--/Start trafic.ro/-->';
 			$out.='<script type="text/javascript">t_rid="casatamd";</script>';
-			$out.='<script type="text/javascript" src="http://storage.trafic.ro/js/trafic.js"></script>';
+			$out.='<script type="text/javascript" src="https://storage.trafic.ro/js/trafic.js"></script>';
 			$out.='<noscript>';		
-			$out.='<a href="http://www.trafic.ro/top/?rid=casatamd" target="_blank"><img border="0" alt="trafic ranking" src="http://log.trafic.ro/cgi-bin/pl.dll?rid=casatamd"/></a>';
-			$out.='<a href="http://www.trafic.ro">Statistici web</a>';
+			$out.='<a href="https://www.trafic.ro/top/?rid=casatamd" target="_blank"><img border="0" alt="trafic ranking" src="https://log.trafic.ro/cgi-bin/pl.dll?rid=casatamd"/></a>';
+			$out.='<a href="https://www.trafic.ro">Statistici web</a>';
 			$out.='</noscript>';
 			$out.='<!--/End trafic.ro/-->';
 			$out.='</div>';	
@@ -322,7 +322,7 @@ class MainWebPage extends WebPage {
 			$out.='<a class="addthis_counter addthis_bubble_style"></a>';
 			$out.='</div>';
 			$out.='<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>';
-			$out.='<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=donvit"></script>';
+			$out.='<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=donvit"></script>';
 				
 			return $out;
 		} else {
@@ -431,12 +431,12 @@ class MainWebPage extends WebPage {
 
 		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		$this->setJavascript(Config::$commonsite."/js/controls.js");
 
 		//$this->setBodyTag('<body onload="MapViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
+		//$this->setJavascript("https://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 		$out='';
 		if ($m->lat==0){
 			$m->maptype=0;
@@ -464,10 +464,10 @@ class MainWebPage extends WebPage {
 	function setMap($m){
 
 		$this->setBodyTag('<body onload="MapEditOnMapLoad()">');
-		$this->setJavascript("http://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
+		//$this->setJavascript("https://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 		
 		$out='';
 		//$out.='<div class="form_row">';
@@ -629,7 +629,7 @@ class MainWebPage extends WebPage {
 		return $out;	 
 	}
 	function getContactsQRCode($c){
-		$qrcodeurl='http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=MECARD:';
+		$qrcodeurl='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=MECARD:';
 		//Name
 		$qrcodeurl.='N:'.$c->contactname.';';
 		//Adresa
@@ -654,7 +654,7 @@ class MainWebPage extends WebPage {
 		$out.='<td class="property-value"><img src="'.$qrcodeurl.'" alt="qr code" class="imageborder"></td>';
 		$out.='</tr>';
 		$out.='<tr>';
-		$out.='<td class="property-value" style="text-align: center;"><a href="http://www.youtube.com/watch?v=GOgyC8liCfg" target="_blank">Ce este un QR code?</a></td>';
+		$out.='<td class="property-value" style="text-align: center;"><a href="https://www.youtube.com/watch?v=GOgyC8liCfg" target="_blank">Ce este un QR code?</a></td>';
 		$out.='</tr>';
 		$out.='</table>';
 	
@@ -743,7 +743,7 @@ class MainWebPage extends WebPage {
 		//$this->setCSS(Config::$commonsite."/style/lightbox.css");
 	
 		//$this->setCSS(Config::$commonsite."/js/lightbox2.51/css/screen.css");
-		//$this->setCSS("http://fonts.googleapis.com/css?family=Fredoka+One|Open+Sans:400,700");
+		//$this->setCSS("https://fonts.googleapis.com/css?family=Fredoka+One|Open+Sans:400,700");
 		
 		
 		//$this->setJavascript(Config::$commonsite."/js/builder.js");
@@ -982,7 +982,7 @@ class MainWebPage extends WebPage {
 	}			
 	function getPanoramioFotos($m){
 	
-		$this->setJavascript("http://www.panoramio.com/wapi/wapi.js?v=1");
+		$this->setJavascript("https://www.panoramio.com/wapi/wapi.js?v=1");
 		$this->setJavascript(Config::$commonsite."/js/panoramio.js");
 	
 		if ($m->lat==0){
@@ -1000,7 +1000,7 @@ class MainWebPage extends WebPage {
 	function getSkypeControl($skypeid){
 		$out='';
 // 		if ($skypeid!=""){
-// 			$this->setJavascript("http://cdn.dev.skype.com/uri/skype-uri.js");
+// 			$this->setJavascript("https://cdn.dev.skype.com/uri/skype-uri.js");
 // 			$out.='<div id="call_16" style1="width:20%;background-color:#0094ff">';
 // 			$out.='<script type="text/javascript">';
 // 			$out.='Skype.ui({name: "call",element: "call_16",participants: ["echo123"],imageSize: 16,imageColor: "white"});';
