@@ -132,7 +132,7 @@ class WebPage extends Object {
 		$v->referer=getenv("HTTP_REFERER");
 		$v->agent=getenv("HTTP_USER_AGENT");
 		//$v->query=getenv("REQUEST_URI");
-		$v->query='http://'.getenv("SERVER_NAME").getenv("REQUEST_URI");
+		$v->query='https://'.getenv("SERVER_NAME").getenv("REQUEST_URI");
 		$v->datetime=System::getCurentDateTime();
 		//$v->save();
 	}

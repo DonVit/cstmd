@@ -10,10 +10,10 @@ class Mail{
 		 <title>Portalul Imobiliar "CasaTa" www.casata.md - Inregistrare</title>
 		</head>
 		<body>
-		<b>Portalul Imobiliar "CasaTa" <a href="http://www.casata.md">www.casata.md</a> - Inregistrare</b>
+		<b>Portalul Imobiliar "CasaTa" <a href="https://www.casata.md">www.casata.md</a> - Inregistrare</b>
 		<p>Utilizator: '.$user.'</p>
 		<p>Parola: '.$password.'</p>
-		Pentru a va logina accesati pagina  <a href="http://accounts.casata.md/login.php">http://accounts.casata.md/login.php</a>
+		Pentru a va logina accesati pagina  <a href="https://accounts.casata.md/login.php">https://accounts.casata.md/login.php</a>
 		</body>
 		</html>
 		';
@@ -30,10 +30,10 @@ class Mail{
 		 <title>Portalul Imobiliar "CasaTa" www.casata.md - Parola Contului</title>
 		</head>
 		<body>
-		<b>Portalul Imobiliar "CasaTa" <a href="http://www.casata.md">www.casata.md</a> - Parola Contului</b>
+		<b>Portalul Imobiliar "CasaTa" <a href="https://www.casata.md">www.casata.md</a> - Parola Contului</b>
 		<p>Utilizator: '.$user.'</p>
 		<p>Parola: '.$password.'</p>
-		Pentru a va logina accesati pagina  <a href="http://accounts.casata.md/login.php">http://accounts.casata.md/login.php</a>
+		Pentru a va logina accesati pagina  <a href="https://accounts.casata.md/login.php">https://accounts.casata.md/login.php</a>
 		</body>
 		</html>
 		';
