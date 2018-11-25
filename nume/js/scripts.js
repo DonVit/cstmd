@@ -12,7 +12,7 @@ function OnMapLoad() {
 		tilelayers[0].getCopyright = function(a,b) {return "OpenStreetMap.com"; }
 		var z;
 		tilelayers[0].getTileUrl = function (a,b) {
-			return "http://a.tile.openstreetmap.org/"+b+"/"+a.x+"/"+a.y+".png";
+			return "https://a.tile.openstreetmap.org/"+b+"/"+a.x+"/"+a.y+".png";
 		};
 		
 		var custommap = new GMapType(tilelayers, new GMercatorProjection(19), "OSM",{errorMessage:"No Data Available"});
