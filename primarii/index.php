@@ -75,7 +75,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getLocalitatiDistance());	
 		$this->setCenterContainer($this->getContacts($l));
 		$this->setCenterContainer($this->getNewsTitles());
-		$this->setCenterContainer($this->getNews());
+		//$this->setCenterContainer($this->getNews());
 		
 		$c='<a name="9"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'y',$l->id)));

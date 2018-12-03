@@ -17,7 +17,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='<h2 class="groupheader_h2">Anunturi Oferte, Cereri Imobiliare</h2>';		
 		$out.='</div>';
 		$out.='<div id="left" style="width:168px;float:left;">';
-		$out.=$this->getImobilCount();	
+		$out.=$this->getImobilCount();
 		$out.=$this->getImobilAdd();				
 		$out.='</div>';			
 		$out.='<div id="center" style="width:824px;float:right;">';
@@ -30,7 +30,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='<h2 class="groupheader_h2">Anunturi Oferte, Cereri Chirii</h2>';		
 		$out.='</div>';
 		$out.='<div id="left" style="width:168px;float:left;">';
-		$out.=$this->getChirieCount();	
+		$out.=$this->getChirieCount();
 		$out.=$this->getChirieAdd();					
 		$out.='</div>';			
 		$out.='<div id="center" style="width:824px;float:right;">';
@@ -44,7 +44,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='<h2 class="groupheader_h2">Ultimile Titluri de Stiri </h2>';		
 		$out.='</div>';
 		$out.='<div id="left" style="width:168px;float:left;">';
-		$out.=$this->getLastFeedsCount();						
+		$out.=$this->getLastFeedsCount();
 		$out.='</div>';			
 		$out.='<div id="center" style="width:824px;float:right;"">';
 		$out.=$this->getLastFeedsTitles();
@@ -52,7 +52,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';			
 		
-		$out.='<div id="group3" class="maingroupbox">';
+		/*$out.='<div id="group3" class="maingroupbox">';
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Stiri Imobiliare</h2>';		
 		$out.='</div>';
@@ -63,7 +63,7 @@ class IndexWebPage extends MainWebPage {
 		$out.=$this->getLastNews();
 		$out.='</div>';
 		$out.='<div style="clear: both;"/></div>';
-		$out.='</div>';	
+		$out.='</div>';*/
 
 		$out.='<div id="group3" class="maingroupbox">';
 		$out.='<div class="groupbox">';
