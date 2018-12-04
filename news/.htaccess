@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule (.*) https://casata.md/ [R=301,L]
+RewriteRule . https://accounts.casata.md/feedback.php? [R=301,L]
