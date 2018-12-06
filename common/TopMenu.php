@@ -6,7 +6,7 @@ class TopMenu {
 		Config::$imobilsite."/index.php?l=".$language->name=>"Imobil",
 		Config::$chiriesite."/index.php?l=".$language->name=>"Chirie",
 		Config::$companiesite."/index.php?l=".$language->name=>"Companii",
-		Config::$newssite."/index.php?l=".$language->name=>"Ştiri",
+		//Config::$newssite."/index.php?l=".$language->name=>"Ştiri",
 		Config::$feedssite."/index.php?l=".$language->name=>"Feeduri",
 		//Config::$videosite."/index.php?l=".$language->name=>"Video",		
 		Config::$imagessite."/index.php?l=".$language->name=>"Imagini",

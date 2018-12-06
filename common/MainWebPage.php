@@ -1050,7 +1050,7 @@ class MainWebPage extends WebPage {
 			$out.='/>';
 		}
 	
-		$n=new News();
+		/*$n=new News();
 		$ns=$n->getAll("lat!=\"\"");
 		foreach($ns as $n){
 			$out.='<marker ';
@@ -1061,7 +1061,7 @@ class MainWebPage extends WebPage {
 			$out.='type="news" ';
 			$out.='link="'.Config::$newssite.'/index.php?id='.$n->id.'" ';
 			$out.='/>';
-		}
+		}*/
 	
 		$p=new Property();
 		$ps=$p->getAll("lat!=\"\"");

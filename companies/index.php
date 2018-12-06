@@ -50,7 +50,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="5"></a>Imagini:',$this->getFiles()));
 		$n=new News();
 		
-		$this->setCenterContainer($this->getGroupBoxH3('<a id="6"></a>Ştiri ce aparţin acestei surse:',$n->getNewsByCompany($c)));
+		//$this->setCenterContainer($this->getGroupBoxH3('<a id="6"></a>Ştiri ce aparţin acestei surse:',$n->getNewsByCompany($c)));
 		$this->setCenterContainer($this->getGroupBoxH3('Alte date:',$this->getSystemDetails($c)));
 		
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getMenuLinks()));

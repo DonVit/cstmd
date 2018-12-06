@@ -49,7 +49,7 @@
 <script>
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope, $http, $sce) {
-    $http.get("https://fm.casata.md/fm.php").success(function (response) {$scope.names = response;});
+    $http.get("fm.php").success(function (response) {$scope.names = response;});
     
     $scope.play = function(x,l) {
     	 console.log(l);

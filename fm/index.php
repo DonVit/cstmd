@@ -6,7 +6,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		parent::__construct();
 		
 		$this->map=User::getCurrentMap();
-		$this->redirect("https://fm.casata.md/index.htm");
+		$this->redirect(Config::$fmsite."/index.htm");
 		
 		if (!isset($this->localitate_id)){
 			$this->localitate_id=0;

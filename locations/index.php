@@ -35,7 +35,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getRaionPhotos());
 		//$this->setCenterContainer($this->getPanoramioFotos($r));
 		$this->setCenterContainer($this->getImobilList($this->raion->id, 0));
-		$this->setCenterContainer($this->getRaionNews());			
+		//$this->setCenterContainer($this->getRaionNews());
 		$c='<a name="11"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'r',$r->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuRaion()));
@@ -80,7 +80,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$this->setCenterContainer($this->getPanoramioFotos($l));
 		$this->setCenterContainer($this->getLocalitatiCuAcelasNume());	
 		$this->setCenterContainer($this->getNewsTitles());		
-		$this->setCenterContainer($this->getNews());		
+		//$this->setCenterContainer($this->getNews());
 		$this->setCenterContainer($this->getImobilList($this->raion->id, $this->location->id));		
 		$this->setCenterContainer($this->getTopAgentiEconomici($l));
 		$this->setCenterContainer($this->getTopActivitatiEconomiceL($l));	
