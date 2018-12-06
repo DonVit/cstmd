@@ -2,8 +2,8 @@
 
 class Mail{
 	
-	public static function send_registration_email($user,$password){
-		$mailsubject = "Portalul Imobiliar \"CasaTa\" www.casata.md - Inregistrare";
+	public static function send_registration_email($user, $password){
+		$mailsubject = 'Portalul Imobiliar "CasaTa" www.casata.md - Inregistrare';
 		$mailmessage = '
 		<html>
 		<head>
@@ -17,13 +17,11 @@ class Mail{
 		</body>
 		</html>
 		';
-		Mail::send_email($user,$mailsubject, $mailmessage);
+		Mail::send_email($user, $mailsubject, $mailmessage);
 	}
-	public static function send_password_email($user,$password){
-		/* subject */
-		$mailsubject = "Portalul Imobiliar \"CasaTa\" www.casata.md - Parola Contului";
-	
-		/* messaje */
+
+	public static function send_password_email($user, $password){
+		$mailsubject = 'Portalul Imobiliar "CasaTa" www.casata.md - Parola Contului';
 		$mailmessage = '
 		<html>
 		<head>
@@ -37,11 +35,11 @@ class Mail{
 		</body>
 		</html>
 		';
-		Mail::send_email($user,$mailsubject, $mailmessage);
+		Mail::send_email($user, $mailsubject, $mailmessage);
 	}
 	public static function send_comment_email($comment){
-		$user='vitalie.doni@gmail.com';
-		$mailsubject = "Comentariu";
+		$user=Config::$adminmail;
+		$mailsubject = 'Comentariu';
 		$mailmessage = '
 		<html>
 		<head>
@@ -54,15 +52,15 @@ class Mail{
 		</body>
 		</html>
 		';
-		Mail::send_email($user,$mailsubject, $mailmessage);
+		Mail::send_email($user, $mailsubject, $mailmessage);
 	}
 	public static function send_commentaprove_email($comment){
-		$user='vitalie.doni@gmail.com';
+		$user=Config::$adminmail;
 		if($comment->email!=''){
 			$user=$comment->email;
 		}
 		
-		$mailsubject = "Comentariu Aprobat";
+		$mailsubject = 'Comentariu Aprobat';
 		$mailmessage = '
 		<html>
 		<head>
@@ -76,21 +74,13 @@ class Mail{
 		</body>
 		</html>
 		';
-		Mail::send_email($user,$mailsubject, $mailmessage);
+		Mail::send_email($user, $mailsubject, $mailmessage);
 	}		
-	public static function send_email($reciever,$subject, $message){
-	
-		/* Pentru a trimite un e-mail in format HTML trebuie setat antetul Content-type. */
-		$antet  = "MIME-Version: 1.0\r\n";
-		$antet .= "Content-type: text/html; charset=utf-8\r\n";
-		
-		/* Antete aditionale */
-		$antet .= "From: Portalul Imobiliar \"CasaTa\" <casata.md@outlook.com>\r\n";
-		
-		//$antete .= "Cc: birthdayarchive@example.com\r\n";
-		$antet .= "Bcc: vitalie.doni@gmail.com, casata.md@outlook.com\r\n";
-		
-		/* Si acum sa-i dam drumul... */
+	public static function send_email($reciever, $subject, $message){
+		$antet  = 'MIME-Version: 1.0\r\n';
+		$antet .= 'Content-type: text/html; charset=utf-8\r\n';
+		$antet .= 'From: Portalul Imobiliar "CasaTa" <'.Config::$adminmail.'>\r\n';
+		$antet .= 'Bcc: '.Config::$adminmail.'\r\n';
 		if (Config::$live) {
 			return mail($reciever, $subject, $message, $antet);
 		}
