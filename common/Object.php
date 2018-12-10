@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 2 Mar 2009
- *
- */
 class Object {
  	public function getClassName(){
 		return get_class($this);
