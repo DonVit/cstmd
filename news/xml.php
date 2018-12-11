@@ -5,17 +5,12 @@ class XmlMapsWebPage extends WebPage {
 	function __construct(){
 		$this->setContentType("text/xml");
 		parent::__construct();
-		
-
 		$this->show();		
 	}
 	function show($html=""){
-
 		WebPage::show($this->getXml());
 	}
 	function getXml(){
-
-		
 		$out='<?xml version="1.0" encoding="utf-8"?>';
 		$out.='<markers>';
 
@@ -29,7 +24,6 @@ class XmlMapsWebPage extends WebPage {
 			$out.='lng="'.$m->lng.'" ';
 			$out.='type="link" ';	
 			$out.='link="'.htmlspecialchars($m->getUrl(Config::$mapssite.'/index.php','action=viewmap&id='.$m->id)).'" ';
-			//$out.='link="'.Config::$mapssite.'/index.php?action=viewmap&id='.$m->id.'" ';								
 			$out.='/>';								
 		}
 

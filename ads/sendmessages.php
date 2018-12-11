@@ -11,13 +11,9 @@ class SendMessagesWebPage extends MainWebPage {
 	}
 	function show($html=""){
 		$out='<div id="container">';
-		//$out.='<div id="left">my left';
-		//$out.='</div>';
 		$out.='<div id="center" style="width:100%;">';
 		$out.=$this->getSendMessages();
 		$out.='</div>';		
-		//$out.='<div id="right"> my right';
-		//$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
