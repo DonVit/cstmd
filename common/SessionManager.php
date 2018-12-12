@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class SessionManager extends Object {
 	public static function getSessionId(){
 		return session_id();

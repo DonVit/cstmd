@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class StatsWebPage extends MainWebPage {
@@ -14,13 +10,9 @@ class StatsWebPage extends MainWebPage {
 	}
 	function show($html=""){
 		$out='<div id="container">';
-		//$out.='<div id="left">my left';
-		//$out.='</div>';
 		$out.='<div id="center" style="width:100%;">';
 		$out.=$this->getSessionsByDate();
-		$out.='</div>';		
-		//$out.='<div id="right"> my right';
-		//$out.='</div>';
+		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);

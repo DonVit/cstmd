@@ -12,7 +12,6 @@ class IndexWebPage extends MainWebPage {
 		$this->setCSS("styles/index.css");	
 		$t="Contul Personal";
 		$this->setTitle($t);
-		//$this->setLogoTitle($t);
 		$this->setLogoTitle("CONTUL PERSONAL");
 		$this->create();		
 	}
@@ -24,9 +23,6 @@ class IndexWebPage extends MainWebPage {
 		$out.='<div id="maindiv">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		//$out.='<div id="right">';
-		//$out.=$this->getRightContainer();		
-		//$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';	
 		MainWebPage::show($out);
@@ -72,7 +68,6 @@ class IndexWebPage extends MainWebPage {
 				$o=$t->getAll("id!='".$u->id."' and email='".$this->email."'","");
 				if (is_null($o)){
 					$t=$u;
-					//$t->name=$this->name;
 					$t->name=$this->name;
 					$t->url=$this->url1;
 					$t->phone=$this->phone;
@@ -82,8 +77,6 @@ class IndexWebPage extends MainWebPage {
 					$t->note=$this->note;
 					$t->save();
 					User::setCurrentUser($t);
-					//Mail::send_registration_email($t->email,$t->password);
-	
 				} else {
 					$this->errormessage='Erroare, utilizator cu emailul ['.$this->email.'] exista deja ! Vrei sa recuperzi parola ? intra aici <a href="password.php?email='.$this->email.'">Recupereaza Parola</a>';
 				}
@@ -104,13 +97,9 @@ class IndexWebPage extends MainWebPage {
 	function show($out=''){
 		$out="";
 		$out.='<div id="container">';
-		//$out=$this->getLocation();
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();
 		$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
 		$out.='<div id="right" class="container right" style="width:800px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
@@ -202,8 +191,6 @@ class IndexWebPage extends MainWebPage {
 		$outb.='<input name="salveaza" type="button" class="button" value="Salveaza" onclick="javascript:SettngsOnSave();">';
 		$outb.='</div>';
 		$outb.='</form>';
-		//$out.='</div>';
-		//$out.='</div>';
 		return $this->getGroupBoxWizard("Setari",$out,$outb);
 	}
 }

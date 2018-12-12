@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 24 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
 class ValidationImage extends WebPage{
 	public function __construct() {

@@ -1,13 +1,7 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
 
-
 class IndexDictionarWebPage extends MainWebPage {
-
 	private $dictionarJudet;
 	private $dictionarTip;
 	private $dictionar;

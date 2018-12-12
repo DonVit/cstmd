@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class LoginWebPage extends MainWebPage {
@@ -19,7 +15,6 @@ class LoginWebPage extends MainWebPage {
 		$this->setTitle("Autentificare");
 		$this->setLogoTitle("CONT PERSONAL");
 		Logger::setLogs(User::getCurrentUser());
-		//$this->setL
 		if (isset($this->email)&&isset($this->password)&&isset($this->validationcode)){
 			if (User::getValidationCode()==$this->validationcode){
 				$u=new User;
@@ -49,12 +44,6 @@ class LoginWebPage extends MainWebPage {
 	function show($out=''){
 		$out="";
 		$out.='<div id="container" style="padding-top:4px;">';
-		//$out.='<div id="left" class="container left" style="width:198px;">';
-		//$out.=$this->getLeftContainer();
-		//$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
 		$out.='<div id="center" class="container center" style="width:500px;float: none;margin: 0 auto;padding:20px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
@@ -63,11 +52,6 @@ class LoginWebPage extends MainWebPage {
 		MainWebPage::show($out);
 	}
 	function getLogInForm(){
-		//$out='<div id="form_container" class="form_container">';
-		//$out.='<div id="form" class="form">';
-		//$out.='<div id="formtitle" class="form_header">';
-		//$out.='Autentificare';
-		//$out.='</div>';
 		$out='<form method="post" name="loginform">';
 		$out.='<div id="formcontrols">';
 		$out.='<div class="form_row">';
@@ -92,8 +76,6 @@ class LoginWebPage extends MainWebPage {
 		$outb.='   <div style="clear: both;"></div>';
 		$outb.='</div>'; 
 		$outb.='</form>';
-		//$out.='</div>';
-		//$out.='</div>';
 		return $this->getGroupBoxWizard("Autentificare",$out,$outb);
 	}
 }

@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 10 Jul 2013
- *
- */
 class Nume extends DBManager {
 	public $id;
 	public $name;

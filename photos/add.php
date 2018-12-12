@@ -1,5 +1,4 @@
 <?php
-
 require_once(__DIR__ . '/../main/loader.php');
  
 class AddImageWebPage extends MainWebPage {
@@ -73,9 +72,7 @@ class AddImageWebPage extends MainWebPage {
 		}
 		User::setCurrentPhoto($this->currentphoto);
 		//Logger::setLogs("current photo before=".$this->currentphoto);
-		//echo "1-".User::getValidationCode();	
 		$this->create();
-		//echo "1-".User::getValidationCode();
 	}
 	function actionDefault(){
 		$this->step=1;
@@ -87,8 +84,7 @@ class AddImageWebPage extends MainWebPage {
 		if (isset($_POST["cancel"])){
 				$this->redirect($this->getUrl("add.php","action=cancel"));
 		}			
-		//$this->setCenterContainer($this->getGroupBoxH3("",$this->setFile(),""));
-		$this->setCenterContainer($this->setFile());	
+		$this->setCenterContainer($this->setFile());
 		$this->show();
 	}
 	function actionAdress(){
@@ -97,17 +93,9 @@ class AddImageWebPage extends MainWebPage {
 		$this->setTitle($this->steptitle);		
 		if ($_POST) {
 			if (isset($_POST["next"])){
-				//$r=new Raion();
-				//$r->loadById($this->currentphoto->raion_id);
-				//$this->currentphoto->setRaion($r);
-				//User::setCurrentPhoto($this->currentphoto);
 				$this->redirect($this->getUrl("add.php","action=map"));
 			}
 			if (isset($_POST["prev"])){
-				//$r=new Raion();
-				//$r->loadById($this->currentphoto->raion_id);
-				//$this->currentphoto->setRaion($r);
-				//User::setCurrentPhoto($this->currentphoto);
 				$this->redirect($this->getUrl("add.php"));
 			}				
 			if (isset($_POST["cancel"])){
@@ -118,8 +106,6 @@ class AddImageWebPage extends MainWebPage {
 		$this->show();
 	}
 	function actionMap(){
-		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 		$this->step=3;
 		$this->steptitle="Adauga Foto - Indica Pozitia pe Harta";
 		$this->setTitle($this->steptitle);
@@ -143,25 +129,13 @@ class AddImageWebPage extends MainWebPage {
 		$this->setTitle($this->steptitle);
 		if ($_POST) {
 			if ($_POST["save"]){
-				//echo $_POST["validationcode"]."-".User::getValidationCode();
 				if (User::getValidationCode()==$_POST["validationcode"]){
-					//echo "2";
 					if (!isset($this->currentphoto->id)){
 						$this->currentphoto->save();
-						//if (!empty($this->currentphoto->file)){
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentphoto->file, "files/t".$this->currentphoto->file, 100);
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentphoto->file, "files/s".$this->currentphoto->file, 300);
-						//}
 					} else {
 						$this->currentphoto->save();
-						//if (!file_exists("files/t".$this->currentphoto->file)){
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentphoto->file, "files/t".$this->currentphoto->file, 100);
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentphoto->file, "files/s".$this->currentphoto->file, 300);
-						//	User::delCurrentPhoto();
-						//}
 					}
 					User::delCurrentPhoto();
-					//$this->redirect("index.php?id=".$this->currentphoto->id);
 					$this->redirect($this->getUrl("index.php","action=viewimage&id=".$this->currentphoto->id));
 				}
 			}
@@ -210,15 +184,9 @@ class AddImageWebPage extends MainWebPage {
 	function show($out=''){
 		$out="";
 		$out.='<div id="container">';
-		//$out.='<div id="left" class="container left" style="width:98px;">';
-		//$out.=$this->getLeftContainer();
-		//$out.='</div>';		
 		$out.='<div id="center" class="container center" style="width:1000px;">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		//$out.='<div id="right" class="container right" style="width:98px;">';
-		//$out.=$this->getRightContainer();
-		//$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
@@ -279,8 +247,6 @@ class AddImageWebPage extends MainWebPage {
 	}	
 	function _setFile1(){
 		$out='';
-		//$out.='<fieldset id="fieldset-files">';
-		//$out.='<legend>Imagini:</legend>';
 		$out.='<table id="files" border="1" width="100%">';
 		if (isset($this->currentphoto->file)){
 			if (isset($this->currentphoto->id)){
@@ -294,9 +260,7 @@ class AddImageWebPage extends MainWebPage {
 		$out.='<tr><td>Data:</td><td><input type="input" id="data" name="data" value="'.$this->currentphoto->data.'"></td><td>Data cind imaginea a fost creata</td></tr>';		
 		$out.='<tr><td>Nota:</td><td><textarea id="note" name="note" >'.$this->currentphoto->note.'</textarea></td><td>Mai mult despre imagine</td></tr>';
 		$out.='</table>';			 
-		//$out.='</fieldset>';
 		return $out;
-		//$this->show($this->setWizardPage($out));	 
 	}
 	function setValidation(){
 		$out=' <table style="height:100px;width:100%">';
@@ -332,9 +296,6 @@ class AddImageWebPage extends MainWebPage {
 		$l=new Location();
 		$ls=$l->getAll("raion_id=".$raionid,"`order`,`oras` desc,`name`");
 		$out="<select id=\"localitate_id\" name=\"localitate_id\" class=\"select\" size=\"1\" onchange=\"javascript:WizardOnDropDownChange()\">";
-		//if (($this->currentproperty->scop_id==3)||($this->currentproperty->scop_id==4)){
-		//	$out.= "<option value=\"0\">Nu Conteaza</option>";
-		//}
 		if (!is_null($ls)){
 			foreach($ls as $ll){
 				if ($ll->id==$localitateid){
@@ -382,5 +343,5 @@ class AddImageWebPage extends MainWebPage {
 		return $out;
 	}
 }
-$n=new AddImageWebPage();
+$n=new AddImageWebPaFge();
 ?>

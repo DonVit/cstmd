@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class FeedBackWebPage extends MainWebPage {
@@ -59,12 +55,6 @@ class FeedBackWebPage extends MainWebPage {
 	function show($html=""){
 		$out="";
 		$out.='<div id="container" style="padding-top:4px;">';
-		//$out.='<div id="left" class="container left" style="width:198px;">';
-		//$out.=$this->getLeftContainer();
-		//$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
 		$out.='<div id="center" class="container center" style="width:500px;float: none;margin: 0 auto;padding:20px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
@@ -74,11 +64,6 @@ class FeedBackWebPage extends MainWebPage {
 	}	
 
 	function getFeedbackForm(){
-		//$out='<div id="form_container" class="form_container">';
-		//$out.='<div id="form" class="form">';
-		//$out.='<div id="formtitle" class="form_header">';
-		//$out.='Feedback';
-		//$out.='</div>';
 		$out='<form method="post" name="fbform">';
 		$out.='<div id="formcontrols">';
 		$out.='<div class="form_row">';
@@ -109,8 +94,6 @@ class FeedBackWebPage extends MainWebPage {
 		$outb.='<input name="Trimite" type="submit" class="button" value="Trimite">';
 		$outb.='</div>'; 
 		$outb.='</form>';
-		//$out.='</div>';
-		//$out.='</div>';
 		return $this->getGroupBoxWizard("Feedback",$out,$outb);
 	}
 }

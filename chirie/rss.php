@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class RssCompaniesWebPage extends WebPage {
@@ -31,13 +27,10 @@ class RssCompaniesWebPage extends WebPage {
 		$out.='<language>ro</language>';
 
 		foreach($cs as $c){
-
 			$title = $c->name;
-			//$link = Config::$companiesite."/index.php?id=".$c->id;
 			$link = $this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id);
 			$description = $c->name;
 			$pubDate = date("r", strtotime($c->created_date));
-			//$image_file = Config::$companiesite."/files/t".$c->logo_file;
 			$image_file = Config::$commonsite.'/img/no_image_100x100.jpg';
 			$image_description = 'no image';
 			
@@ -57,7 +50,6 @@ class RssCompaniesWebPage extends WebPage {
 			$out.='<title>'.$title.'</title>';
 			$out.='<link>'.$link.'</link>';
 			$out.='<description><![CDATA[<p><img align="left" src="'.$image_file.'" border="1" hspace="5" alt="'.$image_description.'">'.$description.'</p>]]></description>';
-			//$out.='<enclosure url="'.$image_file.'"/>';
 			$out.='<pubDate>'.$pubDate.'</pubDate>';
 			if ($c->lat!=0){
 				$out.='<georss:point>'.$c->lat.' '.$c->lng.'</georss:point>';

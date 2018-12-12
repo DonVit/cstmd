@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class Day extends DBManager {
 	public $dayid;
 	public $date;

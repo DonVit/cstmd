@@ -1,11 +1,6 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
- 
-//class NewsWebPage extends LocationFilterWebPage {
+
 class Nl2brNewsWebPage extends MainWebPage {
 	public $rowsperpage=10;
 	function __construct(){

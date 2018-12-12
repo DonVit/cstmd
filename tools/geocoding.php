@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 ini_set("memory_limit","200M"); 
 set_time_limit(10720);
 require_once(__DIR__ . '/../main/loader.php');

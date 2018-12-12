@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 24 Feb 2009
- *
- */
 class LocationFilterWebPage extends MainWebPage {
 
 	

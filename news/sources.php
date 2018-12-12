@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 25 Feb 2009
- * Este un redirect temporar
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class SourceWebPage extends MainWebPage {

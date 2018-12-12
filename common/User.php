@@ -1,9 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
-
 class User extends DBManager{
 	public $id;
 	public $role_id;
@@ -324,10 +319,6 @@ class User extends DBManager{
 	public static function delCurrentNews(){
 		if (isset($_SESSION["news"])){
 			$news=unserialize($_SESSION["news"]);
-			//if (isset($news->file)){
-			//	unlink("files/".$news->file);
-			//}			
-			//session_unregister("news");
 			unset($_SESSION["news"]);
 		}
 	}	
@@ -346,7 +337,6 @@ class User extends DBManager{
 	public static function delCurrentNewsLocations(){
 		if (isset($_SESSION["newslocations"])){
 			$newslocations=unserialize($_SESSION["newslocations"]);
-			//session_unregister("newslocations");
 			unset($_SESSION["newslocations"]);
 		}
 	}	
@@ -409,7 +399,6 @@ class User extends DBManager{
 	public static function delCurrentAlbumFiles(){
 		if (isset($_SESSION["albumfiles"])){
 			$albumfiles=unserialize($_SESSION["albumfiles"]);
-			//session_unregister("photo");
 			unset($_SESSION["albumfiles"]);
 		}
 	}	
@@ -434,10 +423,6 @@ class User extends DBManager{
 	public static function delCurrentCompany(){
 		if (isset($_SESSION["company"])){
 			$company=unserialize($_SESSION["company"]);
-			//if (!empty($company->logo_file)){
-			//	unlink("files/".$company->logo_file);
-			//}			
-			//session_unregister("company");
 			unset($_SESSION["company"]);
 		}
 	}		
@@ -459,7 +444,6 @@ class User extends DBManager{
 	}
 	public static function delCurrentFiles(){
 		if (isset($_SESSION["files"])){
-			//session_unset("files");
 			unset($_SESSION["files"]);
 		}
 	}
@@ -485,7 +469,6 @@ class User extends DBManager{
 	public static function delCurrentMap(){
 		if (isset($_SESSION["map"])){
 			$map=unserialize($_SESSION["map"]);
-			//session_unregister("map");
 			unset($_SESSION["map"]);
 		}
 	}		
@@ -494,14 +477,11 @@ class User extends DBManager{
 		$_SESSION["validationcode"]=$validationcode;
 	}
 	public static function getValidationCode(){
-			$validationcode=$_SESSION["validationcode"];
-			//$_SESSION["validationcode"]=rand(1000,9999);	
+		$validationcode=$_SESSION["validationcode"];
 		return $validationcode;
 	}
-	//working on!
 	public static function Login($email,$password){
 		$o=DBManager::doSql("select * from user where email='".$email."' and password='".$password."'");
-		//$o=$u->getAll("email='".$this->email."' and password='".$this->password."'","");
 		if (!is_null($o)){
 			return $o[0];
 		} else {	

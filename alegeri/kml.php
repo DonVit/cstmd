@@ -41,7 +41,6 @@ class GeoRSSMapsWebPage extends WebPage {
 		$xmlStr=str_replace('"','&quot;',$xmlStr);
 		$xmlStr=str_replace("'",'&#39;',$xmlStr);
 		$xmlStr=str_replace("&",'&amp;',$xmlStr);
-		//return $xmlStr;
 		return htmlspecialchars($htmlStr);
 	}
 }

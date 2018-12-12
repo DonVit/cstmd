@@ -1,25 +1,16 @@
 <?php
-/*
- * Created on 25 Feb 2009
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
  
 class XmlMapsWebPage extends WebPage {
 	function __construct(){
 		$this->setContentType("text/xml");
 		parent::__construct();
-		
-
 		$this->show();		
 	}
 	function show($html=""){
-
 		WebPage::show($this->getXml());
 	}
 	function getXml(){
-
-		
 		$out='<?xml version="1.0" encoding="utf-8"?>';
 		$out.='<markers>';
 
@@ -33,22 +24,8 @@ class XmlMapsWebPage extends WebPage {
 			$out.='lng="'.$m->lng.'" ';
 			$out.='type="link" ';	
 			$out.='link="'.htmlspecialchars($m->getUrl(Config::$mapssite.'/index.php','action=viewmap&id='.$m->id)).'" ';
-			//$out.='link="'.Config::$mapssite.'/index.php?action=viewmap&id='.$m->id.'" ';								
 			$out.='/>';								
 		}
-
-		/*$n=new News();
-		$ns=$n->getAll("lat!=\"\"");
-		foreach($ns as $n){
-			$out.='<marker ';
-			$out.='title="'.$this->parseToXML($n->title).'" ';
-			$out.='description="'.$this->parseToXML($n->description).'" ';
-			$out.='lat="'.$n->lat.'" ';
-			$out.='lng="'.$n->lng.'" ';
-			$out.='type="news" ';		
-			$out.='link="'.Config::$newssite.'/index.php?id='.$n->id.'" ';									
-			$out.='/>';								
-		}*/
 
 		$p=new Property();
 		$ps=$p->getAll("lat!=\"\"");

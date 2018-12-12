@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 28 Feb 2009
- *
- */
 class System{
 	public static function getCurentDateTime(){
 		$date = getdate();

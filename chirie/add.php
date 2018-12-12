@@ -8,13 +8,10 @@ class PropertyWebPage extends MainWebPage {
 	public $currentproperty;
 	public $currentcontact;
 	public $currentfiles;
-	//public $scopid=1;
-	//public $tipimobilid=1;
 	public $errormessage="";
 	function __construct(){
 		parent::__construct();
 		$this->setCSS("styles/property.css");
-		//$this->setJavascript("js/scripts.js");
 
 		//check if user is login
 		if (!User::isAuthenticated()){
@@ -106,47 +103,7 @@ class PropertyWebPage extends MainWebPage {
 			$this->currentproperty->sector_id=$s->id;
 			
 		}
-		
-		///manage added files
-//		if((is_array($_FILES))&&(sizeof($_FILES)!=0)){
-//		  	 $filescounter=0;
-//		  	 for ($i = 0; $i <= 4; $i++) {
-//		  	 	if ($_POST[status][$i]!=1){
-//		  	 		//delete previously add file if added
-//		  	 		
-//		  	 		if (isset($this->currentfiles[$i]->filepath)){
-//		  	 				unlink(Config::$filespath."/".$this->currentfiles[$i]->filepath);
-//		  	 				if ((isset($this->currentfiles[$i]->id))){
-//		  	 					$this->currentfiles[$i]->delete();
-//		  	 					unlink(Config::$filespath."/t".$this->currentfiles[$i]->filepath);
-//		  	 				}
-//		  	 				$f=new Image();
-//		  	 				$this->currentfiles[$i]=$f;
-//		  	 		}
-//		  	 		
-//		  	 		//add files
-//		  	 		$this->currentfiles[$i]->filename=$_FILES["file"]["name"][$filescounter];
-//		  	 		$this->currentfiles[$i]->name=$_FILES["file"]["name"][$filescounter];
-//		  	 		$this->currentfiles[$i]->type=$_FILES["file"]["type"][$filescounter];
-//		  	 		$this->currentfiles[$i]->size=$_FILES["file"]["size"][$filescounter];
-//		  	 		$this->currentfiles[$i]->tmp_name=$_FILES["file"]["tmp_name"][$filescounter];
-//		  	 		if ($_FILES["file"]["error"][$filescounter]!=0){
-//		  	 			$this->currentfiles[$i]->error=$_FILES["file"]["error"][$filescounter];
-//		  	 		}elseif (!array_key_exists($_FILES["file"]["type"][$filescounter], Config::$file_types)){
-//		  	 			$this->currentfiles[$i]->error=8;
-//		  	 		}elseif($_FILES["file"]["size"][$filescounter]>Config::$file_size){
-//		  	 			$this->currentfiles[$i]->error=1;
-//		  	 		}else {
-//		  	 			$this->currentfiles[$i]->error=$_FILES["file"]["error"][$filescounter];
-//		  	 			$this->currentfiles[$i]->new_name=System::getRandomFileName($this->currentfiles[$i]->name);
-//		  	 			$this->currentfiles[$i]->filepath=$this->currentfiles[$i]->new_name;
-//        				move_uploaded_file($this->currentfiles[$i]->tmp_name, Config::$filespath."/".$this->currentfiles[$i]->new_name);
-//		  	 		}
-//		  	 		$filescounter=$filescounter+1;
-//		  	 	}
-//		  	}
-//		}
-	
+
 		if($tmpraionid!=$this->currentproperty->raion_id){
 			$this->currentproperty->localitate_id=Location::getTopFirstLocationByRaionId($this->currentproperty->raion_id)->id;
 			$this->currentproperty->sector_id=Sector::getTopFirstSectorByLocalitateId($this->currentproperty->localitate_id)->id;
@@ -154,12 +111,6 @@ class PropertyWebPage extends MainWebPage {
 		if($tmplocalitateid!=$this->currentproperty->localitate_id){
 			$this->currentproperty->sector_id=Sector::getTopFirstSectorByLocalitateId($this->currentproperty->localitate_id)->id;
 		}
-			
-		//if (isset($this->scop_id)){
-		//	if (($this->scop_id==1)||($this->scop_id==3)){
-		//		$this->currentproperty->scop_id=$this->scop_id;
-		//	}				
-		//}		
 
 		User::setCurrentProperty($this->currentproperty);
 		User::setCurrentContact($this->currentcontact);
@@ -230,14 +181,11 @@ class PropertyWebPage extends MainWebPage {
 		if (isset($_POST["cancel"])){
 				$this->redirect($this->getUrl("add.php","action=cancel"));
 		}			
-		//$this->setCenterContainer($this->setAdress());	
+
 		$this->setCenterContainer($this->getWizardPage($this->setAdress($this->currentproperty)));
 		$this->show();
 	}			
 	function actionMap(){
-		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=3&amp;key=".Config::getMapKey($this->getServerName()));
-
 		$this->step=4;
 		$this->steptitle="Adauga ".$this->currentproperty->getScop()->name." - Pozitia pe Harta";
 		$this->setTitle($this->steptitle);
@@ -254,7 +202,6 @@ class PropertyWebPage extends MainWebPage {
 		$this->show();
 	}
 	function actionFiles(){
-
 		$this->step=5;
 		$this->steptitle="Adauga ".$this->currentproperty->getScop()->name." - Imagini";
 		$this->setTitle($this->steptitle);
@@ -267,7 +214,6 @@ class PropertyWebPage extends MainWebPage {
 		if (isset($_POST["cancel"])){
 				$this->redirect($this->getUrl("add.php","action=cancel"));
 		}			
-		//$this->setCenterContainer($this->setFiles());
 		$this->setCenterContainer($this->getWizardPage($this->setFiles($this->currentfiles)));
 		$this->show();
 	}
@@ -420,20 +366,14 @@ class PropertyWebPage extends MainWebPage {
 	}										
 	function setTipAnunt(){
 		$out='';
-		//$out.='<fieldset id="fieldset-tipanunt">';
-		//$out.='<legend>Tip Anunt, Tip Imobil:</legend>';		
 		$out.='<table><tr>';
 		$out.='<td>Tip Anunt:</td>';
 		$out.='<td>'.$this->getScopDropDown($this->currentproperty->scop_id).'</td>';    
 		$out.='</tr><tr>';
 		$out.='<td>Tip Imobil:</td>';
 		$out.='<td>'.$this->getTipImobilDropDown($this->currentproperty->scop_id,$this->currentproperty->tipimobil_id).'</td>';	
-		//$out.='</tr><tr>';
-		//$out.='<td>SubTip Imobil:</td>';
-		//$out.='<td>'.$this->getSubTipImobilDropDown($this->currentproperty->tipimobil_id,$this->currentproperty->subtipimobil_id).'</td>';		
-		$out.='</tr></table>';	
-		//$out.='</fieldset>'; 
-		return $this->getWizardPage($out);	 
+		$out.='</tr></table>';
+		return $this->getWizardPage($out);
 	}
 	function setDetails(){
 		$out='';
@@ -462,8 +402,6 @@ class PropertyWebPage extends MainWebPage {
 
 	function setOfertaChirieApartament(){
 		$out='';
-		//$out.='<fieldset>';
-		//$out.='<legend>Detalii:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 25%;">Tip Apartament:</td>';
@@ -529,25 +467,17 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td style="width: 25%;">'.$this->getCheckBox("gaz",$this->currentproperty->gaz).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>'; 		
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Note la Detalii:</legend>';
 		$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td>Alte Note:</td>';
 		$out.='<td style="width: 100%;"><textarea id="note" name="note">'.$this->currentproperty->note.'</textarea></td>';
 		$out.='</tr>'; 			
-		$out.='</table>'; 			
-		//$out.='</fieldset>'; 
-		
+		$out.='</table>';
 		return $out;
 	}
 
 	function setOfertaChirieCasaVila(){
 		$out='';
-		//$out.='<fieldset>';
-		//$out.='<legend>Detalii:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 25%;">Casa/Vila:</td>';
@@ -609,25 +539,17 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td style="width: 25%;">'.$this->getCheckBox("telefon",$this->currentproperty->getTelefon()).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>'; 		
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Note la Detalii:</legend>';
 		$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td>Alte Note:</td>';
 		$out.='<td style="width: 100%;"><textarea id="note" name="note">'.$this->currentproperty->note.'</textarea></td>';
 		$out.='</tr>'; 			
 		$out.='</table>'; 			
-		//$out.='</fieldset>'; 
-
 		return $out;
 	}
 
 	function setOfertaChirieComercial(){
 		$out='';
-		//$out.='<fieldset>';
-		//$out.='<legend>Detalii:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 25%;">Tip Imobil Comercial:</td>';
@@ -671,26 +593,16 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td style="width: 25%;"></td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>'; 		
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Note la Detalii:</legend>';
 		$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td>Alte Note:</td>';
 		$out.='<td style="width: 100%;"><textarea id="note" name="note">'.$this->currentproperty->note.'</textarea></td>';
 		$out.='</tr>'; 			
 		$out.='</table>'; 			
-		//$out.='</fieldset>'; 
-	
 		return $out;
 	}
 	function setCerereChirieApartament(){
 		$out='';
-		//preferinte
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Detalii Preferate:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Apartament preferat:</td>';
@@ -706,10 +618,6 @@ class PropertyWebPage extends MainWebPage {
 		$out.='</div></td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>'; 		
-
-		//$out.='<fieldset>';
-		//$out.='<legend>Adresa Preferata:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul Preferat:</td>';
@@ -723,26 +631,17 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td style="width: 25%;">'.$this->getSectorDropDown($this->currentproperty->localitate_id,$this->currentproperty->sector_id).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>';
-
-		//$out.='<fieldset>';
-		//$out.='<legend>Note:</legend>';
 		$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td>Alte Note:</td>';
 		$out.='<td style="width: 100%;"><textarea id="note" name="note">'.$this->currentproperty->note.'</textarea></td>';
 		$out.='</tr>'; 			
 		$out.='</table>'; 			
-		//$out.='</fieldset>'; 	
-
 		return $out;
 	}
 
 	function setCerereChirieCasaVila(){
 		$out='';
-		//preferinte
-		//$out.='<fieldset>';
-		//$out.='<legend>Detalii Preferate:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Casa preferata:</td>';
@@ -762,10 +661,6 @@ class PropertyWebPage extends MainWebPage {
 		$out.='</div></td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>'; 		
-
-		//$out.='<fieldset>';
-		//$out.='<legend>Adresa Preferata:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul Preferat:</td>';
@@ -779,26 +674,17 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td style="width: 25%;">'.$this->getSectorDropDown($this->currentproperty->localitate_id,$this->currentproperty->sector_id).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>';
-
-		//$out.='<fieldset>';
-		//$out.='<legend>Note:</legend>';
 		$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td>Alte Note:</td>';
 		$out.='<td style="width: 100%;"><textarea id="note" name="note">'.$this->currentproperty->note.'</textarea></td>';
 		$out.='</tr>'; 			
 		$out.='</table>'; 			
-		//$out.='</fieldset>'; 	
-
 		return $out;
 	}
 
 	function setCerereChirieComercial(){
 		$out='';
-		//preferinte
-		//$out.='<fieldset>';
-		//$out.='<legend>Detalii Preferate:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Comercial preferat:</td>';
@@ -819,10 +705,6 @@ class PropertyWebPage extends MainWebPage {
 		$out.='</div></td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>'; 		
-	
-		//$out.='<fieldset>';
-		//$out.='<legend>Adresa Preferata:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul Preferat:</td>';
@@ -836,26 +718,17 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td style="width: 25%;">'.$this->getSectorDropDown($this->currentproperty->localitate_id,$this->currentproperty->sector_id).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 
-		//$out.='</fieldset>';
-
-		//$out.='<fieldset>';
-		//$out.='<legend>Note:</legend>';
 		$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td>Alte Note:</td>';
 		$out.='<td style="width: 100%;"><textarea id="note" name="note">'.$this->currentproperty->note.'</textarea></td>';
 		$out.='</tr>'; 			
 		$out.='</table>'; 			
-		//$out.='</fieldset>'; 
-
 		return $out;
 	}
 
 	function setAdress1(){
 		$out='';
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Adresa:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul:</td>';
@@ -885,24 +758,15 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td class="property-name" style="width: 30%;">Nr. Apartament:</td>';
 		$out.='<td style="width: 70%;"><input type="text" id="apartament_nr" name="apartament_nr" class="input" value="'.$this->currentproperty->apartament_nr.'"></td>';
 		$out.='</tr>';
-		//$out.='</table>';	
-		//$out.='</fieldset>'; 
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Note la Adresa:</legend>';
-		//$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Note la Adresa:</td>';
 		$out.='<td style="width: 70%;"><textarea id="noteadresa" name="noteadresa" class="text">'.$this->currentproperty->noteadresa.'</textarea></td>';
 		$out.='</tr>'; 			
 		$out.='</table>'; 			
-		//$out.='</fieldset>'; 
-
-		return $this->getWizardPage($out);	
+		return $this->getWizardPage($out);
 	}
 	function setMap1(){
 		$out='';
-		//$out.='<div class="form_row">';
 		$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$this->currentproperty->centerlat.'"/>';
 		$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$this->currentproperty->centerlng.'"/>';
 		$out.='<input id="maptype" name="maptype" type="hidden" value="'.$this->currentproperty->maptype.'"/>';
@@ -910,14 +774,11 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<input name="lat" type="hidden" id="lat" readonly="true" class="inptdisabled" value="'.$this->currentproperty->lat.'"/>';
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->currentproperty->lng.'"/>';
 		$out.='<div id="map"></div>';
-		//$out.='</div>';
 		return $this->getWizardPage($out);
 	}
 
 	function setFiles1(){
 		$out='';
-		//$out.='<fieldset id="fieldset-files">';
-		//$out.='<legend>Imagini:</legend>';
 		$out.='<div id="msg" class="form_row">';
 		$out.='Atentie! Doar fisiere (jpg,jpeg,gif,png) pina la 1MB altfel fisierele vor fi filtrare.';	
 		$out.='</div>';
@@ -926,8 +787,7 @@ class PropertyWebPage extends MainWebPage {
 		$out.='</div>';
 		$out.='<div id="filestable" class="form_row" style="text-align: right;">'; 		
 		$out.='<input name="back" type="button" class="button" value="Upload" onclick="javascript:WizardUploadButtonOnClick();">';
-		$out.='</div>';		
-		//$out.='</fieldset>';
+		$out.='</div>';
 		return $this->getWizardPage($out);	 
 	}
 	function getFiles1($files){
@@ -950,22 +810,16 @@ class PropertyWebPage extends MainWebPage {
 	}
 	function setVideo(){
 		$out='';
-		//$out.='<fieldset id="fieldset-files">';
-		//$out.='<legend>Imagini:</legend>';
 		$out.='<div id="msg" class="form_row">';
 		$out.='Puneti adresa url de pe YouTube daca aveti.';	
 		$out.='</div>';
 		$out.='<div id="filestable" class="form_row" style="text-align: right">'; 		
 		$out.='<input name="youtubeurl" type="text" style="width:100%"  value="'.$this->currentproperty->youtubeurl.'">';
-		$out.='</div>';		
-		//$out.='</fieldset>';
+		$out.='</div>';
 		return $this->getWizardPage($out);	 
 	}
 	function setContacts1(){
 		$out='';
-
-		//$out.='<fieldset>';
-		//$out.='<legend>Contacte:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 100%;">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Nume:</td>';
@@ -987,29 +841,11 @@ class PropertyWebPage extends MainWebPage {
 		$out.='<td class="property-name" style="width: 30%;">Email:</td>';
 		$out.='<td style="width: 70%;"><input type="text" id="email" name="email" value="'.$this->currentcontact->email.'"></td>';
 		$out.='</tr>';
-		//$out.='</table>';	
-		//$out.='</fieldset>'; 
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Note la Contacte:</legend>';
-		//$out.='<table class="property-table">';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Note la contacte:</td>';
 		$out.='<td style="width: 70%;"><textarea id="notecontact" name="notecontact">'.$this->currentcontact->note.'</textarea></td>';
 		$out.='</tr>'; 			
-		$out.='</table>'; 			
-		//$out.='</fieldset>'; 
-
-		//$out.='<fieldset>';
-		//$out.='<legend>Valideaza:</legend>';		
-		//$out.='<table class="property-table" align="center" style="width: 100%;">';
-		//$out.='<tr>';
-		//$out.='<td class="property-name" style="width: 30%;">Introdu codul din imagine:</td>';
-		//$out.='<td style="width: 70%;"><input type="text" id="validationcode" name="validationcode"><img src="'.Config::$mainsite.'/validationimage.php" style="vertical-align: middle"> ! Obligator</td>';
-		//$out.='</tr>';
-		//$out.='</table>';
-
-		//$out.='</fieldset>';
+		$out.='</table>';
 		return $this->getWizardPage($out);	 
 	}	
 
@@ -1110,7 +946,6 @@ class PropertyWebPage extends MainWebPage {
 		$masura= new Masura();
 		$ms=$masura->getAll("tipimobil_id='$tipimobilid'","`order`");
 		$out="<select id=\"masura_id\" name=\"masura_id\" class=\"select\" size=\"1\">";
-		//print_r($ms);
 		foreach($ms as $m){
 			 if($m->id==$masuraid){
 			  $out.= "<option value=".$m->id." selected>".$m->name."</option>";

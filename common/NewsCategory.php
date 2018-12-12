@@ -1,9 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
-
 class NewsCategory extends DBManager {
 	public $id;
 	public $name_ro;
