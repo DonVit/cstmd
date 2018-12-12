@@ -5,7 +5,7 @@ class RegisterWebPage extends MainWebPage {
 	public $errormessage='';
 	function __construct(){
 		parent::__construct();
-		//check if user is loginR
+		//check if user is login
 		$u=User::getCurrentUser();
 		if ($u->id!=0){
 			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));

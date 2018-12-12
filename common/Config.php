@@ -67,6 +67,6 @@ class Config {
 	public static $publickey = '6LfaSgkTAAAAACzsUEaIstWtJ_F8yE3Ul5t3b7_P'; 
 	public static $privatekey = '6LfaSgkTAAAAAGTkTWUa0P_Zvq2bkRJwZqEzyD2X';
 
-	public static $adminmail = 'casata.md@outlook.com'
+	public static $adminmail = 'casata.md@outlook.com';
 }
 ?>
