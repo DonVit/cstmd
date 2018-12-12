@@ -51,8 +51,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='</div>';
 		$out.='<div style="clear: both;"/></div>';
 		$out.='</div>';			
-		
-		/*$out.='<div id="group3" class="maingroupbox">';
+
 		$out.='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Stiri Imobiliare</h2>';		
 		$out.='</div>';

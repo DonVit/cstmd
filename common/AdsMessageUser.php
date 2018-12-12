@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class AdsMessageUser extends DBManager {
 	public $id;
 	public $ads_message_id;

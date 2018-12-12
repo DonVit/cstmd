@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 14 Apr 2008
- *
- */
 require_once(__DIR__ . '/../main/loader.php');
 class NewsRedirectWebPage extends WebPage {
 	function __construct(){

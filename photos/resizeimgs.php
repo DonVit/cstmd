@@ -52,16 +52,6 @@ class ImagesWebPage extends LocationFilterWebPage {
 			$intCount = -1;
 		}
 		$out.="</table>";
-/*
-		if (isset($this->id)){
-			$out.=$this->getNewsById($this->id);	
-			$out.=$this->getLocalitatiByNews($this->id);
-			$out.=$this->getCommentsByNews($this->id);
-			$out.=$this->getNewsByNewsCategory($this->id);
-		} else {
-			$out.=$this->getImages(0,10,0,0,0);
-		}
-*/		
 		return $out;
 	}	
 	function getRightContainer(){

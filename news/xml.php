@@ -27,19 +27,6 @@ class XmlMapsWebPage extends WebPage {
 			$out.='/>';								
 		}
 
-		/*$n=new News();
-		$ns=$n->getAll("lat!=\"\"");
-		foreach($ns as $n){
-			$out.='<marker ';
-			$out.='title="'.$this->parseToXML($n->title).'" ';
-			$out.='description="'.$this->parseToXML($n->description).'" ';
-			$out.='lat="'.$n->lat.'" ';
-			$out.='lng="'.$n->lng.'" ';
-			$out.='type="news" ';		
-			$out.='link="'.Config::$newssite.'/index.php?id='.$n->id.'" ';									
-			$out.='/>';								
-		}*/
-
 		$p=new Property();
 		$ps=$p->getAll("lat!=\"\"");
 		foreach($ps as $p){

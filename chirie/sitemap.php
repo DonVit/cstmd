@@ -21,7 +21,6 @@ class SitemapCompaniesWebPage extends WebPage {
 		$out.='<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
 		foreach($cs as $c){
-			//$link = Config::$companiesite."/index.php?id=".$c->id;
 			$link = htmlspecialchars($this->getUrlWithSpecialCharsConverted(Config::$companiesite.'/index.php','action=viewcompany&id='.$c->id));
 			$pubDate = date("Y-m-d", strtotime($c->created_date));
 			$out.='<url>';

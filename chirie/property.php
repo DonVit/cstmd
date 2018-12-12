@@ -9,14 +9,10 @@ class PropertyWebPage extends MainWebPage {
 	public $currentproperty;
 	public $currentcontact;
 	public $currentfiles;
-	//public $scopid=1;
-	//public $tipimobilid=1;
 	public $errormessage="";
 	function __construct(){
 		parent::__construct();
 		$this->setCSS("styles/property.css");
-		//$this->setJavascript("js/scripts.js");
-
 		$t="ANUNŢURI IMOBILIARE DIN REPUBLICA MOLDOVA";
 		$this->setTitle($t);
 		$this->setLogoTitle($t);
@@ -62,38 +58,16 @@ class PropertyWebPage extends MainWebPage {
 	function show($out=''){
 		$out="";
 		$out.='<div id="container">';
-		//$out.='<div id="left" class="container left" style="width:198px;">';
-		//$out.=$this->getLeftContainer();
-		//$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
 		$out.='<div id="center" class="container center" style="width:800px;float: none;margin: 0 auto;padding:20px;">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		//$out.='<div id="right" class="container right" style="width:800px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		
 	function actionDefault(){
-		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
-		//$this->setJavascript("js/prototype.js");
-		//$this->setJavascript("js/scriptaculous.js?load=effects,builder");
-		//$this->setJavascript("js/lightbox.js");
-		//$this->setCSS("styles/lightbox.css");
-//		$this->setCSS(Config::$commonsite."/style/lightbox.css");
-//		//$this->setJavascript(Config::$commonsite."/js/builder.js");
-//		//$this->setJavascript(Config::$commonsite."/js/effects.js");
-//
-//		$this->setJavascript(Config::$commonsite."/js/prototype.js");
-//		$this->setJavascript(Config::$commonsite."/js/scriptaculous.js?load=effects,builder");
-//		$this->setJavascript(Config::$commonsite."/js/lightbox.js");
-
 		$this->setTitle($this->currentproperty->getShortDescription());
 		$this->setKeywords($this->currentproperty->getKeywords());
-				
 		$this->setCenterContainer($this->getGroupBoxWizard($this->getPropertyTitle(),$this->getPropertyPage(""),""));	
 		$this->setLeftContainer($this->getGroupBoxHtml("<h3>Detalii:</h3>",$this->getPropertyHeader(),""));	
 		$this->setRightContainer("test2");	
@@ -133,18 +107,8 @@ class PropertyWebPage extends MainWebPage {
 		return $this->getGroupBoxHtml("<h3>Alte date:</h3>",$out,"");	 
 	}	
 	function getPropertyPage($html){
-		
 		$out=' <div id="form_container" class="form_container">';
-		//$out.=$this->getPropertyHeader();
-		$out.='<div id="form" class="form">';				
-		//$out.='<div id="property-view-title">';
-		//$out.=$this->currentproperty->getShortDescription();
-		//$out.='</div>';
-		///$out.=$this->getPropertyTitle();
-		//$out.='<div id="property-view-date" style="text-align:right">';
-		//$out.='Data publicarii:'.$this->currentproperty->getData();
-		//$out.='</div>';				
-	
+		$out.='<div id="form" class="form">';
 		$out.=$this->getPropertyDetails();
 		$out.=$this->getPropertyFiles();		
 		$out.=$this->getPropertyAdress();
@@ -170,10 +134,6 @@ class PropertyWebPage extends MainWebPage {
 			if ($this->currentproperty->getTipImobil()->id==24){
 				$out.=$this->getOfertaChirieComercial();
 			}
-			//$out.=$this->getAdress();
-			//$out.=$this->getMap();
-			//$out.=$this->getGroupBoxHtml("<h3>Pozitia pe Harta:</h3>",$this->getMap(),"");
-						
 		}
 
 		if ($this->currentproperty->getScop()->id==4){
@@ -206,9 +166,6 @@ class PropertyWebPage extends MainWebPage {
 	}
 	function getOfertaChirieApartament(){
 		$out='';
-		
-		//$out.='<fieldset id="fieldset-details-view">';
-		//$out.='<legend>Detaliii:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 86%;">';
 		$out.='<tr><td class="property-name" style="width: 25%;">Tip Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td><td class="property-name" style="width: 25%;">Anul constructiei:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAn().'</td></tr>';
 		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata totala(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaTotala().'</td><td class="property-name" style="width: 25%;">Model:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getModel()->name.'</td></tr>';
@@ -229,9 +186,6 @@ class PropertyWebPage extends MainWebPage {
 	}
 	function getOfertaChirieCasaVila(){
 		$out='';
-		
-		//$out.='<fieldset id="fieldset-details-view">';
-		//$out.='<legend>Detalii:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 86%;">';
 		$out.='<tr><td class="property-name" style="width: 25%;">Casa/Vila:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td><td class="property-name" style="width: 25%;">Anul constructiei:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAn().'</td></tr>';
 		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata totala(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaTotala().'</td><td class="property-name" style="width: 25%;">Tip Constructie:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getTipConstructie()->name.'</td></tr>';
@@ -253,9 +207,6 @@ class PropertyWebPage extends MainWebPage {
 	}
 	function getOfertaChirieComercial(){
 		$out='';
-		
-		//$out.='<fieldset id="fieldset-details-view">';
-		//$out.='<legend>Detalii:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 86%;">';
 		$out.='<tr><td class="property-name" style="width: 25%;">Tip Comercial:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td><td class="property-name" style="width: 25%;">Electricitate:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getElectricitate().'</td></tr>';
 		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaTotala().'</td><td class="property-name" style="width: 25%;">Apeduct:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getApeduct().'</td></tr>';
@@ -273,9 +224,6 @@ class PropertyWebPage extends MainWebPage {
 	}
 	function getCerereChirieApartament(){
 		$out='';
-		
-		//$out.='<fieldset>';
-		//$out.='<legend>Detalii Preferate:</legend>';		
 		$out.='<table class="property-table" align="center" style="width: 50%;">';
 		$out.='<tr><td class="property-name" style="width: 25%;">Apartament preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td></tr>';
 		$out.='<tr><td class="property-name" style="width: 25%;">Pret preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getPret().'</td></tr>';
@@ -337,28 +285,16 @@ class PropertyWebPage extends MainWebPage {
 	function getAdress1(){
 		$out='';
 		if ($this->currentproperty->getScop()->id==2){		
-			//$out.='<fieldset id="fieldset-address-view">';
-			//$out.='<legend>Adresa:</legend>';		
 			$out.='<table class="property-table" align="center" style="width: 100%;">';
 			$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion").'&id='.$this->currentproperty->getRaion()->id.'" >'.$this->currentproperty->getRaion()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Casa:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->casa_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate").'&id='.$this->currentproperty->getLocation()->id.'" >'.$this->currentproperty->getLocation()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Scara:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->scara_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Sector:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td><td class="property-name" style="width: 25%;">Nr. Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->apartament_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Strada:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->strada.'</td><td></td><td></td></tr>';	
-			//$out.='</table>'; 
-			//$out.='</fieldset>'; 		
-			
-			//$out.='<fieldset id="fieldset-address-notes-view">';
-			//$out.='<legend>Note la Adresa:</legend>';
-			//$out.='<table class="property-table" align="center">';
-			//$out.='<tr><td class="property-value" style="height:65px;">'.$this->currentproperty->noteadresa.'</td></tr>';
 			$out.='<tr>';
 			$out.='<td class="property-name" style="width: 25%;">Note:</td>';		
 			$out.='<td class="property-value" style="width: 25%;" colspan="3">'.$this->currentproperty->note.'</td>';
 			$out.='</tr>';
-	
-			$out.='</table>';		
-			//$out.='</fieldset>'; 		
-			
+			$out.='</table>';
 			return $this->getGroupBoxHtml("<h3>Adresa:</h3>",$out,"");
 		} else {
 			return $out;
@@ -367,28 +303,16 @@ class PropertyWebPage extends MainWebPage {
 	function getAdress2(){
 		$out='';
 		if ($this->currentproperty->getScop()->id==2){		
-			//$out.='<fieldset id="fieldset-address-view">';
-			//$out.='<legend>Adresa:</legend>';		
 			$out.='<table class="property-table" align="center" style="width: 100%;">';
 			$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getRaion()->getFullName().'</td><td class="property-name" style="width: 25%;">Nr. Casa:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->casa_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getLocation()->getFullName().'</td><td class="property-name" style="width: 25%;">Nr. Scara:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->scara_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Sector:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td><td class="property-name" style="width: 25%;">Nr. Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->apartament_nr.'</td></tr>';
 			$out.='<tr><td class="property-name" style="width: 25%;">Strada:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->strada.'</td><td></td><td></td></tr>';	
-			//$out.='</table>'; 
-			//$out.='</fieldset>'; 		
-			
-			//$out.='<fieldset id="fieldset-address-notes-view">';
-			//$out.='<legend>Note la Adresa:</legend>';
-			//$out.='<table class="property-table" align="center">';
-			//$out.='<tr><td class="property-value" style="height:65px;">'.$this->currentproperty->noteadresa.'</td></tr>';
 			$out.='<tr>';
 			$out.='<td class="property-name" style="width: 25%;">Note:</td>';		
 			$out.='<td class="property-value" style="width: 25%;" colspan="3">'.$this->currentproperty->note.'</td>';
 			$out.='</tr>';
-	
 			$out.='</table>';		
-			//$out.='</fieldset>'; 		
-			
 			return $this->getGroupBoxHtml("<h3>Adresa:</h3>",$out,"");
 		} else {
 			return $out;
@@ -431,16 +355,10 @@ class PropertyWebPage extends MainWebPage {
 	function getFilesView1(){
 		$out='';
 		if ($this->currentproperty->getScop()->id==2){		
-			//$out.='<fieldset id="fieldset-files-view">';
-			//$out.='<legend>Imagini:</legend>';
-			//$files_result=$files->GetByImobilId($imobil_id);
-			//$files_output="";
-			//while($file = mysql_fetch_object($files_result)){
 			$out.='<table class="property-table" align="center" style="width: 100%;">';
 			$out.='<tr><td style="text-align:center;">';
 			if ((sizeof($this->currentfiles)!=0)){
 			    for ($i = 0; $i <= 4; $i++) {
-					//$output.="<tr><td>Imaginea ".($i+1).":<input type=\"hidden\" id=\"fileid[]\" name=\"fileid[]\" value=\"$i\"><input type=\"hidden\" id=\"status[]\" name=\"status[]\" value=\"1\"></td><td> [".$files[$i]->filename."] <a onclick=\"ReplaceRow(this.parentNode.parentNode.rowIndex)\">sterge</a></td></tr>";
 					if (isset($this->currentfiles[$i]->filepath)){
 						$out.="<a href=\"".Config::$filespath."/".$this->currentfiles[$i]->filepath."\" rel=\"lightbox[list]\"><img src=\"".Config::$filespath."/t".$this->currentfiles[$i]->filepath."\"></a>&nbsp";
 					} else {
@@ -450,12 +368,6 @@ class PropertyWebPage extends MainWebPage {
 			}		
 			$out.='</td></tr>';
 			$out.='</table>';
-			
-			//}
-			//if ($files_output==""){
-			//	$files_output="Nu exista";
-			//}
-			//$out.='</fieldset>';
 			return $this->getGroupBoxHtml("<h3>Imagini:</h3>",$out,"");	
 		} else {
 			return $out;

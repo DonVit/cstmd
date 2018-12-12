@@ -42,12 +42,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		if (!((isset($this->id))&&(strlen($this->id)==8))){
 			$this->redirect(Config::$numesite);
 		}
-		//$n->count();
 		$this->setTitle('Calendar Moldova: Data de '.$this->id.'');
-		//$this->setLogoTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->raion->getFullNameDescription());	
-		$this->setCenterContainer($this->getDateDescription($this->id));	
-		//$this->setCenterContainer($this->getMapView());
-		//$this->setCenterContainer($this->getTop100Locations());
+		$this->setCenterContainer($this->getDateDescription($this->id));
 		$c='<a name="11"></a>Forum/Comentarii:';
 		$this->setLeftContainer($this->getSelectDate());
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));
@@ -67,7 +63,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<div id="right1" class="pure-u-1-5">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
-		//$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}
@@ -99,7 +94,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		if (count($ns)!=0){			
 			$c=1;
 			foreach($ns as $n){
-				//$out.='<a href="?r='.$r->id.'">'.$r->getFullNameDescription().'</a><br>';
 				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$n->id);
 				$out.='<tr><td>'.$c.'</td><td><a href="'.$url.'">'.$n->name.'</a></td><td>'.$n->suma.'</td></tr>';
 				$c=$c+1;	
@@ -120,20 +114,13 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='</ul>';
 		return $out;
 	}
-	
-									
+
 	function getLeftMenu(){
 		$outm='<div class="pure-menu pure-menu-open">';
 		$outm.='<ul>';
-		//$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'" title="Populatia">Lista si numarul de Municipii</a></li>';
 		$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Top 100 cele mai populare nume de familie</a></li>';
 		$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtop100namesgeograficlylocated").'">Top 100 cele mai raspindite geografic nume de familie</a></li>';
 		$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewtop100prenume").'">Top 100 cele mai populare prenume</a></li>';
-		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Familii unicale in RM</a></li>';
-		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Top 100 cele mai scurte familii</a></li>';
-		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Top 100 cele mai lungi familii</a></li>';
-		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Lista de familii dupa alfabet</a></li>';
-		//$outm.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php").'">Lista de prenume dupa alfabet</a></li>';
 		$outm.='</ul>';
 		$outm.='</div>';
 		$out="";
@@ -190,13 +177,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$o1b.='Au mai ramas '.$dl.' zile pina la sfirsit de an.<br>';
 		
 		$o1b.='Saptamina a '.(int)$dt->format('W').'a <br>';
-		//$sun_info = date_sun_info($dt,47.0122,28.8605);
-		//$sun_info = date_sun_info($dt->getTimestamp(),45.9075,28.1944);
 		$sun_info = date_sun_info($dt->getTimestamp(),$this->location->lat,$this->location->lng);
-		
-		//foreach ($sun_info as $key => $val) {
-		//	echo "$key: " . date("H:i:s", $val) . "\n";
-		//}
 		$o1b.='<br>';
 		$o1b.='Zorii de zi incep la ora '.date("H:i:s", $sun_info['civil_twilight_begin']).'<br>';		
 		$o1b.='Rasaritul soarelui are loc la ora '.date("H:i:s", $sun_info['sunrise']).'<br>';
@@ -214,9 +195,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		$z=Zodiac::getZodiacByDate($dt);
 		
 		$o1b.='Zodia: '.$z->name.' '.$z->sign.'<br>';
-		//foreach ($sun_info as $key => $val) {
-		//	$o1b.="$key: " . date("H:i:s", $val).'<br>';
-		//}
 		$y=Year::getYearByDate($dt);
 		$o1b.='Animalul asociat acestui an este: '.$y->animal.'<br>';
 		$o1b.='Elementul asociat acestui an este: '.$y->element.'<br>';
@@ -250,7 +228,6 @@ class IndexLocationsWebPage extends MainWebPage {
 		if ((!empty($_POST['searchnameformpost']))&&(isset($this->nsearch))){
 			$l=new Location();
 			$r=new Raion();
-			//$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysql_real_escape_string($this->lsearch,DBConnection::getConnection())."%' LIMIT 0,30");
 			$ns=DBManager::doSql("SELECT id,name FROM `family` WHERE deleted=0 and name like '".mysql_real_escape_string($this->nsearch,DBConnection::getConnection())."%' LIMIT 0,30");
 			if (!is_null($ns)){
 				foreach ($ns as $v){
@@ -284,10 +261,6 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function getSearchLocation(){
 		$lsrs="";
-	
-
-		
-		
 		if ((!empty($_POST['searchlocationformpost']))&&(isset($this->lsearch))){
 			$l=new Location();
 			$r=new Raion();

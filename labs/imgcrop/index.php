@@ -29,15 +29,6 @@ if ($handle = opendir($in_path)) {
             $out_filename_2=$out_path.'\\'.str_replace('.','_b.',$entry);
             crop_and_save($in_filename,$out_filename_1,$to_crop_array_1);
             crop_and_save($in_filename,$out_filename_2,$to_crop_array_2);
-            /*
-			$orig_im = imagecreatefrompng($in_filename);
-			$croped_im_1 = imagecrop($orig_im, $to_crop_array_1);
-			$croped_im_2 = imagecrop($orig_im, $to_crop_array_2);
-			$merged_im=imagecreate($width1,($height1+$height2));
-			imagecopymerge($merged_im,$croped_im_1,0,0,0,0,$width1,$height1,100);
-			imagecopymerge($merged_im,$croped_im_2,0,$height1,0,0,$width2,$height2,100);
-			imagepng($merged_im, $out_filename, 0);  
-			*/       
         }
     }
     closedir($handle);

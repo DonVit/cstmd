@@ -38,7 +38,6 @@ class IndexPage extends MainWebPage {
 		
 		$this->setCSS("style/maps.css");
 		$this->setCenterContainer($this->getGroupBoxH1($maptitle,$this->getMap($this->sectievot)));
-		//$this->setCenterContainer($this->getGroupBoxH3("Sectia:",$this->sectievot->sectie_nr));
 		$this->setCenterContainer($this->getGroupBoxH3('<a name="2"></a>Adresa:',$this->sectievot->adresa));
 		$this->setCenterContainer($this->getGroupBoxH3('<a name="3"></a>Hotar:',$this->sectievot->hotar));
 		$this->setCenterContainer($this->getGroupBoxH3('<a name="4"></a>Contacte:',$this->sectievot->telefon));
@@ -100,7 +99,6 @@ class IndexPage extends MainWebPage {
 	function show($html=""){
 		$out='<div id="container">';
 		$out.=$this->getAllMap();
-		//$out.=$this->getLastMaps();
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
@@ -249,8 +247,6 @@ class IndexPage extends MainWebPage {
 		$o2b.=Alegeri::getAlegeriPresidentialeBySectieAndTur($this,$this->sectievot->sectie_id,2);
 		$o2b.='<b>Rezultate Tur 1:</b>';
 		$o2b.=Alegeri::getAlegeriPresidentialeBySectieAndTur($this,$this->sectievot->sectie_id,1);
-		//$o2b.='<b>Imagini Sursa:</b>';
-		//$o2b.=Alegeri::getPresidentialImageUrlByPrimarie($this->location->raion_id,$this->location->id);
 		$o2f="Sursa: www.cec.md";
 		if (empty($o2b)){
 			return "";

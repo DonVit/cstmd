@@ -260,5 +260,4 @@ class DBManager extends Object {
 
 	}
 }
-//$c=new DBManager(1,2,3);
 ?>

@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
 class Dictionar extends DBManager {
 	public $id;
 	public $localitate_id;

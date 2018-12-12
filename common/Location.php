@@ -19,10 +19,7 @@ class Location extends DBManager {
 	public $data;
 	public $contor;
 	public $order;
-// 	public function __construct() {
-// 		parent::__construct();
-// 		Logger::setLogs("xyzparent_id".$this->parent_id);
-// 	}
+
 	function getTableName(){
 		return "localitate";
 	}

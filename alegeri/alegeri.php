@@ -31,8 +31,7 @@ class XmlMapsWebPage extends WebPage {
 			$out.= (($m->winner==8)?'type="red" ':'type="yellow" ');
 			
 			$out.='link="'.htmlspecialchars($m->getUrl(Config::$alegerisite.'/index.php','action=viewsectie&id='.$m->id)).'" ';
-			//$out.='link="'.Config::$mapssite.'/index.php?action=viewmap&id='.$m->id.'" ';								
-			$out.='/>';								
+			$out.='/>';
 		}
 								
 		$out.='</markers>';

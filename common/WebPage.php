@@ -1,8 +1,4 @@
 <?php
-/*
- * Created on 24 Feb 2009
- *
- */
 class WebPage extends Object {
 	private $webpageid=0;
 	private $contenttype="text/html";
@@ -141,15 +137,6 @@ class WebPage extends Object {
 	        htmlspecialchars(
 	            stripslashes($intext)));
 	}
-	/*
-	function setWebPage(){
-		$sql="select * from webpage where name='".$this->getClassName()."'";
-		$wp=DBManager::doSql($sql);
-		if (count($wp)!=0){
-			$this->webpageid=$wp[0]->id;
-		}
-	}
-	*/		
 
 	function getUrlInLanguage($l=""){	
 		//http_build_query ()

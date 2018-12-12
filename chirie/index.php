@@ -84,10 +84,7 @@ class Properties extends MainWebPage {
 		$out.='<div id="container" style="font-size:85%;">';		
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();
-		$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
+		$out.='</div>';
 		$out.='<div id="right" class="container right" style="width:800px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
@@ -95,12 +92,10 @@ class Properties extends MainWebPage {
 		$out.='</div>';
 		MainWebPage::show($out);
 	}		
-	function getAdd(){	
-		//$out='<div id="leftmenu1" class="groupbox">';
+	function getAdd(){
 		$out='<ul>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("add.php").'">Adauga Anunt</a></li>';
 		$out.='</ul>';
-		//$out.='</div>';
 		return $out;
 	}
 	function getMain(){
@@ -120,23 +115,18 @@ class Properties extends MainWebPage {
 			$f.=" and sector_id=".User::getChirieCurrentSector()->id;
 		}
 
-		//$s=new Scop();
 		$sql="select imobil.scop_id, scop.menu_name as scop_name, count(*) as cnt from imobil join scop on imobil.scop_id=scop.id join tipimobil on imobil.tipimobil_id=tipimobil.id join subtipimobil on imobil.subtipimobil_id=subtipimobil.id where imobil.status = 0 and imobil.scop_id in (2,4)";			
 		$sql.=$f." group by imobil.scop_id order by imobil.scop_id";
 		$ss=DBManager::doSql($sql);
-		
-		//$t=new TipImobil();
+
 		$sql="select imobil.scop_id, scop.menu_name as scop_name, imobil.tipimobil_id, tipimobil.menu_name as tipimobil_name, count(*) as cnt from imobil join scop on imobil.scop_id=scop.id join tipimobil on imobil.tipimobil_id=tipimobil.id join subtipimobil on imobil.subtipimobil_id=subtipimobil.id where imobil.status = 0 and imobil.scop_id in (2,4)";			
 		$sql.=$f." group by imobil.scop_id, imobil.tipimobil_id order by imobil.scop_id, imobil.tipimobil_id";
 		$ts=DBManager::doSql($sql);
-
-		//$st=new SubTipImobil();
-		$sql="select imobil.scop_id, scop.menu_name as scop_name, imobil.tipimobil_id, tipimobil.menu_name as tipimobil_name, imobil.subtipimobil_id, subtipimobil.name as subtipimobil_name, count(*) as cnt from imobil join scop on imobil.scop_id=scop.id join tipimobil on imobil.tipimobil_id=tipimobil.id join subtipimobil on imobil.subtipimobil_id=subtipimobil.id where imobil.status = 0 and imobil.scop_id in (2,4)";			
+		$sql="select imobil.scop_id, scop.menu_name as scop_name, imobil.tipimobil_id, tipimobil.menu_name as tipimobil_name, imobil.subtipimobil_id, subtipimobil.name as subtipimobil_name, count(*) as cnt from imobil join scop on imobil.scop_id=scop.id join tipimobil on imobil.tipimobil_id=tipimobil.id join subtipimobil on imobil.subtipimobil_id=subtipimobil.id where imobil.status = 0 and imobil.scop_id in (2,4)";
 		$sql.=$f." group by imobil.scop_id, imobil.tipimobil_id, imobil.subtipimobil_id order by imobil.scop_id, imobil.tipimobil_id, imobil.subtipimobil_id";
 		$sts=DBManager::doSql($sql);
 
 		if (count($ss)!=0) {
-			//$out.='<div id="leftmenu2" class="groupbox">';
 			$out.='<ul class="leftmenulist">';
 			foreach ($ss as $s){
 				if ($s->scop_id==User::getChirieCurrentScop()){
@@ -148,8 +138,7 @@ class Properties extends MainWebPage {
 				foreach ($ts as $t){				
 					if ($s->scop_id==$t->scop_id){
 						if ($t->tipimobil_id!=User::getChirieCurrentTipImobil()){
-							//$out.='<li><a href="/'.$this->getBaseName().'?scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getChirieCurrentRaion()->id.'&locationid='.User::getChirieCurrentLocation()->id.'&sectorid='.User::getChirieCurrentSector()->id.'">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';
-							$out.='<li><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getChirieCurrentRaion()->id.'&locationid='.User::getChirieCurrentLocation()->id.'&sectorid='.User::getChirieCurrentSector()->id).'">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';						
+							$out.='<li><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getChirieCurrentRaion()->id.'&locationid='.User::getChirieCurrentLocation()->id.'&sectorid='.User::getChirieCurrentSector()->id).'">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';
 						}else{
 							$out.='<li style="color: #C20000;"><a href="/'.$this->getUrlWithSpecialCharsConverted('index.php','scopid='.$s->scop_id.'&tipimobil='.$t->tipimobil_id.'&subtipimobil=0&raionid='.User::getChirieCurrentRaion()->id.'&locationid='.User::getChirieCurrentLocation()->id.'&sectorid='.User::getChirieCurrentSector()->id).'" style="color: #C20000;">'.$t->tipimobil_name.' ('.$t->cnt.')</a></li>';
 							$out.='<ul class="leftsubsubmenulist">';
@@ -167,19 +156,15 @@ class Properties extends MainWebPage {
 					}
 				}
 				$out.='</ul>';		
-			}					
-						
-			$out.='</ul>';	
-			//$out.='</div>';	
+			}
+			$out.='</ul>';
 		}
 		return $out;
 	}		
 	function getRssLink(){
-		//$out='<div class="groupbox">';
 		$out='<ul class="leftmenulist1">';
 		$out.='<li><a href="rss.php" title="Anuţuri în format RSS">Anuţuri în RSS <img src="'.Config::$commonsite.'/img/rss.png" alt="Companii in format RSS" title="Comapnii in format RSS"/></a></li>';
 		$out.='</ul>';
-		//$out.='</div>';
 		return $out;
 	}
 
@@ -202,16 +187,9 @@ function getLocation(){
 	$out='<div id="location" class="container groupbox" style="margin:0px;margin-top:2px;font-size:85%;">';
 	$out.='<form id="locationform" name="locationform" method="post">';
 	$out.='<div id="location-raion">Municipiu/Raion:'.$this->getRaionDropDown(User::getChirieCurrentRaion()->id).'</div>';
-	//if (User::getImobilCurrentRaion()->id!=0){
-		$out.='<div id="location-localitate">Oras/Sat:'.$this->getLocationDropDown(User::getChirieCurrentRaion()->id,User::getChirieCurrentLocation()->id).'</div>';
-	//}
-	//if (User::getImobilCurrentLocation()->id!=0){
-		$out.='<div id="location-sector">Sector:'.$this->getSectorDropDown(User::getChirieCurrentLocation()->id,User::getChirieCurrentSector()->id).'</div>';
-	//}
-	//$out.='<div id="location-search-label">Cauta Localitate:</div>';
+	$out.='<div id="location-localitate">Oras/Sat:'.$this->getLocationDropDown(User::getChirieCurrentRaion()->id,User::getChirieCurrentLocation()->id).'</div>';
+	$out.='<div id="location-sector">Sector:'.$this->getSectorDropDown(User::getChirieCurrentLocation()->id,User::getChirieCurrentSector()->id).'</div>';
 	$out.='<div id="location-search-box">Cauta Localitate:<input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
-	//$out.='<div id="location-search-box"><input type="text" id="lsearch" name="lsearch" value="Cauta Localitate" onblur="if (this.value==\'\') this.value=\'Cauta Localitate\';" onfocus="if (this.value==\'Cauta Localitate\') this.value=\'\';"><input type="submit" class="button" value="Cauta"><br>'.$lsrs.'</div>';
-	//$out.='<div id="location-search">'.$lsrs.'</div>';
 	$out.='<div style="clear: both;"></div>';
 	$out.='</form>';
 	$out.='</div>';
@@ -272,5 +250,4 @@ function getSectorDropDown($locationid,$sectorid){
 }	
 }
 $p=new Properties();
-//phpinfo();
 ?>

@@ -3,18 +3,15 @@ require_once(__DIR__ . '/../main/loader.php');
  
 class RegisterWebPage extends MainWebPage {
 	public $errormessage='';
-	//public $name='';
-	//private $url='';
 	function __construct(){
 		parent::__construct();
-		//check if user is login
+		//check if user is loginR
 		$u=User::getCurrentUser();
 		if ($u->id!=0){
 			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
 		}		
 		$this->setCSS("styles/register.css");
 		$this->setTitle("Inregistrare");
-		//$this->setLogoTitle("Inregistrare");
 		$this->setLogoTitle("CONT PERSONAL");
 		if (isset($this->name)&&isset($this->email)&&isset($this->password)&&isset($this->validationcode)){
 			if (User::getValidationCode()==$this->validationcode){
@@ -53,12 +50,6 @@ function actionDefault(){
 	function show($out=''){
 		$out="";
 		$out.='<div id="container" style="padding-top:4px;">';
-		//$out.='<div id="left" class="container left" style="width:198px;">';
-		//$out.=$this->getLeftContainer();
-		//$out.='</div>';		
-		//$out.='<div id="center" class="container center" style="width:798px;">';
-		//$out.=$this->getCenterContainer();
-		//$out.='</div>';
 		$out.='<div id="center" class="container center" style="width:500px;float: none;margin: 0 auto;padding:20px;">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
@@ -73,11 +64,6 @@ function actionDefault(){
 		MainWebPage::show($out);
 	}
 	function setRegisterForm(){
-		//$out='<div id="form_container" class="form_container">';
-		//$out.='<div id="form" class="form">';
-		//$out.='<div id="form_title" class="form_header">';
-		//$out.='Inregistrare';
-		//$out.='</div>';
 		$out='<form id="frmRegister" name="frmRegister" method="POST" action="register.php">';
 		$out.=' <div id="formcontrols">';
 		$out.='<div class="form_row">';
@@ -124,8 +110,6 @@ function actionDefault(){
 		$outb.='<input name="salveaza" type="button" class="button" value="Inregistreaza-te" onclick="javascript:RegisterOnSave();">';
 		$outb.='</div>';
 		$outb.='</form>';
-		//$out.='</div>';
-		//$out.='</div>';
 		return $this->getGroupBoxWizard("Inregistrare",$out,$outb);
 	}
 }

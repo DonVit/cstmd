@@ -343,5 +343,5 @@ class AddImageWebPage extends MainWebPage {
 		return $out;
 	}
 }
-$n=new AddImageWebPage();
+$n=new AddImageWebPaFge();
 ?>

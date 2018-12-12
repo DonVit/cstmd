@@ -1,9 +1,4 @@
 <?php
-/*
- * Created on 27 Feb 2009
- *
- */
-
 class Video extends DBManager {
 	public $id;
 	public $company_id;

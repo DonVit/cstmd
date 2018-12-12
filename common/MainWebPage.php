@@ -72,11 +72,9 @@ class MainWebPage extends WebPage {
 		$out.='<meta content="'.$this->getDescription().'" name="description"/>';
 		$out.='<meta content="'.$this->getKeywords().'" name="keywords"/>';
 		$out.=$this->getOGP();
-		//$out.='<meta name=viewport content="width=device-width, initial-scale=1">';
 		$out.=$this->getTheShiv();
 		$out.=$this->getFavIcon();
 		$out.=$this->getCSS();
-		//$out.='<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 		$out.=$this->getJavascript();
 		$out.=$this->getGA();
 		$out.='</head>';
@@ -101,11 +99,8 @@ class MainWebPage extends WebPage {
 		$out='<div id="mainmenu" class="container bar mainhormenu">';
 		$out.='<div id="mainmenuleft" style="display:block;float:left">';
 		$out.='<ul>';
-		//$SelectedItem=TopMenu::getSelectedItem();
 		foreach (TopMenu::getItems($this->getLang()) as $ItemKey=>$ItemValue){
-			//if ($SelectedItem==$ItemKey){
 			$host=parse_url($ItemKey,PHP_URL_HOST);
-			//Logger::setLogs($this->getServerName()."-".$ItemKey."-".$host);	
 			if ($this->getServerName()==$host){
 				$out.='<li><a href="'.$ItemKey.'" style="border-bottom:2px solid #C20000;">'.$ItemValue.'</a></li>';
 			} else {
@@ -114,11 +109,6 @@ class MainWebPage extends WebPage {
 		}
 		$out.='</ul>';	
 		$out.='</div>';
-// 		$out.='<div id="mainmenuright" style="display:block;float:right">';
-// 		$out.='<ul>';
-// 		$out.='<li>'.$this->getBookmarks().'</li>';
-// 		$out.='</ul>';						
-// 		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';		
 		$out.='</div>';	
 		return $out;
@@ -133,8 +123,7 @@ class MainWebPage extends WebPage {
 			$out.='<li><a href="'.Config::$accountssite.'/index.php">Contul Personal</a></li>';
 			$out.='<li><a href="'.Config::$accountssite.'/logout.php">Logout</a></li>';
 		}
-		//$out.='<div style="clear: both;"></div>';
-		$out.='</ul>';	
+		$out.='</ul>';
 		$out.='</div>';	
 		return $out;
 	}
@@ -143,7 +132,6 @@ class MainWebPage extends WebPage {
 	}
 	function getLogo(){	
 		$out='<div id="logo" class="container bar tophorlogo">';
-		//$out.='<div id="logo-title-left"><span style="color:#000099;">casa</span><span style="color:#FFFF33;">ta</span><span style="color:#FF0000;">.md</span></div>';
 		$out.='<div id="logo-title-left" style="display:block;float:left">CASATA.MD</div>';
 		$out.='<div id="logo-title-right" style="display:block;float:left">'.$this->getLogoTitle().'</div>';
 		$out.=$this->getFacebookButton();
@@ -230,7 +218,6 @@ class MainWebPage extends WebPage {
 		$out='<div id="bottommenu">';		
 		$out.='<ul>';
 		foreach (BottomMenu::$Items as $ItemKey=>$ItemValue){
-				//$out.='<div class="bottommenu_item"><a href="/'.$ItemKey.'">'.$ItemValue.'</a></div>';
 				$out.='<li><a href="'.Config::$accountssite.'/'.$ItemKey.'">'.$ItemValue.'</a></li>';
 		}
 		$out.='<li> | Email la: <a href="mailto:casata.md@outlook.com">casata.md@outlook.com</a></li>';	
@@ -262,12 +249,8 @@ class MainWebPage extends WebPage {
 		$out="";
 		if (Config::$loging){
 			$out.='<div id="logs">';
-			//$out.='<fieldset id="logstext">';
-			//$out.='<legend>Logs</legend>';
-			//$out.=$this->getHeaders();			
 			$out.=Logger::getLogs();
 			$out.=$this->getCurrentConnections();
-			//$out.='</fieldset>';
 			$out.='</div>';
 			$out.='<p style="font-size:85%;">(11px) Lorem ipsum dolor sit amet, consectetur.</p>';
 			$out.='<div style="clear: both;"></div>';	
@@ -309,15 +292,6 @@ class MainWebPage extends WebPage {
 			//addthis
 			$out='<div class="addthis_toolbox addthis_default_style " style="width:120px;">';
 			$out.='<a class="addthis_button_preferred_1"></a>';
-			//$out.='<a class="addthis_button_preferred_2"></a>';
-			//$out.='<a class="addthis_button_preferred_3"></a>';
-			//$out.='<a class="addthis_button_preferred_4"></a>';
-			//$out.='<a class="addthis_button_preferred_5"></a>';
-			//$out.='<a class="addthis_button_preferred_6"></a>';
-			//$out.='<a class="addthis_button_preferred_7"></a>';
-			//$out.='<a class="addthis_button_preferred_8"></a>';
-			//$out.='<a class="addthis_button_preferred_9"></a>';
-			//$out.='<a class="addthis_button_preferred_10"></a>';
 			$out.='<a class="addthis_button_compact"></a>';
 			$out.='<a class="addthis_counter addthis_bubble_style"></a>';
 			$out.='</div>';
@@ -346,7 +320,6 @@ class MainWebPage extends WebPage {
 	}
 	function getRightContainer(){
 		$out='';
-		//$out.=$this->getPrivescEuWidget();
 		$out.=$this->rightcontainer;
 		return $out;		
 	}			
@@ -434,9 +407,6 @@ class MainWebPage extends WebPage {
 		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		$this->setJavascript(Config::$commonsite."/js/controls.js");
-
-		//$this->setBodyTag('<body onload="MapViewOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("https://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
 		$out='';
 		if ($m->lat==0){
 			$m->maptype=0;
@@ -456,8 +426,6 @@ class MainWebPage extends WebPage {
 		$out.='<input id="zoom" name="zoom" type="hidden" value="'.$m->zoom.'" />';
 		$out.='<input name="lat" type="hidden" id="lat" readonly="true" class="inptdisabled" value="'.$m->lat.'" />';
 		$out.='<input name="lng" type="hidden" id="lng" readonly="true" class="inptdisabled" value="'.$m->lng.'" />';
-		//$out.='<input name="map_title" type="hidden" id="map_title" readonly="true" class="inptdisabled" value="" />';
-		//$out.='<input name="map_description" type="hidden" id="map_description" readonly="true" class="inptdisabled" value="" />';
 		$out.='<div id="map" style="width: 100%;"></div>';
 		return $out;
 	}
@@ -466,20 +434,6 @@ class MainWebPage extends WebPage {
 		$this->setBodyTag('<body onload="MapEditOnMapLoad()">');
 		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
-		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("https://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
-		
-		$out='';
-		//$out.='<div class="form_row">';
-		//$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$m->centerlat.'"/>';
-		//$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$m->centerlng.'"/>';
-		//$out.='<input id="maptype" name="maptype" type="hidden" value="'.$m->maptype.'"/>';
-		//$out.='<input id="zoom" name="zoom" type="hidden" value="'.$m->zoom.'"/>';
-		//$out.='<input name="lat" type="hidden" id="lat" readonly="true" class="inptdisabled" value="'.$m->lat.'"/>';
-		//$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$m->lng.'"/>';
-		//$out.='<div id="map"></div>';
-		//$out.='</div>';
-
 		$out='';
 		$out.='<div>';
 		$out.='<table style="width:100%"><tr><td>';
@@ -706,8 +660,6 @@ class MainWebPage extends WebPage {
 			User::setCurrentFiles($files);
 		}			
 		$out='';
-		//$out.='<fieldset id="fieldset-files">';
-		//$out.='<legend>Imagini:</legend>';
 		$out.='<div id="msg" class="form_row" style="padding-bottom:20px;">';
 		$out.='Atentie ! Doar fisiere (jpg,jpeg,gif,png) pina la 1MB altfel fisierele vor fi filtrare.';	
 		$out.='</div>';	
@@ -718,14 +670,11 @@ class MainWebPage extends WebPage {
 		    	if (isset($files[$i]->error)){
 			    	if ($files[$i]->error==UPLOAD_ERR_OK){
 			        	$out.='<tr><td style="text-align: right;">Imaginea '.($i+1).':<input type="hidden" id="fileid[]" name="fileid[]" value="'.$i.'"><input type="hidden" id="status[]" name="status[]" value="1"></td><td style="text-align: left;"> ['.$files[$i]->imagename.']</td><td style="text-align: left;"><a onclick="ReplaceRow(this.parentNode.parentNode.rowIndex)" style="text-decoration: underline;cursor: pointer;color:blue;">sterge</a></td></tr>';
-			        	//$out.='<tr><td style="text-align: right;">Imaginea '.($i+1).', descriere:<input type="text" id="imagenote[]" name="imagenote[]" style="width:70%" value="'.$files[$i]->imagenote.'"><input type="hidden" id="fileid[]" name="fileid[]" value="'.$i.'"><input type="hidden" id="status[]" name="status[]" value="1"></td><td style="text-align: left;"> ['.$files[$i]->imagename.']</td><td style="text-align: left;"><a onclick="ReplaceRow(this.parentNode.parentNode.rowIndex)">sterge</a></td></tr>';
 			    	}else {
 			    		$out.='<tr><td style="text-align: right;">Imaginea '.($i+1).':<input type="hidden" id="fileid[]" name="fileid[]" value="'.$i.'"><input type="hidden" id="status[]" name="status[]" value="0"></td><td style="text-align: left;"><input type="file" id="file[]" name="file[]" style="width:50%;"></td><td style="text-align: left;">'.Image::getErrorMsg($files[$i]->imagename,$files[$i]->error).'</td></tr>';
-			    		//$out.='<tr><td style="text-align: right;">Imaginea '.($i+1).', descriere:<input type="text" id="imagenote[]" name="imagenote[]" style="width:70%" value="'.$files[$i]->imagenote.'"><input type="hidden" id="fileid[]" name="fileid[]" value="'.$i.'"><input type="hidden" id="status[]" name="status[]" value="0"></td><td style="text-align: left;"><input type="file" id="file[]" name="file[]" ></td><td style="text-align: left;">'.Image::getErrorMsg($files[$i]->imagename,$files[$i]->error).'</td></tr>';
 			    	}
 		    	} else {
 		    		$out.='<tr><td style="text-align: right;">Imaginea '.($i+1).':<input type="hidden" id="fileid[]" name="fileid[]" value="'.$i.'"><input type="hidden" id="status[]" name="status[]" value="0"></td><td style="text-align: left;"><input type="file" id="file[]" name="file[]" style="width:50%;"></td><td></td></tr>';
-		    		//$out.='<tr><td style="text-align: right;">Imaginea '.($i+1).', descriere:<input type="text" id="imagenote[]" name="imagenote[]" style="width:70%" value="'.$files[$i]->imagenote.'"><input type="hidden" id="fileid[]" name="fileid[]" value="'.$i.'"><input type="hidden" id="status[]" name="status[]" value="0"></td><td style="text-align: left;"><input type="file" id="file[]" name="file[]" ></td><td></td></tr>';
 		    	}
 			}
 		}
@@ -734,42 +683,13 @@ class MainWebPage extends WebPage {
 		$out.='<div id="filestable" class="form_row" style="text-align: right;">'; 		
 		$out.='<input name="back" type="button" class="button" value="Upload" onclick="javascript:WizardUploadButtonOnClick();">';
 		$out.='</div>';		
-		//$out.='</fieldset>';
-		return $out;	 
+		return $out;
 	}
 	function getFiles(){
 		$files=User::getCurrentFiles();
-	
-		//$this->setCSS(Config::$commonsite."/style/lightbox.css");
-	
-		//$this->setCSS(Config::$commonsite."/js/lightbox2.51/css/screen.css");
-		//$this->setCSS("https://fonts.googleapis.com/css?family=Fredoka+One|Open+Sans:400,700");
-		
-		
-		//$this->setJavascript(Config::$commonsite."/js/builder.js");
-		//$this->setJavascript(Config::$commonsite."/js/effects.js");
-
-		//$this->setJavascript(Config::$commonsite."/js/prototype.js");
-		//$this->setJavascript(Config::$commonsite."/js/scriptaculous.js?load=effects,builder");
-		//$this->setJavascript(Config::$commonsite."/js/lightbox.js");
-		
-		//$this->setJavascript(Config::$commonsite."/js/scriptaculous-js-1.9.0/prototype.js");
-		//$this->setJavascript(Config::$commonsite."/js/scriptaculous-js-1.9.0/scriptaculous.js");		
-		//$this->setJavascript(Config::$commonsite."/js/lightbox v2.04/lightbox.js");
-		
-		//$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-		//$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js");
-		//2.51
-		//$this->setCSS(Config::$commonsite."/js/lightbox2.51/css/lightbox.css");
-		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-1.7.2.min.js");
-		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery-ui-1.8.18.custom.min.js");
-		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/jquery.smooth-scroll.min.js");				
-		//$this->setJavascript(Config::$commonsite."/js/lightbox2.51/js/lightbox.js");
-		//2
 		$this->setCSS(Config::$commonsite."/js/lightbox2/css/lightbox.css");
 		$this->setFooterJavascript(Config::$commonsite."/js/lightbox2/js/lightbox-plus-jquery.min.js");
-		
-		
+
 		$out='';
 		$out.='<table class="property-table" style="width: 100%;align:center;">';
 		$out.='<tr><td style="text-align:center;">';
@@ -777,8 +697,6 @@ class MainWebPage extends WebPage {
 			$outt='';
 			foreach ($files as $i){
 				if (isset($i->imagepath)){
-					//$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" rel="lightbox[list]"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
-					//$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" rel="lightbox[roadtrip]"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
 					$outt.='<a href="'.Config::$filespath.'/'.$i->imagepath.'" data-lightbox="roadtrip"><img src="'.Config::$filespath.'/t'.$i->imagepath.'" alt="'.$i->imagenote.'" class="imageborder"></a>&nbsp';
 				}				
 		    }
@@ -793,7 +711,6 @@ class MainWebPage extends WebPage {
 	}					
 	function getWizardPage($html){
 		$this->setJavascript(Config::$commonsite."/js/wizard.js");
-		//$out.='<div id="form" class="font-size: 16px;">';
 		$outh='<form id="frmWizard" name="frmWizard" method="POST" enctype="multipart/form-data">';		
 		//footer
 		$outh.=' <div id="form_header" style1="padding:10px;border-bottom:2px solid #777;font-size: 20px;">';
@@ -827,20 +744,15 @@ class MainWebPage extends WebPage {
 		$outf.='  <div style="clear: both;"></div>';
 		$outf.=' </div>';				
 		$outf.='</form>';
-		//$out.='</div>';
 		return $this->getGroupBoxWizard($outh,$out,$outf);
 	}
 	function getQuestionPage($html){
-		//$out.='<div id="form" class="font-size: 16px;">';
 		$outh.='<form id="frmWizard" name="frmWizard" method="POST" enctype="multipart/form-data">';		
 		//footer
 		$outh.=' <div id="form_header">';
 		$outh.='  <div style="float:left">';	
 		$outh.=$this->steptitle;
 		$outh.='  </div>';
-		//$outh.='  <div style="float:right">';
-		//$outh.='  Pasul '.$this->step.' din '.$this->steps;		
-		//$outh.='  </div>';
 		$outh.='  <div s></div>';				
 		$outh.=' </div>';
 		//body
@@ -849,23 +761,13 @@ class MainWebPage extends WebPage {
 		$out.=' </div>';
 		//footer
 		$outf.=' <div id="form_footer" style1="padding:10px;border-top:2px solid #777;">';
-		//$outf.='  <div style="float:left">';
-		//$outf.='   <input name="cancel" type="submit" class="button" value="Anuleaza">';
-		//$outf.='  </div>';
 		$outf.='  <div style="float:right">';
-		//if ($this->step!=1){
 		$outf.='  <input name="nu" type="submit" class="button" value="Nu">';
-		//}
-		///if ($this->step==$this->steps){
 		$outf.='   <input name="da" type="submit" class="button" value="Da">';
-		//} else {
-		//	$outf.='   <input name="next" type="submit" class="button" value="Inainte >>">';
-		//}
 		$outf.='  </div>';
 		$outf.='  <div style="clear: both;"></div>';
 		$outf.=' </div>';				
 		$outf.='</form>';
-		//$out.='</div>';
 		return $this->getGroupBoxDialog($outh,$out,$outf);
 	}
 	function getSearchLocation(){
@@ -959,12 +861,9 @@ class MainWebPage extends WebPage {
 		if ((!empty($_POST['searchnameformpost']))&&(isset($this->nsearch))){
 			$l=new Location();
 			$r=new Raion();
-			//$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysql_real_escape_string($this->lsearch,DBConnection::getConnection())."%' LIMIT 0,30");
 			$ns=DBManager::doSql("SELECT id,name FROM `family` WHERE deleted=0 and name like '".mysql_real_escape_string($this->nsearch,DBConnection::getConnection())."%' LIMIT 0,30");
 			if (!is_null($ns)){
 				foreach ($ns as $v){
-					//$l->loadById($v->location_id);
-					//$r->loadById($l->raion_id);
 					$nurl=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$v->id);
 					$nsrs.="<a href=".$nurl." target=\"_blank\">".$v->name."</a><br>";
 				}
@@ -992,21 +891,12 @@ class MainWebPage extends WebPage {
 		}
 		$out='<div id="div_photo_ex" class="container groupbox"></div>';
 		$out.='<script type="text/javascript">';
-		//$out.='showFotos(46.0074,28.4152);';
 		$out.='showFotos('.$m->lat.','.$m->lng.');';
 		$out.='</script>';
 		return $out;
 	}
 	function getSkypeControl($skypeid){
 		$out='';
-// 		if ($skypeid!=""){
-// 			$this->setJavascript("https://cdn.dev.skype.com/uri/skype-uri.js");
-// 			$out.='<div id="call_16" style1="width:20%;background-color:#0094ff">';
-// 			$out.='<script type="text/javascript">';
-// 			$out.='Skype.ui({name: "call",element: "call_16",participants: ["echo123"],imageSize: 16,imageColor: "white"});';
-// 			$out.='</script>';
-// 			$out.='</div>';		
-// 		}
 		if ($skypeid!=""){
 			$out.=' <a href="skype:'.$skypeid.'?call">'.$skypeid.'</a>';
 		}		
@@ -1046,23 +936,9 @@ class MainWebPage extends WebPage {
 			$out.='lng="'.$m->lng.'" ';
 			$out.='type="link" ';
 			$out.='link="'.htmlspecialchars($m->getUrl(Config::$mapssite.'/index.php','action=viewmap&id='.$m->id)).'" ';
-			//$out.='link="'.Config::$mapssite.'/index.php?action=viewmap&id='.$m->id.'" ';
 			$out.='/>';
 		}
-	
-		/*$n=new News();
-		$ns=$n->getAll("lat!=\"\"");
-		foreach($ns as $n){
-			$out.='<marker ';
-			$out.='title="'.$this->parseToXML($n->title).'" ';
-			$out.='description="'.$this->parseToXML($n->description).'" ';
-			$out.='lat="'.$n->lat.'" ';
-			$out.='lng="'.$n->lng.'" ';
-			$out.='type="news" ';
-			$out.='link="'.Config::$newssite.'/index.php?id='.$n->id.'" ';
-			$out.='/>';
-		}*/
-	
+
 		$p=new Property();
 		$ps=$p->getAll("lat!=\"\"");
 		foreach($ps as $p){
@@ -1143,6 +1019,4 @@ class MainWebPage extends WebPage {
 		return $out;
 	}	
 }
-//$b=new WebPage();
-//phpinfo();
 ?>

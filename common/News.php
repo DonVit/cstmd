@@ -9,9 +9,6 @@ class News extends DBManager {
 	public $keywords;
 	public $url;
 	public $date;
-	//public $image_file;
-	//public $image_url;
-	//public $image_description;
 	public $centerlat;
 	public $centerlng;
 	public $zoom;
@@ -86,15 +83,12 @@ class News extends DBManager {
 				}else{
 					$out.='<td style="width:25%"><div><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$newssite."/index.php","action=viewnews").'&id='.$n->id.'" style="text-align: left;text-decoration: none;"><img src="'.Config::$commonsite.'/img/no_image_100x100.jpg" alt="no image" style1="height: 100px; width:130px;" class="imageborder"/><p class="newsgroup_p">'.$n->title.'</p></a></div></td>';
 				}
-				//$out.="<td class=\"newsgroup_td\"><div><a href=\"".$this->getBaseName()."?id=$n->id\"><img src=\"".Config::$imagessite."/thumbs/".$n->image_file."\" alt=\"".$n->image_description."\" class=\"newsgroup_img\"/><p class=\"newsgroup_p\">$n->title</p></a></div></td>";
-				
 				if ($i==8){
 					$out.='</tr>';
 				}
 				$i=$i+1;
 			}
 			$out.='</table>';
-			//$out.="</div>";
 		} else {
 			$out.='Nu exista stiri.';
 		}
