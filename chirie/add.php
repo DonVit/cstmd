@@ -818,36 +818,6 @@ class PropertyWebPage extends MainWebPage {
 		$out.='</div>';
 		return $this->getWizardPage($out);	 
 	}
-	function setContacts1(){
-		$out='';
-		$out.='<table class="property-table" align="center" style="width: 100%;">';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Nume:</td>';
-		$out.='<td style="width: 70%;"><input type="text" id="name" name="name" value="'.$this->currentcontact->name.'"></td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Url:</td>';
-		$out.='<td style="width: 70%;"><input type="text" id="url" name="url" value="'.$this->currentcontact->url.'"></td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Fix:</td>';
-		$out.='<td style="width: 70%;"><input type="text" id="phone" name="phone" value="'.$this->currentcontact->phone.'"></td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Mobil:</td>';
-		$out.='<td style="width: 70%;"><input type="text" id="mobile" name="mobile" value="'.$this->currentcontact->mobile.'"></td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Email:</td>';
-		$out.='<td style="width: 70%;"><input type="text" id="email" name="email" value="'.$this->currentcontact->email.'"></td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Note la contacte:</td>';
-		$out.='<td style="width: 70%;"><textarea id="notecontact" name="notecontact">'.$this->currentcontact->note.'</textarea></td>';
-		$out.='</tr>'; 			
-		$out.='</table>';
-		return $this->getWizardPage($out);	 
-	}	
 
 	function setValidation(){
 

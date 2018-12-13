@@ -921,11 +921,8 @@ class MainWebPage extends WebPage {
 		WebPage::show($this->getXml());
 	}
 	function getXml(){
-	
-	
 		$out='<?xml version="1.0" encoding="utf-8"?>';
 		$out.='<markers>';
-	
 		$m=new Map();
 		$ms=$m->getAll();
 		foreach($ms as $m){
@@ -938,7 +935,6 @@ class MainWebPage extends WebPage {
 			$out.='link="'.htmlspecialchars($m->getUrl(Config::$mapssite.'/index.php','action=viewmap&id='.$m->id)).'" ';
 			$out.='/>';
 		}
-
 		$p=new Property();
 		$ps=$p->getAll("lat!=\"\"");
 		foreach($ps as $p){
@@ -968,7 +964,6 @@ class MainWebPage extends WebPage {
 			$out.='link="'.Config::$imagessite.'/index.php?id='.$p->id.'" ';
 			$out.='/>';
 		}
-	
 		$out.='</markers>';
 		return $out;
 	}
@@ -998,9 +993,7 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	public function getPrivescEuWidget(){
-		
 		$out='<iframe src="//www.privesc.eu/Widget/embeded/�nregistrare/Moldova,Parlament,Guvern,Conferinte,Offlineuri,Emisiuni,RIA,Concerte,Retransmisiuni,Sport,Monden,Altele," frameborder="0" width="180" height="140" scrolling="no" title="Televizor Privesc.Eu"></iframe>';
-		
 		return $this->getGroupBoxH2("Privesc Eu TV",$out);
 	}
 	public function setOGP($title, $type, $url, $image){

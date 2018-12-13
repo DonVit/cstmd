@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . '/../main/loader.php');
  
-class PropertyWebPage extends MainWebPage {
+class ChiriePropertyWebPage extends PropertyWebPage {
 	public $mod="view";
 	public $step=1;
 	public $steps=6;
@@ -281,42 +281,6 @@ class PropertyWebPage extends MainWebPage {
 		} else {
 			return $out;
 		}
-	}	
-	function getAdress1(){
-		$out='';
-		if ($this->currentproperty->getScop()->id==2){		
-			$out.='<table class="property-table" align="center" style="width: 100%;">';
-			$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewraion").'&id='.$this->currentproperty->getRaion()->id.'" >'.$this->currentproperty->getRaion()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Casa:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->casa_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat:</td><td class="property-value" style="width: 25%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite."/index.php","action=viewlocalitate").'&id='.$this->currentproperty->getLocation()->id.'" >'.$this->currentproperty->getLocation()->getFullName().'</a></td><td class="property-name" style="width: 25%;">Nr. Scara:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->scara_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 25%;">Sector:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td><td class="property-name" style="width: 25%;">Nr. Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->apartament_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 25%;">Strada:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->strada.'</td><td></td><td></td></tr>';	
-			$out.='<tr>';
-			$out.='<td class="property-name" style="width: 25%;">Note:</td>';		
-			$out.='<td class="property-value" style="width: 25%;" colspan="3">'.$this->currentproperty->note.'</td>';
-			$out.='</tr>';
-			$out.='</table>';
-			return $this->getGroupBoxHtml("<h3>Adresa:</h3>",$out,"");
-		} else {
-			return $out;
-		}
-	}		
-	function getAdress2(){
-		$out='';
-		if ($this->currentproperty->getScop()->id==2){		
-			$out.='<table class="property-table" align="center" style="width: 100%;">';
-			$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getRaion()->getFullName().'</td><td class="property-name" style="width: 25%;">Nr. Casa:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->casa_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getLocation()->getFullName().'</td><td class="property-name" style="width: 25%;">Nr. Scara:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->scara_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 25%;">Sector:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td><td class="property-name" style="width: 25%;">Nr. Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->apartament_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 25%;">Strada:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->strada.'</td><td></td><td></td></tr>';	
-			$out.='<tr>';
-			$out.='<td class="property-name" style="width: 25%;">Note:</td>';		
-			$out.='<td class="property-value" style="width: 25%;" colspan="3">'.$this->currentproperty->note.'</td>';
-			$out.='</tr>';
-			$out.='</table>';		
-			return $this->getGroupBoxHtml("<h3>Adresa:</h3>",$out,"");
-		} else {
-			return $out;
-		}
 	}
 	function getPropertyMap(){
 		$out='';
@@ -351,52 +315,7 @@ class PropertyWebPage extends MainWebPage {
 		} else {
 			return $out;
 		}			
-	}	
-	function getFilesView1(){
-		$out='';
-		if ($this->currentproperty->getScop()->id==2){		
-			$out.='<table class="property-table" align="center" style="width: 100%;">';
-			$out.='<tr><td style="text-align:center;">';
-			if ((sizeof($this->currentfiles)!=0)){
-			    for ($i = 0; $i <= 4; $i++) {
-					if (isset($this->currentfiles[$i]->filepath)){
-						$out.="<a href=\"".Config::$filespath."/".$this->currentfiles[$i]->filepath."\" rel=\"lightbox[list]\"><img src=\"".Config::$filespath."/t".$this->currentfiles[$i]->filepath."\"></a>&nbsp";
-					} else {
-						$out.="<a href=\"".Config::$commonsite."/img/no_image_100x100.jpg\" ><img src=\"".Config::$commonsite."/img/no_image_100x100.jpg\"></a>&nbsp";
-					}
-				}
-			}		
-			$out.='</td></tr>';
-			$out.='</table>';
-			return $this->getGroupBoxHtml("<h3>Imagini:</h3>",$out,"");	
-		} else {
-			return $out;
-		}		
 	}
-	function getContacts1(){
-		$out='';
-		$out.='<table class="property-table" align="center" style="width:100%">';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width:25%">Nume:</td><td class="property-value" style="width:25%">'.$this->currentcontact->name.'</td>';
-		$out.='<td class="property-name" style="width:25%">Url:</td><td class="property-value" style="width:25%">'.$this->currentcontact->url.'</td>';
-		$out.='</tr>';
-		$out.='<tr>';			
-		$out.='<td class="property-name" style="width:25%">Fix:</td><td class="property-value" style="width:25%">'.$this->currentcontact->phone.'</td>';
-		$out.='<td class="property-name" style="width:25%">Email:</td><td class="property-value" style="width:25%">'.$this->currentcontact->email.'</td>';		
-		$out.='</tr>';
-		$out.='<tr>';				 
-		$out.='<td class="property-name" style="width:25%">Mobil:</td><td class="property-value" colspan="3">'.$this->currentcontact->mobile.'</td>';
-		$out.='</tr>';
-		$out.='<tr>';				 		
-		$out.='<td class="property-name" style="width:25%">Note:</td><td class="property-value" colspan="3">'.$this->currentcontact->note.'</td>';
-		$out.='</tr>';	
-		$out.='</table>'; 			
-	
-		return $this->getGroupBoxHtml("<h3>Contacte:</h3>",$out,"");	 
-	}
-	function getPropertyContacts(){	
-		return $this->getGroupBoxH3("Contacte:",$this->getContacts($this->currentcontact));
-	}			
 }
-$n=new PropertyWebPage();
+$n=new ChiriePropertyWebPage();
 ?>
