@@ -801,7 +801,7 @@ class IndexLocationsWebPage extends MainWebPage {
 						}						
 						
 					}
-					$popnatmax=$this->getMaxValueRounded($popnatmax);
+					$popnatmax=System::getMaxValueRounded($popnatmax);
 					$chxl='0:|'.$chxl0.'1:|'.$chxl1;
 					$chxp='0'.$chxp0.'|1'.$chxp1;
 					$chxr="0,$anmin,$anmax|1,$popnatmin,$popnatmax";
@@ -817,10 +817,6 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.=$this->getGroupBoxH3($o2s,$o2b);
 		}
 		return $out;
-	}
-	function getMaxValueRounded($maxvalue){
-		$len=strlen($maxvalue);
-		return $maxvalue+pow(10,$len-1);
 	}
 	function showElectoralPreferences(){
 		if (($this->location->raion_id!=500)&&($this->location->raion_id!=700)){

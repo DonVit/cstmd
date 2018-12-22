@@ -61,6 +61,10 @@ class System{
    }
 	public static function getHtmlSpecialChars($text){
 		return htmlspecialchars($text);
-	}    	
+	}
+	public static function getMaxValueRounded($maxvalue){
+		$len=strlen($maxvalue);
+		return $maxvalue+pow(10,$len-1);
+	}
 }
 ?>

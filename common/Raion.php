@@ -135,9 +135,9 @@ class Raion extends DBManager {
 		return substr($this->lng,0,7);
 	}
 	function getPopulation(){
-		$o=DBManager::doSql("select sum(p) as p from localitate where raion_id=".$this->id);
+		$o=RecensamintPrimarie::getPopulationBy(2014, $this->id);
 		if (!is_null($o)){
-			return $o[0]->p;
+			return $o[0]->total;
 		} else {	
 			return null;
 		}
@@ -196,7 +196,7 @@ class Raion extends DBManager {
 		return $out;
 	}
 	public static function getPrimariiListByRaion($currentPage, $raionId){
-		$sql="select l.*, (select count(*) from localitate where parent_id=l.id) as nr_loc from localitate as l where l.statut in (3,8) and l.raion_id=".$raionId." order by l.oras desc, l.name";
+		$sql="select l.*, (select count(*)+1 from localitate where parent_id=l.id and statut in (6,9)) as nr_loc from localitate as l where l.statut in (3,8) and l.raion_id=".$raionId." order by l.oras desc, l.name";
 		$out='';
 		$out.='<div class="groupboxtable">';
 	
@@ -211,7 +211,7 @@ class Raion extends DBManager {
 			if ($row->oras==1){
 				$name.="Orasului ";
 			} else {
-				if ($row->nr_loc!=0){
+				if ($row->nr_loc!=1){
 					$name.="Comunei ";
 				} else {
 					$name.="Satului ";
@@ -221,11 +221,7 @@ class Raion extends DBManager {
 			return '<a href="'.$url.'">'.$name.'</a>';
 		};
 		$contorlink=function($row) use ($currentPage){
-			$cnt=1;
-			if ($row->raion_center==0){
-				$cnt+=$row->nr_loc;
-			}
-			return $cnt;
+			return $row->nr_loc;
 		};		
 		$table->addField(new TableField(1, "Denumire", "name", "text-align: left;width:70%",$namelink));
 		$table->addField(new TableField(2, "Localitati in componenta", "nr_loc", "text-align: center;width:20%",$contorlink));
