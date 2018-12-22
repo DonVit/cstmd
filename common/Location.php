@@ -43,11 +43,6 @@ class Location extends DBManager {
 	public function getFullNameDescription(){
 		$fn="";
 		if (isset($this->id)){
-// 			if ($this->oras==1){
-// 				$fn="Orasul ".$this->getName();
-// 			}else{
-// 				$fn="Satul ".$this->getName();
-// 			}
 			$fn=Location::getLocationPrefix($this,$this->oras)." ".$this->getName();
 		}
 		return $fn;
@@ -166,20 +161,18 @@ class Location extends DBManager {
 		return $ls;
 	}
 	function getChildLocationsAsResultSet(){
-		$sql="SELECT * FROM localitate where id=$this->id or parent_id=$this->id order by oras desc, p desc, name";
+		$sql="SELECT * FROM localitate where id=$this->id or (parent_id=$this->id and statut in (6,9)) order by oras desc, p desc, name";
 		$ls=$this->sql($sql);
 		return $ls;
 	}	
 	function getChildLocations(){
-		
 		$l=new Location();
 		$ls=$l->getAll("id=$this->id or parent_id=".$this->id,"oras desc, p desc, name");
 		return $ls;		
 	}
 	function getPrimariePopulation(){
-		$sql="SELECT sum(p) as p FROM localitate where id=$this->id or parent_id=".$this->id;
-		$ls=$this->doSql($sql);
-		return $ls[0]->p;
+		$o=RecensamintPrimarie::getPopulationBy(2014, $this->raion_id, $this->id);
+		return $o[0]->total;
 	}
 	function getPrimarName(){
 		$sql="SELECT * FROM al_primari where alegeri_id='2015' and localitate_id=".$this->id;
@@ -287,7 +280,6 @@ class Location extends DBManager {
 			return '<a href="'.$url.'">'.Location::getLocationPrefix($currentPage,$row->oras)." ".$row->name.'</a>';
 		};
 		$table->addField(new TableField(1, "Denumire", "name", "width:85%",$namelink));
-		//$table->addField(new TableField(2, "Total locuitori", "p", "text-align: center;",""));
 	
 		$out.=$table->show();
 	
