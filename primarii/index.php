@@ -62,8 +62,6 @@ class IndexLocationsWebPage extends MainWebPage {
 			Logger::setLogs($this->location);
 
 		}
-		Logger::setLogs($this->location);
-		Logger::setLogs("point11".$this->location->parent_id);
 		$l->count();
 		$this->setTitle('Primarii Moldova: '.$this->location->getPrimariaName());
 		$this->setLogoTitle(strtoupper($this->location->getPrimariaName()));
@@ -77,9 +75,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getLocalitatiDistance());	
 		$this->setCenterContainer($this->getContacts($l));
 		$this->setCenterContainer($this->getNewsTitles());
-		//$this->setCenterContainer($this->getNews());
 		
-		$c='<a name="9"></a>Forum/Comentarii:';
+		$c='<a name="11"></a>Forum/Comentarii:';
 		$this->setCenterContainer($this->getGroupBoxH3($c,Comment::getComments($this,'y',$l->id)));
 		$this->setLeftContainer($this->getGroupBoxH3("Menu",$this->getMenuPrimarie()));
 		$this->setLeftContainer($this->getGroupBoxH3("Cauta Primarie:",$this->getSearchPrimarie()));
@@ -247,11 +244,13 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#2").'">Localitati in componenta</a></li>';	
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#3").'">Date geografice</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#4").'">Pozitia pe Harta</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#5").'">Lista Consilierilor</a></li>';		
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#6").'">Primarii in raza de 10 km</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#7").'">Telefoane</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#8").'">Stiri</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#9").'">Forum/Comentarii</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#5").'">Populatia</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#6").'">Lista Consilierilor</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#7").'">Alegeri</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#8").'">Primarii in raza de 10 km</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#9").'">Telefoane</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#10").'">Stiri</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewprimarie&id=".$this->id."#11").'">Forum/Comentarii</a></li>';
 		$out.='</ul>';
 		return $out;
 	}		
@@ -377,7 +376,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		if (mysql_num_rows($ls)!=0){
 			$o2s='';
 			$o2b='';
-			$o2s.='<a name="5"></a>'.$this->location->getPrimariaName().' - Lista Consilierilor:';
+			$o2s.='<a name="6"></a>'.$this->location->getPrimariaName().' - Lista Consilierilor:';
 			$o2b.='<div class="groupboxtable">';
 		
 			$table=new Table();
@@ -471,27 +470,6 @@ class IndexLocationsWebPage extends MainWebPage {
 			return $rtcl;
 	}
 
-	function getLocalitatiInJur(){
-		$out="";
-		
-		$ls=$this->location->getLocationsInRadius();
-		if (count($ls)!=0){				
-			$o2s='';
-			$o2b='';
-			$o2s.='<a name="5"></a>'.$this->location->getFullNameDescription().' - Localitati in raza de 10 km:';		
-			$l=new Location();
-			foreach($ls as $loc){
-				$l->loadById($loc->id);
-				$lurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitate&id=".$l->id);
-				$rurl=$this->getUrlWithSpecialCharsConverted("index.php","action=viewraion&id=".$l->getRaion()->id);
-				$o2b.=round($loc->distance).' km - distanța directă pînă la <a href="'.$lurl.'">'.$l->getFullNameDescription().'</a> din <a href="'.$rurl.'">'.$l->getRaion()->getFullNameDescription().'</a> - <a href="'.$this->getUrlWithSpecialCharsConverted(Config::$distantesite."/index.php","from=".$this->location->id."&to=".$loc->id).'">vezi pe harta</a><br>';
-				//$o2b.='<a href="?lc='.$l->id.'">'.$l->getFullName().'</a><br>';	
-			}
-			$out.=$this->getGroupBoxH3($o2s,$o2b);		
-		}			
-
-		return $out;
-	}
 	function getPrimariiInJur(){
 		$out="";
 	
@@ -499,7 +477,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		if (count($ls)!=0){
 			$o2s='';
 			$o2b='';
-			$o2s.='<a name="6"></a>'.$this->location->getPrimariaName().' - Primarii in raza de 10 km:';
+			$o2s.='<a name="8"></a>'.$this->location->getPrimariaName().' - Primarii in raza de 10 km:';
 			$l=new Location();
 			foreach($ls as $loc){
 				$l->loadById($loc->id);
@@ -555,73 +533,6 @@ class IndexLocationsWebPage extends MainWebPage {
 			$out.=$this->getGroupBoxH3($o2s,$o2b);		
 		}			
 
-		return $out;
-	}
-	function getPopulation(){
-		$out="";
-		
-		if (($this->location->p>0)){				
-			$o2s='<a name="7"></a>'.$this->location->getFullNameDescription().' - Populatia (Conform recensamintului din anul 2004):';		
-			$o2b='Locuitori - '.number_format($this->location->p, 0, ',', ' ').' din care:<br>';
-			//$o2b.='Din care:<br>';
-			$o2b.='Barbati - '.number_format($this->location->m, 0, ',', ' ').'<br>';
-			$o2b.='Femei - '.number_format($this->location->f, 0, ',', ' ').'<br>';	
-			$popnat=new Population();
-			$popnat->loadById($this->location->id);
-			$total=$popnat->total;
-			$moldoveni=$popnat->moldoveni+$popnat->romani;
-			$moldovenip=round($moldoveni*100/$total,2);
-			$ucraineni=$popnat->ucraineni;
-			$ucrainenip=round($ucraineni*100/$total,2);
-			$rusi=$popnat->rusi;
-			$rusip=round($rusi*100/$total,2);
-			$gagauzi=$popnat->gagauzi;
-			$gagauzip=round($gagauzi*100/$total,2);
-			$bulgari=$popnat->bulgari;
-			$bulgarip=round($bulgari*100/$total,2);
-			$evrei=$popnat->evrei;
-			$evreip=round($evrei*100/$total,2);
-			$polonezi=$popnat->polonezi;
-			$polonezip=round($polonezi*100/$total,2);
-			$tigani=$popnat->tigani;
-			$tiganip=round($tigani*100/$total,2);
-			$altele=$popnat->altele;
-			$altelep=round($altele*100/$total,2);
-			
-			$o2b.='<br>';
-			$o2b.='Componenta pe nationalitati:';
-			$o2b.='<br>';
-			$o2b.='<div class="groupboxtable">';
-			$o2b.='<table style="width:100%;">';			
-			$o2b.='<tr><th>Nationalitate</th><th>Numar de Locuitori</th><th>% de Locuitori</th></tr>';
-			$o2b.='<tr><td>Moldoveni/Romani</td><td style="text-align:center;">'.$moldoveni.'</td><td style="text-align:center;">'.$moldovenip.'</td></tr>';
-			$o2b.='<tr><td>Ucraineni</td><td style="text-align:center;">'.$ucraineni.'</td><td style="text-align:center;">'.$ucrainenip.'</td></tr>';
-			$o2b.='<tr><td>Rusi</td><td style="text-align:center;">'.$rusi.'</td><td style="text-align:center;">'.$rusip.'</td></tr>';
-			$o2b.='<tr><td>Gagauzi</td><td style="text-align:center;">'.$gagauzi.'</td><td style="text-align:center;">'.$gagauzip.'</td></tr>';
-			$o2b.='<tr><td>Bulgari</td><td style="text-align:center;">'.$bulgari.'</td><td style="text-align:center;">'.$bulgarip.'</td></tr>';
-			$o2b.='<tr><td>Evrei</td><td style="text-align:center;">'.$evrei.'</td><td style="text-align:center;">'.$evreip.'</td></tr>';
-			$o2b.='<tr><td>Polonezi</td><td style="text-align:center;">'.$polonezi.'</td><td style="text-align:center;">'.$polonezip.'</td></tr>';
-			$o2b.='<tr><td>Tigani</td><td style="text-align:center;">'.$tigani.'</td><td style="text-align:center;">'.$tiganip.'</td></tr>';		
-			$o2b.='<tr><td>Altele</td><td style="text-align:center;">'.$altele.'</td><td style="text-align:center;">'.$altelep.'</td></tr>';
-			$o2b.='</table>';
-			$o2b.='</div>';
-			$chco='008000|224499|FF0000|FF9900|AA0033|7777CC|80C65A|AB8F3C|AD4949';
-			$chd='t:'.$moldovenip.','.$ucrainenip.','.$rusip.','.$gagauzip.','.$bulgarip.','.$evreip.','.$polonezip.','.$tiganip.','.$altelep;
-			$chdl='Moldoveni|Ucraineni|Rusi|Gagauzi|Bulgari|Evrei|Polonezi|Tigani|Altele';
-			$chl=$moldovenip.'%|'.$ucrainenip.'%|'.$rusip.'%|'.$gagauzip.'%|'.$bulgarip.'%|'.$evreip.'%|'.$polonezip.'%|'.$tiganip.'%|'.$altelep;
-			$chtt='Nationalitati '.$this->location->getFullNameDescription();
-			$o2b.='<br>';
-			//$o2b.='Componenta pe nationalitati:';
-			//$o2b.='<br>';
-			$o2b.='<div style="text-align:center">';
-			$o2b.='<img src="https://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
-			$o2b.='</div>';
-			
-			//https://chart.apis.google.com/chart?chs=400x225&cht=p&chd=t:90.25,0.73,1,0.31,1,0,0,6.29,0.42&chdl=Moldoveni|Ucraineni|Rusi|Gagauzi|Bulgari|Evrei|Polonezi|Tigani|Altele&chl=90.25%25|0.73%25|1%25|0.31%25|1%25|0%25|0%25|6.29%25|0.42%25&chtt=Nationalitati+in+satul+XXXX
-			
-		
-		}
-		$out.=$this->getGroupBoxH3($o2s,$o2b);					
 		return $out;
 	}
 	function getRaionPopulation(){
@@ -700,7 +611,7 @@ class IndexLocationsWebPage extends MainWebPage {
 	}
 	function getNewsTitles(){
 		$out="";			
-		$o2s='<a name="8"></a>'.$this->location->getPrimariaName().' - Ultimile Titluri de Stiri:';		
+		$o2s='<a name="10"></a>'.$this->location->getPrimariaName().' - Ultimile Titluri de Stiri:';
 		$fi=new FeedItem();
 		$o2b=$fi->getNewsByPrimarie($this->location->id);		
 		$link=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=primarie&id=".$this->location->id);
@@ -777,7 +688,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		
 		$out.='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$telefoanesite."/index.php","action=viewprefixbylocation&id=".$l->id).'">Mai multe contacte vezi aici</a>';
 	
-		return $this->getGroupBoxH2("<a name=\"7\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
+		return $this->getGroupBoxH2("<a name=\"9\"></a>Contacte, Telefoane a celor mai importante institutii sociale",$out);
 	}				
 	function showElectoralPreferences(){
 		if (($this->location->raion_id!=500)&&($this->location->raion_id!=700)){
@@ -825,7 +736,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$popnatall=RecensamintPrimarie::getPopulationBy(0, 0, $this->location->id);
 		if (count($popnatall)>1){
 
-					$o2s=$this->location->getFullNameDescription().' - Evolutia numarului de locuitori in ultimii 100 ani:';
+					$o2s='<a name="5"></a>'.$this->location->getPrimariaName().' - Evolutia numarului de locuitori in ultimii 100 ani:';
 
 					$o2b.=RecensamintPrimarie::getPopulationInTimeVeiwByPrimarie($this, $this->location->id);
 
