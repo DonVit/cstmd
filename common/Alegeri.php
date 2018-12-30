@@ -107,7 +107,7 @@ class Alegeri extends DBManager {
 		return $url;	
 	}				
 	public static function getPresidentialImageUrlByPrimarie($raion_id,$localitate_id){
-		$old_url="http://www.voteaza.md/r/r/52";
+		$old_url="https://cec.md/storage/old_site_files/r/r/52";
 		$new_url_t1="https://cec.md/storage/old_site_files/r/procese-verbale/prezidentiale2016/79";
 		$new_url_t2="https://cec.md/storage/old_site_files/r/procese-verbale/prezidentiale-t2-2016/82";
 		$url="";
