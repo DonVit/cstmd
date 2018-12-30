@@ -78,7 +78,7 @@ class FeedItem extends DBManager {
 		return $out;
 	}
 	public function getLocalitatiInNewsByDate($date,$limit=50){
-		$sql="SELECT t2.id, t2.title, t2.createdat as date, t5.id as c_id, t5.name as c_name from feeditem t2 inner join company t5 on t2.companyid=t5.id where date(t2.createdat)=\"".$date."\" order by t2.id desc limit 0,".$limit;
+		$sql="SELECT t1.feeditemid as id, t2.title, t2.createdat as date, t5.id as c_id, t5.name as c_name,t3.id as localitateid, t3.name as localitatename FROM feeditemlocation t1 inner join feeditem t2 on t1.feeditemid=t2.id inner join localitate t3 on t1.localitateid=t3.id inner join company t5 on t2.companyid=t5.id where date(t2.createdat)=\"".$date."\" limit 0,".$limit;
 		$ns=DBManager::doSql($sql);
 		$out=$this->getNewsTable($ns);
 		return $out;
