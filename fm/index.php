@@ -5,8 +5,8 @@ class IndexFmWebPage extends MainWebPage {
 	function __construct(){
 		parent::__construct();
 		$this->setTitle("FM Statii din Republica Moldova");
-		$this->setLogoTitle("Statii Radion FM Live din Republica Moldova");
-		$this->setCenterContainer('<iframe width="100%" height="100%" frameborder="0" allowfullscreen src="index.htm"></iframe>');
+		$this->setLogoTitle("Statii Radio FM Live din Republica Moldova");
+		$this->setCenterContainer('<iframe width="100%" height="100%" frameborder="0" src="index.htm"></iframe>');
 		$this->show();
 	}
 	function show($out=''){
