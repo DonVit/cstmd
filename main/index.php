@@ -87,9 +87,8 @@ class IndexWebPage extends MainWebPage {
 		$out='<div class="groupbox">';
 		$out.='<h2 class="groupheader_h2">Titluri de Stiri</h2>';
 		$out.='<table width="100%"><tr><td>';
-		$f=new FeedItem();	
-		$todayDate=date(FeedItem::$dateFormat);	
-		$out.=$f->getNewsByDate($todayDate,25);
+		$f=new FeedItem();
+		$out.=$f->getLatestNews(25);
 		$out.='</td></tr></table>';
 		$out.='<h2 class="groupfooter_h2"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$feedssite.'/index.php').'">mai multe stiri</a></h2>';		
 		$out.='</div>';
@@ -275,11 +274,11 @@ class IndexWebPage extends MainWebPage {
 	}
 	function getLastFeedsCount(){
 		$f=new FeedItem();
-		$fs=$f->doSql("select count(*) as cnt from feeditem where deleted=0 and status=2");
+		$fs=$f->doSql("explain select count(1) from feeditem");
 		
 		$c=0;
 		foreach ($fs as $f){
-			$c=$f->cnt;
+			$c=$f->rows;
 		}
 
 		$out='<div class="groupbox">';

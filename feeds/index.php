@@ -14,11 +14,10 @@ class FeedsWebPage extends MainWebPage {
 	}
 	function actionDefault(){	
 		$this->setLeftContainer($this->getGroupBoxH3("Utile:", $this->getMenuFeeds()));
-		$this->setLeftContainer($this->getGroupBoxH3("Stiri pe Surse:", $this->fi->getTopCompanies()));		
-		$todayDate=date(FeedItem::$dateFormat);
+		$this->setLeftContainer($this->getGroupBoxH3("Stiri pe Surse:", $this->fi->getTopCompanies()));
 		$title="Stiri de Azi";
 		$this->setTitle($title);	
-		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($todayDate,2000)));
+		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getLatestNews(250)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getRaions(0)));
 		$this->show();
 	}
