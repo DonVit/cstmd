@@ -291,7 +291,7 @@ class MainWebPage extends WebPage {
 	function getGAS() {
 		$out='';
 		if (Config::$live){
-            $out.='<div id="gas" class="container bar tophorlogo" style="text-align:center;padding: 5px;">';
+            $out.='<div id="topAd" align="center">';
             $out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
             $out.='<!-- topAd -->';
             $out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="3058206169" data-ad-format="auto" data-full-width-responsive="true"></ins>';
