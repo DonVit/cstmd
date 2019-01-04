@@ -43,13 +43,11 @@ class AdsBanner extends DBManager {
 				$out.='<div id="ad" class="container bar tophorlogo" style="text-align:center;padding: 5px;">';
 				$out.='<a href="'.Config::$adssite.'/banner.php?id='.$b->id.'" target="_blank">';
 				$out.='<div style="width: 100%; display: inline-block; vertical-align: middle; height: 77px; line-height: 77px; text-align: center; text-transform: uppercase; text-transform: uppercase; font-size: 30px; font-weight: bolder; text-decoration: blink; color:'.$b->tx_color.'; border: 1px solid '.$b->tx_color.'; background-color:'.$b->bg_color.'">'.$b->title.'	</div>';
-				$out.='</a>';              
-				$out.='<div style="clear: both;"></div>';
+				$out.='</a>';
 				$out.='</div>';
 			} else {
 				$out.='<div id="ad" class="container bar tophorlogo" style="text-align:center;padding: 5px;">';
-				$out.='<a href="'.Config::$adssite.'/banner.php?id='.$b->id.'" target="_blank"><img src="'.$b->image_url.'" alt="'.$b->title.'" style="width: 980px;"></a>';               
-				$out.='<div style="clear: both;"></div>';
+				$out.='<a href="'.Config::$adssite.'/banner.php?id='.$b->id.'" target="_blank"><img src="'.$b->image_url.'" alt="'.$b->title.'" style="width: 980px;"></a>';
 				$out.='</div>';				
 			}
 		}

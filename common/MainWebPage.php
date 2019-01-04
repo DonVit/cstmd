@@ -82,7 +82,8 @@ class MainWebPage extends WebPage {
 		$out.=$this->getBodyTag();
 		$out.=$this->getFacebookSDK();
 		$out.='<div id="main" class="main">';
-		$out.=$this->getBanner();		
+		//$out.=$this->getBanner();
+		$out.=$this->getGAS();
 		$out.=$this->getTopMenu();	
 		$out.=$this->getLogo();
 		$out.=$this->getMainMenu();
@@ -289,12 +290,14 @@ class MainWebPage extends WebPage {
 		return $out;
 	}
 	function getGAS() {
-		$out="";
+		$out='';
 		if (Config::$live){
-			$out.="<script async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>";
-			$out.="<script>";
-			$out.="(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: 'ca-pub-3574090138068623', enable_page_level_ads: true});";
-			$out.="</script>";
+			$out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
+            $out.='<div id="gas" class="container bar tophorlogo" style="text-align:center;padding: 5px;">';
+			$out.='<script>';
+			$out.='(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-3574090138068623", enable_page_level_ads: true});';
+			$out.='</script>';
+            $out.='</div>';
 		}
 		return $out;
 	}
