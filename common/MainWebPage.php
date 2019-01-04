@@ -77,7 +77,6 @@ class MainWebPage extends WebPage {
 		$out.=$this->getCSS();
 		$out.=$this->getJavascript();
 		$out.=$this->getGA();
-		$out.=$this->getGAS();
 		$out.='</head>';
 		$out.=$this->getBodyTag();
 		$out.=$this->getFacebookSDK();
@@ -292,8 +291,8 @@ class MainWebPage extends WebPage {
 	function getGAS() {
 		$out='';
 		if (Config::$live){
-			$out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
             $out.='<div id="gas" class="container bar tophorlogo" style="text-align:center;padding: 5px;">';
+			$out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
 			$out.='<script>';
 			$out.='(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-3574090138068623", enable_page_level_ads: true});';
 			$out.='</script>';
