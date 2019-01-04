@@ -292,10 +292,10 @@ class MainWebPage extends WebPage {
 		$out='';
 		if (Config::$live){
             $out.='<div id="gas" class="container bar tophorlogo" style="text-align:center;padding: 5px;">';
-			$out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
-			$out.='<script>';
-			$out.='(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-3574090138068623", enable_page_level_ads: true});';
-			$out.='</script>';
+            $out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
+            $out.='<!-- topAd -->';
+            $out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="3058206169" data-ad-format="auto" data-full-width-responsive="true"></ins>';
+            $out.='<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
             $out.='</div>';
 		}
 		return $out;
