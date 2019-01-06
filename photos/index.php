@@ -2,26 +2,6 @@
 require_once(__DIR__ . '/../main/loader.php');
  
 class PhotosWebPage extends MainWebPage {
-	public $months = array(
-		1 => "Ianuarie", 
-		2 => "Februarue", 
-		3 => "Martie", 
-		4 => "Aprilie", 
-		5 => "Mai", 
-		6 => "Iunie", 
-		7 => "Iulie", 
-		8 => "August", 
-		9 => "Septembrie", 
-		10 => "Octombrie", 
-		11 => "Noiembrie", 
-		12 => "Decembrie"
-		);
-	public $seasons = array(
-		1 => "Iarna",
-		2 => "Primavara",
-		3 => "Vara",
-		4 => "Toamna"
-	);	
 	public $rowsperpage=21;
 	function __construct(){
 		parent::__construct();
@@ -157,7 +137,7 @@ class PhotosWebPage extends MainWebPage {
 		//$localitate=new Location();
 		//$localitate->loadById($this->id);
 	
-		$title="Imagini de ".$this->months[$this->id].", Republica Moldova";
+		$title="Imagini de ".Enum::getMonths()[$this->id].", Republica Moldova";
 	
 		$this->setTitle($title);
 		//$this->setLogoTitle($title);
@@ -187,7 +167,7 @@ class PhotosWebPage extends MainWebPage {
 		if(!isset($this->page)){
 			$this->page=0;
 		}
-		$title="Imagini de ".$this->seasons[$this->id].", Republica Moldova";
+		$title="Imagini de ".Enum::getSeasons()[$this->id].", Republica Moldova";
 	
 		$this->setTitle($title);
 		
@@ -421,7 +401,7 @@ class PhotosWebPage extends MainWebPage {
 		$out="<ul>";
 		foreach($ys as $y){
 			if ($y->month!=0){
-				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewmonthimages&id='.$y->month).'">'.$this->months[$y->month].' ('.$y->cnt.')</a></li>';
+				$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewmonthimages&id='.$y->month).'">'.Enum::getMonths()[$y->month].' ('.$y->cnt.')</a></li>';
 			}
 		}
 		$out.="</ul>";
@@ -431,25 +411,25 @@ class PhotosWebPage extends MainWebPage {
 		$y=new DBManager();
 		$ys=$y->doSql("select month(data) as month, count(*) as cnt from photos group by month(data)");
 		$out="<ul>";
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=1').'">'.$this->seasons[1].' ('.($ys[11]->cnt+$ys[0]->cnt+$ys[1]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=2').'">'.$this->seasons[2].' ('.($ys[2]->cnt+$ys[3]->cnt+$ys[4]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=3').'">'.$this->seasons[3].' ('.($ys[5]->cnt+$ys[6]->cnt+$ys[7]->cnt).')</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=4').'">'.$this->seasons[4].' ('.($ys[8]->cnt+$ys[9]->cnt+$ys[10]->cnt).')</a></li>';						
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=1').'">'.Enum::getSeasons()[1].' ('.($ys[11]->cnt+$ys[0]->cnt+$ys[1]->cnt).')</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=2').'">'.Enum::getSeasons()[2].' ('.($ys[2]->cnt+$ys[3]->cnt+$ys[4]->cnt).')</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=3').'">'.Enum::getSeasons()[3].' ('.($ys[5]->cnt+$ys[6]->cnt+$ys[7]->cnt).')</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewseasonimages&id=4').'">'.Enum::getSeasons()[4].' ('.($ys[8]->cnt+$ys[9]->cnt+$ys[10]->cnt).')</a></li>';
 		$out.="</ul>";
 		return $out;
 	}		
 	function getSeasonByMonth($month){
 
 		if(in_array($month,array('3','4','5'))){
-			return $this->seasons[2];
-		}		
+			return Enum::getSeasons()[2];
+		}
 		if(in_array($month,array('6','7','8'))){
-			return $this->seasons[3];
+			return Enum::getSeasons()[3];
 		}		
 		if(in_array($month,array('9','10','11'))){
-			return $this->seasons[4];
+			return Enum::getSeasons()[4];
 		}
-		return $this->seasons[1];
+		return Enum::getSeasons()[1];
 	}
 	function getSeasonIdByMonth($month){
 	
@@ -638,7 +618,7 @@ class PhotosWebPage extends MainWebPage {
 		$out='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewraionimages&id='.$r->id).'" target="_self" title="Foto '.$r->getFullNameDescription().'">Foto '.$r->getFullNameDescription().'</a>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewlocalitateimages&id='.$l->id).'" target="_self" title="Foto '.$l->getFullNameDescription().'">Foto '.$l->getFullNameDescription().'</a>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewyearimages&id='.date('Y',strtotime($p->data))).'" target="_self" title="Foto Anul '.date('Y',strtotime($p->data)).'">Foto Anul '.date('Y',strtotime($p->data)).'</a>';
-		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewmonthimages&id='.date('n',strtotime($p->data))).'" target="_self" title="Foto de '.$this->months[date('n',strtotime($p->data))].'">Foto de '.$this->months[date('n',strtotime($p->data))].'</a>';
+		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewmonthimages&id='.date('n',strtotime($p->data))).'" target="_self" title="Foto de '.Enum::getMonths()[date('n',strtotime($p->data))].'">Foto de '.Enum::getMonths()[date('n',strtotime($p->data))].'</a>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewseasonimages&id='.$this->getSeasonIdByMonth(date('n',strtotime($p->data)))).'" target="_self" title="Foto de '.$this->getSeasonByMonth(date('n',strtotime($p->data))).'">Foto de '.$this->getSeasonByMonth(date('n',strtotime($p->data))).'</a>';
 		$out.='<br/>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$r->id).'" target="_self" title="'.$r->getFullName().'">'.$r->getFullNameDescription().'</a>';

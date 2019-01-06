@@ -18,7 +18,8 @@ class TopMenu {
 		Config::$numesite."/index.php?l=".$language->name=>"Nume",			
 		Config::$telefoanesite."/index.php?l=".$language->name=>"Telefoane",
 		Config::$fmsite."/index.php?l=".$language->name=>"Radio",
-		Config::$alegerisite."/index.php?l=".$language->name=>"Alegeri"					
+		Config::$alegerisite."/index.php?l=".$language->name=>"Alegeri",
+		Config::$calendarsite."/index.php?l=".$language->name=>"Calendar"
 		);
 		return $Items;
 	}
