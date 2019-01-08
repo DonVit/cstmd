@@ -196,7 +196,7 @@ class IndexCalendarWebPage extends MainWebPage {
 	}
 	function getSun(){
 		$sun_info = date_sun_info($this->dt->getTimestamp(),$this->location->lat,$this->location->lng);
-		$o1s='<a name="5"></a>Soarele in '.$this->location->getLngShort().' la data de '.$this->dateLongFormat;
+		$o1s='<a name="5"></a>Soarele in '.$this->location->getFullName().' la data de '.$this->dateLongFormat;
 		$o1b='Zorii de zi incep la ora '.date("H:i:s", $sun_info['civil_twilight_begin']).'<br>';
 		$o1b.='Rasaritul soarelui are loc la ora '.date("H:i:s", $sun_info['sunrise']).'<br>';
 		$o1b.='Zorii de zi dureaza: '.date("H:i:s", ($this->dt->getTimestamp()+($sun_info['sunrise']-$sun_info['civil_twilight_begin']))).'<br>';
