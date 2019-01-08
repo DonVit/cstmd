@@ -4,6 +4,8 @@ class Zodiac extends DBManager {
 	public $name;
 	public $startdate;
 	public $enddate;
+	public $startnr;
+	public $endnr;
 	public $sign;
 	function getTableName(){
 		return "zodiac";
@@ -11,14 +13,12 @@ class Zodiac extends DBManager {
 	public static function getZodiacByDate($date){
 		$z=new Zodiac();
 		$zs=$z->getAll();
-		
-		$dt_year=$date->format('Y');
-		$rt=$zs[0];
+
+		$datenr=$date->format('md');
+		$rt=$zs[9];
 		
 		foreach ($zs as $zt){
-			$dt_start=DateTime::createFromFormat("dmY",$zt->startdate.$dt_year);
-			$dt_end=DateTime::createFromFormat("dmY",$zt->enddate.$dt_year);
-			if (($date>=$dt_start)&&($date<=$dt_end)){
+			if (($datenr>=$zt->startnr)&&($datenr<=$zt->endnr)){
 				$rt=$zt;
 				break;
 			}
