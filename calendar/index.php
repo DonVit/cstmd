@@ -136,8 +136,6 @@ class IndexCalendarWebPage extends MainWebPage {
 		if (!Day::doesDayExists($this->dt)){
 			Day::addDaysByYear($this->year);
 		}
-		$nrfd=Day::getFreeDaysByYear($this->year);
-		$nrfdfd=Day::getFreeDaysFromDate($this->year,$this->dt);
 		
 		$out='';
 		$this->dateLongFormat = (int)$this->day.' '.Enum::getMonths()[(int)$this->month].' '.$this->year;
@@ -180,7 +178,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		$o1b.='Numarul de zile libere în an (Sîmbete și Duminici): '.$nrfd.'.<br>';
 		$o1b.='Numarul de zile lucrătoare în an: '.(365-$nrfd).'.<br>';
 		$o1b.='Numarul de zile libere rămase in acest an (Sîmbete și Duminici): '.$nrfdfd.'.<br>';
-		$o1b.='Numarul de zile lucrătoare rămase in acest an: '.($dl-$nrfd).'.<br>';
+		$o1b.='Numarul de zile lucrătoare rămase in acest an: '.($dl-$nrfdfd).'.<br>';
 		if ($this->year>1969 && $this->year<2038){
 		    $o1b.='Ziua de pasti in acest an: '.date("M-d-Y",easter_date($this->year)).'.<br>';
 		}
