@@ -632,9 +632,10 @@ class PhotosWebPage extends MainWebPage {
 		return $out;
 	}
 	function getSystemDetails($p){
+		$date=new DateTime($p->data);
 		$out='<div>';
 		$out.='<div id="property-view-dateq1" style="float:left">';
-		$out.='Data si Timpul fotografierii: <b>'.$p->data.'</b>';
+		$out.='Data si Timpul fotografierii: <b>'.$p->data.'</b>.<br><a href="'.Config::$calendarsite.'/index.php?action=viewdate&id='.$date->format('dmY').'&location_id='.$p->localitate_id.'">Vezi Calendarul acestei zile.</a>';
 		$out.='</div>';
 		$out.='<div id="property-view-dateq2" style="float:right">';
 		$out.='Vizualizari: <b>'.$p->contor.'</b>';

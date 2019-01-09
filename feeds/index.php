@@ -28,7 +28,7 @@ class FeedsWebPage extends MainWebPage {
 		$yesterday=$today->sub(new DateInterval('P1D'));
 		$title="Stiri de Ieri";
 		$this->setTitle($title);	
-		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($yesterday->format(FeedItem::$dateFormat),2000)));
+		$this->setCenterContainer($this->getGroupBoxH1($title,$this->fi->getNewsByDate($yesterday->format(FeedItem::$dateFormat),250)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getRaions(0)));
 		$this->show();
 	}	
@@ -38,7 +38,7 @@ class FeedsWebPage extends MainWebPage {
 		$date=date(FeedItem::$dateFormat,strtotime($this->date));	
 		$title="Titluri de Stiri din data de ";
 		$this->setTitle($title.$date);
-		$this->setCenterContainer($this->getGroupBoxH1($title.$date,$this->fi->getNewsByDate($date),2000));
+		$this->setCenterContainer($this->getGroupBoxH1($title.$date,$this->fi->getNewsByDate($date,250)));
 		$this->setRightContainer($this->getGroupBoxH3("Stire pe Localitati:",$this->getRaions(0)));		
 		$this->show();
 	}

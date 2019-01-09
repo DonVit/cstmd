@@ -1,10 +1,8 @@
 ﻿<?php
 require_once(__DIR__ . '/../main/loader.php');
 
-
 class IndexNumeWebPage extends MainWebPage {
 
-	
 	function __construct(){
 		parent::__construct();
 		$this->setCSS("style/maps.css");
