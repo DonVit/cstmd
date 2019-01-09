@@ -71,6 +71,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		$this->setCenterContainer($this->getYear());
 		$this->setCenterContainer($this->getCalendars());
 		$this->setCenterContainer($this->getSun());
+		$this->setCenterContainer($this->getMoon());
 		$this->setCenterContainer($this->getZodia());
 		$this->setCenterContainer($this->getCalendarChinez());
 		$this->setLeftContainer($this->getMenu());
@@ -108,9 +109,10 @@ class IndexCalendarWebPage extends MainWebPage {
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#3").'">Anul</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#4").'">Calendare</a></li>';
 		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#5").'">Soarele</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#6").'">Zodia</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#7").'">Calendarul Chinez</a></li>';
-		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#8").'">Stiri</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#6").'">Luna pe cer</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#7").'">Zodia</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#8").'">Calendarul Chinez</a></li>';
+		$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$this->id."#9").'">Stiri</a></li>';
 		$out.='</ul>';
 		$out.='</div>';
 		return $this->getGroupBoxH3("Menu:",$out);;
@@ -152,7 +154,9 @@ class IndexCalendarWebPage extends MainWebPage {
 		$o1b.='Luna: '.Enum::getMonths()[(int)$this->month].'.<br>';
 		$o1b.='Luna in calendarul popular: '.Enum::getPopMonths()[(int)$this->month].'<br>';
 		$o1b.='Ziua a '.$this->getDayNumber($this->dt).'a din an.<br>';
-		$o1b.='Saptamina a '.(int)$this->dt->format('W').'a <br>';
+		$weekNumber =(int)$this->dt->format('W');
+		$oddWeek = ($weekNumber%2) ? 'Pară' : 'Impară';
+		$o1b.='Săptămîna a '.$weekNumber.'a din an. Săptămîna '.$oddWeek.'.<br>';
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
 		return $out;
 	}
@@ -182,13 +186,16 @@ class IndexCalendarWebPage extends MainWebPage {
 		if ($this->year>1969 && $this->year<2038){
 		    $o1b.='Ziua de pasti in acest an: '.date("M-d-Y",easter_date($this->year)).'.<br>';
 		}
+        $leapYear = $this->dt->format('L');
+        $o1b.= ($leapYear) ? 'Este an Bisect.' : 'Nu este an Bisect.';
+
 		return $this->getGroupBoxH3($o1s,$o1b);
 	}
 	function getCalendars(){
 		$o1s='<a name="4"></a>Calendare';
 		$jd=gregoriantojd($this->month,$this->day, $this->year);
-		$o1b='Data in Calendarul Gregorian:'.jdtogregorian($jd).'<br>';
-		$o1b.='Data in Calendarul Iulian:'.jdtojulian($jd).'<br>';
+		$o1b='Data in Calendarul Gregorian(Stil Nou):'.jdtogregorian($jd).'<br>';
+		$o1b.='Data in Calendarul Iulian(Stil/Rit Vechi):'.jdtojulian($jd).'<br>';
 		$o1b.='Data in Calendarul Evreiesc: '.jdtojewish($jd).'<br>';
 		return $this->getGroupBoxH3($o1s,$o1b);
 	}
@@ -209,8 +216,31 @@ class IndexCalendarWebPage extends MainWebPage {
 		$o1b.='Noaptea dureaza: '.date("H:i:s", (mktime(24,0,0,0,0,0)-($sun_info['sunset']-$sun_info['sunrise']))).'<br>';
 		return $this->getGroupBoxH3($o1s,$o1b);
 	}
+	function getMoon(){
+        $dt=DateTime::createFromFormat("mdY",$this->month.$this->day.$this->year);
+        $moon = new MoonPhase($dt->getTimestamp());
+		$o1s='<a name="6"></a>Luna pe cer';
+		$z=Zodiac::getZodiacByDate($this->dt);
+		$dt_start=DateTime::createFromFormat("dmY",$z->startdate.$this->dt->format('Y'));
+        $dt_end=DateTime::createFromFormat("dmY",$z->enddate.$this->dt->format('Y'));
+		$o1b='Zodia: '.$z->name.' ('.$dt_start->format('d/M').' - '.$dt_end->format('d/M').')<br>';
+
+        $age = round( $moon->age(), 1 );
+        $stage = $moon->phase() < 0.5 ? 'Crestere' : 'Descreștere';
+        $distance = round( $moon->distance(), 0);
+        $o1b='Luna este in ziua a '.$age.'a si in faza de '.$stage.' a Semilunii.<br>';
+        $o1b.='Luna Noua a ciclului curent a avut loc la: '.gmdate( 'G:i:s, j M Y', $moon->new_moon() ).'<br>';
+        $o1b.='Urmatoarea Luna Noua va fi la:'.gmdate( 'G:i:s, j M Y', $moon->next_new_moon() ).'<br>';
+        $o1b.='Luna Plina in ciclul curent este/va fi la: '.gmdate( 'G:i:s, j M Y', $moon->full_moon() ).'<br>';
+        $o1b.='Urmatoarea Luna Plina va fi la:'.gmdate( 'G:i:s, j M Y', $moon->next_full_moon() ).'<br>';
+        $o1b.='Distanta de la centrul pamintului pina la luna este : '.$distance.' km.<br>';
+        $o1b.='<br>';
+        $agephase=round( $moon->age()*2, 0);
+        $o1b.='<div style="text-align:center;"><img style="width:180px;" src="http://en.calc-site.com/img/moon/moon_'.$agephase.'.jpg"></div>';
+        return $this->getGroupBoxH3($o1s,$o1b);
+	}
 	function getZodia(){
-		$o1s='<a name="6"></a>Zodia';
+		$o1s='<a name="7"></a>Zodia';
 		$z=Zodiac::getZodiacByDate($this->dt);
 		$dt_start=DateTime::createFromFormat("dmY",$z->startdate.$this->dt->format('Y'));
         $dt_end=DateTime::createFromFormat("dmY",$z->enddate.$this->dt->format('Y'));
@@ -219,7 +249,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		return $this->getGroupBoxH3($o1s,$o1b);
 	}
 	function getCalendarChinez(){
-		$o1s='<a name="7"></a>Calendarul Chinez';
+		$o1s='<a name="8"></a>Calendarul Chinez';
 		$y=Year::getYearByDate($this->dt);
 		$o1b='Animalul asociat acestui an este: '.$y->animal_ro.'<br>';
 		$o1b.='Elementul asociat acestui an este: '.$y->element.'<br>';
@@ -232,7 +262,7 @@ class IndexCalendarWebPage extends MainWebPage {
 
     function getNewsTitles(){
         $out="";
-        $o2s='<a name="8"></a>Stiri la data de '.$this->dateLongFormat.' din '.$this->location->getFullName();
+        $o2s='<a name="9"></a>Stiri la data de '.$this->dateLongFormat.' din '.$this->location->getFullName();
         $fi=new FeedItem();
         $o2b=$fi->getNewsByLocalitateAndDate($this->location->id, $this->dt->format(FeedItem::$dateFormat));
         $link=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=primarie&id=".$this->location->id);
