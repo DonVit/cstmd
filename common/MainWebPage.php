@@ -82,7 +82,7 @@ class MainWebPage extends WebPage {
 		$out.=$this->getFacebookSDK();
 		$out.='<div id="main" class="main">';
 		//$out.=$this->getBanner();
-		$out.=$this->getGAS();
+		$out.=$this->getTopGAS();
 		$out.=$this->getTopMenu();	
 		$out.=$this->getLogo();
 		$out.=$this->getMainMenu();
@@ -208,8 +208,8 @@ class MainWebPage extends WebPage {
 		$out.=$this->getCounters();
 		$out.=$this->getBottomMenu();
 		$out.='</div>';
-		$out.=$this->getLogs();
-		$out.='</div>';
+		$out.=$this->getBottomGAS();
+		$out.=$this->getLogs();;
 		$out.=$this->getFooterJavascript();
 		$out.='</body>';
 		$out.='</html>';
@@ -288,12 +288,22 @@ class MainWebPage extends WebPage {
 		}
 		return $out;
 	}
-	function getGAS() {
+	function getTopGAS() {
 		$out='';
 		if (Config::$live){
             $out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
             $out.='<!-- topAd -->';
             $out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="3058206169" data-ad-format="auto" data-full-width-responsive="true"></ins>';
+            $out.='<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
+		}
+		return $out;
+	}
+	function getBottomGAS() {
+		$out='';
+		if (!Config::$live){
+            $out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
+            $out.='<!-- bottomAd -->';
+            $out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="1166607204" data-ad-format="auto" data-full-width-responsive="true"></ins>';
             $out.='<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		}
 		return $out;
