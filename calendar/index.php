@@ -155,7 +155,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		$o1b.='Luna in calendarul popular: '.Enum::getPopMonths()[(int)$this->month].'<br>';
 		$o1b.='Ziua a '.$this->getDayNumber($this->dt).'a din an.<br>';
 		$weekNumber =(int)$this->dt->format('W');
-		$oddWeek = ($weekNumber%2) ? 'Pară' : 'Impară';
+		$oddWeek = ($weekNumber%2) ? 'Impară' : 'Pară';
 		$o1b.='Săptămîna a '.$weekNumber.'a din an. Săptămîna '.$oddWeek.'.<br>';
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
 		return $out;
