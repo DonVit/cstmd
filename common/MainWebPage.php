@@ -312,10 +312,10 @@ class MainWebPage extends WebPage {
 	function getRightGAS() {
 		$out='';
 		if (Config::$live){
-            $out.='<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
-            $out.='<!-- rightAd -->';
-            $out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="5675349039" data-ad-format="auto" data-full-width-responsive="true"></ins>';
-            $out.='<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>';
+			$out.='<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
+			$out.='<!-- rightAd -->';
+			$out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="5675349039" data-ad-format="auto" data-full-width-responsive="true"></ins>';
+			$out.='<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>';
 		}
 		return $out;
 	}	
