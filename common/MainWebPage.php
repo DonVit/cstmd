@@ -20,6 +20,7 @@ class MainWebPage extends WebPage {
 		$this->setJavascript(Config::$commonsite."/js/scripts.js");
 		$this->setJavascript("https://www.google.com/recaptcha/api.js?hl=".$this->getLang()->name);
 		$this->setJavascript("https://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
+		$this->rightcontainer=$this->getRightGAS();
 	}
 	
 	function show($html="MainWebPageHtml"){
@@ -308,6 +309,16 @@ class MainWebPage extends WebPage {
 		}
 		return $out;
 	}
+	function getRightGAS() {
+		$out='';
+		if (Config::$live){
+			$out.='<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
+			$out.='<!-- rightAd -->';
+			$out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="5675349039" data-ad-format="auto" data-full-width-responsive="true"></ins>';
+			$out.='<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>';
+		}
+		return $out;
+	}	
 	function getBookmarks($permalink="", $title="") {
 		if (Config::$live){
 			//addthis
