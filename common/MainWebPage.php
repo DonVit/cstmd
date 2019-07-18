@@ -317,7 +317,7 @@ class MainWebPage extends WebPage {
 			$out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="5675349039" data-ad-format="auto" data-full-width-responsive="true"></ins>';
 			$out.='<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>';
 		}
-		return $out;
+		return $this->getGroupBoxH3('',$out);
 	}	
 	function getBookmarks($permalink="", $title="") {
 		if (Config::$live){
