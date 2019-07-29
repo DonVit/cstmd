@@ -111,7 +111,7 @@ class FeedItem extends DBManager {
 				$urlnews=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=redirect&id=".$n->id);
 				$urlcompany=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=company&id=".$n->c_id);
 				$urldate=$this->getUrlWithSpecialCharsConverted(Config::$feedssite."/index.php","action=calendar&date=".$date);
-				$calendardate=date('dmY', strtotime($n->date));
+				$calendardate=date('Ymd', strtotime($n->date));
 				$urlcalendardate=$this->getUrlWithSpecialCharsConverted(Config::$calendarsite."/index.php","action=viewdate&id=".$calendardate);
 				$out.='<li style="border-bottom: 1px dotted #777777;"><a href="'.$urlnews.'" target="_blank">'.$n->title.'</a><div style="font-size: 11px;  text-align: right;">Sursa:<a href="'.$urlcompany.'" target="_blank">'.$n->c_name.'</a> Din data:<a href="'.$urlcalendardate.'" target="_blank">'.$date.'</a> Vezi toate stirle din aceata zi <a href="'.$urldate.'" target="_blank">AICI.</a></div></li>';
 				$c=$c-1;

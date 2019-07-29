@@ -20,7 +20,7 @@ class SitemapDaysWebPage extends WebPage {
 		$out.='<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
 		foreach($ds as $d){
-			$link = htmlspecialchars(Config::$calendarsite."/index.php?action=viewdate&id=".strrev($d->dayid));		
+			$link = htmlspecialchars(Config::$calendarsite."/index.php?action=viewdate&id=".$d->dayid);		
 			$pubDate = "2019-07-29";
 			$out.='<url>';
 			$out.='<loc>'.$link.'</loc>';
