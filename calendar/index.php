@@ -66,7 +66,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		}
 
 		$this->setTitle('Calendar Moldova: Data de '.$this->id.'');
-		$this->setCenterContainer($this->getDateDescription($this->id));
+		$this->setCenterContainer($this->getDateDescription());
 		$this->setCenterContainer($this->getMonth());
 		$this->setCenterContainer($this->getYear());
 		$this->setCenterContainer($this->getCalendars());
