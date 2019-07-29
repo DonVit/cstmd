@@ -58,19 +58,22 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function show($out=''){
 		$out="";
 		$out.='<div id="container">';
-		$out.='<div id="center" class="container center" style="width:800px;float: none;margin: 0 auto;padding:20px;">';
+		$out.='<div id="center" class="container center" style="width:798px;">';
 		$out.=$this->getCenterContainer();
+		$out.='</div>';
+		$out.='<div id="right" class="container right" style="width:198px;">';
+		$out.=$this->getRightContainer();
 		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
-	}		
+	}
+
 	function actionDefault(){
 		$this->setTitle($this->currentproperty->getShortDescription());
 		$this->setKeywords($this->currentproperty->getKeywords());
 		$this->setCenterContainer($this->getGroupBoxWizard($this->getPropertyTitle(),$this->getPropertyPage(""),""));	
 		$this->setLeftContainer($this->getGroupBoxHtml("<h3>Detalii:</h3>",$this->getPropertyHeader(),""));	
-		$this->setRightContainer("test2");	
 		$this->show();
 	}			
 	function getPropertyHeader(){
