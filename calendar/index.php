@@ -39,7 +39,7 @@ class IndexCalendarWebPage extends MainWebPage {
 	}
 	function actionDefault(){
 		$now=new DateTime();
-		$this->id=$now->format('dmY');
+		$this->id=$now->format('Ymd');
 		$this->setDate();
 		$this->actionViewDate();
 	}
