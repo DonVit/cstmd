@@ -253,6 +253,7 @@ class PhotosWebPage extends MainWebPage {
 		
 		$this->setCenterContainer($this->getGroupBoxH2($longTitle,$this->getImage($p)));
 		$this->setCenterContainer($this->getImageDescription($p));
+		$this->setCenterContainer($this->getGroupBoxH3("Copyright:",$this->getCopyright()));
 		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii:",Comment::getComments($this,'p',$p->id)));
 		$this->setRightContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
@@ -280,6 +281,7 @@ class PhotosWebPage extends MainWebPage {
 		
 		$this->setCenterContainer($this->getGroupBoxH1($longTitle, $this->getFullImage($p)));
 		$this->setCenterContainer($this->getImageDescription($p));
+		$this->setCenterContainer($this->getGroupBoxH3("Copyright:",$this->getCopyright()));
 		$this->setCenterContainer($this->getGroupBoxH3("Pozitia pe harta a imaginii:",$this->getMap($p)));
 		$this->setCenterContainer($this->getGroupBoxH3("Taguri:",$this->getTags($p)));		
 		$this->setCenterContainer($this->getGroupBoxH3("Imagini din jur:",$this->getImagesAround($p,8)));
@@ -708,6 +710,9 @@ class PhotosWebPage extends MainWebPage {
 		return $out;
 	}								
 
+	function getCopyright(){
+		return '<p>&copy; 2008-2019 casata.md</p>';
+	}
 }
 $n=new PhotosWebPage();
 

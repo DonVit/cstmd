@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . '/../main/loader.php');
  
-class SitemapLocationsWebPage extends WebPage {
+class SitemapDaysWebPage extends WebPage {
 	function __construct(){
 		$this->setContentType("text/xml");
 		parent::__construct();
@@ -13,15 +13,15 @@ class SitemapLocationsWebPage extends WebPage {
 		WebPage::show($this->getSitemap());
 	}
 	function getSitemap(){
-		$l=new Nume();
-		$ls=$l->getAll("suma>10");
+		$d=new Day();
+		$ds=$d->getAll();
 		
 		$out='<?xml version="1.0" encoding="utf-8"?>';
 		$out.='<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-		foreach($ls as $l){
-			$link = htmlspecialchars(Config::$numesite."/index.php?action=viewnume&id=".$l->id);		
-			$pubDate = "2013-10-05";
+		foreach($ds as $d){
+			$link = htmlspecialchars(Config::$calendarsite."/index.php?action=viewdate&id=".strrev($d->dayid));		
+			$pubDate = "2019-07-29";
 			$out.='<url>';
 			$out.='<loc>'.$link.'</loc>';
 			$out.='<lastmod>'.$pubDate.'</lastmod>';
@@ -31,6 +31,6 @@ class SitemapLocationsWebPage extends WebPage {
 		return $out;
 	}
 }
-$n=new SitemapLocationsWebPage();
+$n=new SitemapDaysWebPage();
 
 ?>

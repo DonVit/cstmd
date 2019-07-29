@@ -779,7 +779,7 @@ class MainWebPage extends WebPage {
 		return $this->getGroupBoxWizard($outh,$out,$outf);
 	}
 	function getQuestionPage($html){
-		$outh.='<form id="frmWizard" name="frmWizard" method="POST" enctype="multipart/form-data">';		
+		$outh='<form id="frmWizard" name="frmWizard" method="POST" enctype="multipart/form-data">';		
 		//footer
 		$outh.=' <div id="form_header">';
 		$outh.='  <div style="float:left">';	
@@ -788,11 +788,11 @@ class MainWebPage extends WebPage {
 		$outh.='  <div s></div>';				
 		$outh.=' </div>';
 		//body
-		$out.=' <div id="formcontrols" style="padding:10px;padding-top:20px;padding-bottom:20px;height:160px;width:auto;">';
+		$out=' <div id="formcontrols" style="padding:10px;padding-top:20px;padding-bottom:20px;height:160px;width:auto;">';
 		$out.=$html;
 		$out.=' </div>';
 		//footer
-		$outf.=' <div id="form_footer" style1="padding:10px;border-top:2px solid #777;">';
+		$outf=' <div id="form_footer" style1="padding:10px;border-top:2px solid #777;">';
 		$outf.='  <div style="float:right">';
 		$outf.='  <input name="nu" type="submit" class="button" value="Nu">';
 		$outf.='   <input name="da" type="submit" class="button" value="Da">';
