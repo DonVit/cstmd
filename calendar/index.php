@@ -30,9 +30,10 @@ class IndexCalendarWebPage extends MainWebPage {
 		$this->create();		
 	}
 	function setDate(){
-		$this->day=substr($this->id,0,2);
-		$this->month=substr($this->id,2,2);
-		$this->year=substr($this->id,4,4);
+		$this->year=substr($this->id,0,4);
+		$this->month=substr($this->id,4,2);
+		$this->day=substr($this->id,6,2);
+
 		$this->dt=new DateTime();
 		$this->dt->setTimestamp(mktime(0,0,0,$this->month,$this->day,$this->year));
 	}
@@ -52,7 +53,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		$this->day=$this->dt->format('d');
 		$this->month=$this->dt->format('m');
 		$this->year=$this->dt->format('Y');
-		$this->redirect(Config::$calendarsite.'/index.php?action=viewdate&id='.$this->day.$this->month.$this->year);
+		$this->redirect(Config::$calendarsite.'/index.php?action=viewdate&id='.$this->year.$this->month.$this->day);
 	}
 	function actionViewDate(){
 		if (!((isset($this->id))&&(strlen($this->id)==8))){
@@ -289,11 +290,6 @@ class IndexCalendarWebPage extends MainWebPage {
 		return $this->getGroupBoxH3("Alege Data:",$this->getSelectDateForm());	
 	}
 	function getSelectDateForm(){
-		$nsrs="";
-		if (!empty($_POST['searchdateformpost'])){
-            echo $this->day.$this->month.$this->year;
-            //$this->redirect(Config::$calendarsite."/index.php?action=viewdate&id=".$this->day.$this->month.$this->year);
-		}
 		$out='<table id="name">';
 		$out.='<form id="searchdateform" name="searchdateform" action="index.php?action=selectdate" method="post">';
 		$out.='<tr>';
