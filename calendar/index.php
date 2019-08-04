@@ -34,8 +34,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		$this->month=substr($this->id,4,2);
 		$this->day=substr($this->id,6,2);
 
-		$this->dt=new DateTime();
-		$this->dt->setTimestamp(mktime(0,0,0,$this->month,$this->day,$this->year));
+		$this->dt = Day::getDateTime($this->year, $this->month, $this->day);
 	}
 	function actionDefault(){
 		$now=new DateTime();
@@ -44,12 +43,19 @@ class IndexCalendarWebPage extends MainWebPage {
 		$this->actionViewDate();
 	}
 	function actionSelectDate(){
+		//is valid year interval
+		if (!Day::isValidYearInterval($this->year)){
+			$this->redirect(Config::$calendarsite."/index.php");
+			return;
+		}
 		//is valid date
 		if (!checkdate($this->month,$this->day,$this->year)){
 			$this->redirect(Config::$calendarsite."/index.php");
+			return;
 		}
-		$this->dt=new DateTime();
-		$this->dt->setTimestamp(mktime(0,0,0,$this->month,$this->day,$this->year));
+
+		$this->dt = Day::getDateTime($this->year, $this->month, $this->day);
+		
 		$this->day=$this->dt->format('d');
 		$this->month=$this->dt->format('m');
 		$this->year=$this->dt->format('Y');
@@ -58,12 +64,14 @@ class IndexCalendarWebPage extends MainWebPage {
 	function actionViewDate(){
 		if (!((isset($this->id))&&(strlen($this->id)==8))){
 			$this->redirect(Config::$calendarsite."/index.php");
+			return;
 		}
         $this->setDate();
 
 		//is valid date
 		if (!checkdate($this->month,$this->day,$this->year)){
 			$this->redirect(Config::$calendarsite."/index.php");
+			return;
 		}
 
 		$this->setTitle('Calendar Moldova: Data de '.$this->id.'');
@@ -218,7 +226,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		return $this->getGroupBoxH3($o1s,$o1b);
 	}
 	function getMoon(){
-        $dt=DateTime::createFromFormat("mdY",$this->month.$this->day.$this->year);
+		$dt=Day::getDateTime($this->year, $this->month, $this->day);
         $moon = new MoonPhase($dt->getTimestamp());
 		$o1s='<a name="6"></a>Luna pe cer';
 		$z=Zodiac::getZodiacByDate($this->dt);
@@ -272,18 +280,15 @@ class IndexCalendarWebPage extends MainWebPage {
     }
 
 	function getDayNumber($dt){
-		$startdt=new DateTime();
-		$startdt->setTimestamp(mktime(0,0,0,1,1,$dt->format("Y")));
+		$startdt=Day::getDateTime($dt->format("Y"),1,1);
 		return ($dt->diff($startdt)->days)+1;
 	}
 	function getDaysLeft($dt){
-		$enddt=new DateTime();
-		$enddt->setTimestamp(mktime(0,0,0,12,31,$dt->format("Y")));
+		$enddt=Day::getDateTime($dt->format("Y"),12,31);
 		return ($enddt->diff($dt)->days);
 	}
 	function getWeeksInYear($dt){
-		$enddt=new DateTime();
-		$enddt->setTimestamp(mktime(0,0,0,12,25,$dt->format("Y")));
+		$enddt=Day::getDateTime($dt->format("Y"),12,31);
 		return $enddt->format("W");
 	}
 	function getSelectDate(){
@@ -368,13 +373,6 @@ class IndexCalendarWebPage extends MainWebPage {
 		}
 		$out='<div id="location">';
 		$out.='<form id="searchlocationform" name="searchlocationform" method="post">';
-		//$out.='<table class1="property-table" align="center" style="width: 100%;">';
-		//$out.='<tr><td>Municipiul/Raionul:</td></tr>';
-		//$out.='<tr><td>'.Raion::getRaionDropDown($this->raion->id,"width:auto;").'</td></tr>';
-		//$out.='<tr><td>Oras/Sat:</td></tr>';
-		//$out.='<tr><td>'.Location::getLocationDropDown($this->raion->id,$this->location->id,"width:auto;").'</td></tr>';
-		//$out.='</table>';
-		
 		$out.='<div>Cauta localitate.</div>';
 		$out.='<div><input type="text" name="lsearch" value="'.(isset($this->lsearch)?$this->lsearch:'').'"></div>';
 		$out.='<div><input type="submit" name="searchlocationformpost" class="button" style="width:60px;" value="Cauta"><br>'.$lsrs.'</div>';

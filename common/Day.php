@@ -11,8 +11,7 @@ class Day extends DBManager {
 		return "day";
 	}
 	public static function addDaysByYear($year){
-		$dt=new DateTime();
-		$dt->setTimestamp(mktime(0,0,0,1,1,$year));	
+		$dt=Day::getDateTime($year,1,1);
 		$onedayinterval = DateInterval::createfromdatestring('+1 day');
 		$curyear=$dt->format("Y");
 		
@@ -51,7 +50,20 @@ class Day extends DBManager {
 			$dayexists=false;
 		}
 		return $dayexists;
-	}	
+	}
+	
+	public static function isValidYearInterval($year){
+		return ($year >= 1900 and $year <= 2099);
+	}
+
+	public static function getDateTime($year, $month, $day){
+		$dt=new DateTime();
+		$tz = new DateTimeZone('Europe/Chisinau');
+		$dt->setDate($year, $month, $day);
+		$dt->setTime(0,0,0);
+		$dt->setTimezone($tz);
+		return $dt;		
+	}
 	
 }
 
