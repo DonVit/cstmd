@@ -19,7 +19,8 @@ class PhotosWebPage extends MainWebPage {
 		
 		$out=$this->getImagesByAll($this->page,$this->rowsperpage);
 		$out.=$this->getPagesByAll($this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewimages"));
-			
+
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($this->getConstants("IndexPhotosWebPageRaioaneTitle"),$out));
@@ -30,6 +31,39 @@ class PhotosWebPage extends MainWebPage {
 		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
 		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));		
 		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
+		$this->show();
+	}
+	function actionViewCountryImages(){
+
+		if(!isset($this->id)){
+			$this->redirect(Config::$imagessite);
+		}
+		if(!isset($this->page)){
+			$this->page=0;
+		}
+
+		$country=new Country();
+		$country->loadById($this->id);
+		
+		$title="Imagini din ".$country->Country;
+
+		$this->setTitle($title);
+
+		$out=$this->getImagesByCountry($this->id,$this->page,$this->rowsperpage);
+		$out.=$this->getPagesByCountry($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewcountryimages"));
+	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
+		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
+		$this->setRightContainer($this->getGroupBoxH3("Adauga:",$this->getAddMenu()));
+		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Ani:',$this->getYears()));
+		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Anotimpuri:',$this->getSeasons()));
+		$this->setRightContainer($this->getGroupBoxH3('Imagini pe Luni:',$this->getMonths()));
+		$this->setRightContainer($this->getGroupBoxH3('Albume:',$this->getAlbums()));
+		$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRssLink"),$this->getRssLink()));
+		$this->setCenterContainer($this->getGroupBoxH3("Comentarii recente:",Comment::getAllComments()));
+		
 		$this->show();
 	}
 	function actionViewRaionImages(){
@@ -51,6 +85,7 @@ class PhotosWebPage extends MainWebPage {
 		$out=$this->getImagesByRaion($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByRaion($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewraionimages"));
 	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
@@ -83,6 +118,7 @@ class PhotosWebPage extends MainWebPage {
 		$out=$this->getImagesByLocalitate($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByLocalitate($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewlocalitateimages"));
 	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));		
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
@@ -112,6 +148,7 @@ class PhotosWebPage extends MainWebPage {
 		$out=$this->getImagesByYear($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByYear($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewyearimages"));
 	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
@@ -146,6 +183,7 @@ class PhotosWebPage extends MainWebPage {
 		$out=$this->getImagesByMonth($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByMonth($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewmonthimages"));
 	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
@@ -174,6 +212,7 @@ class PhotosWebPage extends MainWebPage {
 		$out=$this->getImagesBySeason($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesBySeason($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewseasonimages"));
 	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
@@ -213,6 +252,7 @@ class PhotosWebPage extends MainWebPage {
 		$out=$this->getImagesByAlbum($this->id,$this->page,$this->rowsperpage);
 		$out.=$this->getPagesByAlbum($this->id,$this->page,$this->rowsperpage,$this->getUrlWithSpecialCharsConverted("index.php","action=viewalbumimages"));
 	
+		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageCountries"),$this->getCountries()));	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageRaions"),$this->getRaions()));
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexPhotosWebPageLocations"),$this->getLocations()));
 		$this->setCenterContainer($this->getGroupBoxH2($title,$out));
@@ -350,16 +390,8 @@ class PhotosWebPage extends MainWebPage {
 		return $out;		
 	}
 	function getLocations(){
-		$lt=new Location();
-		$lts=$lt->doSql("select l.id from photos as p inner join localitate as l on p.localitate_id = l.id group by l.id");
-		$st='';
-		foreach($lts as $lt){	
-			$st.=$lt->id.',';			
-		}
-		$st.='0';
-		
 		$l=new Location();
-		$ls=$l->getAll("id in (".$st.")","oras desc, `order`, name");
+		$ls=$l->getAll("id in (SELECT distinct localitate_id FROM `photos`)","oras desc, `order`, name");
 		$out="<ul>";
 		foreach($ls as $l){	
 			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewlocalitateimages&id='.$l->id).'">'.$l->getFullName().'</a></li>';			
@@ -367,17 +399,19 @@ class PhotosWebPage extends MainWebPage {
 		$out.="</ul>";
 		return $out;
 	}
-	function getRaions(){
-		$rt=new Raion();
-		$rts=$rt->doSql("select r.id from photos as p inner join raion as r on p.raion_id = r.id group by r.id");
-		$st='';
-		foreach($rts as $rt){	
-			$st.=$rt->id.',';			
+	function getCountries(){		
+		$c=new Country();
+		$cs=$c->getAll("id in (SELECT distinct country_id FROM `photos`)","Country");
+		$out="<ul>";
+		foreach($cs as $c){	
+			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewcountryimages&id='.$c->id).'">'.$c->Country.'</a></li>';			
 		}
-		$st.='0';
-		
+		$out.="</ul>";
+		return $out;
+	}
+	function getRaions(){
 		$r=new Raion();
-		$rs=$r->getAll("id in (".$st.")","municipiu desc, `order`, name");
+		$rs=$r->getAll("id in (SELECT distinct raion_id FROM `photos`)","municipiu desc, `order`, name");
 		$out="<ul>";
 		foreach($rs as $r){	
 			$out.='<li><a href="'.$this->getUrlWithSpecialCharsConverted('index.php','action=viewraionimages&id='.$r->id).'">'.$r->getFullName().'</a></li>';			
@@ -465,6 +499,11 @@ class PhotosWebPage extends MainWebPage {
 	function getImagesByAll($page,$rowsperpage){
 		$sql="select id, title, file from photos where deleted=0 order by data desc";
 		$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;
+		return $this->getImages($sql);
+	}
+	function getImagesByCountry($countryid,$page,$rowsperpage){
+		$sql='select id, title, file from photos where deleted=0 and country_id='.$countryid.' order by data desc';
+		$sql.=' limit '.$page*$rowsperpage.','.$rowsperpage;
 		return $this->getImages($sql);
 	}
 	function getImagesByRaion($raionid,$page,$rowsperpage){
@@ -612,19 +651,27 @@ class PhotosWebPage extends MainWebPage {
 		return $out;
 	}	
 	function getTags($p){
-		$r=new Raion();
-		$r->loadById($p->raion_id);
-		$l=new Location();
-		$l->loadById($p->localitate_id);
-		
-		$out='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewraionimages&id='.$r->id).'" target="_self" title="Foto '.$r->getFullNameDescription().'">Foto '.$r->getFullNameDescription().'</a>';
-		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewlocalitateimages&id='.$l->id).'" target="_self" title="Foto '.$l->getFullNameDescription().'">Foto '.$l->getFullNameDescription().'</a>';
+		$out='';
+		$c=new Country();
+		$c->loadById($p->country_id);
+		$t=$c->ISO;
+		if ($c->ISO=='MD') {	
+			$r=new Raion();
+			$r->loadById($p->raion_id);
+			$l=new Location();
+			$l->loadById($p->localitate_id);
+			
+			$out.='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewraionimages&id='.$r->id).'" target="_self" title="Foto '.$r->getFullNameDescription().'">Foto '.$r->getFullNameDescription().'</a>';
+			$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewlocalitateimages&id='.$l->id).'" target="_self" title="Foto '.$l->getFullNameDescription().'">Foto '.$l->getFullNameDescription().'</a>';
+			$out.='<br/>';
+			$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$r->id).'" target="_self" title="'.$r->getFullName().'">'.$r->getFullNameDescription().'</a>';
+			$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate&id='.$l->id).'" target="_self" title="'.$l->getFullName().'">'.$l->getFullNameDescription().'</a>';						
+			$out.='<br/>';
+		}
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewyearimages&id='.date('Y',strtotime($p->data))).'" target="_self" title="Foto Anul '.date('Y',strtotime($p->data)).'">Foto Anul '.date('Y',strtotime($p->data)).'</a>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewmonthimages&id='.date('n',strtotime($p->data))).'" target="_self" title="Foto de '.Enum::getMonths()[date('n',strtotime($p->data))].'">Foto de '.Enum::getMonths()[date('n',strtotime($p->data))].'</a>';
 		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewseasonimages&id='.$this->getSeasonIdByMonth(date('n',strtotime($p->data)))).'" target="_self" title="Foto de '.$this->getSeasonByMonth(date('n',strtotime($p->data))).'">Foto de '.$this->getSeasonByMonth(date('n',strtotime($p->data))).'</a>';
-		$out.='<br/>';
-		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$r->id).'" target="_self" title="'.$r->getFullName().'">'.$r->getFullNameDescription().'</a>';
-		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate&id='.$l->id).'" target="_self" title="'.$l->getFullName().'">'.$l->getFullNameDescription().'</a>';						
+		$out.='<br/><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$imagessite.'/index.php','action=viewcountryimages&id='.$c->id).'" target="_self" title="Foto din '.$c->Country.'">Foto din '.$c->Country.'</a>';
 		if ($p->album_id) {
 			$a = $p->getAlbum();
 			$albumTitle = 'Album: '.$a->title;
@@ -652,6 +699,10 @@ class PhotosWebPage extends MainWebPage {
 	function getPagesByAll($page,$rowsperpage,$url){
 		$sql="select count(*) as cnt from photos where deleted=0";
 		return $this->getPages($sql,$page,$rowsperpage,$url);
+	}
+	function getPagesByCountry($countryid,$page,$rowsperpage,$url){
+		$sql="select count(*) as cnt from photos where deleted=0 and country_id=".$countryid;
+		return $this->getPages($sql,$page,$rowsperpage,$url,$countryid);
 	}
 	function getPagesByRaion($raionid,$page,$rowsperpage,$url){
 		$sql="select count(*) as cnt from photos where deleted=0 and raion_id=".$raionid;
