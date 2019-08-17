@@ -6,6 +6,7 @@ class Photo extends DBManager {
 	public $title;
 	public $note;	
 	public $file;
+	public $country_id;
 	public $raion_id;
 	public $localitate_id;
 	public $centerlat;
@@ -18,15 +19,21 @@ class Photo extends DBManager {
 	public $data;
 	public $contor;
 	function getLongTitle(){
-		$r=new Raion();
-		$r->loadById($this->raion_id);
-		$l=new Location();
-		$l->loadById($this->localitate_id);
-		if ($r->name==$l->name){
-			$t=$l->getFullNameDescription().', '.$this->title;
-		} else {
-			$t=$r->getFullNameDescription().', '.$l->getFullNameDescription().', '.$this->title;
+		$c=new Country();
+		$c->loadById($this->country_id);
+		$t=$c->ISO;
+		if ($c->ISO=='MD') {
+			$r=new Raion();
+			$r->loadById($this->raion_id);
+			$l=new Location();
+			$l->loadById($this->localitate_id);
+			if ($r->name==$l->name){
+				$t.=', '.$l->getFullNameDescription();
+			} else {
+				$t.=', '.$r->getFullNameDescription().', '.$l->getFullNameDescription();
+			}
 		}
+		$t.=', '.$this->title;
 		return $t;	
 	}
 	function getTitle(){
