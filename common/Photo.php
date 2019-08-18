@@ -6,7 +6,7 @@ class Photo extends DBManager {
 	public $title;
 	public $note;	
 	public $file;
-	public $country_id;
+	public $country_id=140; // MD code implicit
 	public $raion_id;
 	public $localitate_id;
 	public $centerlat;
