@@ -567,8 +567,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		return $this->getGroupBoxH3($o2s,$o2b);
 	}								
 	function getMap1($m){
-		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
+		//$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
+		//$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		
 		if ($m->lat==0){
 			$m->maptype=3;
