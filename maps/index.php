@@ -85,7 +85,7 @@ class MapsWebPage extends MainWebPage {
 	function getMap($out=''){
 
 		$this->setBodyTag('<body onload="MapViewOnMapLoad(true)">');
-		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCOqgHOazhJlcp0LUOSNmfkyCGxmVT8NEc");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		$this->setJavascript(Config::$commonsite."/js/controls.js");
@@ -127,7 +127,7 @@ class MapsWebPage extends MainWebPage {
 	function getViewMap(){
 
 		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCOqgHOazhJlcp0LUOSNmfkyCGxmVT8NEc");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		
 		$out='';

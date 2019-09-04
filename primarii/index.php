@@ -634,8 +634,8 @@ class IndexLocationsWebPage extends MainWebPage {
 	}								
 	function getMap1($m){
 
-		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
+		//$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
+		//$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 
 		//$this->setBodyTag('<body onload="MapViewOnMapLoad()" onunload="GUnload()">');
 		//$this->setJavascript("https://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
