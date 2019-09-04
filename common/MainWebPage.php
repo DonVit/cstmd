@@ -19,7 +19,7 @@ class MainWebPage extends WebPage {
 		$this->setCSS(Config::$commonsite."/style/common.css");
 		$this->setJavascript(Config::$commonsite."/js/scripts.js");
 		$this->setJavascript("https://www.google.com/recaptcha/api.js?hl=".$this->getLang()->name);
-		$this->setJavascript("https://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");
+		$this->setJavascript("https://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");		
 		$this->rightcontainer=$this->getRightGAS();
 	}
 	
@@ -435,8 +435,8 @@ class MainWebPage extends WebPage {
 	function getMap($m){
 
 		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
+		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCOqgHOazhJlcp0LUOSNmfkyCGxmVT8NEc");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
-		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		$this->setJavascript(Config::$commonsite."/js/controls.js");
 		$out='';
