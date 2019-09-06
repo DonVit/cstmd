@@ -168,7 +168,7 @@ class DistancesWebPage extends MainWebPage {
 	function getMap($out=''){
 
 		$this->setBodyTag('<body onload="DirectionsMapViewOnMapLoad()">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCOqgHOazhJlcp0LUOSNmfkyCGxmVT8NEc&libraries=geometry&sensor=false");
+		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey."&libraries=geometry&sensor=false");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");		
 		$this->setJavascript(Config::$commonsite."/js/directions.js");		
 
