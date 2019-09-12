@@ -464,7 +464,7 @@ class MainWebPage extends WebPage {
 	function setMap($m){
 
 		$this->setBodyTag('<body onload="MapEditOnMapLoad()">');
-		$this->setJavascript("https://maps.google.com/maps/api/js?sensor=false");
+		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey);
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		$out='';
 		$out.='<div>';
