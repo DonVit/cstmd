@@ -69,13 +69,10 @@ class MapsWebPage extends MainWebPage {
 	function showmap(){
 		$out="";
 		$out.='<div id="container">';
-		$out.='<div id="left" class="container left" style="width:98px;">';
-		$out.=$this->getLeftContainer();
-		$out.='</div>';		
-		$out.='<div id="center" class="container center" style="width:800px;">';
+		$out.='<div id="center" class="container center" style="width:808px;">';
 		$out.=$this->getCenterContainer();
 		$out.='</div>';
-		$out.='<div id="right" class="container right" style="width:98px;">';
+		$out.='<div id="right" class="container right" style="width:190px;">';
 		$out.=$this->getRightContainer();
 		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
