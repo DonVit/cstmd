@@ -89,8 +89,8 @@ class Alegeri extends DBManager {
 			    $table->addField(new TableField(3, "PCRM", "pcrm", "text-align: center;",""));
 			    $table->addField(new TableField(4, "PDM", "pdm", "text-align: center;",""));
 			    $table->addField(new TableField(5, "PLDM", "pldm", "text-align: center;",""));
-				$table->addField(new TableField(6, "PL", "pl", "text-align: center;",""));
-				$table->addField(new TableField(6, "ACUM", "acum", "text-align: center;",""));
+			    $table->addField(new TableField(6, "PL", "pl", "text-align: center;",""));
+			    $table->addField(new TableField(6, "ACUM", "acum", "text-align: center;",""));
 			    $table->addField(new TableField(7, "Altii", "altii", "text-align: center;",""));
 			    $table->addField(new TableField(8, "Total Voturi", "voturi_valabile", "text-align: center;",""));			    
 			    $out.=$table->show();
