@@ -195,13 +195,22 @@ class AddImageWebPage extends MainWebPage {
 	function setAdress($out=''){
 		$out.='<table style="height:100px;width:100%">';
 		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul:</td>';
-		$out.='<td style="width: 70%;">'.$this->getRaionDropDown($this->currentphoto->raion_id).'</td>';
+		$out.='<td class="property-name" style="width: 30%;">Tara:</td>';
+		$out.='<td style="width: 70%;">'.Country::getCountryDropDown($this->currentphoto->country_id).'</td>';
 		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td class="property-name" style="width: 30%;">Oras/Sat:</td>';
-		$out.='<td style="width: 70%;">'.$this->getLocationDropDown($this->currentphoto->raion_id,$this->currentphoto->localitate_id).'</td>';
-		$out.='</tr>';
+		$c=new Country();
+		$c->loadById($this->currentphoto->country_id);
+		$t=$c->ISO;
+		if ($c->ISO=='MD') {
+			$out.='<tr>';
+			$out.='<td class="property-name" style="width: 30%;">Municipiul/Raionul:</td>';
+			$out.='<td style="width: 70%;">'.Raion::getRaionDropDown($this->currentphoto->raion_id).'</td>';
+			$out.='</tr>';
+			$out.='<tr>';
+			$out.='<td class="property-name" style="width: 30%;">Oras/Sat:</td>';
+			$out.='<td style="width: 70%;">'.Location::getLocationDropDown($this->currentphoto->raion_id,$this->currentphoto->localitate_id).'</td>';
+			$out.='</tr>';
+		}
 		$out.='</table>';
 		return $this->getWizardPage($out);
 	}		
@@ -274,73 +283,6 @@ class AddImageWebPage extends MainWebPage {
 		$out.='<td><h2>Doresti sa stergi acest Anunt ?</h2></td>';    		
 		$out.='</tr></table>';	
 		return $this->getQuestionPage($out);	 
-	}
-	function getRaionDropDown($raionid){
-		$r=new Raion();
-		$rs=$r->getAll("","`municipiu` desc,`order`,`name`");
-		$out="<select id=\"raion_id\" name=\"raion_id\" class=\"select\" size=\"1\" onchange=\"javascript:WizardOnDropDownChange()\">";
-		if (!is_null($rs)){
-			foreach($rs as $rr){
-				$name=($rr->municipiu==1)?"m. ".$rr->name:"r. ".$rr->name;
-				if ($rr->id==$raionid){
-					$out.= "<option value=".$rr->id." selected>".$name."</option>";
-				} else {
-					$out.= "<option value=".$rr->id.">".$name."</option>";
-				}
-			}
-		}
-		$out.="</select>";
-		return $out;
-	}	
-	function getLocationDropDown($raionid,$localitateid){
-		$l=new Location();
-		$ls=$l->getAll("raion_id=".$raionid,"`order`,`oras` desc,`name`");
-		$out="<select id=\"localitate_id\" name=\"localitate_id\" class=\"select\" size=\"1\" onchange=\"javascript:WizardOnDropDownChange()\">";
-		if (!is_null($ls)){
-			foreach($ls as $ll){
-				if ($ll->id==$localitateid){
-					$out.= "<option value=".$ll->id." selected>".$ll->tip." ".$ll->name."</option>";
-				} else {
-					$out.= "<option value=".$ll->id.">".$ll->tip." ".$ll->name."</option>";
-				}
-			}
-		}
-		$out.="</select>";
-		return $out;
-	}	
-	function getSectorDropDown($localitateid,$sectorid){
-		$s=new Sector();
-		$ss=$s->getAll("localitate_id=".$localitateid,"`name`");
-		$out="<select id=\"sector_id\" name=\"sector_id\" class=\"select\" size=\"1\" onchange=\"javascript:WizardOnSectorDropDownChange()\">";
-		if (($this->currentproperty->scop_id==3)||($this->currentproperty->scop_id==4)){
-			if ($sectorid==0){
-				$out.= "<option value=\"0\" selected>Nu Conteaza</option>";
-			} else {
-				$out.= "<option value=\"0\">Nu Conteaza</option>";
-			}
-		}		
-		if (!is_null($ss)){
-			foreach($ss as $s){
-				if ($s->id==$sectorid){
-					$out.= "<option value=".$s->id." selected>".$s->name."</option>";
-				} else {
-					$out.= "<option value=".$s->id.">".$s->name."</option>";
-				}
-			}
-		
-			$out.= "<option value=\"0\" disabled=\"disabled\">---</option>";
-			$out.= "<option value=\"-1\">Altul...</option>";
-			if (($this->currentproperty->scop_id==1)||($this->currentproperty->scop_id==2)){
-				if ($sectorid==0){
-					$out.= "<option value=\"0\" selected>Nu Exista</option>";
-				} else {
-					$out.= "<option value=\"0\">Nu Exista</option>";
-				}
-			}
-		}
-		$out.="</select>";
-		$out.="<input type=\"hidden\" id=\"sector_new\" name=\"sector_new\">";
-		return $out;
 	}
 }
 $n=new AddImageWebPage();
