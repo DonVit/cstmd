@@ -132,6 +132,7 @@ class AlbumsWebPage extends MainWebPage {
 							$photo->note=$file->note;
 							$photo->file=$file->file;
 							$photo->user_id=$this->currentalbum->user_id;
+							$photo->country_id=$this->currentalbum->country_id;
 							$photo->raion_id=$this->currentalbum->raion_id;
 							$photo->localitate_id=$this->currentalbum->localitate_id;
 
@@ -169,90 +170,7 @@ class AlbumsWebPage extends MainWebPage {
 	function actionEdit(){
 		$this->actionDefault();
 	}
-	function actionAdress(){
-		$this->step=2;
-		$this->steptitle="Adauga Foto - Indica Adresa";
-		$this->setTitle($this->steptitle);		
-		if ($_POST) {
-			if (isset($_POST["next"])){
-				//$r=new Raion();
-				//$r->loadById($this->currentalbum->raion_id);
-				//$this->currentalbum->setRaion($r);
-				//User::setcurrentalbum($this->currentalbum);
-				$this->redirect($this->getUrl("add.php","action=map"));
-			}
-			if (isset($_POST["prev"])){
-				//$r=new Raion();
-				//$r->loadById($this->currentalbum->raion_id);
-				//$this->currentalbum->setRaion($r);
-				//User::setcurrentalbum($this->currentalbum);
-				$this->redirect($this->getUrl("add.php"));
-			}				
-			if (isset($_POST["cancel"])){
-				$this->redirect($this->getUrl("add.php","action=cancel"));
-			}
-		}
-		$this->setCenterContainer($this->setAdress());	
-		$this->show();
-	}
-	function actionMap(){
-		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
-		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
-		$this->step=3;
-		$this->steptitle="Adauga Foto - Indica Pozitia pe Harta";
-		$this->setTitle($this->steptitle);
-		if ($_POST) {
-			if (isset($_POST["next"])){
-				$this->redirect($this->getUrl("add.php","action=validation"));
-			}
-			if (isset($_POST["prev"])){
-				$this->redirect($this->getUrl("add.php","action=adress"));
-			}
-			if (isset($_POST["cancel"])){
-				$this->redirect($this->getUrl("add.php","action=cancel"));
-			}							
-		}
-		$this->setCenterContainer($this->getWizardPage($this->setMap($this->currentalbum)));	
-		$this->show();		
-	}	
-	function actionValidation(){
-		$this->step=4;
-		$this->steptitle="Adauga Foto - Introdu codul din imagine";
-		$this->setTitle($this->steptitle);
-		if ($_POST) {
-			if ($_POST["save"]){
-				//echo $_POST["validationcode"]."-".User::getValidationCode();
-				if (User::getValidationCode()==$_POST["validationcode"]){
-					//echo "2";
-					if (!isset($this->currentalbum->id)){
-						$this->currentalbum->save();
-						//if (!empty($this->currentalbum->file)){
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentalbum->file, "files/t".$this->currentalbum->file, 100);
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentalbum->file, "files/s".$this->currentalbum->file, 300);
-						//}
-					} else {
-						$this->currentalbum->save();
-						//if (!file_exists("files/t".$this->currentalbum->file)){
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentalbum->file, "files/t".$this->currentalbum->file, 100);
-						//	Photo::makeIcons_MergeCenter("files/".$this->currentalbum->file, "files/s".$this->currentalbum->file, 300);
-						//	User::delcurrentalbum();
-						//}
-					}
-					User::delcurrentalbum();
-					//$this->redirect("index.php?id=".$this->currentalbum->id);
-					$this->redirect($this->getUrl("index.php","action=viewimage&id=".$this->currentalbum->id));
-				}
-			}
-			if ($_POST["prev"]){
-				$this->redirect($this->getUrl("add.php","action=map"));
-			}
-			if ($_POST["cancel"]){
-				$this->redirect($this->getUrl("add.php","action=cancel"));
-			}							
-		}
-		$this->setCenterContainer($this->setValidation());	
-		$this->show();			
-	}
+	
 	function actionCancel(){
 		if (!isset($this->id)){
 			if (!empty($this->currentalbum->file)){
@@ -313,8 +231,14 @@ class AlbumsWebPage extends MainWebPage {
 		$out.='<tr><td>Titlu:</td><td><input type="input" id="title" name="title" value="'.$this->currentalbum->title.'" style="width:100%;"></td></tr>';
 		$out.='<tr><td>Data:</td><td><input type="input" id="data" name="data" value="'.$this->currentalbum->data.'"></td></tr>';
 		$out.='<tr><td>Descriere:</td><td><textarea id="description" name="description" style="width:100%;height:60px;">'.$this->currentalbum->description.'</textarea></td></tr>';		
-		$out.='<tr><td>Municipiul/Raionul:</td><td>'.$this->getRaionDropDown($this->currentalbum->raion_id).'</td></tr>';
-		$out.='<tr><td>Oras/Sat:</td><td>'.$this->getLocationDropDown($this->currentalbum->raion_id,$this->currentalbum->localitate_id).'</td></tr>';
+		$out.='<tr><td>Tara:</td><td>'.Country::getCountryDropDown($this->currentalbum->country_id).'</td></tr>';
+		$c=new Country();
+		$c->loadById($this->currentalbum->country_id);
+		$t=$c->ISO;
+		if ($c->ISO=='MD') {
+			$out.='<tr><td>Municipiul/Raionul:</td><td>'.Raion::getRaionDropDown($this->currentalbum->raion_id).'</td></tr>';
+			$out.='<tr><td>Oras/Sat:</td><td>'.Location::getLocationDropDown($this->currentalbum->raion_id,$this->currentalbum->localitate_id).'</td></tr>';
+		}
 		$out.='<tr><td colspan="2">'.$this->setMap($this->currentalbum).'</td></tr>';
 		foreach ($this->currentalbumfiles as $p){
 			$out.='<tr><td><img src="files/t'.$p->file.'"></td><td><input type="hidden" id="photoid" name="photoid[]" value="'.$p->id.'"><input type="input" id="photodata" name="photodata[]" value="'.$p->data.'"><input type="input" id="phototitle" name="phototitle[]" value="'.$p->title.'" style="width:100%;"></br><textarea id="photodescription" name="photodescription[]" style="width:100%;height:60px;">'.$p->note.'</textarea></td></tr>';
@@ -335,76 +259,6 @@ class AlbumsWebPage extends MainWebPage {
 		$out.='<td><h2>Doresti sa stergi acest Anunt ?</h2></td>';    		
 		$out.='</tr></table>';	
 		return $this->getQuestionPage($out);	 
-	}
-	function getRaionDropDown($raionid){
-		$r=new Raion();
-		$rs=$r->getAll("","`municipiu` desc,`order`,`name`");
-		$out="<select id=\"raion_id\" name=\"raion_id\" class=\"select\" size=\"1\" onchange=\"javascript:WizardOnDropDownChange()\">";
-		if (!is_null($rs)){
-			foreach($rs as $rr){
-				$name=($rr->municipiu==1)?"m. ".$rr->name:"r. ".$rr->name;
-				if ($rr->id==$raionid){
-					$out.= "<option value=".$rr->id." selected>".$name."</option>";
-				} else {
-					$out.= "<option value=".$rr->id.">".$name."</option>";
-				}
-			}
-		}
-		$out.="</select>";
-		return $out;
-	}	
-	function getLocationDropDown($raionid,$localitateid){
-		$l=new Location();
-		$ls=$l->getAll("raion_id=".$raionid,"`order`,`oras` desc,`name`");
-		$out="<select id=\"localitate_id\" name=\"localitate_id\" class=\"select\" size=\"1\" onchange=\"javascript:WizardOnDropDownChange()\">";
-		//if (($this->currentproperty->scop_id==3)||($this->currentproperty->scop_id==4)){
-		//	$out.= "<option value=\"0\">Nu Conteaza</option>";
-		//}
-		if (!is_null($ls)){
-			foreach($ls as $ll){
-				if ($ll->id==$localitateid){
-					$out.= "<option value=".$ll->id." selected>".$ll->tip." ".$ll->name."</option>";
-				} else {
-					$out.= "<option value=".$ll->id.">".$ll->tip." ".$ll->name."</option>";
-				}
-			}
-		}
-		$out.="</select>";
-		return $out;
-	}	
-	function getSectorDropDown($localitateid,$sectorid){
-		$s=new Sector();
-		$ss=$s->getAll("localitate_id=".$localitateid,"`name`");
-		$out="<select id=\"sector_id\" name=\"sector_id\" class=\"select\" size=\"1\" onchange=\"javascript:WizardOnSectorDropDownChange()\">";
-		if (($this->currentproperty->scop_id==3)||($this->currentproperty->scop_id==4)){
-			if ($sectorid==0){
-				$out.= "<option value=\"0\" selected>Nu Conteaza</option>";
-			} else {
-				$out.= "<option value=\"0\">Nu Conteaza</option>";
-			}
-		}		
-		if (!is_null($ss)){
-			foreach($ss as $s){
-				if ($s->id==$sectorid){
-					$out.= "<option value=".$s->id." selected>".$s->name."</option>";
-				} else {
-					$out.= "<option value=".$s->id.">".$s->name."</option>";
-				}
-			}
-		
-			$out.= "<option value=\"0\" disabled=\"disabled\">---</option>";
-			$out.= "<option value=\"-1\">Altul...</option>";
-			if (($this->currentproperty->scop_id==1)||($this->currentproperty->scop_id==2)){
-				if ($sectorid==0){
-					$out.= "<option value=\"0\" selected>Nu Exista</option>";
-				} else {
-					$out.= "<option value=\"0\">Nu Exista</option>";
-				}
-			}
-		}
-		$out.="</select>";
-		$out.="<input type=\"hidden\" id=\"sector_new\" name=\"sector_new\">";
-		return $out;
 	}
 }
 $n=new AlbumsWebPage();

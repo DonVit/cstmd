@@ -4,6 +4,7 @@ class Album extends DBManager {
 	public $id;
 	public $title;
 	public $description;	
+	public $country_id=140; // MD code implicit
 	public $raion_id;
 	public $localitate_id;
 	public $centerlat;
