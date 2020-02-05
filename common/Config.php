@@ -66,7 +66,7 @@ class Config {
 	//public static $privatekey = '6LdotAYTAAAAAJYTGqvD9VIHHyzCkEERzOU_5Cc1';
 	public static $publickey = '6LfaSgkTAAAAACzsUEaIstWtJ_F8yE3Ul5t3b7_P'; 
 	public static $privatekey = '6LfaSgkTAAAAAGTkTWUa0P_Zvq2bkRJwZqEzyD2X';
-	public static $gmapskey = 'AIzaSyDTxVOWG58AJai2C0ds5y2ytKmFOM3nepA';
+	public static $gmapskey = 'AIzaSyAPy4xpXsRZdvlEN2mAdXq6LJpkCZ6wniw';
 
 	public static $adminmail = 'casata.md@outlook.com';
 }
