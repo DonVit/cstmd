@@ -75,7 +75,7 @@ class Properties extends MainWebPage {
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getAdd()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getMenu()));
 		$this->setLeftContainer($this->getGroupBoxH3("",$this->getRssLink()));
-		$this->setRightContainer($this->getGroupBoxH3("",$this->getMain()));
+		$this->setCenterContainer($this->getGroupBoxH3("",$this->getMain()));
 		$this->show();
 	}		
 	function show($out=''){
@@ -85,8 +85,8 @@ class Properties extends MainWebPage {
 		$out.='<div id="left" class="container left" style="width:198px;">';
 		$out.=$this->getLeftContainer();
 		$out.='</div>';
-		$out.='<div id="right" class="container right" style="width:800px;">';
-		$out.=$this->getRightContainer();
+		$out.='<div id="center" class="container center" style="width:798px;">';
+		$out.=$this->getCenterContainer();
 		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
