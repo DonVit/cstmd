@@ -8,16 +8,11 @@ class WebPage extends Object {
 	private $title="web page";	
 	private $description="description";
 	private $keywords="keywords";
-	//private $html="html";
-	
-	//public function __construct($contenttype="text/html",$charset="utf-8") {
+	private $cors=false;
 		
 	public function __construct() {
-		//$this->contenttype=$contenttype;
-		//$this->charset=$charset;
 		$this->getHeaders();
 		$this->setView();
-		//$this->setWebPage();
  
  		if (isset($_GET["id"])){
 			if (!is_numeric($_GET["id"])){
@@ -43,6 +38,9 @@ class WebPage extends Object {
 		//ini_set('session.cookie_domain',substr($_SERVER['SERVER_NAME'],strpos($_SERVER['SERVER_NAME'],"."),100));
 		ini_set('session.cookie_domain',Config::$cookiedomain);
 		header('Content-Type: '.$this->getContentType().'; charset='.$this->getCharset());
+		if ($this->getCORS()){
+			header('Access-Control-Allow-Origin: *');
+		}
 		if ($this->getDownload()){
 			header('Content-Disposition: attachment; filename='.$this->getFileName());
 		}
@@ -60,6 +58,12 @@ class WebPage extends Object {
 	}
 	function setDownload($value){
 		$this->download=$value;
+	}
+	function getCORS(){
+		return $this->cors;
+	}
+	function setCORS($value){
+		$this->cors=$value;
 	}	
 	function getCharset(){
 		return $this->charset;
