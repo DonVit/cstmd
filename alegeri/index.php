@@ -139,6 +139,8 @@ class IndexPage extends MainWebPage {
 		$this->setBodyTag('<body onload="MapAlegeriViewOnMapLoad(true)">');
 		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey."&sensor=false");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
+		$this->setFooterJavascript("https://unpkg.com/leafmap@1.1.3/dist/main.js");
+		$this->setCSS("https://unpkg.com/leafmap@1.1.3/dist/main.css");
 		$this->setJavascript(Config::$commonsite."/js/maps.js");
 		$this->setJavascript(Config::$commonsite."/js/controls.js");
 		
@@ -154,6 +156,7 @@ class IndexPage extends MainWebPage {
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';		
 		$out.='<div id="map" style="width: 998px;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
 		$out.='</form>';
+		$out.='<div id="mapid" style="width: 998px;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
 		return $out;
 	}
 	function getLastMaps($out=''){

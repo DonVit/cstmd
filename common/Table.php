@@ -67,6 +67,9 @@ class Table extends Object {
 				$this->rowscount=$row["total_rows_counter"];
 			}
 		}		
+	}
+	public function getDownloadHash(){
+		return hash('md5', $this->sql);
 	}	
 	public function setDataSet($dataset){
 		$this->dataset=$dataset;
@@ -181,8 +184,8 @@ class Table extends Object {
 				$out.='</div>';
 			}
 		}
-		
-		
+		$n=$this->navigationlink;
+		$out.='<a href="'.$n().'&download='.($this->getDownloadHash()).'" class="link_button">Download</a>';
 		return $out;	
 	}
 	public function getResultSet(){
