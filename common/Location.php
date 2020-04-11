@@ -175,14 +175,10 @@ class Location extends DBManager {
 		return $o[0]->total;
 	}
 	function getPrimarName(){
-		$sql="SELECT * FROM al_primari where alegeri_id='2015' and localitate_id=".$this->id;
-		$ls=$this->doSql($sql);
-		return $ls[0];
+		return Primar::getCurrentPrimarByLocalitate($this->id);
 	}
 	function getPrimarPartid(){
-		$sql="SELECT a2.* FROM al_primari as a1 inner join al_partid as a2 on a1.alegeri_id=a2.alegeri_id and a1.partid=a2.partidcod where a1.alegeri_id='2015' and a1.localitate_id=".$this->id;
-		$ls=$this->doSql($sql);
-		return $ls[0];
+		return Partid::getPrimarPartidByLocationId($this->id);
 	}	
 	function getPrimarieConsilieri(){
 		$sql="SELECT * FROM al_consilierilocali where alegeri_id='2015' and localitate_id=".$this->id." order by nr";

@@ -66,14 +66,14 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle('Primarii Moldova: '.$this->location->getPrimariaName());
 		$this->setLogoTitle(strtoupper($this->location->getPrimariaName()));
 		$this->setCenterContainer($this->getPrimarie());
+		$this->setCenterContainer($this->getContacts($l));
 		$this->setCenterContainer($this->getPopulationInTime());
-		$this->setCenterContainer($this->getPrimarieConsilieri());
-		$this->setCenterContainer($this->showAlegeriPresidentiale161030Image());
-		$this->setCenterContainer($this->showAlegeri141130Image());		
-		$this->setCenterContainer($this->showElectoralPreferences());
 		$this->setCenterContainer($this->getPrimariiInJur());
 		$this->setCenterContainer($this->getLocalitatiDistance());	
-		$this->setCenterContainer($this->getContacts($l));
+		//$this->setCenterContainer($this->getPrimarieConsilieri());
+		//$this->setCenterContainer($this->showAlegeriPresidentiale161030Image());
+		//$this->setCenterContainer($this->showAlegeri141130Image());		
+		$this->setCenterContainer($this->showElectoralPreferences());		
 		$this->setCenterContainer($this->getNewsTitles());
 		
 		$c='<a name="11"></a>Forum/Comentarii:';
