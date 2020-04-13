@@ -3,7 +3,6 @@ require_once(__DIR__ . '/../main/loader.php');
 
 class IndexLocationsWebPage extends MainWebPage {
 
-	
 	function __construct(){
 		parent::__construct();
 		$this->setLogoTitle("LOCALITATI DIN REPUBLICA MOLDOVA");		
@@ -130,7 +129,8 @@ class IndexLocationsWebPage extends MainWebPage {
 		$t="Lista a 50 cele mai populate localitati din Moldova";
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
-		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));			
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopUpPopLocalitati()));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopUpDownPopLocalitati($this,'up')));
 		$this->show();
@@ -140,6 +140,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopUpDownPopLocalitati($this,'down')));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
 		$this->show();
@@ -149,6 +150,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiUcraineni($this)));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "ucraineni")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
@@ -159,6 +161,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiRusi($this)));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "rusi")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
@@ -169,6 +172,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiGagauzi()));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "gagauzi")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
@@ -179,6 +183,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiBulgari()));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "bulgari")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
@@ -189,6 +194,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($t);
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiEvrei()));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "evrei")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
@@ -201,6 +207,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiPolonezi()));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "polonezi")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
@@ -213,6 +220,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		//$this->setLogoTitle("Localitati din Republica Moldova");	
 		$this->setLeftContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getLeftMenu()));
 		$this->setRightContainer($this->getGroupBoxH3("Cauta Localitate:",$this->getSearchLocation()));				
+		$this->setRightContainer($this->getGroupBoxH3("Despre Date",$this->getRecensamintInfo()));	
 		//$this->setCenterContainer($this->getGroupBoxH2($t,$this->getTopLocalitatiTigani()));
 		$this->setCenterContainer($this->getGroupBoxH2($t,Location::getTopLocalitatiNationality($this, "tigani")));
 		//$this->setRightContainer($this->getGroupBoxH3($this->getConstants("IndexLocationsWebPageReferinte"),$this->getRightMenu()));
@@ -858,6 +866,10 @@ class IndexLocationsWebPage extends MainWebPage {
 			}
 		}
 	}	
+	function getRecensamintInfo(){
+		$out='Datele sunt pe baza recensamintului din 2004';
+		return $out;
+	}
 }
 $n=new IndexLocationsWebPage();
 ?>

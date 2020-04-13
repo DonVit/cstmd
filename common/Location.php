@@ -368,7 +368,7 @@ class Location extends DBManager {
 	
 	public static function getTopLocalitatiNationality($currentPage, $nationality){
 	
-		$sql="select l.id as l_id, l.oras as l_oras, l.name as l_name, l.p as l_p, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name, l.p as l_p, p.".$nationality." as l_".$nationality." from localitate l inner join raion r on l.raion_id=r.id inner join popnat p on l.id=p.id where ".$nationality.">0 order by ".$nationality." desc";
+		$sql="select l.id as l_id, l.oras as l_oras, l.name as l_name, l.p as l_p, r.id as r_id, r.municipiu as r_municipiu, r.name as r_name, l.p as l_p, p.".$nationality." as l_".$nationality." from localitate l inner join raion r on l.raion_id=r.id inner join popnat p on l.id=p.localitate_id where p.an=2004 and ".$nationality.">0 order by ".$nationality." desc";
 	
 		$out='';
 		$out.='<div class="groupboxtable">';
