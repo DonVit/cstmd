@@ -46,7 +46,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="2"></a>Adresa:',$this->getAdress($c)));
 		
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="3"></a>Contacte:',$this->getContacts($c)));
-		$this->setCenterContainer($this->getGroupBoxH3('<a id="4"></a>Pozitia pe Harta:',$this->getMap($c)));
+		$this->setCenterContainer($this->getGroupBoxH3('<a id="4"></a>Pozitia pe Harta:',$this->getOsm($c)));
 		$this->setCenterContainer($this->getGroupBoxH3('<a id="5"></a>Imagini:',$this->getFiles()));
 		$n=new News();
 		

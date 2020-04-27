@@ -289,7 +289,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->raion->maptype=3;
 		$this->raion->centerlat=$this->raion->lat;
 		$this->raion->centerlng=$this->raion->lng;
-		$o3b=$this->getMap($this->raion);
+		$o3b=$this->getOsm($this->raion);
 		$out.=$this->getGroupBoxH3($o3s,$o3b);
 		return $out;
 	}
@@ -365,7 +365,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->location->maptype=3;
 		$this->location->centerlat=$this->location->lat;
 		$this->location->centerlng=$this->location->lng;
-		$o4b=$this->getMap($this->location);
+		$o4b=$this->getOsm($this->location);
 		$out.=$this->getGroupBoxH3($o4s,$o4b);	
 		return $out;
 	}
