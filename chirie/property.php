@@ -288,7 +288,7 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getPropertyMap(){
 		$out='';
 		if ($this->currentproperty->getScop()->id==2){	
-			return $this->getGroupBoxH3("Harta:",$this->getMap($this->currentproperty));
+			return $this->getGroupBoxH3("Harta:",$this->getOsm($this->currentproperty));
 		} else {
 			return $out;
 		}		

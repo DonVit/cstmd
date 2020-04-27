@@ -461,6 +461,31 @@ class MainWebPage extends WebPage {
 		$out.='<div id="map" style="width: 100%;"></div>';
 		return $out;
 	}
+	function getOsm($m){
+		$this->setFooterJavascript("https://unpkg.com/leafmap@1.1.7/dist/main.js");
+		$this->setCSS("https://unpkg.com/leafmap@1.1.7/dist/main.css");
+		$out='';
+		if ($m->lat==0){
+			$m->maptype=0;
+			$m->lat=0;
+			$m->lng=0;
+
+			$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$m->centerlat.'" />';
+			$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$m->centerlng.'" />';
+				
+		}	else {
+
+			$out.='<input id="centerlat" name="centerlat" type="hidden" value="'.$m->lat.'" />';
+			$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$m->lng.'" />';
+		}
+		
+		$out.='<input id="maptype" name="maptype" type="hidden" value="'.$m->maptype.'" />';
+		$out.='<input id="zoom" name="zoom" type="hidden" value="'.$m->zoom.'" />';
+		$out.='<input name="lat" type="hidden" id="lat" readonly="true" class="inptdisabled" value="'.$m->lat.'" />';
+		$out.='<input name="lng" type="hidden" id="lng" readonly="true" class="inptdisabled" value="'.$m->lng.'" />';
+		$out.='<div id="mapid" style="width: 100%;"></div>';
+		return $out;
+	}
 	function setMap($m){
 
 		$this->setBodyTag('<body onload="MapEditOnMapLoad()">');
