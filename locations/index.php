@@ -68,6 +68,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$this->setTitle($this->getConstants("IndexLocationsWebPageTitle").' '.$this->location->getFullNameDescription().' din '.$this->location->getRaion()->getFullNameDescription());
 		$this->setLogoTitle(strtoupper($this->location->getFullNameDescription()));
 		$this->setCenterContainer($this->getLocalitate());
+		$this->setCenterContainer($this->getPopulationByYearsRange());
 		$this->setCenterContainer($this->getPopulation());
 		$this->setCenterContainer($this->getPopulationInTime());
 		$this->setCenterContainer($this->showElectoralPreferences());
@@ -485,7 +486,45 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.=$this->getGroupBoxH3($o2s,$o2b);					
 		return $out;
 	}
-	
+	function getPopulationByYearsRange(){
+		$out='';
+		$o2s='';
+		$o2b='';
+		if (($this->location->p>0)){				
+			$o2s='<a name="5"></a>'.$this->location->getFullNameDescription().' - Locuitorii pe varste (Conform listelor electorale din anul 2020):';		
+			
+			$p=new PeopleYears();
+			$peopleyears=$p->getAll("raion_id=".$this->raion->id." and localitate_id=".$this->location->id, 'years_range');
+			if  (count($peopleyears)!=0){
+
+				$chd='t:';
+				$chl='';
+				$counter=0;
+				foreach($peopleyears as $peopleyear){
+					if ($counter==0){
+						$chd.=$peopleyear->years_percent;
+						$chl.=$peopleyear->years_percent;
+					} else {
+						$chd.=','.$peopleyear->years_percent;
+						$chl.='%|'.$peopleyear->years_percent;
+					}
+					$counter++;
+				}
+
+				$o2b.='<br>';
+				$o2b.=PeopleYears::getPopulationVeiw($this, $this->raion->id, $this->location->id);
+				$chco='008000|224499|FF0000|FF9900|AA0033|7777CC';
+				$chdl='18-25 ani|26-35 ani|36-45 ani|46-55 ani|56-65 ani|66-99 ani';
+				$chtt='Locuitorii pe varste in '.$this->location->getFullNameDescription();
+				$o2b.='<br>';
+				$o2b.='<div style="text-align:center">';
+				$o2b.='<img src="https://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
+				$o2b.='</div>';			
+			}
+		}
+		$out.=$this->getGroupBoxH3($o2s,$o2b);					
+		return $out;
+	}	
 	function getRaionPopulation(){
 		$out="";
 		if (($this->raion->id!=500)&&($this->raion->id!=700)){
