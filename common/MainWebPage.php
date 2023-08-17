@@ -281,11 +281,16 @@ class MainWebPage extends WebPage {
 	function getGA() {
 		$out="";
 		if (Config::$live){
-			$out.="<script>";
-			$out.="(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');";
-			$out.="ga('create', 'UA-1976884-1', 'auto');";
-			$out.="ga('send', 'pageview');";
-			$out.="</script>";	
+
+			$out.='<!-- Google tag (gtag.js) -->';
+			$out.='<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1976884-1"></script>';
+			$out.='<script>';
+			$out.='window.dataLayer = window.dataLayer || [];';
+			$out.='function gtag(){dataLayer.push(arguments);}';
+			$out.='gtag(\'js\', new Date());';
+			$out.='gtag(\'config\', \'UA-1976884-1\');';
+			$out.='</script>';
+			
 		}
 		return $out;
 	}
@@ -319,22 +324,6 @@ class MainWebPage extends WebPage {
 		}
 		return $this->getGroupBoxH3('',$out);
 	}	
-	function getBookmarks($permalink="", $title="") {
-		if (Config::$live){
-			//addthis
-			$out='<div class="addthis_toolbox addthis_default_style " style="width:120px;">';
-			$out.='<a class="addthis_button_preferred_1"></a>';
-			$out.='<a class="addthis_button_compact"></a>';
-			$out.='<a class="addthis_counter addthis_bubble_style"></a>';
-			$out.='</div>';
-			$out.='<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>';
-			$out.='<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=donvit"></script>';
-				
-			return $out;
-		} else {
-			return '';
-		}
-	}
 	function setLeftContainer($value=""){
 		$this->leftcontainer.=$value;	
 	}	
@@ -578,7 +567,7 @@ class MainWebPage extends WebPage {
 		$out.='</tr>';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">E-mail:</td>';
-		$out.='<td style="width: 70%;"><input type="text" id="email" name="email" style="width: 55%;" value="'.$c->email.'"></td>';
+		$out.='<td style="width: 70%;"><input type="email" id="email" name="email" style="width: 55%;" value="'.$c->email.'"></td>';
 		$out.='</tr>';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Skype Id:</td>';
@@ -586,7 +575,7 @@ class MainWebPage extends WebPage {
 		$out.='</tr>';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Web Site:</td>';
-		$out.='<td style="width: 70%;"><input type="text" id="contacturl" name="contacturl" style="width: 55%;" value="'.$c->contacturl.'"></td>';
+		$out.='<td style="width: 70%;"><input type="url" id="contacturl" name="contacturl" style="width: 55%;" value="'.$c->contacturl.'"></td>';
 		$out.='</tr>';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="width: 30%;">Fax:</td>';
