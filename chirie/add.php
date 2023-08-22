@@ -14,9 +14,9 @@ class PropertyWebPage extends MainWebPage {
 		$this->setCSS("styles/property.css");
 
 		//check if user is login
-		if (!User::isAuthenticated()){
-			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
-		}	
+		// if (!User::isAuthenticated()){
+		// 	$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
+		// }	
 
 		$t="ANUNTURI CHIRII DIN REPUBLICA MOLDOVA";
 		$this->setTitle($t);

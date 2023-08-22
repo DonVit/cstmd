@@ -17,9 +17,9 @@ class PropertyWebPage extends MainWebPage {
 		//$this->setJavascript("js/scripts.js");
 
 		//check if user is login
-		if (!User::isAuthenticated()){
-			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
-		}		
+		// if (!User::isAuthenticated()){
+		// 	$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
+		// }		
 
 		$t="ANUNTURI IMOBILIARE DIN REPUBLICA MOLDOVA";
 		$this->setTitle($t);
