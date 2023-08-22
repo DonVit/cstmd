@@ -12,9 +12,9 @@ class AddImageWebPage extends MainWebPage {
 		parent::__construct();
 		
 		//check if user is login
-		if (!User::isAuthenticated()){
-			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
-		}
+		// if (!User::isAuthenticated()){
+		// 	$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
+		// }
 
 		$this->setJavascript("js/scripts.js");
 		

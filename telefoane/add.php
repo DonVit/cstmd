@@ -15,9 +15,9 @@ class AddCompanyWebPage extends MainWebPage {
 		//$this->setCSS("style/styles.css");
 
 		//check if user is login
-		if (!User::isAuthenticated()){
-			$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
-		}	
+		// if (!User::isAuthenticated()){
+		// 	$this->redirect($this->getUrl(Config::$accountssite."/index.php"));
+		// }	
 		
 		$t="Adauga Companie";
 		$this->setTitle($t);
