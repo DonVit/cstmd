@@ -60,7 +60,7 @@ class Comment extends DBManager {
 		return substr($string, 0, strlen($prefix)) == $prefix;
 	 }
 	public static function isValidComment($comment){
-		return (isset($comment) && shas_prefix($comment,'<p>'));
+		return (isset($comment) && has_prefix($comment,'<p>'));
 	}
 	public static function getComments($webpage,$item_type,$item_id){
 		$c=new Comment();
