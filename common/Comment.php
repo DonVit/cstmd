@@ -56,12 +56,18 @@ class Comment extends DBManager {
 		}	
 		return $link;						
 	}
-	public static function has_prefix($string, $prefix) {
+	// public static function has_prefix($string, $prefix) {
+	// 	return substr($string, 0, strlen($prefix)) == $prefix;
+	//  }
+	// public static function isValidComment($comment){
+	// 	return (isset($comment) && has_prefix($comment,'<p>'));
+	// }
+	function has_prefix($string, $prefix) {
 		return substr($string, 0, strlen($prefix)) == $prefix;
 	 }
-	public static function isValidComment($comment){
-		return (isset($comment) && has_prefix($comment,'<p>'));
-	}
+	 function isValidComment($comment){
+		 return (isset($comment) && has_prefix($comment,'<p>'));
+	 }
 	public static function getComments($webpage,$item_type,$item_id){
 		$c=new Comment();
 		$c->item_type=$item_type;
@@ -108,8 +114,8 @@ class Comment extends DBManager {
 			$recaptcha = new \ReCaptcha\ReCaptcha(Config::$privatekey);
 			$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 			if ($resp->isSuccess()){
-				$isValidCommnet = Comment::isValidComment($webpage->comment)
-				if(isset($webpage->name)&&$isValidCommnet&&isset($webpage->email)){
+				$isVC= isValidComment($webpage->comment)
+				if(isset($webpage->name)&&$isVC&&isset($webpage->email)){
 					$c->name=$webpage->name;
 					$c->phone=$webpage->phone;
 					$c->email=$webpage->email;
