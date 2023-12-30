@@ -12,12 +12,13 @@ class Comment extends DBManager {
 	public $comment;
 	public $valid;
 	public $date;
-   function __construct() {
-   }
+
+	function __construct() {
+	}
  
-   public function getAproveLink(){
-   		return $this->getUrlWithSpecialCharsConverted(Config::$mainsite."/comments.php","action=validate&id=".$this->id);
-   }
+	public function getAproveLink(){
+		return $this->getUrlWithSpecialCharsConverted(Config::$mainsite."/comments.php","action=validate&id=".$this->id);
+	}
 	public function getLink(){
 		$link=$this->getUrlWithSpecialCharsConverted(Config::$mainsite."/index.php");
 		if ($this->item_type=="n"){
@@ -54,6 +55,9 @@ class Comment extends DBManager {
 			$link=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$this->item_id);
 		}	
 		return $link;						
+	}
+	public static function isValidComment($comment){
+		return (str_starts_with($comment,'<p>'))
 	}
 	public static function getComments($webpage,$item_type,$item_id){
 		$c=new Comment();
@@ -101,7 +105,7 @@ class Comment extends DBManager {
 			$recaptcha = new \ReCaptcha\ReCaptcha(Config::$privatekey);
 			$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 			if ($resp->isSuccess()){
-				if(isset($webpage->name)&&isset($webpage->comment)&&isset($webpage->email)){
+				if(isset($webpage->name)&&isset($webpage->comment)&&isset($webpage->email)&&Comment::isValidComment($webpage->comment)){
 					$c->name=$webpage->name;
 					$c->phone=$webpage->phone;
 					$c->email=$webpage->email;
