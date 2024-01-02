@@ -63,5 +63,8 @@ class System{
 		$len=strlen($maxvalue);
 		return $maxvalue+pow(10,$len-1);
 	}
+	public static function hasPrefix($string, $prefix) {
+		return substr($string, 0, strlen($prefix)) == $prefix;
+	}
 }
 ?>
