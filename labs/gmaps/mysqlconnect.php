@@ -16,7 +16,7 @@ $page_limit = "14";
 $uploaddir = 'uploaded_images/';
 
 //Connect to MySQL
-$dbconnect=mysql_connect ("$dbhost", "$dbuser", "$dbpass") or die ('I cannot connect to the database because: ' . mysql_error());
+$dbconnect=mysql_connect ("$dbhost", "$dbuser", "$dbpass") or die ('I cannot connect to the database because: ' . mysqli_error());
 mysql_select_db ("$dbname");
 
 ?>

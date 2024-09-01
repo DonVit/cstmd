@@ -557,7 +557,7 @@ class Property extends DBManager {
 			$sql.=" limit 0,1";		
 			$ps=DBManager::doSql($sql);
 			$this->next=0;
-			if (count($ps)!=0){
+			if (isset($ps) && count($ps)!=0){
 				foreach($ps as $p){
 					$this->next=$p->id;
 				}
@@ -583,7 +583,7 @@ class Property extends DBManager {
 			$sql.=" limit 0,1";				
 			$ps=DBManager::doSql($sql);
 			$this->previous=0;
-			if (count($ps)!=0){
+			if (isset($ps) && count($ps)!=0){
 				foreach($ps as $p){
 					$this->previous=$p->id;
 				}

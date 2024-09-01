@@ -68,7 +68,7 @@ class AddImageWebPage extends MainWebPage {
 			$this->currentphoto->centerlng = $latlng['longitude'];
 			$this->currentphoto->lat = $latlng['latitude'];
 			$this->currentphoto->lng = $latlng['longitude'];
-			print_r($this->currentphoto);
+			// print_r($this->currentphoto);
 		}
 		User::setCurrentPhoto($this->currentphoto);
 		//Logger::setLogs("current photo before=".$this->currentphoto);

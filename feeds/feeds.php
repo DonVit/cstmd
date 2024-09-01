@@ -71,7 +71,7 @@ class IndexWebPage extends MainWebPage {
 		$out.='<table style="width:100%;" class="pure-table pure-table-bordered">';
 		$out.='<thead><tr><th style="width:20%;">Nr</th><th style="width:20%;">Compania</th><th style="width:50%;">Title</th><th style="width:30%;text-align:center">Descriere</th><th style="width:30%;text-align:center">Data</th></tr></thead>';		
 		$out.="<tbody>";
-		if (count($ns)!=0){			
+		if ($ns->num_rows > 0) {			
 			$c=1;
 			foreach($ns as $n){
 				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$n->id);

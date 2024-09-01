@@ -377,7 +377,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 		
 		$ls=$this->location->getLocationsInRadius();
-		if (count($ls)!=0){				
+		if (isset($ls) && count($ls)!=0) {					
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="7"></a>'.$this->location->getFullNameDescription().' - Localitati in raza de 10 km:';		
@@ -397,7 +397,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 		
 		$ls=LocationDistance::getDistancesByLocation($this->location->id);
-		if (count($ls)!=0){				
+		if (isset($ls) && count($ls)!=0) {			
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="5"></a>'.$this->location->getFullNameDescription().' - Distanțe:';		
@@ -417,7 +417,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 		
 		$ls=$this->location->getLocationsWithSameName();
-		if (count($ls)!=0){				
+		if (isset($ls) && count($ls)!=0) {					
 			$o2s='';
 			$o2b='';			
 			$o2s.='<a name="6"></a>'.$this->location->getFullNameDescription().' - Localitati cu aceleasi nume:';		
@@ -495,8 +495,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			
 			$p=new PeopleYears();
 			$peopleyears=$p->getAll("raion_id=".$this->raion->id." and localitate_id=".$this->location->id, 'years_range');
-			if  (count($peopleyears)!=0){
-
+			if (isset($peopleyears) && count($peopleyears)!=0) {
 				$chd='t:';
 				$chl='';
 				$counter=0;
@@ -667,7 +666,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$d=new Dictionar();
 		$ds=$d->getAll("localitate_id=".$l->id);
 		$out="";
-		if (count($ds)){			
+		if (isset($ds) && count($ds)!=0) {		
 			$o1s='Descrierea din Dictionarul Geografic al Basarabiei an. 1904 de Zamfir Arbore';
 			$o1b=$ds[0]->descriere;
 			$o1f='<a href="'.$this->getUrlWithSpecialCharsConverted(Config::$dictionarsite."/index.php").'">Mai mult despre dictionar vezi aici</a>';
@@ -809,7 +808,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$o2b='';
 		$p=new Population();
 		$popnatall=$p->getAll("localitate_id=".$this->location->id,"an asc");
-		if (count($popnatall)>1){
+		if (isset($popnatall) && count($popnatall)>1){
 					
 					$o2s=$this->location->getFullNameDescription().' - Evolutia numarului de locuitori in ultimii 100 ani:';
 							

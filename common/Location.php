@@ -204,7 +204,7 @@ class Location extends DBManager {
 		$sql="SELECT xcompany.type,xsubdivizion.new_name as SubdivizionName, xsubsector.new_name as SectorName,phoneprefix,phonenumber FROM xsubcompany inner join xcompany on xsubcompany.companyid=xcompany.id left join xsubdivizion on xsubcompany.subdivizionid=xsubdivizion.id left join xsubsector on xsubcompany.subsectorid=xsubsector.id where localitateid=".$this->id." and xcompany.type in ('Primaria','Scoala','Gradinita','Medic','Politia','Casa De Cultura','Posta','Biblioteca','Banca','Biserica','Gimnaziu') order by xcompany.type LIMIT 0,100";
 		$ls=$this->sql($sql);
 		$out='';
-		if (count($ls)){
+		if ($ls->num_rows >= 0) {
 		$table=new Table();
 		$table->setDataSet($ls);
 		$contactvalue=function($row){

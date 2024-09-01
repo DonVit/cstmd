@@ -1,5 +1,5 @@
 <?php
-class DBManager extends Object {
+class DBManager extends MainObject {
     //Common basic fields
     public $deleted;
     //public $createdby;
@@ -14,7 +14,8 @@ class DBManager extends Object {
     }
 	function sql($sql){
 		Logger::setLogs($sql);
-		$result=mysql_query($sql, DBConnection::getConnection());	
+		$result=mysqli_query(DBConnection::getConnection(), $sql);	
+		// print_r($result);
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
@@ -28,7 +29,7 @@ class DBManager extends Object {
 	}
 	public static function doSql($sql){
 		Logger::setLogs($sql);
-		$result=mysql_query($sql, DBConnection::getConnection());
+		$result=mysqli_query(DBConnection::getConnection(), $sql);
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
@@ -39,13 +40,21 @@ class DBManager extends Object {
 		//	DBManager::logsql($sql,'0');
 		}
 		if (!(is_bool($result) === true)) {
-		$fields=mysql_num_fields($result);
+		// $fields=mysqli_num_fields($result);
+		$fieldsinfo = $result -> fetch_fields();
 		$arr=array();
-		while($row = mysql_fetch_object($result)){
-			$o=new Object();
-			for ($i=0; $i < $fields; $i++) {
-    			$n=mysql_field_name($result, $i);
-    			$o->$n=$row->$n;
+		while($row = mysqli_fetch_object($result)){
+			$o=new MainObject();
+			// for ($i=0; $i < $fields; $i++) {
+    		// 	$n=mysqli_fetch_field($result, $i);
+    		// 	$o->$n=$row->$n;
+			// }
+			foreach ($fieldsinfo as $val) {
+				// printf("Name: %s\n", $val -> name);
+				// printf("Table: %s\n", $val -> table);
+				// printf("Max. Len: %d\n", $val -> max_length);
+				$n = $val -> name;
+				$o->$n=$row->$n;
 			}
 			$arr[]=$o;
 		}
@@ -60,16 +69,18 @@ class DBManager extends Object {
 	}
 	public static function doJustSql($sql){
 		Logger::setLogs($sql);
-		$result=mysql_query($sql, DBConnection::getConnection());
+		$result=mysqli_query(DBConnection::getConnection(), $sql);
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
 			$n->redirect(Config::$errorpage);	
 		}
+		return $result;
 	}	
 	function save(){
 		$f="";
 		$v="";
+		echo 'save:'.$this->id;
 		if (!isset($this->id)){
 			//set values to system fields
 			if (!isset($this->deleted)){$this->deleted=0;}
@@ -81,21 +92,21 @@ class DBManager extends Object {
 			foreach ($this as $name => $value) {
 	    		if ($this->isMember($name)){
 		    		if ($f==""){
-		    			$f.=" `".mysql_real_escape_string($name,DBConnection::getConnection())."`";
-		    			$v.=" '".mysql_real_escape_string($value,DBConnection::getConnection())."'";
+		    			$f.=" `".mysqli_real_escape_string(DBConnection::getConnection(), $name)."`";
+		    			$v.=" '".mysqli_real_escape_string(DBConnection::getConnection(), $value)."'";
 		    		} else {
 						Logger::setLogs('fv='.$name.':'.$value);
-		    			$f.=", `".mysql_real_escape_string($name,DBConnection::getConnection())."`";
-		    			$v.=", '".mysql_real_escape_string($value,DBConnection::getConnection())."'";
+		    			$f.=", `".mysqli_real_escape_string(DBConnection::getConnection(), $name)."`";
+		    			$v.=", '".mysqli_real_escape_string(DBConnection::getConnection(), $value)."'";
 		    			
 		    		}
 	    		}
 			}
 			$sql=" insert into `".$this->getTableName()."` (".$f.") values (".$v.")";
-			//echo $sql;
-			//execute the sql query
+			// echo 'save sql'.$sql;
+			// execute the sql query
 			if ($this->sql($sql)){
-				$this->id=mysql_insert_id();
+				$this->id = mysqli_insert_id(DBConnection::getConnection());
 			}
 		} else {
 			$f="";
@@ -112,14 +123,15 @@ class DBManager extends Object {
 	    		if ($this->isMember($name)){
 	    			if ($f==""){
 	    				//$f.=" `".$name."`='".$value."'";
-	    				$f.=" `".$name."`='".mysql_real_escape_string($value,DBConnection::getConnection())."'";
+	    				$f.=" `".$name."`='".mysqli_real_escape_string(DBConnection::getConnection(), $value)."'";
 	    			} else {
 	    				//$f.=" ,`".$name."`='".$value."'";
-	    				$f.=" ,`".$name."`='".mysql_real_escape_string($value,DBConnection::getConnection())."'";
+	    				$f.=" ,`".$name."`='".mysqli_real_escape_string(DBConnection::getConnection(), $value)."'";
 	    			}
 	    		}	    			    		
 			}
 			$sql=" update `".$this->getTableName()."` set ".$f." where `id`='".$this->id."'";
+			echo 'update sql'.$sql;
 			$this->sql($sql);
 		}
 	}
@@ -155,10 +167,10 @@ class DBManager extends Object {
 		$sql.=" from `".$this->getTableName()."` where id='".$id."' and deleted=0";
 	
 		$result=$this->sql($sql);
-		$num_rows = mysql_num_rows($result);
+		$num_rows = mysqli_num_rows($result);
 		$o=null;
 		if ($num_rows!=0){
-			while($row = mysql_fetch_object($result)){
+			while($row = mysqli_fetch_object($result)){
 				$o=new $this;
 				foreach ($o as $name=>$value) {
 					$o->$name=$row->$name;
@@ -179,8 +191,8 @@ class DBManager extends Object {
 		$sql.=" from `".$this->getTableName()."` where id='".$id."' and deleted=0";
 	
 		$result=$this->sql($sql);
-		if (mysql_num_rows($result)!=0){
-			while($row = mysql_fetch_object($result)){
+		if (mysqli_num_rows($result)!=0){
+			while($row = mysqli_fetch_object($result)){
 				foreach ($this as $name=>$value) {
 					$this->$name=$row->$name;
 				}		
@@ -210,13 +222,14 @@ class DBManager extends Object {
 		//if (($page!="")&&($rowsperpage!="")){
 		if (!(empty($page)&&empty($rowsperpage))){	
 			$sql.=" limit ".$page*$rowsperpage.",".$rowsperpage;;
-		}		
+		}
+		// echo $sql;	
 		return $this->getResult($this->sql($sql));	
 	}
 
 	function getResult($result){
 		$arr=array();
-		while($row = mysql_fetch_object($result)){
+		while($row = mysqli_fetch_object($result)){
 			$o=new $this;
 			foreach ($o as $name=>$value) {
 				$o->$name=$row->$name;
@@ -249,10 +262,10 @@ class DBManager extends Object {
 		return $rv;
 	}
 	public static function logsql($sql,$status){
-		$sql=mysql_real_escape_string($sql);
+		$sql=mysqli_real_escape_string(DBConnection::getConnection(), $sql);
 		$sqllog="INSERT INTO  `logs` (`id` ,`sessionid` ,`sql` ,`status` ,`datetime`) VALUES (NULL ,  '".SessionManager::getSessionId()."',  '".$sql."',  '".$status."',  '".System::getCurentDateTime()."')";
 		Logger::setLogs('sqllogger'.$sqllog);
-		$result=mysql_query($sqllog, DBConnection::getConnection());
+		$result=mysqli_query(DBConnection::getConnection(), $sqllog);
 		if (!$result){
 			$n=new WebPage();
 			$n->redirect(Config::$errorpage);

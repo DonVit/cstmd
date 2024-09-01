@@ -1,5 +1,5 @@
 <?php
-class WebPage extends Object {
+class WebPage extends MainObject {
 	private $webpageid=0;
 	private $contenttype="text/html";
 	private $charset="utf-8";

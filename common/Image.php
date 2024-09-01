@@ -123,7 +123,7 @@ class Image extends DBManager {
 	public static function getMainImageByRefType($reftype,$reftypeid){
 		$i=new Image();
 		$is=$i->getAll("reftype='".$reftype."' and reftypeid='".$reftypeid."'");
-		if (count($is)!=0){
+		if (isset($is) && count($is)!=0){
 			foreach ($is as $i){
 				if ($i->imagemain==1){
 					return $i;
