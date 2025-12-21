@@ -93,17 +93,17 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	}
 	function getPropertyTitle(){
 		$out='<div style="text-align:center;">';
-		$out.=$this->currentproperty->getShortDescription();
+		$out.=System::getHtmlSpecialChars($this->currentproperty->getShortDescription());
 		$out.='</div>';
 		return $out;		
 	}
 	function getSystemDetails(){
 		$out='<div>';		
 		$out.='<div id="property-view-dateq" style="float:left">';
-		$out.='Data publicarii: '.$this->currentproperty->getData();
+		$out.='Data publicarii: '.System::getHtmlSpecialChars($this->currentproperty->getData());
 		$out.='</div>';	
 		$out.='<div id="property-view-dateq" style="float:right">';
-		$out.='Vizualizari: '.$this->currentproperty->contor;
+		$out.='Vizualizari: '.System::getHtmlSpecialChars($this->currentproperty->contor);
 		$out.='</div>';
 		$out.='<div style="clear: both;"></div>';						
 		$out.='</div>';
@@ -170,18 +170,18 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getOfertaChirieApartament(){
 		$out='';
 		$out.='<table class="property-table" align="center" style="width: 86%;">';
-		$out.='<tr><td class="property-name" style="width: 25%;">Tip Apartament:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td><td class="property-name" style="width: 25%;">Anul constructiei:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAn().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata totala(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaTotala().'</td><td class="property-name" style="width: 25%;">Model:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getModel()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata locuibila(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaLocuibila().'</td><td class="property-name" style="width: 25%;">Tip Constructie:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getTipConstructie()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Etaj/Etaje:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getEtaj().'</td><td class="property-name" style="width: 25%;">Stare:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getStare()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Balcoane:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getBalcoane().'</td><td class="property-name" style="width: 25%;">Garaj:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getGaraj().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Pret:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getPret().'</td><td class="property-name" style="width: 25%;">Subsol:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubsol().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Negociabil:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getNgociabil().'</td><td class="property-name" style="width: 25%;">Incalzire Autonoma:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getIncalzire().'</td></tr>';
-		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Telefon:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getTelefon().'</td></tr>';	
-		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Gaz:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getGaz().'</td></tr>';	
+		$out.='<tr><td class="property-name" style="width: 25%;">Tip Apartament:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubTipImobil()->name).'</td><td class="property-name" style="width: 25%;">Anul constructiei:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAn()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata totala(m2):</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaTotala()).'</td><td class="property-name" style="width: 25%;">Model:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getModel()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata locuibila(m2):</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaLocuibila()).'</td><td class="property-name" style="width: 25%;">Tip Constructie:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getTipConstructie()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Etaj/Etaje:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getEtaj()).'</td><td class="property-name" style="width: 25%;">Stare:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getStare()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Balcoane:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getBalcoane()).'</td><td class="property-name" style="width: 25%;">Garaj:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getGaraj()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Pret:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getPret()).'</td><td class="property-name" style="width: 25%;">Subsol:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubsol()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Negociabil:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getNgociabil()).'</td><td class="property-name" style="width: 25%;">Incalzire Autonoma:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getIncalzire()).'</td></tr>';
+		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Telefon:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getTelefon()).'</td></tr>';	
+		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Gaz:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getGaz()).'</td></tr>';	
 		$out.='<tr>';
 		$out.='<td class="property-name" style="height:25px;">Note:</td>';		
-		$out.='<td class="property-value" style="height:25px;" colspan="3">'.$this->currentproperty->note.'</td>';
+		$out.='<td class="property-value" style="height:25px;" colspan="3">'.System::getHtmlSpecialChars($this->currentproperty->note).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 			
 
@@ -190,18 +190,18 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getOfertaChirieCasaVila(){
 		$out='';
 		$out.='<table class="property-table" align="center" style="width: 86%;">';
-		$out.='<tr><td class="property-name" style="width: 25%;">Casa/Vila:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td><td class="property-name" style="width: 25%;">Anul constructiei:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAn().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata totala(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaTotala().'</td><td class="property-name" style="width: 25%;">Tip Constructie:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getTipConstructie()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata lotului aferent:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaLot().'</td><td class="property-name" style="width: 25%;">Stare:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getStare()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Pret:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getPret().'</td><td class="property-name" style="width: 25%;">Electricitate:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getElectricitate().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Negociabil:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getNgociabil().'</td><td class="property-name" style="width: 25%;">Apeduct:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getApeduct().'</td></tr>';
-		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Canalizare:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getCanalizare().'</td></tr>';	
-		$out.='<tr><td class="property-name" style="width: 25%;">Garaj:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getGaraj().'</td><td class="property-name" style="width: 25%;">Incalzire Autonoma:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getIncalzire().'</td></tr>';	
-		$out.='<tr><td class="property-name" style="width: 25%;">Subsol:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubsol().'</td><td class="property-name" style="width: 25%;">Telefon:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getTelefon().'</td></tr>';	
-		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Gaz:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getGaz().'</td></tr>';	
+		$out.='<tr><td class="property-name" style="width: 25%;">Casa/Vila:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubTipImobil()->name).'</td><td class="property-name" style="width: 25%;">Anul constructiei:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAn()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata totala(m2):</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaTotala()).'</td><td class="property-name" style="width: 25%;">Tip Constructie:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getTipConstructie()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata lotului aferent:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaLot()).'</td><td class="property-name" style="width: 25%;">Stare:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getStare()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Pret:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getPret()).'</td><td class="property-name" style="width: 25%;">Electricitate:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getElectricitate()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Negociabil:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getNgociabil()).'</td><td class="property-name" style="width: 25%;">Apeduct:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getApeduct()).'</td></tr>';
+		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Canalizare:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getCanalizare()).'</td></tr>';	
+		$out.='<tr><td class="property-name" style="width: 25%;">Garaj:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getGaraj()).'</td><td class="property-name" style="width: 25%;">Incalzire Autonoma:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getIncalzire()).'</td></tr>';	
+		$out.='<tr><td class="property-name" style="width: 25%;">Subsol:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubsol()).'</td><td class="property-name" style="width: 25%;">Telefon:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getTelefon()).'</td></tr>';	
+		$out.='<tr><td></td><td></td><td class="property-name" style="width: 25%;">Gaz:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getGaz()).'</td></tr>';	
 		$out.='<tr>';
 		$out.='<td class="property-name" style="height:25px;">Note:</td>';		
-		$out.='<td class="property-value" style="height:25px;" colspan="3">'.$this->currentproperty->note.'</td>';
+		$out.='<td class="property-value" style="height:25px;" colspan="3">'.System::getHtmlSpecialChars($this->currentproperty->note).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 			
 			
@@ -211,14 +211,14 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getOfertaChirieComercial(){
 		$out='';
 		$out.='<table class="property-table" align="center" style="width: 86%;">';
-		$out.='<tr><td class="property-name" style="width: 25%;">Tip Comercial:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td><td class="property-name" style="width: 25%;">Electricitate:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getElectricitate().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaTotala().'</td><td class="property-name" style="width: 25%;">Apeduct:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getApeduct().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata lotului aferent:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaLot().'</td><td class="property-name" style="width: 25%;">Canalizare:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getCanalizare().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Pret:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getPret().'</td><td class="property-name" style="width: 25%;">Telefon:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getTelefon().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Negociabil::</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getNgociabil().'</td><td class="property-name" style="width: 25%;">Gaz:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getGaz().'</td></tr>';	
+		$out.='<tr><td class="property-name" style="width: 25%;">Tip Comercial:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubTipImobil()->name).'</td><td class="property-name" style="width: 25%;">Electricitate:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getElectricitate()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata(m2):</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaTotala()).'</td><td class="property-name" style="width: 25%;">Apeduct:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getApeduct()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata lotului aferent:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaLot()).'</td><td class="property-name" style="width: 25%;">Canalizare:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getCanalizare()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Pret:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getPret()).'</td><td class="property-name" style="width: 25%;">Telefon:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getTelefon()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Negociabil::</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getNgociabil()).'</td><td class="property-name" style="width: 25%;">Gaz:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getGaz()).'</td></tr>';	
 		$out.='<tr>';
 		$out.='<td class="property-name" style="height:25px;">Note:</td>';		
-		$out.='<td class="property-value" style="height:25px;" colspan="3">'.$this->currentproperty->note.'</td>';
+		$out.='<td class="property-value" style="height:25px;" colspan="3">'.System::getHtmlSpecialChars($this->currentproperty->note).'</td>';
 		$out.='</tr>';
 		$out.='</table>'; 			
 		
@@ -228,14 +228,14 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getCerereChirieApartament(){
 		$out='';
 		$out.='<table class="property-table" align="center" style="width: 50%;">';
-		$out.='<tr><td class="property-name" style="width: 25%;">Apartament preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Pret preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getPret().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getRaion()->getFullName().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getLocation()->getFullName().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Sector preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Apartament preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubTipImobil()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Pret preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getPret()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getRaion()->getFullName()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getLocation()->getFullName()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Sector preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSector()->name).'</td></tr>';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="height:25px;">Note:</td>';		
-		$out.='<td class="property-value" style="height:25px;" colspan="3">'.$this->currentproperty->note.'</td>';
+		$out.='<td class="property-value" style="height:25px;" colspan="3">'.System::getHtmlSpecialChars($this->currentproperty->note).'</td>';
 		$out.='</tr>';
 		$out.='</table>';	
 		
@@ -245,15 +245,15 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getCerereChirieCasaVila(){
 		$out='';
 		$out.='<table class="property-table" align="center" style="width: 50%;">';
-		$out.='<tr><td class="property-name" style="width: 25%;">Casa/Vila preferata:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata preferata(m2):</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaTotala().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Pret preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getPret().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getRaion()->getFullName().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getLocation()->getFullName().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Sector preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Casa/Vila preferata:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubTipImobil()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata preferata(m2):</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaTotala()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Pret preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getPret()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getRaion()->getFullName()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getLocation()->getFullName()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Sector preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSector()->name).'</td></tr>';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="height:25px;">Note:</td>';		
-		$out.='<td class="property-value" style="height:25px;" colspan="3">'.$this->currentproperty->note.'</td>';
+		$out.='<td class="property-value" style="height:25px;" colspan="3">'.System::getHtmlSpecialChars($this->currentproperty->note).'</td>';
 		$out.='</tr>';
 		$out.='</table>';		
 		
@@ -263,15 +263,15 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getCerereChirieComercial(){
 		$out='';
 		$out.='<table class="property-table" align="center" style="width: 50%;">';
-		$out.='<tr><td class="property-name" style="width: 25%;">Tip Comercial preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSubTipImobil()->name.'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata preferata:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getAriaLot().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Pret preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getPret().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getRaion()->getFullName().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getLocation()->getFullName().'</td></tr>';
-		$out.='<tr><td class="property-name" style="width: 25%;">Sector preferat:</td><td class="property-value" style="width: 25%;">'.$this->currentproperty->getSector()->name.'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Tip Comercial preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSubTipImobil()->name).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Suprafata preferata:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getAriaLot()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Pret preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getPret()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Municipiul/Raionul preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getRaion()->getFullName()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Oras/Sat preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getLocation()->getFullName()).'</td></tr>';
+		$out.='<tr><td class="property-name" style="width: 25%;">Sector preferat:</td><td class="property-value" style="width: 25%;">'.System::getHtmlSpecialChars($this->currentproperty->getSector()->name).'</td></tr>';
 		$out.='<tr>';
 		$out.='<td class="property-name" style="height:25px;">Note:</td>';		
-		$out.='<td class="property-value" style="height:25px;" colspan="3">'.$this->currentproperty->note.'</td>';
+		$out.='<td class="property-value" style="height:25px;" colspan="3">'.System::getHtmlSpecialChars($this->currentproperty->note).'</td>';
 		$out.='</tr>';
 		$out.='</table>';
 		
@@ -296,9 +296,9 @@ class ChiriePropertyWebPage extends PropertyWebPage {
 	function getVideo(){
 		$out='';
 		if ($this->currentproperty->getScop()->id==2){	
-			if ($this->currentproperty->getYouTubeId()!=""){ 
+			if (System::getHtmlSpecialChars($this->currentproperty->getYouTubeId())!=""){ 
 				$out.='<div style="text-align: center;">';
-				$out.='<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$this->currentproperty->getYouTubeId().'" frameborder="0" allowfullscreen></iframe>';
+				$out.='<iframe width="560" height="315" src="https://www.youtube.com/embed/'.System::getHtmlSpecialChars($this->currentproperty->getYouTubeId()).'" frameborder="0" allowfullscreen></iframe>';
 				$out.='</div>';
 			} else {
 				$out.='<div style="text-align: center;">';

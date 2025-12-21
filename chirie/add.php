@@ -814,7 +814,7 @@ class PropertyWebPage extends MainWebPage {
 		$out.='Puneti adresa url de pe YouTube daca aveti.';	
 		$out.='</div>';
 		$out.='<div id="filestable" class="form_row" style="text-align: right">'; 		
-		$out.='<input name="youtubeurl" type="text" style="width:100%"  value="'.$this->currentproperty->youtubeurl.'">';
+		$out.='<input name="youtubeurl" type="url" style="width:100%"  value="'.$this->currentproperty->youtubeurl.'">';
 		$out.='</div>';
 		return $this->getWizardPage($out);	 
 	}

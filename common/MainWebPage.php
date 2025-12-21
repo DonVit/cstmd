@@ -542,11 +542,11 @@ class MainWebPage extends WebPage {
 			$out.='<tr><td class="property-name" style="width: 35%;">Municipiul/Raionul:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewraion&id='.$a->getRaion()->id).'" >'.$a->getRaion()->getFullName().'</a></td></tr>';			
 			$out.='<tr><td class="property-name" style="width: 35%;">Oras/Sat:</td><td class="property-value" style="width: 65%;"><a href="'.$this->getUrlWithSpecialCharsConverted(Config::$locationssite.'/index.php','action=viewlocalitate&id='.$a->getLocation()->id).'" >'.$a->getLocation()->getFullName().'</a></td></tr>';			
 			$out.='<tr><td class="property-name" style="width: 35%;">Sector:</td><td class="property-value" style="width: 65%;">'.$a->getSector()->name.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 35%;">Strada:</td><td class="property-value" style="width: 65%;">'.$a->strada.'</td><td></td><td></td></tr>';
-			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Casa:</td><td class="property-value" style="width: 65%;">'.$a->casa_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Scara:</td><td class="property-value" style="width: 65%;">'.$a->scara_nr.'</td></tr>';
-			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Apartament:</td><td class="property-value" style="width: 65%;">'.$a->apartament_nr.'</td></tr>';				
-			$out.='<tr><td class="property-name" style="width: 35%;">Note la adresa:</td><td class="property-value" style="width: 65%;">'.$a->noteadresa.'</td></tr>';
+			$out.='<tr><td class="property-name" style="width: 35%;">Strada:</td><td class="property-value" style="width: 65%;">'.System::getHtmlSpecialChars($a->strada).'</td><td></td><td></td></tr>';
+			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Casa:</td><td class="property-value" style="width: 65%;">'.System::getHtmlSpecialChars($a->casa_nr).'</td></tr>';
+			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Scara:</td><td class="property-value" style="width: 65%;">'.System::getHtmlSpecialChars($a->scara_nr).'</td></tr>';
+			$out.='<tr><td class="property-name" style="width: 35%;">Nr. Apartament:</td><td class="property-value" style="width: 65%;">'.System::getHtmlSpecialChars($a->apartament_nr).'</td></tr>';				
+			$out.='<tr><td class="property-name" style="width: 35%;">Note la adresa:</td><td class="property-value" style="width: 65%;">'.System::getHtmlSpecialChars($a->noteadresa).'</td></tr>';
 			$out.='</table>';		 			
 			return $out;
 	}		
@@ -595,13 +595,13 @@ class MainWebPage extends WebPage {
 		$out.='<td style="width:70%">';					
 		$out.='<table class="property-table" style="width:100%;align:center;">';
 		$out.='<tr>';
-		$out.='<td class="property-name" style="width:35%">Nume de contact:</td><td class="property-value" style="width:65%">'.$c->contactname.'</td>';
+		$out.='<td class="property-name" style="width:35%">Nume de contact:</td><td class="property-value" style="width:65%">'.System::getHtmlSpecialChars($c->contactname).'</td>';
 		$out.='</tr>';
 		$out.='<tr>';			
-		$out.='<td class="property-name" style="width:35%">Telefon Fix:</td><td class="property-value" style="width:65%">'.$c->phone.'</td>';		
+		$out.='<td class="property-name" style="width:35%">Telefon Fix:</td><td class="property-value" style="width:65%">'.System::getHtmlSpecialChars($c->phone).'</td>';		
 		$out.='</tr>';
 		$out.='<tr>';
-		$out.='<td class="property-name" style="width:35%">Telefon Mobil:</td><td class="property-value" style="width:65%">'.$c->mobile.'</td>';
+		$out.='<td class="property-name" style="width:35%">Telefon Mobil:</td><td class="property-value" style="width:65%">'.System::getHtmlSpecialChars($c->mobile).'</td>';
 		$out.='</tr>';
 		$out.='<tr>';			
 		$out.='<td class="property-name" style="width:35%">E-mail:</td><td class="property-value" style="width:65%">'.$this->getEmailControl($c->email).'</td>';		
@@ -613,10 +613,10 @@ class MainWebPage extends WebPage {
 		$out.='<td class="property-name" style="width:35%">Web Site:</td><td class="property-value" style="width:65%">'.$this->getUrlControl($c->contacturl).'</td>';
 		$out.='</tr>';		
 		$out.='<tr>';
-		$out.='<td class="property-name" style="width:35%">Fax:</td><td class="property-value" style="width:65%">'.$c->fax.'</td>';
+		$out.='<td class="property-name" style="width:35%">Fax:</td><td class="property-value" style="width:65%">'.System::getHtmlSpecialChars($c->fax).'</td>';
 		$out.='</tr>';		
 		$out.='<tr>';				 		
-		$out.='<td class="property-name" style="width:35%">Note de contact:</td><td class="property-value" style="width:65%">'.$c->notecontact.'</td>';
+		$out.='<td class="property-name" style="width:35%">Note de contact:</td><td class="property-value" style="width:65%">'.System::getHtmlSpecialChars($c->notecontact).'</td>';
 		$out.='</tr>';	
 		$out.='</table>'; 
 		$out.='</td>';
@@ -944,21 +944,21 @@ class MainWebPage extends WebPage {
 	function getSkypeControl($skypeid){
 		$out='';
 		if ($skypeid!=""){
-			$out.=' <a href="skype:'.$skypeid.'?call">'.$skypeid.'</a>';
+			$out.=' <a href="skype:'.System::getHtmlSpecialChars($skypeid).'?call">'.System::getHtmlSpecialChars($skypeid).'</a>';
 		}		
 		return $out;
 	}
 	function getEmailControl($emailid){
 		$out='';
 		if ($emailid!=""){
-			$out.=' <a href="mailto:'.$emailid.'">'.$emailid.'</a>';
+			$out.=' <a href="mailto:'.System::getHtmlSpecialChars($emailid).'">'.System::getHtmlSpecialChars($emailid).'</a>';
 		}
 		return $out;
 	}
 	function getUrlControl($urlid){
 		$out='';
 		if ($urlid!=""){
-			$out.=' <a href="'.System::getValidUrl($urlid).'" target="_blank">'.$urlid.'</a>';
+			$out.=' <a href="'.System::getValidUrl($urlid).'" target="_blank">'.System::getHtmlSpecialChars($urlid).'</a>';
 		}
 		return $out;
 	}
