@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+      - "3306:3306"
+    volumes:
+      - ./:/var/www
+      - db_data:/opt/lampp/var/mysql
+    environment:
+      APP_BASE_URL: http://casata.it:8080
+      COOKIE_DOMAIN: .casata.it
+      DB_HOST: 127.0.0.1
+      DB_USER: root
+      DB_PASSWORD: ""
+      DB_NAME: cst
+    tty: true
+
+volumes:
+  db_data:
