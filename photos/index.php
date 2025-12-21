@@ -762,7 +762,7 @@ class PhotosWebPage extends MainWebPage {
 	}								
 
 	function getCopyright(){
-		return '<p>&copy; 2008-2019 casata.md</p>';
+		return '<p>&copy; 2008-'.date("Y").' casata.md</p>';
 	}
 }
 $n=new PhotosWebPage();
