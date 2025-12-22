@@ -104,7 +104,7 @@ class MainWebPage extends WebPage {
 		foreach (TopMenu::getItems($this->getLang()) as $ItemKey=>$ItemValue){
 			$host=parse_url($ItemKey,PHP_URL_HOST);
 			if ($this->getServerName()==$host){
-				$out.='<li><a href="'.$ItemKey.'" style="border-bottom:2px solid #C20000;">'.$ItemValue.'</a></li>';
+				$out.='<li><a href="'.$ItemKey.'" style="border-bottom:2px solid #B91C1C;">'.$ItemValue.'</a></li>';
 			} else {
 				$out.='<li><a href="'.$ItemKey.'">'.$ItemValue.'</a></li>';
 			}
