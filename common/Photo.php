@@ -33,7 +33,7 @@ class Photo extends DBManager {
 				$t.=', '.$r->getFullNameDescription().', '.$l->getFullNameDescription();
 			}
 		}
-		$t.=', '.$this->title;
+		$t.=', '.System::getHtmlSpecialChars($this->title);
 		return $t;	
 	}
 	function getTitle(){
