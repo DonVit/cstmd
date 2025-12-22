@@ -630,21 +630,22 @@ class MainWebPage extends WebPage {
 		return $out;	 
 	}
 	function getContactsQRCode($c){
-		$qrcodeurl='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=MECARD:';
+		$payload='MECARD:';
 		//Name
-		$qrcodeurl.='N:'.$c->contactname.';';
+		$payload.='N:'.$c->contactname.';';
 		//Adresa
-		//$qrcodeurl.='ADR:smith%20st,new%20york;';
+		//$payload.='ADR:smith%20st,new%20york;';
 		//Tel Mobil
-		$qrcodeurl.='TEL:'.$c->mobile.';';
+		$payload.='TEL:'.$c->mobile.';';
 		//Tel Fix
-		$qrcodeurl.='TEL:'.$c->phone.';';
+		$payload.='TEL:'.$c->phone.';';
 		//Email
-		$qrcodeurl.='EMAIL:'.$c->email.';';
+		$payload.='EMAIL:'.$c->email.';';
 		//Url
-		$qrcodeurl.='URL:'.urlencode($this->getServerName().$this->getRequestURI()).';';	
+		$payload.='URL:'.$this->getServerName().$this->getRequestURI().';';	
 		//Note
 		//$qrcodeurl.='NOTE:'.$c->notecontact.'';
+		$qrcodeurl='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='.urlencode($payload);
 		
 		$out='';
 		$out.='<table class="property-table" style="width:100%;align:center;">';
