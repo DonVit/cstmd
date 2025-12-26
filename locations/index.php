@@ -479,7 +479,7 @@ class IndexLocationsWebPage extends MainWebPage {
 				$chtt='Nationalitati '.$this->location->getFullNameDescription();
 				$o2b.='<br>';
 				$o2b.='<div style="text-align:center">';
-				$o2b.='<img src="https://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
+				$o2b.='<img src="https://image-charts.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
 				$o2b.='</div>';			
 			}
 		}
@@ -518,7 +518,7 @@ class IndexLocationsWebPage extends MainWebPage {
 				$chtt='Locuitorii pe varste in '.$this->location->getFullNameDescription();
 				$o2b.='<br>';
 				$o2b.='<div style="text-align:center">';
-				$o2b.='<img src="https://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
+				$o2b.='<img src="https://image-charts.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
 				$o2b.='</div>';			
 			}
 		}
@@ -565,7 +565,7 @@ class IndexLocationsWebPage extends MainWebPage {
 				$chtt='Nationalitati '.$this->raion->getFullNameDescription();
 				$o2b.='<br>';
 				$o2b.='<div style="text-align:center">';
-				$o2b.='<img src="https://chart.apis.google.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
+				$o2b.='<img src="https://image-charts.com/chart?chf=bg,s,eeeeee&chs=580x260&cht=pc&chco='.$chco.'&chd='.$chd.'&chdl='.$chdl.'&chl='.$chl.'&chma=5,5,5,5&chtt='.$chtt.'" width="580" height="260" alt="'.$chtt.'" />';
 				$o2b.='</div>';
 				$out.=$this->getGroupBoxH3($o2s,$o2b);
 			}
@@ -856,7 +856,7 @@ class IndexLocationsWebPage extends MainWebPage {
 					$chd='t:'.$chd0.'|'.$chd1;
 
 					$chtt='Evolutia numarului de locuitori in ultimii 100 ani in '.$this->location->getFullName();
-					$o2b.='<img src="//chart.googleapis.com/chart?chf=bg,s,EEEEEE&chxl='.$chxl.'&chxp='.$chxp.'&chxr='.$chxr.'&chxs=0,000000,14,0,lt,000000|1,000000,14,0,lt,000000&chxt=x,y&chs=580x360&cht=lxy&chco=3D7930&chds='.$chds.'&chd='.$chd.'&chg=10,10,1,1&chls=3&chma=10,10,10,10&chm=B,C5D4B5BB,0,0,0,1&chtt='.$chtt.'&chts=000000,16" width="580" height="360" alt="" />';
+					$o2b.='<img src="https://image-charts.com/chart?chf=bg,s,EEEEEE&chxl='.$chxl.'&chxp='.$chxp.'&chxr='.$chxr.'&chxs=0,000000,14,0,lt,000000|1,000000,14,0,lt,000000&chxt=x,y&chs=580x360&cht=lxy&chco=3D7930&chds='.$chds.'&chd='.$chd.'&chg=10,10,1,1&chls=3&chma=10,10,10,10&chm=B,C5D4B5BB,0,0,0,1&chtt='.$chtt.'&chts=000000,16" width="580" height="360" alt="" />';
 					
 					$o2b.='</div>';					
 		}

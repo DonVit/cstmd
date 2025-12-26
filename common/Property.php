@@ -512,10 +512,10 @@ class Property extends DBManager {
 			$out.=", ".$this->getSector()->name;
 		}	
 		if ($this->strada!=""){
-			$out.=", ".$this->strada;
+			$out.=", ".System::getHtmlSpecialChars($this->strada);
 		}
 		if ($this->casa_nr!=""){
-			$out.=" ".$this->casa_nr;
+			$out.=" ".System::getHtmlSpecialChars($this->casa_nr);
 		}
 		//$out.="<br>";
 		$out.=" Contacte: ";

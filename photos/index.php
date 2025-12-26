@@ -694,7 +694,7 @@ class PhotosWebPage extends MainWebPage {
 		return $out;
 	}
 	function getImageDescription($p){
-		return $this->getGroupBoxH3("Descriere:",$p->note,$this->getSystemDetails($p));;
+		return $this->getGroupBoxH3("Descriere:",System::getHtmlSpecialChars($p->note),$this->getSystemDetails($p));;
 	}	
 	function getPagesByAll($page,$rowsperpage,$url){
 		$sql="select count(*) as cnt from photos where deleted=0";
@@ -762,7 +762,7 @@ class PhotosWebPage extends MainWebPage {
 	}								
 
 	function getCopyright(){
-		return '<p>&copy; 2008-2019 casata.md</p>';
+		return '<p>&copy; 2008-'.date("Y").' casata.md</p>';
 	}
 }
 $n=new PhotosWebPage();

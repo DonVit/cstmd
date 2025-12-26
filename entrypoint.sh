@@ -12,6 +12,18 @@ if [ -f /opt/lampp/etc/extra/httpd-xampp.conf ]; then
   sed -i 's/Require local/Require all granted/g' /opt/lampp/etc/extra/httpd-xampp.conf
 fi
 
+mkdir -p /var/www/photos/files
+chmod -R 0777 /var/www/photos/files || true
+
+mkdir -p /var/www/imobil/data
+chmod -R 0777 /var/www/imobil/data || true
+
+mkdir -p /var/www/chirie/data
+chmod -R 0777 /var/www/chirie/data || true
+
+mkdir -p /var/www/companies/data
+chmod -R 0777 /var/www/companies/data || true
+
 # Ensure MySQL data dir exists and has proper ownership; initialize if empty volume is mounted.
 if [ ! -d /opt/lampp/var/mysql/mysql ]; then
   echo "Initializing MySQL data directory..."

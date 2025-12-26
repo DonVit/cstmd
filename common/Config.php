@@ -34,7 +34,7 @@ class Config {
 	public static $mysql_password="";
 	public static $mysql_db="cst";
 	
-	public static $loging=true;  //yes/true|no/false
+	public static $loging=false;  //yes/true|no/false
 	public static $phploging=-1;  //-1 - all php errors; 0 - // Turn off all error reporting
 	public static $live=false; //yes/true|no/false
 	
@@ -66,7 +66,7 @@ class Config {
 	//public static $privatekey = '6LdotAYTAAAAAJYTGqvD9VIHHyzCkEERzOU_5Cc1';
 	public static $publickey = '6LfaSgkTAAAAACzsUEaIstWtJ_F8yE3Ul5t3b7_P'; 
 	public static $privatekey = '6LfaSgkTAAAAAGTkTWUa0P_Zvq2bkRJwZqEzyD2X';
-	public static $gmapskey = 'AIzaSyAPy4xpXsRZdvlEN2mAdXq6LJpkCZ6wniw';
+	public static $gmapskey = ''; // replace with actual key
 
 	public static $adminmail = 'casata.md@outlook.com';
 
