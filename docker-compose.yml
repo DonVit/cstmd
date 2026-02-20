@@ -1,22 +1,45 @@
 version: "3.9"
 
 services:
+  mysql:
+    image: mysql:5.7
+    container_name: cstmd-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cst
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql  # Use your existing volume if it has old data
+
   app:
     build: .
     ports:
       - "8080:80"
-      - "3306:3306"
     volumes:
       - ./:/var/www
-      - db_data:/opt/lampp/var/mysql
     environment:
       APP_BASE_URL: http://casata.it:8080
       COOKIE_DOMAIN: .casata.it
-      DB_HOST: 127.0.0.1
-      DB_USER: root
-      DB_PASSWORD: ""
+      DB_HOST: mysql
       DB_NAME: cst
-    tty: true
+      DB_USER: app
+      DB_PASSWORD: app
+    depends_on:
+      - mysql
+
+  categorizer:
+    build: ./categorizer
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_NAME: cst
+      DB_USER: app
+      DB_PASSWORD: app
+    command: python categorize.py
 
 volumes:
   db_data:
