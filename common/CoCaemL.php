@@ -15,7 +15,7 @@ class CoCaemL extends DBManager {
 		$sql="SELECT count(*) as contor FROM (SELECT cn.id, cn.denumire,count(*) as contor FROM co_caem_licentiate as cn inner join co_cocaem_licentiate as cc on cn.id=cc.caem_id inner join co_co as c on cc.company_id=c.id where c.raion_id=".$raion_id." group by cn.id, cn.denumire) as cnttab";
 		$cs=DBManager::sql($sql);
 		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		}
 		return $cnt;
@@ -29,7 +29,7 @@ class CoCaemL extends DBManager {
 		$sql="SELECT count(*) as contor FROM (SELECT cn.id, cn.denumire,count(*) as contor FROM co_caem_licentiate as cn inner join co_cocaem_licentiate as cc on cn.id=cc.caem_id inner join co_co as c on cc.company_id=c.id where c.localitate_id=".$localitate_id." group by cn.id, cn.denumire) as cnttab";
 		$cs=DBManager::sql($sql);
  		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		} 		
 		return $cnt;

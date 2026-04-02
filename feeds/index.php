@@ -118,7 +118,7 @@ class FeedsWebPage extends MainWebPage {
 		$out.=$this->getLeftContainer();
 		$out.='</div>';		
 		$out.='<div id="center" class="container center" style="width:600px;">';
-		$out.=$this->getCenterContainer();
+		//$out.=$this->getCenterContainer();
 		$out.='</div>';
 		$out.='<div id="right" class="container right" style="width:198px;">';
 		$out.=$this->getRightContainer();
@@ -135,7 +135,7 @@ class FeedsWebPage extends MainWebPage {
 		$out.='<table style="width:100%;" class="pure-table pure-table-bordered">';
 		$out.='<thead><tr><th style="width:20%;">Nr</th><th style="width:20%;">Compania</th><th style="width:50%;">Title</th><th style="width:30%;text-align:center">Descriere</th><th style="width:30%;text-align:center">Data</th></tr></thead>';		
 		$out.="<tbody>";
-		if (count($ns)!=0){			
+		if ($ns->num_rows > 0) {			
 			$c=1;
 			foreach($ns as $n){
 				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=viewnume&id=".$n->id);
@@ -181,7 +181,7 @@ class FeedsWebPage extends MainWebPage {
 		$out.='<table style="width:100%;" class="pure-table pure-table-bordered">';
 		$out.='<thead><tr><th>Nr</th><th>Compania</th><th>Title</th><th>Data</th></tr></thead>';
 		$out.='<tbody>';
-		if (count($ns)!=0){
+		if ($ns->num_rows > 0) {
 			$c=count($ns);
 			foreach($ns as $n){
 				$url=$this->getUrlWithSpecialCharsConverted("index.php","action=redirect&id=".$n->id);

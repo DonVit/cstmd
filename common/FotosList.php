@@ -1,5 +1,5 @@
 <?php
-class FotosList extends Object{
+class FotosList extends MainObject {
 	public function getUserFotosList($page=0,$rowsperpage=50){	
 		
 		$userid=0;

@@ -1,5 +1,5 @@
 <?php
-class TableField extends Object{
+class TableField extends MainObject {
 	public $id;
 	public $title;
 	public $source;

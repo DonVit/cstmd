@@ -36,10 +36,10 @@ class Alegeri extends DBManager {
 	}			
 	public static function showResults($rs){
 			$out="";
-			if (count($rs)!=0){
+			if ($rs->num_rows > 0){
 				$rows="";
 				$trows="";
-				while($r = mysql_fetch_object($rs)){
+				while($r = mysqli_fetch_object($rs)){
 					$rows.="['$r->data', $r->psrmp, 'color: #eb1c23;', '$r->psrmp%', $r->pcrmp, 'color: #d65151', '$r->pcrmp%',  $r->pdmp, 'color: #224499','$r->pdmp%', $r->pldmp, 'color: #008000','$r->pldmp%', $r->plp,'color: #ADD8E6','$r->plp%', $r->acump,'color: #f0c41b','$r->acump%', $r->altiip, 'color: #A52A2A', '$r->altiip%'],";
 					$trows.="<tr><td style=\"text-align:center;\">$r->data</td><td style=\"text-align:center;\">$r->psrm</td><td style=\"text-align:center;\">$r->pcrm</td><td style=\"text-align:center;\">$r->pdm</td><td style=\"text-align:center;\">$r->pldm</td><td style=\"text-align:center;\">$r->pl</td><td style=\"text-align:center;\">$r->altii</td><td style=\"text-align:center;\">$r->voturi_valabile</td></tr>";
 				}
@@ -79,7 +79,8 @@ class Alegeri extends DBManager {
 			   	$out.='<br>';
 			    $out.='<div class="groupboxtable">';
 			    
-			    mysql_data_seek($rs, 0);
+			    // mysql_data_seek($rs, 0);
+				$rs->data_seek(0);
 			    
 			    $table=new Table();
 			    $table->setDataSet($rs);
@@ -157,7 +158,7 @@ class Alegeri extends DBManager {
 			return number_format($row->voturi, 0, ',', ' ');
 		};
 	
-		if (count($rs)!=0){
+		if ($rs->num_rows>0){
 			$out.='<div class="groupboxtable">';
 			$table=new Table();
 			$table->setDataSet($rs);
@@ -193,8 +194,7 @@ class Alegeri extends DBManager {
 			}
 			return $out;
 		};
-	
-		if (count($rs)!=0){
+		if ($rs->num_rows > 0) {
 			$out.='<div class="groupboxtable">';
 			$table=new Table();
 			$table->setDataSet($rs);

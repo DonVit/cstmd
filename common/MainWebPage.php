@@ -824,7 +824,7 @@ class MainWebPage extends WebPage {
 		if ((!empty($_POST['searchlocationformpost']))&&(isset($this->lsearch))){
 			$l=new Location();
 			$r=new Raion();
-			$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysql_real_escape_string($this->lsearch,DBConnection::getConnection())."%' LIMIT 0,30");
+			$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysqli_real_escape_string(DBConnection::getConnection(), $this->lsearch)."%' LIMIT 0,30");
 			if (!is_null($ls)){
 				foreach ($ls as $v){
 					$l->loadById($v->location_id);
@@ -857,7 +857,7 @@ class MainWebPage extends WebPage {
 		$lsrs="";
 	
 		if ((!empty($_GET['searchdictionarformpost']))&&(isset($this->dsearch))){
-			$ls=DBManager::doSql("SELECT id, descriere,denumire,tip,judet  FROM `dictionar` WHERE `dictionar`.deleted=0 AND `dictionar`.descriere like '%".mysql_real_escape_string($this->dsearch,DBConnection::getConnection())."%' LIMIT 0,30");
+			$ls=DBManager::doSql("SELECT id, descriere,denumire,tip,judet  FROM `dictionar` WHERE `dictionar`.deleted=0 AND `dictionar`.descriere like '%".mysqli_real_escape_string(DBConnection::getConnection(), $this->dsearch)."%' LIMIT 0,30");
 			$lsrs.="Rezultatele cautarii:<br><br>";
 			if (!is_null($ls)){
 				foreach ($ls as $v){
@@ -883,7 +883,7 @@ class MainWebPage extends WebPage {
 		if ((!empty($_POST['searchprimarieformpost']))&&(isset($this->psearch))){
 			$l=new Location();
 			$r=new Raion();
-			$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` inner join primari2011 on localitate.id=primari2011.localitate_id WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysql_real_escape_string($this->psearch,DBConnection::getConnection())."%' LIMIT 0,30");
+			$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` inner join primari2011 on localitate.id=primari2011.localitate_id WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysqli_real_escape_string(DBConnection::getConnection(), $this->psearch)."%' LIMIT 0,30");
 			if (!is_null($ls)){
 				foreach ($ls as $v){
 					$l->loadById($v->location_id);
@@ -909,7 +909,7 @@ class MainWebPage extends WebPage {
 		if ((!empty($_POST['searchnameformpost']))&&(isset($this->nsearch))){
 			$l=new Location();
 			$r=new Raion();
-			$ns=DBManager::doSql("SELECT id,name FROM `family` WHERE deleted=0 and name like '".mysql_real_escape_string($this->nsearch,DBConnection::getConnection())."%' LIMIT 0,30");
+			$ns=DBManager::doSql("SELECT id,name FROM `family` WHERE deleted=0 and name like '".mysqli_real_escape_string(DBConnection::getConnection(), $this->nsearch)."%' LIMIT 0,30");
 			if (!is_null($ns)){
 				foreach ($ns as $v){
 					$nurl=$this->getUrlWithSpecialCharsConverted(Config::$numesite."/index.php","action=viewnume&id=".$v->id);

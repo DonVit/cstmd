@@ -359,7 +359,7 @@ class IndexCalendarWebPage extends MainWebPage {
 		if ((!empty($_POST['searchlocationformpost']))&&(isset($this->lsearch))){
 			$l=new Location();
 			$r=new Raion();
-			$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysql_real_escape_string($this->lsearch,DBConnection::getConnection())."%' LIMIT 0,30");
+			$ls=DBManager::doSql("SELECT `localitate`.id as location_id, `localitate`.name as location_name  FROM `localitate` WHERE `localitate`.deleted=0 AND `localitate`.name like '%".mysqli_real_escape_string(DBConnection::getConnection(), $this->lsearch)."%' LIMIT 0,30");
 			if (!is_null($ls)){
 				foreach ($ls as $v){
 					$l->loadById($v->location_id);
