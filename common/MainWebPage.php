@@ -137,21 +137,9 @@ class MainWebPage extends WebPage {
 		$out.='<div id="logo-title-left" style="display:block;float:left">CASATA.MD</div>';
 		$out.='<div id="logo-title-right" style="display:block;float:left">'.$this->getLogoTitle().'</div>';
 		$out.=$this->getFacebookButton();
-		$out.=$this->getGooglePlus();		
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
-	}
-	function getGooglePlus(){
-		if (Config::$live){
-			$out='<div id="logo-plusone" style="display:block;float:left;padding-left:100px;">';
-			$out.='<script type="text/javascript" src="https://apis.google.com/js/plusone.js">{lang: \''.$this->getLang()->name.'\'}</script>';
-			$out.='<g:plusone size="medium"></g:plusone>';
-			$out.='</div>';
-		return $out;	
-		} else {
-			return '';
-		}	
 	}
 	function getFacebookButton(){
 		if (Config::$live){
@@ -225,7 +213,6 @@ class MainWebPage extends WebPage {
 		$out.='<li> | Email la: <a href="mailto:casata.md@outlook.com">casata.md@outlook.com</a></li>';	
 		$out.='</ul>';
 		$out.=$this->getFacebookButton();
-		$out.=$this->getGooglePlus();		
 		$out.='</div>';	
 		$out.='<div style="clear: both;"></div>';	
 		return $out;
