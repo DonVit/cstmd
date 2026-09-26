@@ -649,7 +649,32 @@ class PhotosWebPage extends MainWebPage {
 		}
 		$out.='</table>';
 		return $out;
-	}	
+	}
+
+	/**
+	 * Override map rendering to use Leaflet with POIs and heatmap
+	 */
+	function getMap($p){
+		$this->setBodyTag('<body onload="initialize('.$p->id.','.$p->lat.','.$p->lng.')">');
+		$this->setCSS("http://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setJavascript("http://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
+		$this->setJavascript(Config::$commonsite."/js/poismap.js");
+
+		$out='<div id="map" style="width: 100%;height: 500px;border:1px solid #777777;margin-top: 2px;"></div>';
+		// $out.='<p><b>Vezi mai multe pe harta:</b></p>';
+		// $out.='<div id="filters" style="margin-top: 10px; pointer-events: none; opacity: 0.5;">';
+		// $out.='<ul style="list-style: none; padding: 0; margin: 0;">';
+		// $out.='<li style="margin: 0 !important; line-height: 1.2;"><label style="color: red;"><input type="checkbox" id="filter-imobil" disabled>Imobil</label></li>';
+		// $out.='<li style="margin: 0 !important; line-height: 1.2;"><label style="color: blue;"><input type="checkbox" id="filter-chirie" disabled>Chirie</label></li>';
+		// $out.='<li style="margin: 0 !important; line-height: 1.2;"><label style="color: green;"><input type="checkbox" id="filter-photo" disabled>Photos</label></li>';
+		// $out.='<li style="margin: 0 !important; line-height: 1.2;"><label style="color: purple;"><input type="checkbox" id="filter-link" disabled>Links</label></li>';
+		// $out.='</ul>';
+		$out.='</div>';
+
+		return $out;
+	}
+
 	function getTags($p){
 		$out='';
 		$c=new Country();

@@ -7,6 +7,26 @@ Automatically exported from code.google.com/p/cstmd
   - Ensure WSL2 is enabled and Docker Desktop's WSL integration is ON; restart if prompted.
   - Verify: `docker --version`, `docker compose version`, `docker run --rm hello-world`.
   - Troubleshooting: enable virtualization in BIOS, run `wsl --update`, and make sure Docker Desktop is running.
+
+### Step-by-step local startup (Windows)
+
+One-time setup:
+
+1. Start Docker Desktop and wait until it reports that the engine is running.
+2. Open PowerShell in the project directory: `cd C:\projects\cstmd`.
+3. Initialize the ReCaptcha submodule: `git submodule update --init --recursive`.
+4. Add `127.0.0.1 casata.it` to `C:\Windows\System32\drivers\etc\hosts` using an Administrator editor. To enable every configured local virtual host, run `tools\update-hosts.ps1` from an Administrator PowerShell instead.
+
+Start the application whenever you need it:
+
+1. Open PowerShell and change to the project directory: `cd C:\projects\cstmd`.
+2. Build the image and start Apache/MySQL in the background: `docker compose up --build -d`.
+   The first build downloads and installs XAMPP and can take several minutes.
+3. Confirm the container is running: `docker compose ps`.
+4. Open http://casata.it:8080 in your browser. To open a specific section, use its path, for example `http://casata.it:8080/photos/` or `http://casata.it:8080/main/index.php`.
+
+To follow application logs, run `docker compose logs -f app` and press `Ctrl+C` to stop following them. Stop the application with `docker compose down`; this keeps the database volume. Use `docker compose down -v` only when you intentionally want to delete the local database.
+
 - Pull the ReCaptcha submodule once: `git submodule update --init --recursive` (needed for `common/lib/recaptcha`).
 - Build and start: `docker compose up --build`. This installs XAMPP 5.6.3, starts Apache+MySQL, and serves the repo from `/opt/lampp/htdocs`.
 - App is served at http://localhost:8080/main/index.php (other sections live under their folders, e.g. `/imobil`, `/chirie`, `/photos`).
