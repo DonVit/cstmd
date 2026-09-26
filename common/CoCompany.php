@@ -32,7 +32,7 @@ class CoCompany extends DBManager {
 		$sql="select count(*) as contor from (SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul FROM co_co as c inner join co_cocaem_nelicentiate as cc on c.id=cc.company_id where c.raion_id=".$raion_id." and cc.caem_id=".$activity_id.") as tb";
 		$cs=DBManager::sql($sql);
 		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		}
 		return $cnt;
@@ -46,7 +46,7 @@ class CoCompany extends DBManager {
 		$sql="select count(*) as contor from (SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul FROM co_co as c inner join co_cocaem_nelicentiate as cc on c.id=cc.company_id where c.localitate_id=".$localitate_id." and cc.caem_id=".$activity_id.") as tb";
 		$cs=DBManager::sql($sql);
 		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		}
 		return $cnt;
@@ -61,7 +61,7 @@ class CoCompany extends DBManager {
 		$sql="select count(*) as contor from (SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul FROM co_co as c inner join co_cocaem_licentiate as cc on c.id=cc.company_id where c.raion_id=".$raion_id." and cc.caem_id=".$activity_id.") as tb";
 		$cs=DBManager::sql($sql);
 		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		}
 		return $cnt;
@@ -75,7 +75,7 @@ class CoCompany extends DBManager {
 		$sql="select count(*) as contor from (SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul FROM co_co as c inner join co_cocaem_licentiate as cc on c.id=cc.company_id where c.localitate_id=".$localitate_id." and cc.caem_id=".$activity_id.") as tb";
 		$cs=DBManager::sql($sql);
 		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		}
 		return $cnt;
@@ -89,7 +89,7 @@ class CoCompany extends DBManager {
 		$sql="select count(*) as contor from (SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul FROM co_co as c where c.raion_id=".$raion_id.") as tb";
 		$cs=DBManager::sql($sql);
 		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		}
 		return $cnt;
@@ -103,7 +103,7 @@ class CoCompany extends DBManager {
 		$sql="select count(*) as contor from (SELECT  c.id, c.data_inregistrarii, c.nume_scurt, statutul FROM co_co as c where c.localitate_id=".$localitate_id.") as tb";
 		$cs=DBManager::sql($sql);
 		$cnt=0;
-		while($row=mysql_fetch_assoc($cs)){
+		while($row=mysqli_fetch_assoc($cs)){
 			$cnt=$row["contor"];
 		}
 		return $cnt;

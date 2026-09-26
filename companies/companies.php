@@ -356,7 +356,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		$canl=new CoCaemL();
 		$canls=$canl->getActivitatiByCompanie($c->id);
 		$out.='<table>';
- 		if (count($canls)!=0){
+ 		if (isset($canls) && count($canls)!=0) {
  			foreach($canls as $anl){
  				$out.='<tr><td>'.$anl->denumire.'</td></tr>';
  			}

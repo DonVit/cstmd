@@ -1,5 +1,5 @@
 <?php
-class Table extends Object {
+class Table extends MainObject {
 	private $pagination=true;
 	private $sql;
 	private $sqlcount;
@@ -55,23 +55,24 @@ class Table extends Object {
 	public function setSql($sql){
 		$this->sql=$sql." limit ".$this->page*$this->rowsperpage.",".$this->rowsperpage;
 		if (is_null($this->dataset)){
-			$this->dataset=DBManager::sql($this->sql);
+			$this->dataset=DBManager::doJustSql($this->sql);
 		}
 		//$this->sqlcount="select count(*) as contor from ".$this->getFromSql($sql);
 		$this->sqlcount=$this->getSqlWithCount($sql);
-		$cs=DBManager::sql($this->sqlcount);
+		$cs=DBManager::doJustSql($this->sqlcount);
 		if (is_null($this->rowscount)){
 			
 			$this->rowscount=0;
-			while($row=mysql_fetch_assoc($cs)){
+			while($row=mysqli_fetch_assoc($cs)){
 				$this->rowscount=$row["total_rows_counter"];
 			}
 		}		
 	}	
 	public function setDataSet($dataset){
 		$this->dataset=$dataset;
-		if (mysql_num_rows($this->dataset)!=0){
-			mysql_data_seek($this->dataset, 0);
+		if (mysqli_num_rows($this->dataset)!=0){
+			// mysql_data_seek($this->dataset, 0);
+			$this->dataset->data_seek(0);
 		}
 	}
 	public function getDataSet(){
@@ -97,10 +98,10 @@ class Table extends Object {
 			$out.='</tr>';
 
 			if (!(is_bool($this->getDataSet()) === true)) {
-				$fields=mysql_num_fields($this->getDataSet());
+				$fields=mysqli_num_fields($this->getDataSet());
 				$arr=array();
 				$cnt=$this->page*$this->rowsperpage+1;
-				while($row = mysql_fetch_object($this->getDataSet())){
+				while($row = mysqli_fetch_object($this->getDataSet())){
 					$out.='<tr>';
 					if ($this->showNrOrd){
 						$out.='<td style="text-align: center;">'.$cnt.'</td>';
@@ -123,22 +124,22 @@ class Table extends Object {
 		} else {
 
 			if (!(is_bool($this->getDataSet()) === true)) {
-				$fields=mysql_num_fields($this->getDataSet());
+				$fields=mysqli_num_fields($this->getDataSet());
 				
 				//add column titles
 				$out.='<th>';
 				$out.='<th>Nr. Ord.</th>';
 				for ($i=0; $i < $fields; $i++) {
-					$n=mysql_field_name($this->getDataSet(), $i);
+					$n=mysqli_fetch_field($this->getDataSet(), $i);
 					$out.='<td>'.$n.'</td>';
 				}
 				$out.='</th>';
 	
 				//add column values
-				while($row = mysql_fetch_object($this->getDataSet())){
+				while($row = mysqli_fetch_object($this->getDataSet())){
 					$out.='<tr>';
 					for ($i=0; $i < $fields; $i++) {
-						$n=mysql_field_name($this->getDataSet(), $i);
+						$n=mysqli_fetch_field($this->getDataSet(), $i);
 						$out.='<td>'.$row->$n.'</td>';
 					}
 					$out.='</tr>';

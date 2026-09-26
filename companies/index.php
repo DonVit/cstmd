@@ -280,7 +280,7 @@ require_once(__DIR__ . '/../main/loader.php');
 			$ps=$p->getAll("valid=1","created_date desc",$page,$this->rowsperpage);
 		}		
 		$out='';
-		if (count($ps)!=0){
+		if ($ps->num_rows > 0) {
 			foreach($ps as $p){
 		
 				$o='<table style="width: 100%"><tr><td style="align:center">';
@@ -380,7 +380,7 @@ require_once(__DIR__ . '/../main/loader.php');
 		//$n=new News;
 		$out='';
 		$ns=$c->getNews();
-		if (count($ns)!=0){		
+		if ($ns->num_rows > 0) {		
 			//$out="<div class=\"groupbox\">";
 			//$out.="<h2 class=\"newsgroup_h2\">Ştiri ce aparţin acestei surse:</h2>";
 			$out.='<table>';

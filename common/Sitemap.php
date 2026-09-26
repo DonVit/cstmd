@@ -1,5 +1,5 @@
 <?php
-class Sitemap extends Object {
+class Sitemap extends MainObject {
 	private $loc;
 	private $lastmod;
 	private $dataset;
@@ -25,7 +25,7 @@ class Sitemap extends Object {
 		$lastmodfunc=$this->lastmod;
 		
 		if (!(is_bool($this->getDataSet()) === true)) {
-			while($row = mysql_fetch_object($this->getDataSet())){
+			while($row = mysqli_fetch_object($this->getDataSet())){
 				$out.='<url>';
 				$out.='<loc>'.$locfunc($row).'</loc>';
 				$out.='<lastmod>'.$lastmodfunc($row).'</lastmod>';				

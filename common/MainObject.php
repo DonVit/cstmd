@@ -1,5 +1,5 @@
 <?php
-class Object {
+class MainObject {
  	public function getClassName(){
 		return get_class($this);
 	}

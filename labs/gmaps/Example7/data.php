@@ -20,7 +20,7 @@ $query="SELECT id, lat, lng, full_name FROM geocode_md_unicode_1 WHERE lat >=".$
 
 $query = mysql_query($query);
 $out="<locations>";
-while ($row=mysql_fetch_assoc($query))
+while ($row=mysqli_fetch_assoc($query))
 {
 //$out.="<location id=\"".$row["id"]."\" name=\"".$row["full_name"]."\" lat=\"".$row["lat"]."\" lng=\""'.$row["lng"]."\"/>";
 $out.="<location id=\"".$row["id"]."\" name=\"".$row["full_name"]."\" lat=\"".$row["lat"]."\" lng=\"".$row["lng"]."\"/>";

@@ -126,7 +126,7 @@ class Comment extends DBManager {
 
 		$cs=$c->getAll('valid=1 and item_type=\''.$item_type.'\' and item_id='.$item_id,"`date`");	
 		$url=$webpage->getServerName().$webpage->getRequestURI();
-		if (count($cs)!=0){
+		if (isset($cs) && count($cs)!=0){
 			$out.='<div>';
 			$i=1;
 			foreach($cs as $c){
