@@ -165,11 +165,6 @@ class Comment extends DBManager {
 		$out.='<tr><td>Comentariu:<span style="color:red">*</span></td><td><textarea id="comment" name="comment" style="width:98%;height:100px;">'.((isset($webpage->comment))?($webpage->comment):'').'</textarea></td></tr>';
         //$out.='<textarea name="text">'.$this->currentnews->text.'</textarea>';
         $out.='<script>            CKEDITOR.replace( \'comment\' );        </script>';				
-		$out.='<script type="text/javascript">';
-		$out.='                lang : \'ru\', // Unavailable while writing this code (just for audio challenge)';
-		$out.='                theme : \'red\',';
-		$out.='        };';
-		$out.='</script>';
 		
 		$out.='<tr><td>Validare:<span style="color:red">*</span></td><td>';
 		$out.='<div class="g-recaptcha" data-sitekey="'.Config::$publickey.'"></div>';

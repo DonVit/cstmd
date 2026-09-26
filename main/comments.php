@@ -201,11 +201,6 @@ class CommentsWebPage extends MainWebPage {
 		$out.='<tr><td>Web Site:</td><td><input type="text" name="web" style="width:98%;"  value="'.((isset($webpage->web))?($webpage->web):'').'"></td></tr>';
 
 		$out.='<tr><td>Comentariu:<span style="color:red">*</span></td><td><textarea id="comment" name="comment" style="width:98%;height:100px;">'.((isset($webpage->comment))?($webpage->comment):'').'</textarea></td></tr>';
-		$out.='<script type="text/javascript">';
-		$out.='                lang : \'ru\', // Unavailable while writing this code (just for audio challenge)';
-		$out.='                theme : \'red\',';
-		$out.='        };';
-		$out.='</script>';
 		$out.='<tr><td>Validare:<span style="color:red">*</span></td><td>'.recaptcha_get_html($publickey).'</td></tr>';
 		if ($errormsg!=""){
 		$out.='<tr><td><br><span style="color:red">Eroare:</span></td><td><br><span style="color:red">'.$errormsg.'</span><br></td></tr>';
