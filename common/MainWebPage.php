@@ -281,9 +281,12 @@ class MainWebPage extends WebPage {
 		}
 		return $out;
 	}
+	function isAccountsSite(){
+		return $this->getServerName()===parse_url(Config::$accountssite, PHP_URL_HOST);
+	}
 	function getTopGAS() {
 		$out='';
-		if (Config::$live){
+		if (Config::$live && !$this->isAccountsSite()){
             $out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
             $out.='<!-- topAd -->';
             $out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="3058206169" data-ad-format="auto" data-full-width-responsive="true"></ins>';
@@ -293,7 +296,7 @@ class MainWebPage extends WebPage {
 	}
 	function getBottomGAS() {
 		$out='';
-		if (Config::$live){
+		if (Config::$live && !$this->isAccountsSite()){
             $out.='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
             $out.='<!-- bottomAd -->';
             $out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="1166607204" data-ad-format="auto" data-full-width-responsive="true"></ins>';
@@ -303,7 +306,7 @@ class MainWebPage extends WebPage {
 	}
 	function getRightGAS() {
 		$out='';
-		if (Config::$live){
+		if (Config::$live && !$this->isAccountsSite()){
 			$out.='<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
 			$out.='<!-- rightAd -->';
 			$out.='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3574090138068623" data-ad-slot="5675349039" data-ad-format="auto" data-full-width-responsive="true"></ins>';
