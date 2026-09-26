@@ -156,7 +156,7 @@ class MainWebPage extends WebPage {
 			$out.='  var js, fjs = d.getElementsByTagName(s)[0];';
 			$out.='  if (d.getElementById(id)) return;';
 			$out.='  js = d.createElement(s); js.id = id;';
-			$out.='  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=209032902551666";';
+			$out.='  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v21.0&appId=209032902551666";';
 			$out.='  fjs.parentNode.insertBefore(js, fjs);';
 			$out.='}(document, \'script\', \'facebook-jssdk\'));</script>';
 			return $out;
