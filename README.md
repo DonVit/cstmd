@@ -27,6 +27,19 @@ Start the application whenever you need it:
 
 To follow application logs, run `docker compose logs -f app` and press `Ctrl+C` to stop following them. Stop the application with `docker compose down`; this keeps the database volume. Use `docker compose down -v` only when you intentionally want to delete the local database.
 
+### Deploy with GitHub Actions
+
+The `Deploy` workflow runs when a pull request targeting `master` is merged. It checks out the latest `master` (including submodules) on the GitHub runner, then copies the files over SSH to `/var/www/cstmdlive/` with `rsync`. It does not run Docker or Git on the live server. Extra files already on the server are not deleted.
+
+Configure these secrets in the GitHub `production` environment:
+
+- `DEPLOY_HOST`: server hostname or IPv4 address.
+- `DEPLOY_USER`: SSH user with write permission to the existing `/var/www/cstmdlive/` directory.
+- `DEPLOY_SSH_KEY`: private SSH key for that user.
+- `DEPLOY_PORT`: SSH port; optional, defaults to `22`.
+
+The server must allow SSH, have `rsync` installed, and already contain the writable `/var/www/cstmdlive/` directory. The workflow checks these prerequisites and fails with a specific message if one is missing; it does not create the deployment directory.
+
 - Pull the ReCaptcha submodule once: `git submodule update --init --recursive` (needed for `common/lib/recaptcha`).
 - Build and start: `docker compose up --build`. This installs XAMPP 5.6.3, starts Apache+MySQL, and serves the repo from `/opt/lampp/htdocs`.
 - App is served at http://localhost:8080/main/index.php (other sections live under their folders, e.g. `/imobil`, `/chirie`, `/photos`).
