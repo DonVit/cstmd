@@ -19,7 +19,7 @@ class MainWebPage extends WebPage {
 		$this->setCSS(Config::$commonsite."/style/common.css");
 		$this->setJavascript(Config::$commonsite."/js/scripts.js");
 		$this->setJavascript("https://www.google.com/recaptcha/api.js?hl=".$this->getLang()->name);
-		$this->setJavascript("https://cdn.ckeditor.com/4.4.6/basic/ckeditor.js");		
+		$this->setJavascript("https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js");		
 		$this->rightcontainer=$this->getRightGAS();
 	}
 	
@@ -137,21 +137,9 @@ class MainWebPage extends WebPage {
 		$out.='<div id="logo-title-left" style="display:block;float:left">CASATA.MD</div>';
 		$out.='<div id="logo-title-right" style="display:block;float:left">'.$this->getLogoTitle().'</div>';
 		$out.=$this->getFacebookButton();
-		$out.=$this->getGooglePlus();		
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		return $out;
-	}
-	function getGooglePlus(){
-		if (Config::$live){
-			$out='<div id="logo-plusone" style="display:block;float:left;padding-left:100px;">';
-			$out.='<script type="text/javascript" src="https://apis.google.com/js/plusone.js">{lang: \''.$this->getLang()->name.'\'}</script>';
-			$out.='<g:plusone size="medium"></g:plusone>';
-			$out.='</div>';
-		return $out;	
-		} else {
-			return '';
-		}	
 	}
 	function getFacebookButton(){
 		if (Config::$live){
@@ -225,7 +213,6 @@ class MainWebPage extends WebPage {
 		$out.='<li> | Email la: <a href="mailto:casata.md@outlook.com">casata.md@outlook.com</a></li>';	
 		$out.='</ul>';
 		$out.=$this->getFacebookButton();
-		$out.=$this->getGooglePlus();		
 		$out.='</div>';	
 		$out.='<div style="clear: both;"></div>';	
 		return $out;

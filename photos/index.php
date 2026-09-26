@@ -656,8 +656,8 @@ class PhotosWebPage extends MainWebPage {
 	 */
 	function getMap($p){
 		$this->setBodyTag('<body onload="initialize('.$p->id.','.$p->lat.','.$p->lng.')">');
-		$this->setCSS("http://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
-		$this->setJavascript("http://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setJavascript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
 		$this->setJavascript(Config::$commonsite."/js/poismap.js");
 
