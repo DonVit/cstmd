@@ -19,7 +19,7 @@ class MainWebPage extends WebPage {
 		$this->setCSS(Config::$commonsite."/style/common.css");
 		$this->setJavascript(Config::$commonsite."/js/scripts.js");
 		$this->setJavascript("https://www.google.com/recaptcha/api.js?hl=".$this->getLang()->name);
-		$this->setJavascript("https://cdn.ckeditor.com/4.25.2-lts/basic/ckeditor.js");		
+		$this->setJavascript("https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js");		
 		$this->rightcontainer=$this->getRightGAS();
 	}
 	

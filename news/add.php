@@ -13,7 +13,7 @@ class AddNewsWebPage extends MainWebPage {
 	function __construct(){
 		parent::__construct();
 		$this->setJavascript("js/scripts.js");
-		$this->setJavascript("https://cdn.ckeditor.com/4.25.2-lts/basic/ckeditor.js");
+		$this->setJavascript("https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js");
 		//$this->setCSS("style/news.css");
 		$t="Adauga Stire";
 		$this->setTitle($t);
