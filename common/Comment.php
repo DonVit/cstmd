@@ -66,33 +66,7 @@ class Comment extends DBManager {
 				
 		$out='';
 				
-		// fb start
-		$out.='<div id="fb-root"></div>';
-		$out.='<script>';
-		$out.='window.fbAsyncInit = function() {';
-		$out.='FB.init({';
-		$out.='appId      : \'209032902551666\','; // App ID
-		$out.='channelUrl : \'//WWW.CASATA.MD/channel.html\','; // Channel File
-		$out.='status     : true,'; // check login status
-		$out.='cookie     : true,'; // enable cookies to allow the server to access the session
-		$out.='xfbml      : true';  // parse XFBML
-		$out.='});';
-		
-		// Additional initialization code here
-		$out.='};';
-		
-		// Load the SDK Asynchronously
-		$out.='(function(d){';
-		$out.='var js, id = \'facebook-jssdk\', ref = d.getElementsByTagName(\'script\')[0];';
-		$out.='if (d.getElementById(id)) {';
-		$out.='return;';
-		$out.='}';
-		$out.='js = d.createElement(\'script\'); js.id = id; js.async = true;';
-		$out.='js.src = "//connect.facebook.net/en_US/all.js";';
-		$out.='ref.parentNode.insertBefore(js, ref);';
-		$out.='}(document));';
-		$out.='</script>';		
-
+		// fb like/comments widgets (SDK is loaded once globally by MainWebPage::getFacebookSDK)
 		$out.='<div class="fb-like" data-send="false" data-width="100%" data-show-faces="false"></div>';		
 		$out.='<div class="fb-comments" data-href="'.$c->getLink().'" data-num-posts="10" data-width="100%"></div>';		
 		// fb end
@@ -165,11 +139,6 @@ class Comment extends DBManager {
 		$out.='<tr><td>Comentariu:<span style="color:red">*</span></td><td><textarea id="comment" name="comment" style="width:98%;height:100px;">'.((isset($webpage->comment))?($webpage->comment):'').'</textarea></td></tr>';
         //$out.='<textarea name="text">'.$this->currentnews->text.'</textarea>';
         $out.='<script>            CKEDITOR.replace( \'comment\' );        </script>';				
-		$out.='<script type="text/javascript">';
-		$out.='                lang : \'ru\', // Unavailable while writing this code (just for audio challenge)';
-		$out.='                theme : \'red\',';
-		$out.='        };';
-		$out.='</script>';
 		
 		$out.='<tr><td>Validare:<span style="color:red">*</span></td><td>';
 		$out.='<div class="g-recaptcha" data-sitekey="'.Config::$publickey.'"></div>';
