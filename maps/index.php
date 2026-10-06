@@ -81,11 +81,13 @@ class MapsWebPage extends MainWebPage {
 	}	
 	function getMap($out=''){
 
-		$this->setBodyTag('<body onload="MapViewOnMapLoad(true)">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey);
-		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
-		$this->setJavascript(Config::$commonsite."/js/maps.js");
-		$this->setJavascript(Config::$commonsite."/js/controls.js");
+		$this->setBodyTag('<body onload="MapsLeaflet.initMain(true)">');
+		$this->setCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setCSS("https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css");
+		$this->setCSS("https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css");
+		$this->setJavascript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setJavascript("https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js");
+		$this->setJavascript(Config::$mapssite."/leaflet.js");
 		
 		$out='';
 		$out.='<form id="poiform" name="poiform" method="post">';		
@@ -97,7 +99,7 @@ class MapsWebPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';		
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';		
-		$out.='<div id="map" style="width: 998px;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
+		$out.='<div id="map" class="maps-leaflet-main"></div>';
 		$out.='</form>';
 		return $out;
 	}
@@ -123,9 +125,10 @@ class MapsWebPage extends MainWebPage {
 	}	
 	function getViewMap(){
 
-		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey);
-		$this->setJavascript(Config::$commonsite."/js/maps.js");
+		$this->setBodyTag('<body onload="MapsLeaflet.initView()">');
+		$this->setCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setJavascript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setJavascript(Config::$mapssite."/leaflet.js");
 		
 		$out='';
 		$out='<form id="poiform" name="poiform" method="post">';		
@@ -144,9 +147,10 @@ class MapsWebPage extends MainWebPage {
 	}
 	function getViewPoi(){
 	
-		$this->setBodyTag('<body onload="MapViewPoiOnMapLoad()">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey);
-		$this->setJavascript(Config::$commonsite."/js/maps.js");
+		$this->setBodyTag('<body onload="MapsLeaflet.initPoi()">');
+		$this->setCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setJavascript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setJavascript(Config::$mapssite."/leaflet.js");
 	
 		$out='';
 		$out='<form id="poiform" name="poiform" method="post">';
@@ -158,10 +162,7 @@ class MapsWebPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';
-		$out.='<div id="osmmap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';
-		$out.='<div id="roadmap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';
-		$out.='<div id="satellitemap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';
-		$out.='<div id="terrainmap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';						
+		$out.='<div id="map" class="maps-leaflet-view"></div>';
 		$out.='</form>';
 		return $out;
 	}	

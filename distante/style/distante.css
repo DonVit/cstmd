@@ -1,0 +1,205 @@
+.main{
+	width: 1000px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.distance-content{
+	float: none !important;
+	width: 100% !important;
+	margin: 8px 0 0 !important;
+	box-sizing: border-box;
+}
+
+.distance-content .groupbox{
+	margin: 0 0 12px;
+	padding: 14px 16px;
+	border-radius: 5px;
+	background: #fff;
+	text-align: left;
+	box-shadow: 0 1px 3px rgba(31, 41, 55, .08);
+}
+
+.distance-content .groupboxheader{
+	margin-bottom: 12px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #e7e5e4;
+}
+
+.distance-content .groupboxheader h3{
+	margin: 0;
+	color: #242a32;
+	font-size: 18px;
+	line-height: 1.35;
+}
+
+.distance-route-panel .groupbox{
+	border-top: 4px solid #a43a3a;
+	padding-top: 12px;
+}
+
+.distance-route-form{
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+	align-items: end;
+	gap: 12px;
+}
+
+.distance-endpoint{
+	display: flex;
+	min-width: 0;
+	flex-direction: column;
+	gap: 6px;
+	color: #4b5563;
+	font-size: 13px;
+}
+
+.distance-endpoint select{
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+	padding: 8px 10px;
+	border: 1px solid #cbc7c2;
+	border-radius: 4px;
+	background: #fff;
+	color: #242a32;
+	font: inherit;
+}
+
+.distance-submit{
+	min-height: 40px;
+	margin: 0;
+	padding: 0 18px;
+	border: 1px solid #8e3030;
+	border-radius: 4px;
+	background: #a43a3a;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.distance-submit:hover{
+	background: #872e2e;
+}
+
+.distance-metrics{
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+	margin: 0 0 12px;
+}
+
+.distance-metric{
+	display: flex;
+	min-height: 74px;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+	padding: 10px 14px;
+	border: 1px solid #e7e5e4;
+	border-left: 4px solid #64748b;
+	border-radius: 4px;
+	background: #fafaf9;
+}
+
+.distance-metric-road{
+	border-left-color: #a43a3a;
+}
+
+.distance-metric span{
+	color: #666b73;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.distance-metric strong{
+	min-height: 28px;
+	color: #242a32;
+	font-size: 24px;
+	line-height: 1.2;
+}
+
+.distance-metric-road strong{
+	color: #922f2f;
+}
+
+.distance-map{
+	width: 100%;
+	height: min(72vh, 720px);
+	min-height: 500px;
+	margin-top: 2px;
+	border: 1px solid #d6d3d1;
+	border-radius: 3px;
+	box-sizing: border-box;
+}
+
+.distance-waypoint{
+	background: transparent;
+	border: 0;
+}
+
+.distance-waypoint span{
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 3px solid #ffffff;
+	border-radius: 50%;
+	background: #b91c1c;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 720px){
+	.main{
+		width: calc(100% - 16px);
+	}
+
+	.distance-route-form{
+		grid-template-columns: minmax(0, 1fr);
+		gap: 10px;
+	}
+
+	.distance-submit{
+		width: 100%;
+	}
+
+	.distance-metrics{
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.distance-map{
+		height: min(72vh, 720px);
+		min-height: 500px;
+	}
+
+	.tophormenu{
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 6px;
+	}
+
+	.tophormenu #langmenu,
+	.tophormenu #usermenu,
+	#logo-title-left,
+	#logo-title-right,
+	#mainmenuleft{
+		float: none !important;
+	}
+
+	.tophormenu ul,
+	#mainmenuleft ul{
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0;
+		padding: 0;
+	}
+
+	.bar li{
+		float: none;
+	}
+
+	#logo-title-right{
+		margin-top: 3px;
+	}
+}

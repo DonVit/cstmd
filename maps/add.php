@@ -60,6 +60,9 @@ class AddMapWebPage extends MainWebPage {
 	function actionMap(){
 		//$this->setBodyTag('<body onload="WizardOnMapLoad()" onunload="GUnload()">');
 		//$this->setJavascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key=".Config::getMapKey($this->getServerName()));
+		$this->setCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setJavascript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setJavascript(Config::$mapssite."/leaflet.js");
 		$this->step=2;
 		$this->steptitle="Adauga Punct pe Harta - Indica Pozitia pe Harta";
 		$this->setTitle($this->steptitle);
@@ -119,6 +122,17 @@ class AddMapWebPage extends MainWebPage {
 		$out.='<div style="clear: both;"></div>';
 		$out.='</div>';
 		MainWebPage::show($out);
+	}
+	function setMap($m){
+		$this->setBodyTag('<body onload="MapsLeaflet.initEdit()">');
+		$out='<input id="centerlat" name="centerlat" type="hidden" value="'.$m->centerlat.'"/>';
+		$out.='<input id="centerlng" name="centerlng" type="hidden" value="'.$m->centerlng.'"/>';
+		$out.='<input id="maptype" name="maptype" type="hidden" value="'.$m->maptype.'"/>';
+		$out.='<input id="zoom" name="zoom" type="hidden" value="'.$m->zoom.'"/>';
+		$out.='<input name="lat" type="hidden" id="lat" value="'.$m->lat.'"/>';
+		$out.='<input name="lng" type="hidden" id="lng" value="'.$m->lng.'"/>';
+		$out.='<div id="map" class="maps-leaflet-edit"></div>';
+		return $out;
 	}
 
 	function setDetails(){
