@@ -5,7 +5,7 @@ require_once(__DIR__ . '/../main/loader.php');
 class IndexCalendarWebPage extends MainWebPage {
 	function __construct(){
 		parent::__construct();
-		$this->setCSS("style/maps.css");
+		$this->setCSS("style/calendar.css");
 		$this->setLogoTitle("CALENDAR IN REPUBLICA MOLDOVA");
 
 		if (isset($this->location_id)){
@@ -95,17 +95,16 @@ class IndexCalendarWebPage extends MainWebPage {
 
 	function show($out=''){
 		$out="";
-		$out.='<div id="container">';
-		$out.='<div id="left" class="container left" style="width:198px;">';
+		$out.='<div id="calendar-layout">';
+		$out.='<aside id="left" class="calendar-sidebar">';
 		$out.=$this->getLeftContainer();
-		$out.='</div>';
-		$out.='<div id="center" class="container center" style="width:600px;">';
+		$out.='</aside>';
+		$out.='<main id="center" class="calendar-content">';
 		$out.=$this->getCenterContainer();
-		$out.='</div>';
-		$out.='<div id="right" class="container right" style="width:198px;">';
+		$out.='</main>';
+		$out.='<aside id="right" class="calendar-aside">';
 		$out.=$this->getRightContainer();
-		$out.='</div>';
-		$out.='<div style="clear: both;"></div>';
+		$out.='</aside>';
 		$out.='</div>';
 		MainWebPage::show($out);
 	}	
@@ -154,19 +153,29 @@ class IndexCalendarWebPage extends MainWebPage {
 		$this->setTitle($title);
 		$o1s='<a name="1"></a>'.$title;
 
-		$o1b='';
-		$o1b.='Ziua: '.(int)$this->day.'.<br>';
-		$o1b.='Luna: '.(int)$this->month.'.<br>';
-		$o1b.='Anul: '.$this->year.'.<br>';
 		$jd=gregoriantojd($this->month,$this->day, $this->year);
-		$o1b.='Ziua din săptămînă: '.Enum::getDays()[jddayofweek($jd)].'.<br>';
-		$o1b.='Luna: '.Enum::getMonths()[(int)$this->month].'.<br>';
-		$o1b.='Luna in calendarul popular: '.Enum::getPopMonths()[(int)$this->month].'<br>';
-		$o1b.='Ziua a '.$this->getDayNumber($this->dt).'a din an.<br>';
+		$facts = array(
+			'Data' => (int)$this->day.' '.Enum::getMonths()[(int)$this->month].' '.$this->year,
+			'Ziua săptămînii' => Enum::getDays()[jddayofweek($jd)],
+			'Luna populară' => Enum::getPopMonths()[(int)$this->month],
+			'Ziua anului' => $this->getDayNumber($this->dt)
+		);
 		$weekNumber =(int)$this->dt->format('W');
-		$oddWeek = ($weekNumber%2) ? 'Impară' : 'Pară';
-		$o1b.='Săptămîna a '.$weekNumber.'a din an. Săptămîna '.$oddWeek.'.<br>';
-		$out.=$this->getGroupBoxH3($o1s,$o1b);
+		$facts['Săptămîna'] = $weekNumber.(( $weekNumber%2) ? ' · impară' : ' · pară');
+		$o1b='<dl class="calendar-date-facts">';
+		foreach($facts as $label => $value){
+			$o1b.='<div><dt>'.$label.'</dt><dd>'.$value.'</dd></div>';
+		}
+		$o1b.='</dl>';
+		$previous=$this->dt->modify('-1 day');
+		$next=$this->dt->modify('+1 day');
+		$locationParam='&location_id='.(int)$this->location->id;
+		$o1b.='<nav class="calendar-date-nav" aria-label="Navigare între zile">';
+		$o1b.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$previous->format('Ymd').$locationParam).'">Ziua precedentă</a>';
+		$o1b.='<a class="calendar-today" href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".date('Ymd').$locationParam).'">Astăzi</a>';
+		$o1b.='<a href="'.$this->getUrlWithSpecialCharsConverted("index.php","action=viewdate&id=".$next->format('Ymd').$locationParam).'">Ziua următoare</a>';
+		$o1b.='</nav>';
+		$out.='<div class="calendar-date-summary">'.$this->getGroupBoxH3($o1s,$o1b).'</div>';
 		return $out;
 	}
 	function getMonth(){
@@ -260,10 +269,12 @@ class IndexCalendarWebPage extends MainWebPage {
 	function getCalendarChinez(){
 		$o1s='<a name="8"></a>Calendarul Chinez';
 		$y=Year::getYearByDate($this->dt);
+		$animalUrl=$y->animal_url;
+		$animalUrl=preg_replace('~(/wikipedia/commons)/thumb/([^/]+/[^/]+)/([^/]+\.svg)/[^/]+$~i','$1/$2/$3',$animalUrl);
 		$o1b='Animalul asociat acestui an este: '.$y->animal_ro.'<br>';
 		$o1b.='Elementul asociat acestui an este: '.$y->element.'<br>';
 		$o1b.='<br>';
-		$o1b.='<div style="text-align:center;font-size:60px;"><img src="'.$y->animal_url.'"></div>';
+		$o1b.='<div style="text-align:center;font-size:60px;"><img src="'.htmlspecialchars($animalUrl,ENT_QUOTES,'UTF-8').'" alt="'.htmlspecialchars($y->animal_ro,ENT_QUOTES,'UTF-8').'" style="display:inline-block;width:140px;max-width:80%;height:auto;"></div>';
 		$o1b.='<div style="text-align:center;font-size:160px;">'.$y->stem.'</div>';
 		$o1b.='<div style="text-align:center;font-size:160px;">'.$y->branch.'</div>';
 		return $this->getGroupBoxH3($o1s,$o1b);
@@ -295,26 +306,12 @@ class IndexCalendarWebPage extends MainWebPage {
 		return $this->getGroupBoxH3("Alege Data:",$this->getSelectDateForm());	
 	}
 	function getSelectDateForm(){
-		$out='<table id="name">';
-		$out.='<form id="searchdateform" name="searchdateform" action="index.php?action=selectdate" method="post">';
-		$out.='<tr>';
-		$out.='<td>Anul:</td>';
-		$out.='<td>'.$this->getYears().'</td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td>Luna:</td>';
-		$out.='<td>'.$this->getMonths().'</td>';
-		$out.='</tr>';
-		$out.='<div>';
-		$out.='<td>Ziua:</td>';
-		$out.='<td>'.$this->getDays().'</td>';
-		$out.='</tr>';
-		$out.='<tr>';
-		$out.='<td></td>';
-		$out.='<td><input type="submit" name="searchdateformpost" class="button" style="width:60px;" value="Go"></td>';
-		$out.='</tr>';
+		$out='<form id="searchdateform" class="calendar-date-picker" name="searchdateform" action="index.php?action=selectdate" method="post">';
+		$out.='<label>Anul'.$this->getYears().'</label>';
+		$out.='<label>Luna'.$this->getMonths().'</label>';
+		$out.='<label>Ziua'.$this->getDays().'</label>';
+		$out.='<button type="submit" name="searchdateformpost" class="button">Afișează data</button>';
 		$out.='</form>';
-		$out.='</table>';
 		return $out;
 	}
 	function getYears(){

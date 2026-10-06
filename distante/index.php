@@ -37,6 +37,7 @@ class DistancesWebPage extends MainWebPage {
 	}
 	function actionDefault(){
 	
+		$this->setCSS("style/distante.css");
 		$this->map=User::getCurrentMap();
 
 		$this->locationfrom=new Location();
@@ -52,10 +53,13 @@ class DistancesWebPage extends MainWebPage {
 			$this->locationto->loadById(301);		
 		}		
 		$t="Distanța din ".$this->locationfrom->getFullNameDescription()." pînă în ".$this->locationto->getFullNameDescription();
-		$gt="Distanța directă și distanța drumului din ".$this->locationfrom->getFullNameDescription()." pînă în ".$this->locationto->getFullNameDescription()." sunt de: <span id=\"directdistance\"></span> și <span id=\"roaddistance\"></span>";
+		$gt='<div class="distance-metrics">';
+		$gt.='<div class="distance-metric"><span>Distanța în linie dreaptă</span><strong id="directdistance"></strong></div>';
+		$gt.='<div class="distance-metric distance-metric-road"><span>Distanța pe drum</span><strong id="roaddistance"></strong></div>';
+		$gt.='</div>';
 		$this->setTitle($t);
-		$this->setCenterContainer($this->getGroupBoxH3("Specifică localitatea de început și sfîrțit pentru a vedea distanța ți drumul:",$this->getFilter()));
-		$this->setCenterContainer($this->getGroupBoxH3($gt,$this->getMap()));
+		$this->setCenterContainer('<section class="distance-route-panel">'.$this->getGroupBoxH3("Alege punctele traseului",$this->getFilter()).'</section>');
+		$this->setCenterContainer('<section class="distance-results-panel">'.$this->getGroupBoxH3("Distanța dintre localități",$gt.$this->getMap()).'</section>');
 		$this->show();
 	}
 	function actionViewMap1(){
@@ -93,9 +97,9 @@ class DistancesWebPage extends MainWebPage {
 		//$out.='<div id="left" class="container left" style="width:198px;">';
 		//$out.=$this->getLeftContainer();
 		//$out.='</div>';		
-		$out.='<div id="center" class="container center" style="width:1000px;">';
+		$out.='<main id="center" class="container center distance-content">';
 		$out.=$this->getCenterContainer();
-		$out.='</div>';
+		$out.='</main>';
 		//$out.='<div id="right" class="container right" style="width:198px;">';
 		//$out.=$this->getRightContainer();
 		//$out.='</div>';
@@ -124,8 +128,8 @@ class DistancesWebPage extends MainWebPage {
 		
 		$out='';
 		//$out.='<div id="filter" style="width: 998px;height: 40px;border:1px solid #777777;margin-top: 2px;">';
-		$out.='<form id="frmWizard" name="frmWizard" method="post">';
-		$out.='<strong>De la </strong> ';
+		$out.='<form id="frmWizard" class="distance-route-form" name="frmWizard" method="post">';
+		$out.='<label class="distance-endpoint"><span>Punct de plecare</span>';
 		/*
 		$locationfrom=new Location();
 		$locationto=new Location();
@@ -146,8 +150,10 @@ class DistancesWebPage extends MainWebPage {
 		}		
 		*/
 		$out.=Raion::getRaionLocalitateDropDownAsync("raionstart","localitatestart",$this->locationfrom->id);
-		$out.='<strong> pina la </strong>';
+		$out.='</label>';
+		$out.='<label class="distance-endpoint"><span>Punct de sosire</span>';
 		$out.=Raion::getRaionLocalitateDropDownAsync("raionend","localitateend",$this->locationto->id);
+		$out.='</label>';
 		//$out.=Location::getLocationDropDown(Raion::getTopFirstRaion()->id,Location::getTopFirstLocationByRaionId(Raion::getTopFirstRaion()->id)->id);
 		
 		$out.='<input id="fromlat" name="fromlat" type="hidden" value="'.$this->locationfrom->lat.'"/>';
@@ -161,18 +167,21 @@ class DistancesWebPage extends MainWebPage {
 		//$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		//$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';		
 		//$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';		
-		$out.='<input name="show" type="button" class="button" style="width:60px;" value="Arata" onclick="javascript:ShowDirections(\'localitatestart\',\'localitateend\')">';
+		$out.='<button name="show" type="button" class="distance-submit" onclick="javascript:ShowDirections(\'localitatestart\',\'localitateend\')">Arată ruta</button>';
 		$out.='</form>';
 		return $out;
 	}
 	function getMap($out=''){
 
 		$this->setBodyTag('<body onload="DirectionsMapViewOnMapLoad()">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey."&libraries=geometry&sensor=false");
+		$this->setCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setCSS("https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css");
+		$this->setJavascript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setJavascript("https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js");
 		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");		
-		$this->setJavascript(Config::$commonsite."/js/directions.js");		
+		$this->setJavascript("directions.js");
 
-		$out='<div id="map" style="width: 100%;height: 400px;border:1px solid #777777;margin-top: 2px;"></div>';
+		$out='<div id="map" class="distance-map" style="height:min(72vh,720px);min-height:500px;width:min(100%,calc(100vw - 32px));max-width:1000px;box-sizing:border-box;"></div>';
 		//$out.='<div id="dir" style="width: 100%;border:1px solid #777777;margin-top: 2px;"></div>';
 
 		return $out;

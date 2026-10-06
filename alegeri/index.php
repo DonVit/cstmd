@@ -136,11 +136,10 @@ class IndexPage extends MainWebPage {
 	}	
 	function getAllMap($out=''){
 
-		$this->setBodyTag('<body onload="MapAlegeriViewOnMapLoad(true)">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey."&sensor=false");
-		$this->setJavascript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js");
-		$this->setJavascript(Config::$commonsite."/js/maps.js");
-		$this->setJavascript(Config::$commonsite."/js/controls.js");
+		$this->setElectionMapAssets("AlegeriLeaflet.initOverview()");
+		$this->setCSS("https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css");
+		$this->setCSS("https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css");
+		$this->setJavascript("https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js");
 		
 		$out='';
 		$out.='<form id="poiform" name="poiform" method="post">';		
@@ -152,9 +151,21 @@ class IndexPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';		
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';		
-		$out.='<div id="map" style="width: 998px;height: 520px;border:1px solid #777777;margin-top: 2px;"></div>';
+		$out.='<div id="map" class="election-map-overview" style="height:min(72vh,720px);min-height:500px;width:min(100%,calc(100vw - 16px));max-width:1000px;box-sizing:border-box;"></div>';
 		$out.='</form>';
 		return $out;
+	}
+	function setElectionMapAssets($initializer){
+		$this->setBodyTag('<body onload="'.$initializer.'">');
+		$this->setCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+		$this->setJavascript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+		$this->setJavascript("alegeri-leaflet.js");
+	}
+	function getMap($section){
+		$this->setElectionMapAssets("AlegeriLeaflet.initStation()");
+		$lat=htmlspecialchars((string)$section->lat, ENT_QUOTES, 'UTF-8');
+		$lng=htmlspecialchars((string)$section->lng, ENT_QUOTES, 'UTF-8');
+		return '<div id="map" class="election-map-detail" data-lat="'.$lat.'" data-lng="'.$lng.'" style="height:min(65vh,600px);min-height:420px;width:min(100%,calc(100vw - 16px));max-width:1000px;box-sizing:border-box;"></div>';
 	}
 	function getLastMaps($out=''){
 		$lastmaps=$this->map->getAll("","id desc","0","20");
@@ -178,9 +189,7 @@ class IndexPage extends MainWebPage {
 	}	
 	function getViewMap(){
 
-		$this->setBodyTag('<body onload="MapViewOnMapLoad()">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey."&sensor=false");
-		$this->setJavascript(Config::$commonsite."/js/maps.js");
+		$this->setElectionMapAssets("AlegeriLeaflet.initSaved()");
 		
 		$out='';
 		$out='<form id="poiform" name="poiform" method="post">';		
@@ -193,15 +202,13 @@ class IndexPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';		
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';		
-		$out.='<div id="map" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';
+		$out.='<div id="map" class="election-map-detail" style="height:min(65vh,600px);min-height:420px;width:min(100%,calc(100vw - 16px));max-width:1000px;box-sizing:border-box;"></div>';
 		$out.='</form>';
 		return $out;
 	}
 	function getViewPoi(){
 	
-		$this->setBodyTag('<body onload="MapViewPoiOnMapLoad()">');
-		$this->setJavascript("https://maps.googleapis.com/maps/api/js?key=".Config::$gmapskey);
-		$this->setJavascript(Config::$commonsite."/js/maps.js");
+		$this->setElectionMapAssets("AlegeriLeaflet.initPoi()");
 	
 		$out='';
 		$out='<form id="poiform" name="poiform" method="post">';
@@ -213,10 +220,7 @@ class IndexPage extends MainWebPage {
 		$out.='<input name="lng" type="hidden" id="lng"  readonly="true" class="inptdisabled" value="'.$this->map->lng.'"/>';
 		$out.='<input name="title" type="hidden" id="title"  readonly="true" class="inptdisabled" value="'.$this->map->title.'"/>';
 		$out.='<input name="description" type="hidden" id="description"  readonly="true" class="inptdisabled" value="'.$this->map->description.'"/>';
-		$out.='<div id="osmmap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';
-		$out.='<div id="roadmap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';
-		$out.='<div id="satellitemap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';
-		$out.='<div id="terrainmap" style="height: 400px;border:1px solid #777777;	margin-top: 2px;"></div>';						
+		$out.='<div id="map" class="election-map-detail" style="height:min(65vh,600px);min-height:420px;width:min(100%,calc(100vw - 16px));max-width:1000px;box-sizing:border-box;"></div>';
 		$out.='</form>';
 		return $out;
 	}	
