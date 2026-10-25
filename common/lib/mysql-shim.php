@@ -170,6 +170,17 @@ function mysql_result($result, $row, $field = 0) {
 }
 
 /**
+ * Move internal result pointer
+ *
+ * @param mysqli_result $result
+ * @param int $row_number
+ * @return bool
+ */
+function mysql_data_seek($result, $row_number) {
+    return mysqli_data_seek($result, $row_number);
+}
+
+/**
  * Sets the client character set
  *
  * @param string $charset
