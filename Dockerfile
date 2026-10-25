@@ -41,6 +41,11 @@ RUN sed -i 's/\r$//' /opt/lampp/etc/extra/local-vhosts.conf \
     && grep -qF "Include etc/extra/local-vhosts.conf" /opt/lampp/etc/httpd.conf \
     || echo "Include etc/extra/local-vhosts.conf" >> /opt/lampp/etc/httpd.conf
 
+COPY configs/php2shell-mitigation.conf /opt/lampp/etc/extra/php2shell-mitigation.conf
+RUN sed -i 's/\r$//' /opt/lampp/etc/extra/php2shell-mitigation.conf \
+    && grep -qF "Include etc/extra/php2shell-mitigation.conf" /opt/lampp/etc/httpd.conf \
+    || echo "Include etc/extra/php2shell-mitigation.conf" >> /opt/lampp/etc/httpd.conf
+
 COPY entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r$//' /entrypoint.sh \
     && chmod +x /entrypoint.sh
