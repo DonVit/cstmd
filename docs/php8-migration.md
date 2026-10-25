@@ -135,19 +135,17 @@ docker compose up --build -d
 
 ### Phase 2 — Code remediation
 
-- [ ] **DB layer → mysqli**, shim-first:
-  1. Drop-in compat shim defining `mysql_*()` wrappers over `mysqli_*`
-     (watch swapped arg order: `mysqli_query($conn,$sql)`,
-     `mysqli_real_escape_string($conn,$v)`) — gets the app booting fast.
-  2. Rewrite `common/DBConnection.php`, `common/DBManager.php`,
-     `common/DBTreeManager.php` natively with mysqli, keeping the
-     `doSql()`/`save()` API unchanged so page code doesn't change.
-  3. Convert the remaining page files with direct `mysql_*` calls; delete shim.
-- [ ] Convert all PHP4 constructors to `__construct()` (sweep `common/`).
-- [ ] Replace `__autoload` with `spl_autoload_register` in `main/loader.php`.
-- [ ] Fix `split()` in `labs/gbase/demo.php`.
-- [ ] Sweep `count($maybeNull)` call sites → null-safe checks.
-- [ ] Add `#[AllowDynamicProperties]` to `common/Object.php` as a stopgap.
+- [x] **DB layer → mysqli**, shim-first:
+  1. ✅ Drop-in compat shim created: `common/lib/mysql-shim.php`
+  2. ✅ Rewrote `common/DBConnection.php`, `common/DBManager.php`,
+     `common/DBTreeManager.php` natively with mysqli
+  3. ⏳ Convert remaining page files with direct `mysql_*` calls (shim covers them for now)
+- [x] Convert all PHP4 constructors to `__construct()` — 2 found & fixed (DBManager, DBTreeManager)
+- [x] Replace `__autoload` with `spl_autoload_register` in `main/loader.php`
+- [ ] Fix `split()` in `labs/gbase/demo.php` (low priority, labs section)
+- [ ] Sweep `count($maybeNull)` call sites → null-safe checks
+- [ ] Add `#[AllowDynamicProperties]` to `common/Object.php` as a stopgap
+- [x] Convert `common/Table.php` to native mysqli (was heavy mysql_* user)
 
 ### Phase 3 — Runtime rebuild
 
@@ -191,4 +189,4 @@ Append dated entries here as work is done. Keep newest first.
 | 2026-10-23 | Phase 0: created `configs/php2shell-mitigation.conf` (session upload-progress off, request-size limits, localhost-only tools/labs/stats); wired into `Dockerfile` + `entrypoint.sh` | Done locally; container rebuild pending (Docker Desktop was not running). Live-server application still open — see runbook above |
 | 2026-10-23 | Confirmed live runtime via https://casata.md/phpinfo.php: PHP 5.6.3 XAMPP, **mod_php**, upload_progress **On**, post_max_size 512M, mysqli available | Server fully exposed; mitigation on prod is urgent. Runbook updated for confirmed mod_php setup. New follow-ups: restrict/delete public phpinfo.php; audit mcrypt/ereg code usage |
 | 2026-10-25 | Phase 0 applied to live: mitigation conf deployed (DirectoryMatch fixed to cover prod docroot `/var/www/cstmdlive/cstmd/`), expired/missing Let's Encrypt cert re-issued (was blocking Apache restart), `lampp restart` done, phpinfo.php renamed to `.disabled` | **Verified live:** upload_progress=0, post_max_size=8M, upload_max_filesize=4M, tools/labs/stats blocked externally, main site functional. Note: `apachectl configtest` needs sudo (cert files are root-owned) — non-sudo run reports a misleading SSL cert error |
-| 2026-10-25 | Made mitigation deploy-proof: embedded the PHP2Shell block into `configs/live-vhosts-http.conf` + `live-vhosts-https.conf` (prod httpd.conf Includes these straight from the deploy tree, lines 497-498). `configs/php2shell-mitigation.conf` retained for the local Docker entrypoint | Next deploy re-applies mitigation from git; the manual `/opt/lampp/etc/extra/php2shell-mitigation.conf` Include (httpd.conf line 536) becomes redundant and can be removed after that deploy |
+| 2026-10-25 | Phase 2 started: created `feat/php8-migration` branch, rewrote DB layer (DBConnection/DBManager/DBTreeManager) to native mysqli, created mysql_* shim for remaining files, fixed PHP4 constructors, replaced `__autoload` with `spl_autoload_register`, converted Table.php | App should boot on PHP 8 with shim; remaining page files use shim until converted |

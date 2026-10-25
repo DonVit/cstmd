@@ -63,15 +63,15 @@ class Table extends Object {
 		if (is_null($this->rowscount)){
 			
 			$this->rowscount=0;
-			while($row=mysql_fetch_assoc($cs)){
+			while($row=mysqli_fetch_assoc($cs)){
 				$this->rowscount=$row["total_rows_counter"];
 			}
 		}		
 	}	
 	public function setDataSet($dataset){
 		$this->dataset=$dataset;
-		if (mysql_num_rows($this->dataset)!=0){
-			mysql_data_seek($this->dataset, 0);
+		if (mysqli_num_rows($this->dataset)!=0){
+			mysqli_data_seek($this->dataset, 0);
 		}
 	}
 	public function getDataSet(){
@@ -97,10 +97,10 @@ class Table extends Object {
 			$out.='</tr>';
 
 			if (!(is_bool($this->getDataSet()) === true)) {
-				$fields=mysql_num_fields($this->getDataSet());
+				$fields=mysqli_num_fields($this->getDataSet());
 				$arr=array();
 				$cnt=$this->page*$this->rowsperpage+1;
-				while($row = mysql_fetch_object($this->getDataSet())){
+				while($row = mysqli_fetch_object($this->getDataSet())){
 					$out.='<tr>';
 					if ($this->showNrOrd){
 						$out.='<td style="text-align: center;">'.$cnt.'</td>';
@@ -123,22 +123,24 @@ class Table extends Object {
 		} else {
 
 			if (!(is_bool($this->getDataSet()) === true)) {
-				$fields=mysql_num_fields($this->getDataSet());
+				$fields=mysqli_num_fields($this->getDataSet());
 				
 				//add column titles
 				$out.='<th>';
 				$out.='<th>Nr. Ord.</th>';
 				for ($i=0; $i < $fields; $i++) {
-					$n=mysql_field_name($this->getDataSet(), $i);
+					$field_info = mysqli_fetch_field_direct($this->getDataSet(), $i);
+					$n = $field_info->name;
 					$out.='<td>'.$n.'</td>';
 				}
 				$out.='</th>';
 	
 				//add column values
-				while($row = mysql_fetch_object($this->getDataSet())){
+				while($row = mysqli_fetch_object($this->getDataSet())){
 					$out.='<tr>';
 					for ($i=0; $i < $fields; $i++) {
-						$n=mysql_field_name($this->getDataSet(), $i);
+						$field_info = mysqli_fetch_field_direct($this->getDataSet(), $i);
+						$n = $field_info->name;
 						$out.='<td>'.$row->$n.'</td>';
 					}
 					$out.='</tr>';

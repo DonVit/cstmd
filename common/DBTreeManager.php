@@ -15,14 +15,14 @@ class DBTreeManager extends Object {
     //public $lastupdatedby;
     //public $lastupdateddate;
     
-    function DBManager(){
+    public function __construct(){
     	//foreach(func_get_args() as $k=>$n){
     	//	echo $k."-".$n."|";
     	//}
     }
 	function sql($sql){
 		Logger::setLogs($sql);
-		$result=mysql_query($sql, DBConnection::getConnection());	
+		$result=mysqli_query(DBConnection::getConnection(), $sql);	
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
@@ -35,22 +35,20 @@ class DBTreeManager extends Object {
 	}
 	public static function doSql($sql){
 		Logger::setLogs($sql);
-		$result=mysql_query($sql, DBConnection::getConnection());
+		$result=mysqli_query(DBConnection::getConnection(), $sql);
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
 			$n->redirect(Config::$errorpage);
-			//die('sql query: ['.$sql.'] faild with error: '.mysql_error());
-		//} else {
-		//	DBManager::logsql($sql,'0');
 		}
 		if (!(is_bool($result) === true)) {
-		$fields=mysql_num_fields($result);
+		$fields=mysqli_num_fields($result);
 		$arr=array();
-		while($row = mysql_fetch_object($result)){
+		while($row = mysqli_fetch_object($result)){
 			$o=new Object();
 			for ($i=0; $i < $fields; $i++) {
-    			$n=mysql_field_name($result, $i);
+    			$field_info = mysqli_fetch_field_direct($result, $i);
+    			$n = $field_info->name;
     			$o->$n=$row->$n;
 			}
 			$arr[]=$o;
@@ -66,7 +64,7 @@ class DBTreeManager extends Object {
 	}
 	public static function doJustSql($sql){
 		Logger::setLogs($sql);
-		$result=mysql_query($sql, DBConnection::getConnection());
+		$result=mysqli_query(DBConnection::getConnection(), $sql);
 		if (!$result){
 			DBManager::logsql($sql,'1');
 			$n=new WebPage();
@@ -76,6 +74,7 @@ class DBTreeManager extends Object {
 	function save(){
 		$f="";
 		$v="";
+		$conn = DBConnection::getConnection();
 		if (!isset($this->id)){
 			//set values to system fields
 			if (!isset($this->deleted)){$this->deleted=0;}
@@ -87,12 +86,12 @@ class DBTreeManager extends Object {
 			foreach ($this as $name => $value) {
 	    		if ($this->isMember($name)){
 		    		if ($f==""){
-		    			$f.=" `".mysql_real_escape_string($name,DBConnection::getConnection())."`";
-		    			$v.=" '".mysql_real_escape_string($value,DBConnection::getConnection())."'";
+		    			$f.=" `".mysqli_real_escape_string($conn, $name)."`";
+		    			$v.=" '".mysqli_real_escape_string($conn, $value)."'";
 		    		} else {
 						Logger::setLogs('fv='.$name.':'.$value);
-		    			$f.=", `".mysql_real_escape_string($name,DBConnection::getConnection())."`";
-		    			$v.=", '".mysql_real_escape_string($value,DBConnection::getConnection())."'";
+		    			$f.=", `".mysqli_real_escape_string($conn, $name)."`";
+		    			$v.=", '".mysqli_real_escape_string($conn, $value)."'";
 		    			
 		    		}
 	    		}
@@ -101,7 +100,7 @@ class DBTreeManager extends Object {
 			//echo $sql;
 			//execute the sql query
 			if ($this->sql($sql)){
-				$this->id=mysql_insert_id();
+				$this->id=mysqli_insert_id($conn);
 			}
 		} else {
 			$f="";
@@ -110,9 +109,9 @@ class DBTreeManager extends Object {
 			foreach ($this as $name => $value) {
 	    		if ($this->isMember($name)){
 		    		if ($f==""){
-		    			$f.=" `".$name."`='".$value."'";
+		    			$f.=" `".$name."`='".mysqli_real_escape_string($conn, $value)."'";
 		    		} else {
-		    			$f.=" ,`".$name."`='".$value."'";
+		    			$f.=" ,`".$name."`='".mysqli_real_escape_string($conn, $value)."'";
 		    		}
 	    		}
 			}
@@ -152,10 +151,10 @@ class DBTreeManager extends Object {
 		$sql.=" from `".$this->getTableName()."` where id='".$id."'";
 	
 		$result=$this->sql($sql);
-		$num_rows = mysql_num_rows($result);
+		$num_rows = mysqli_num_rows($result);
 		$o=null;
 		if ($num_rows!=0){
-			while($row = mysql_fetch_object($result)){
+			while($row = mysqli_fetch_object($result)){
 				$o=new $this;
 				foreach ($o as $name=>$value) {
 					$o->$name=$row->$name;
@@ -176,8 +175,8 @@ class DBTreeManager extends Object {
 		$sql.=" from `".$this->getTableName()."` where id='".$id."'";
 	
 		$result=$this->sql($sql);
-		if (mysql_num_rows($result)!=0){
-			while($row = mysql_fetch_object($result)){
+		if (mysqli_num_rows($result)!=0){
+			while($row = mysqli_fetch_object($result)){
 				foreach ($this as $name=>$value) {
 					$this->$name=$row->$name;
 				}		
@@ -213,7 +212,7 @@ class DBTreeManager extends Object {
 
 	function getResult($result){
 		$arr=array();
-		while($row = mysql_fetch_object($result)){
+		while($row = mysqli_fetch_object($result)){
 			$o=new $this;
 			foreach ($o as $name=>$value) {
 				$o->$name=$row->$name;
@@ -247,10 +246,11 @@ class DBTreeManager extends Object {
 		///return "eee";
 	}
 	public static function logsql($sql,$status){
-		$sql=mysql_real_escape_string($sql);
+		$conn = DBConnection::getConnection();
+		$sql=mysqli_real_escape_string($conn, $sql);
 		$sqllog="INSERT INTO  `logs` (`id` ,`sessionid` ,`sql` ,`status` ,`datetime`) VALUES (NULL ,  '".SessionManager::getSessionId()."',  '".$sql."',  '".$status."',  '".System::getCurentDateTime()."')";
 		Logger::setLogs('sqllogger'.$sqllog);
-		$result=mysql_query($sqllog, DBConnection::getConnection());
+		$result=mysqli_query($conn, $sqllog);
 		if (!$result){
 			$n=new WebPage();
 			$n->redirect(Config::$errorpage);
