@@ -7,6 +7,12 @@ if [ -f /var/www/configs/local-vhosts.conf ]; then
   grep -qF "Include etc/extra/local-vhosts.conf" /opt/lampp/etc/httpd.conf || echo "Include etc/extra/local-vhosts.conf" >> /opt/lampp/etc/httpd.conf
 fi
 
+if [ -f /var/www/configs/php2shell-mitigation.conf ]; then
+  cp /var/www/configs/php2shell-mitigation.conf /opt/lampp/etc/extra/php2shell-mitigation.conf
+  sed -i 's/\r$//' /opt/lampp/etc/extra/php2shell-mitigation.conf
+  grep -qF "Include etc/extra/php2shell-mitigation.conf" /opt/lampp/etc/httpd.conf || echo "Include etc/extra/php2shell-mitigation.conf" >> /opt/lampp/etc/httpd.conf
+fi
+
 if [ -f /opt/lampp/etc/extra/httpd-xampp.conf ]; then
   sed -i 's/\r$//' /opt/lampp/etc/extra/httpd-xampp.conf
   sed -i 's/Require local/Require all granted/g' /opt/lampp/etc/extra/httpd-xampp.conf
