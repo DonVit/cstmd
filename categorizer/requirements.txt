@@ -1,0 +1,5 @@
+sentence-transformers
+hdbscan
+umap-learn
+pandas
+mysql-connector-python
