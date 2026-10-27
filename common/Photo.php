@@ -43,7 +43,7 @@ class Photo extends DBManager {
 		$sql="select id from `photos` where deleted!=1 and id < $this->id order by id desc limit 0,1";
 		$ps=$this->doSql($sql);
 		$out=0;
-		if (count($ps)!=0){
+		if (isset($ps) && count($ps)!=0){
 			foreach($ps as $p){
 				$out=$p->id;
 			}
@@ -54,7 +54,7 @@ class Photo extends DBManager {
 		$sql="select id from `photos` where deleted!=1 and id > $this->id limit 0,1";
 		$ps=$this->doSql($sql);
 		$out=0;
-		if (count($ps)!=0){
+		if (isset($ps) && count($ps)!=0) {
 			foreach($ps as $p){
 				$out=$p->id;
 			}
@@ -92,7 +92,7 @@ class Photo extends DBManager {
 	}
 	function getPhotosTable($ps){
 		$out="";
-		if (count($ps)!=0){
+		if (isset($ps) && count($ps)!=0) {
 			$out.='<table style="font-size:85%;width:100%">';
 			$i=0;
 			foreach($ps as $p){

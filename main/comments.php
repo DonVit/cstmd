@@ -77,7 +77,7 @@ class CommentsWebPage extends MainWebPage {
 		$out='';
 		$c=new Comment;
 		$cs=$c->getAll('','id desc','0','30');
-		if (count($cs)!=0){
+		if (isset($cs) && count($cs)!=0) {
 			$out.='<div>';
 			foreach($cs as $c){
 				$out.='<div class="newscomment_head" style="font-size:85%;">';
@@ -156,7 +156,7 @@ class CommentsWebPage extends MainWebPage {
 		$cs=$c->getAll('id=\''.$comment_id.'\' or parent_id='.$comment_id,"`date`");
 		//$url=$webpage->getServerName().$webpage->getRequestURI();
 		$url="";
-		if (count($cs)!=0){
+		if ($cs->num_rows > 0){
 			$out.='<div>';
 			$i=1;
 			foreach($cs as $c){

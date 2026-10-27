@@ -20,10 +20,11 @@ class Partid extends DBManager {
 			return null;
 		}		
 	}
-	function getPrimarPartidByLocationId($localitate_id){
+	public static function getPrimarPartidByLocationId($localitate_id){
+		$p=new Partid();
 		$sql="SELECT a2.* FROM al_primari as a1 inner join al_partid as a2 on a1.alegeri_id=a2.alegeri_id and a1.partid=a2.partidcod where a1.alegeri_id=".Primar::getLastAlegeriYear()->alegeri_id." and a1.localitate_id=".$localitate_id;
-		$ls=$this->doSql($sql);
-		return $ls[0];
+		$ls=$p->doSql($sql);
+		return $ls[0] ?? null;
 	}	
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-class SessionManager extends Object {
+class SessionManager extends MainObject {
 	public static function getSessionId(){
 		return session_id();
 	}

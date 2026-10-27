@@ -55,7 +55,7 @@ class OSMMigratorWebPage extends MainWebPage {
 			foreach( $tags as $value ) {
 				$k=$value->getAttribute("k");
 				$v=$value->getAttribute("v");
-				$sql="INSERT INTO `node_tags` (`id`, `k`, `v`) VALUES ('$id', '$k', '".mysql_real_escape_string($v,DBConnection::getConnection())."');";
+				$sql="INSERT INTO `node_tags` (`id`, `k`, `v`) VALUES ('$id', '$k', '".mysqli_real_escape_string(DBConnection::getConnection(), $v)."');";
 				DBManager::doJustSql($sql);
 	
 				

@@ -16,7 +16,7 @@ $query="SELECT id, lat, lng, name FROM locations WHERE lat >=".$_GET['LatMin']."
 
 $query = mysql_query($query);
 echo "<locations>";
-while ($row=mysql_fetch_assoc($query))
+while ($row=mysqli_fetch_assoc($query))
 {
 	echo '<location id="'.$row['id'].'" name="'.$row['name'].'" lat="'.$row['lat'].'" lon="'.$row['lng'].'"/>';
 }

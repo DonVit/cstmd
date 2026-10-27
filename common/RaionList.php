@@ -1,5 +1,5 @@
 <?php
-class RaionList extends Object {
+class RaionList extends MainObject {
 	private $raionid=0;
 	private $locationid=0;
 	private $raionlink;

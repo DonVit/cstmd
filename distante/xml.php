@@ -22,8 +22,7 @@ class XmlLocalitatiWebPage extends WebPage {
 		$ls=$l->getAll("raion_id=".$this->raion_id,"`order`,`oras` desc,`name`");
 		if (count($ls)!=0){
 			foreach($ls as $l){
-				$out.='<location id="'.$l->id.'" name="'.$l->getFullName().'">';
-				$out.='</location>';
+				$out.='<location id="'.$l->id.'" name="'.$l->getFullName().'"/>';
 			}
 		}
 		$out.='</locations>';

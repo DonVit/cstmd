@@ -348,7 +348,7 @@ class NewsWebPage extends MainWebPage {
 		//$ls=$l->doSql($sql);	
 		$ls=$n->getNewsLocalitati();
 		$out="";
-		if (count($ls)!=0){
+		if ($ls->num_rows > 0) {
 			//$out.="<div class=\"groupbox\">";
 			//$out.="<h2 class=\"localitatigroup_h2\">Localitaţi in ştire:</h2>";
 			$out.="<table  style1=\"font-size:85%;width:100%\"><tr><td>";

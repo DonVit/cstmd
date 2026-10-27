@@ -1,5 +1,5 @@
 <?php
-class CompanyList extends Object{
+class CompanyList extends MainObject {
 	public function getUserCompanyList($page=0,$rowsperpage=50){	
 		
 		$userid=0;

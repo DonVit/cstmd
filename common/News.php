@@ -67,7 +67,7 @@ class News extends DBManager {
 	function getNewsTable($ns){
 		$out="";
 		//$ns=$n->getNewsByCategory();
-		if (count($ns)!=0){
+		if ($ns->num_rows > 0) {
 			$out.='<table style="font-size:85%;width:100%">';
 			$i=0;
 			foreach($ns as $n){

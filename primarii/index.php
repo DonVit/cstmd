@@ -305,11 +305,13 @@ class IndexLocationsWebPage extends MainWebPage {
 		
 		if (!is_null($primar)){
 			$o1b.=' Primarul este '.$primar->prenume.' '.$primar->nume;	
-		} 
-		if ($primarPartid->partidcod=='CI'){
-			$o1b.=' la alegeri fiind '.$primarPartid->partidname.'. ';
-		} else {
-			$o1b.=' din partea ('.$primarPartid->partidcod.' - '.$primarPartid->partidname.'). ';
+		}
+		if (!is_null($primarPartid)) {
+			if ($primarPartid->partidcod=='CI'){
+				$o1b.=' la alegeri fiind '.$primarPartid->partidname.'. ';
+			} else {
+				$o1b.=' din partea ('.$primarPartid->partidcod.' - '.$primarPartid->partidname.'). ';
+			}
 		}
 		
 		if ($this->location->p>0){
@@ -332,7 +334,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out.=$this->getGroupBoxH3($o1s,$o1b);
 		
 		$ls=$this->location->getChildLocationsAsResultSet();
-		if (mysql_num_rows($ls)!=0){
+		if (mysqli_num_rows($ls)!=0){
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="2"></a>'.$this->location->getPrimariaName().' - Localitati in componenta:';
@@ -373,7 +375,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 	
 		$ls=$this->location->getPrimarieConsilieri();
-		if (mysql_num_rows($ls)!=0){
+		if (mysqli_num_rows($ls)!=0){
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="6"></a>'.$this->location->getPrimariaName().' - Lista Consilierilor:';
@@ -395,7 +397,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$ls=$this->location->getPrimarieConsilieriPerPartid();
 		$this->c=$this->location->getPrimarieConsilieriTotal();
 	
-		if (mysql_num_rows($ls)!=0){
+		if (mysqli_num_rows($ls)!=0){
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="2"></a>'.$this->location->getPrimariaName().' - Lista Partidelor in Consiliu:';
@@ -406,7 +408,7 @@ class IndexLocationsWebPage extends MainWebPage {
 			$chl='';
 			$chco='';
 			$cnt=1;
-			while($l = mysql_fetch_object($ls)){
+			while($l = mysqli_fetch_object($ls)){
 					
 			//foreach($ls as $l){
 				if ($cnt==1){
@@ -474,7 +476,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 	
 		$ls=$this->location->getPrimariiInRadius();
-		if (count($ls)!=0){
+		if (isset($ls) && count($ls)!=0) {	
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="8"></a>'.$this->location->getPrimariaName().' - Primarii in raza de 10 km:';
@@ -495,7 +497,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 		
 		$ls=LocationDistance::getDistancesByLocation($this->location->id);
-		if (count($ls)!=0){				
+		if (isset($ls) && count($ls)!=0) {				
 			$o2s='';
 			$o2b='';
 			$o2s.='<a name="5"></a>'.$this->location->getPrimariaName().' - Distanțe:';		
@@ -518,7 +520,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$out="";
 		
 		$ls=$this->location->getLocationsWithSameName();
-		if (count($ls)!=0){				
+		if ($ls->num_rows > 0) {				
 			$o2s='';
 			$o2b='';			
 			$o2s.='<a name="6"></a>'.$this->location->getFullNameDescription().' - Localitati cu aceleasi nume:';		
@@ -734,7 +736,7 @@ class IndexLocationsWebPage extends MainWebPage {
 		$o2b='';
 		$p=new RecensamintPrimarie();
 		$popnatall=RecensamintPrimarie::getPopulationBy(0, 0, $this->location->id);
-		if (count($popnatall)>1){
+		if (isset($popnatall) && count($popnatall)>1){
 
 					$o2s='<a name="5"></a>'.$this->location->getPrimariaName().' - Evolutia numarului de locuitori in ultimii 100 ani:';
 

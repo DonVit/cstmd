@@ -154,7 +154,7 @@ class ImagesWebPage extends LocationFilterWebPage {
 		$l=new Location;
 		$ls=$l->doSql($sql);	
 		$out="";
-		if (count($ls)!=0){
+		if ($ls->num_rows > 0) {
 			$out.="<div class=\"groupbox\">";
 			$out.="<h2 class=\"localitatigroup_h2\">Localitaţi in ştire:</h2>";
 			$out.="<table class=\"localitatigroup_table\"><tr><td>";
@@ -176,7 +176,7 @@ class ImagesWebPage extends LocationFilterWebPage {
 		$c=new Comment;
 		$cs=$c->doSql($sql);		
 		$out="<div class=\"groupbox\">";
-		if (count($cs)!=0){
+		if ($cs->num_rows > 0){
 			$out.="<h2 class=\"newscomments_h2\">Comentarii:</h2>";
 			$out.="<div>";
 			$i=1;
@@ -466,7 +466,7 @@ function getPages($page,$rowsperpage,$categ,$raion,$localitate){
 		$sql="SELECT id, photos_id, name, web, comment,date FROM `photos_comments`WHERE `photos_id` =$id ORDER BY `date`";
 		$result=mysql_query($sql) or die(mysql_error());
 		$out="<div id=\"photoscomments\">";
-		$c=mysql_num_rows($result);
+		$c=mysqli_num_rows($result);
 		if ($c!=0){
 		$out.="<h2 class=\"photoscomments_h2\">Comentarii:</h2>";
 		//$out.="<table class=\"newscomments_table\">";

@@ -117,13 +117,9 @@ class AlbumsWebPage extends MainWebPage {
 	function actionDefault(){
 		$this->step=1;
 		$this->steptitle="Adauga Foto Album";
-		$this->setTitle($this->steptitle);
+		$this->setTitle($this->steptitle); 
 		if (isset($_POST["save"])){
-					if (!isset($this->currentalbum->id)){
-						$this->currentalbum->save();
-					} else {
-						$this->currentalbum->save();
-					}
+					$this->currentalbum->save();
 					foreach ($this->currentalbumfiles as $file) {
 							$photo=new Photo();
 							$photo->id=$file->id;
@@ -240,7 +236,7 @@ class AlbumsWebPage extends MainWebPage {
 			$out.='<tr><td>Oras/Sat:</td><td>'.Location::getLocationDropDown($this->currentalbum->raion_id,$this->currentalbum->localitate_id).'</td></tr>';
 		}
 		$out.='<tr><td colspan="2">'.$this->setMap($this->currentalbum).'</td></tr>';
-		foreach ($this->currentalbumfiles as $p){
+		foreach ($this->currentalbumfiles ?? [] as $p){
 			$out.='<tr><td><img src="files/t'.$p->file.'"></td><td><input type="hidden" id="photoid" name="photoid[]" value="'.$p->id.'"><input type="input" id="photodata" name="photodata[]" value="'.$p->data.'"><input type="input" id="phototitle" name="phototitle[]" value="'.$p->title.'" style="width:100%;"></br><textarea id="photodescription" name="photodescription[]" style="width:100%;height:60px;">'.$p->note.'</textarea></td></tr>';
 		}
 		$out.='<tr><td colspan="2"><input type="file" id="file" name="file[]" style="width:100%;" multiple></td></tr>';
